@@ -2,15 +2,28 @@ class SyncCalendarService
 
   attr_accessor :task, :user
 
-  CLIENT_OPTIONS = {
-      client_id: ENV['GOOGLE_CLIENT_ID'],
-      client_secret: ENV['GOOGLE_CLIENT_SECRET'],
+  def self.client_options(user)
+    option = {
+      client_id: user.client_id,
+      client_secret: user.client_secret,
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_credential_uri: 'https://www.googleapis.com/oauth2/v4/token',
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
       redirect_uri: Rails.application.routes.url_helpers.google_auth_callback_url,
       additional_parameters: {prompt:'consent'},
     }
+    option
+  end
+
+  # CLIENT_OPTIONS = {
+  #     client_id: User.first.client_id,
+  #     client_secret: User.first.client_secret,
+  #     authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+  #     token_credential_uri: 'https://www.googleapis.com/oauth2/v4/token',
+  #     scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
+  #     redirect_uri: Rails.application.routes.url_helpers.google_auth_callback_url,
+  #     additional_parameters: {prompt:'consent'},
+  #   }
 
   def initialize(task,user)
     @task = task
@@ -18,7 +31,7 @@ class SyncCalendarService
   end
 
   def create_event
-    client = Signet::OAuth2::Client.new(CLIENT_OPTIONS)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
     client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
@@ -29,7 +42,7 @@ class SyncCalendarService
   end
 
   def update_event
-    client = Signet::OAuth2::Client.new(CLIENT_OPTIONS)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
     client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
@@ -40,7 +53,7 @@ class SyncCalendarService
   end
 
   def delete_event
-    client = Signet::OAuth2::Client.new(CLIENT_OPTIONS)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
     client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
@@ -53,7 +66,7 @@ class SyncCalendarService
   private
 
   def refresh_token
-    client = Signet::OAuth2::Client.new(CLIENT_OPTIONS)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
     client.update!(user.google_api_token)
     response = client.refresh!
     user.google_api_token = user.google_api_token.merge(response)

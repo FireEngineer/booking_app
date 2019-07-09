@@ -1,0 +1,6 @@
+<h1>認証</h1>
+<%= form_with url:google_auth_identifier_path, method: :patch do |f| %>
+  <%= f.text_field :client_id %>client_id<br>
+  <%= f.text_field :client_secret %>client_secret<br>
+<%= f.submit "認証へ" %>
+<% end %>

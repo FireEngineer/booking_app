@@ -1,6 +1,6 @@
 class GoogleAuthController < ApplicationController
   def callback
-    client = Signet::OAuth2::Client.new(SyncCalendarService::CLIENT_OPTIONS)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_user))
     client.code = params[:code]
     response = client.fetch_access_token!
     current_user.google_api_token = response
@@ -14,7 +14,27 @@ class GoogleAuthController < ApplicationController
   end
 
   def redirect
-    client = Signet::OAuth2::Client.new(SyncCalendarService::CLIENT_OPTIONS)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_user))
     redirect_to client.authorization_uri.to_s
+  rescue
+    redirect_to google_auth_ident_form_url
+  end
+
+  def ident_form
+
+  end
+
+  def identifier
+    user = current_user
+    if user.update(params_identifier)
+      redirect_to google_auth_redirect_url
+    end
+
+  end
+
+  private
+
+  def params_identifier
+    params.permit(:client_id, :client_secret)
   end
 end
