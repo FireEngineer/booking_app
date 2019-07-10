@@ -8,8 +8,17 @@ class TasksController < ApplicationController
   def index
     task = Task.new
     @tasks = SyncCalendarService.new(task,current_user).read_event
-    debugger
-
+    # unless Config.exists?
+    #   initialize_config
+    # end
+    # config = Config.first
+    @times = [*10..22]
+    @today = Time.current
+    @events = SyncCalendarService.new(task,current_user).read_event
+    one_month = [*Date.current.days_since(1)..Date.current.weeks_since(10)]
+    @month = Kaminari.paginate_array(one_month).page(params[:page])
+    @wild_time = []
+    @wild_day = []
   end
 
   # GET /tasks/1
