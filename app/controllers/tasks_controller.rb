@@ -6,7 +6,10 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = current_user.tasks.order(:due_at)
+    task = Task.new
+    @tasks = SyncCalendarService.new(task,current_user).read_event
+    debugger
+
   end
 
   # GET /tasks/1

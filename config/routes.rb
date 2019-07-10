@@ -8,4 +8,14 @@ Rails.application.routes.draw do
     devise_for :users
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  root "schedules#top"
+  
+  get "/form", to: "schedules#form"
+  get "/complete", to: "schedules#complete"
+  get "/fail_page", to: "schedules#fail_page"
+  post "/create_event", to: "schedules#create_event"
+  get "/cancel/:id", to: "schedules#cancel"
+  delete "/cancel/:id", to: "schedules#delete_event", as: :delete_event
+
 end

@@ -15,11 +15,40 @@ class SyncCalendarService
     option
   end
 
-  
-
   def initialize(task,user)
     @task = task
     @user = user
+  end
+
+  def read_event
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
+    client.update!(user.google_api_token)
+    service = Google::Apis::CalendarV3::CalendarService.new
+    service.authorization = client
+    
+    # Fetch the next 10 events for the user
+    calendar_id = user.calendar_id
+    
+    response = service.list_events(calendar_id,
+                                   single_events: true,
+                                   order_by: 'startTime',
+                                   time_max: Date.today.tomorrow.rfc3339,
+                                   time_min: Date.today.rfc3339)
+                                  #  Config.first.end_day.to_i
+    puts 'Upcoming events:'
+    puts 'No upcoming events found' if response.items.empty?
+    array = []
+    response.items.each do |event|
+      # puts event.start.date_time || event.start.date
+      array.push( 
+                  [ event.start.date_time || event.start.date, 
+                  event.end.date_time || event.end.date ] 
+                )
+    end
+    array
+  rescue Google::Apis::AuthorizationError
+    refresh_token
+    retry
   end
 
   def create_event
