@@ -15,15 +15,7 @@ class SyncCalendarService
     option
   end
 
-  # CLIENT_OPTIONS = {
-  #     client_id: User.first.client_id,
-  #     client_secret: User.first.client_secret,
-  #     authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-  #     token_credential_uri: 'https://www.googleapis.com/oauth2/v4/token',
-  #     scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
-  #     redirect_uri: Rails.application.routes.url_helpers.google_auth_callback_url,
-  #     additional_parameters: {prompt:'consent'},
-  #   }
+  
 
   def initialize(task,user)
     @task = task
