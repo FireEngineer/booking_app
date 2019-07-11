@@ -1,1 +1,7 @@
 user.update(client_id: "477159610244-ks6r9nps6b0laqk1t7ts2si950o51qnq.apps.googleusercontent.com", client_secret: "jv-etGGHdIXeA64sMqaLhNXg")
+
+rails g controller schedule title:string content:text name:string email:string line_id:string date_time:datetime phone:string google_event_id:string
+
+rails g model schedule title:string content:text name:string email:string line_id:string date_time:datetime phone:string google_event_id:string
+
+rails g controller schedules

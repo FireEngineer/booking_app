@@ -32,7 +32,7 @@ class SyncCalendarService
     response = service.list_events(calendar_id,
                                    single_events: true,
                                    order_by: 'startTime',
-                                   time_max: Date.today.tomorrow.rfc3339,
+                                   time_max: Date.today.since(3.month).rfc3339,
                                    time_min: Date.today.rfc3339)
                                   #  Config.first.end_day.to_i
     puts 'Upcoming events:'
