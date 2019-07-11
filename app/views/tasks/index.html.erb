@@ -17,7 +17,7 @@
     </div>
   </div>
   
-  <%#= paginate @month %>
+  <%= paginate @month %>
     <div class="tabel_scroll">
       <table class="table  table-bordered">
         <thead>
@@ -39,7 +39,7 @@
                 <% time_str = time(day, time) %>
                   <% if include_time?(@events, time_str) %>
                     <td class="possible <%= if @wild_time.include?(time) || @wild_day.include?(time(day, 0)) || Time.zone.parse(time_str) < Time.current then "can_not_choice" end %>">
-                      <%= link_to form_path(date_time: time(Time.zone.parse("#{day}"), time)), class:"wide_link" do %>
+                      <%= link_to new_user_task_path(params[:user_id], date_time: time(Time.zone.parse("#{day}"), time)), class:"wide_link" do %>
                         <i class="far fa-circle"></i>
                       <% end %>
                     </td>

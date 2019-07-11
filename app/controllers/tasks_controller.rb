@@ -7,7 +7,7 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     task = Task.new
-    @tasks = SyncCalendarService.new(task,current_user).read_event
+    # @tasks = SyncCalendarService.new(task,current_user).read_event
     # unless Config.exists?
     #   initialize_config
     # end
@@ -16,23 +16,13 @@ class TasksController < ApplicationController
     @today = Time.current
     @events = SyncCalendarService.new(task,current_user).read_event
     one_month = [*Date.current.days_since(1)..Date.current.weeks_since(10)]
-    @month = Kaminari.paginate_array(one_month).page(params[:page])
+    @month = Kaminari.paginate_array(one_month).page(params[:page]).per(7)
     @wild_time = []
     @wild_day = []
   end
 
-  # GET /tasks/1
-  # GET /tasks/1.json
-  def show
-  end
-
-  # GET /tasks/new
   def new
     @task = Task.new
-  end
-
-  # GET /tasks/1/edit
-  def edit
   end
 
   # POST /tasks

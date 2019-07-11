@@ -1,0 +1,31 @@
+
+.container {
+  width: 80%;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 600px) {
+.container {
+    width: 100%;
+}
+}
+
+.card_share_style {
+  box-shadow: 0px 0px 2px;
+}
+
+.share_text_centering {
+  text-align: center;
+}
+
+.margin_share_centering {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+
+
