@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :user do
     resources :tasks
+    get "task/:id/complete", to: "tasks#complete", as: :task_complete
   end
 
 

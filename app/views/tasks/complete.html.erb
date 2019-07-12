@@ -1,0 +1,67 @@
+<div class="complete_page">
+  <div class="title">
+    <!--<h2>予約が完了しました。</h2>-->
+  </div>
+  
+  <div class="complete_content card">
+    <h2 class="title_style">予約内容</h2>
+    <div class="content_zone">
+      <p>お名前 : <%= @task.name %></p>
+      <p>メールアドレス : <%= @task.email %></p>
+      <p>予約時間 : <%= reservation_date("#{@task.date_time}") %>(相談時間は30分〜１時間程度)</p>
+      <p>ご予約申し込み頂きありがとうございます！<br>
+        下記のリンクからLINEの友達追加してお名前（フルネーム）で、メッセージ下さいm(_ _)m<br>
+        ↓↓↓<br>
+        <a href="https://www.google.com" class="line_btn">担当者LINE登録をここから行ってください。</a><br>
+        LINE名：予約システム事務局<br>
+      </p>
+    </div>
+  </div>
+  <%= link_to "戻る", user_tasks_path(params[:user_id]), class:"btn btn-secondary btn_style" %>
+</div>
+
+<!--モーダル-->
+<div class="popup" id="js-popup">
+  <div class="popup-inner">
+    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+    <p>ご予約申し込み頂きありがとうございます！<br>
+        下記のリンクからLINEの友達追加してお名前（フルネーム）で、メッセージ下さいm(_ _)m<br>
+        ↓↓↓<br>
+        <a href="https://www.google.com" class="line_btn">担当者LINE登録をここから行ってください。</a><br>
+        LINE名：予約システム事務局<br>
+      </p>
+  </div>
+  <div class="black-background" id="js-black-bg"></div>
+</div>
+
+<script>
+  window.onload = function() {
+  var popup = document.getElementById('js-popup');
+  if(!popup) return;
+  popup.classList.add('is-show');
+
+  var blackBg = document.getElementById('js-black-bg');
+  var closeBtn = document.getElementById('js-close-btn');
+
+  // closePopUp(blackBg);
+  closePopUp(closeBtn);
+
+  function closePopUp(elem) {
+    if(!elem) return;
+    elem.addEventListener('click', function() {
+      popup.classList.remove('is-show');
+    })
+  }
+}
+
+
+// 戻るボタン禁止
+history.pushState(null, null, null);
+$(window).on("popstate", function (event) {
+    if (!event.originalEvent.state) {
+        alert("戻る操作はできません。")
+        history.pushState(null, null, null);
+        return;
+    }
+});
+</script>

@@ -94,12 +94,37 @@ class SyncCalendarService
   end
 
   def calendar_event
-    event = Google::Apis::CalendarV3::Event.new({
-                                                    start: Google::Apis::CalendarV3::EventDateTime.new(date_time:task.due_at.to_datetime.rfc3339),
-                                                    end: Google::Apis::CalendarV3::EventDateTime.new(date_time:(task.due_at+1.hour).to_datetime.rfc3339),
-                                                    summary: task.title.to_s ,
-                                                    discription: task.content.to_s,
-                                                    id: task.calendar_event_uid,
-                                                  })
+    event = Google::Apis::CalendarV3::Event.new(
+                          summary: "【TEL】#{task.name}",
+                          # location: '800 Howard St., San Francisco, CA 94103',
+                          description: "【セレブエンジニア電話相談】名前：#{task.name}、TEL：#{task.phone}",
+                          start: {
+                            date_time: "#{time(task.date_time, 0)}",
+                            time_zone: 'Asia/Tokyo',
+                          },
+                          end: {
+                            date_time: "#{time(task.date_time, 1)}",
+                            time_zone: 'Asia/Tokyo',
+                          },
+                          # recurrence: [
+                          #   'RRULE:FREQ=DAILY;COUNT=2'
+                          # ],
+                          attendees: [
+                            {email: "#{task.email}"},
+                          ],
+                          # reminders: {
+                          #   use_default: false,
+                          #   overrides: [
+                          #     {method' => 'email', 'minutes: 24 * 60},
+                          #     {method' => 'popup', 'minutes: 10},
+                          #   ],
+                          # },
+                        )
   end
+
+  private
+    def time(date, time)
+      date_time = date.since(time.hours)
+      "#{date_time.year}-#{date_time.month}-#{date_time.day}T#{date_time.hour}:00:00+09:00"
+    end
 end
