@@ -22,13 +22,14 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new
+    @task = Task.new(date_time: params[:date_time])
   end
 
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = current_user.tasks.build(task_params)
+    user = User.find(params[:user_id])
+    @task = user.tasks.build(task_params)
 
     respond_to do |format|
       if @task.save
@@ -74,6 +75,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:title, :content, :due_at)
+      params.require(:task).permit(:title, :content, :due_at, :date_time, :email, :phone, :name)
     end
 end
