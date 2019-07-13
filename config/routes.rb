@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   end
 
   resources :user do
+    get "tasks_index", to: "configs#tasks_index"
     resources :tasks
     get "task/:id/complete", to: "tasks#complete", as: :task_complete
+    get "task/:id/cancel", to: "tasks#cancel", as: :task_cancel
   end
 
 

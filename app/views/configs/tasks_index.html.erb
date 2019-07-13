@@ -1,0 +1,25 @@
+<table class="table table-hover">
+  <caption>テーブルの表題</caption>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th scope="col">名前</th>
+      <th scope="col">email</th>
+      <th scope="col">電話番号</th>
+      <th scope="col">予約時間</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <th scope="row"><%= task.id %></th>
+        <td><%= task.name %></td>
+        <td><%= task.email %></td>
+        <td><%= task.phone %></td>
+        <td><%= task.date_time %></td>
+        <td><%= link_to "キャンセル", user_task_path(params[:user_id], task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

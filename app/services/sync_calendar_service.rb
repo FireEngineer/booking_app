@@ -82,6 +82,8 @@ class SyncCalendarService
     rescue Google::Apis::AuthorizationError
       refresh_token
       retry
+    rescue Google::Apis::ClientError
+      "already cancel"
   end
 
   private
