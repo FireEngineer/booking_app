@@ -10,7 +10,7 @@ class GoogleAuthController < ApplicationController
     _calendar = service.insert_calendar(calendar)
     current_user.calendar_id = _calendar.id
     current_user.save
-    redirect_to tasks_path
+    redirect_to user_tasks_path(current_user)
   end
 
   def redirect

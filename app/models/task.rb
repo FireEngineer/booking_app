@@ -1,6 +1,9 @@
 class Task < ApplicationRecord
   # validates :title, :content, :due_at, presence: true
+  validates :date_time, uniquness: true
   belongs_to :user
+
+
 
   after_create :sync_create, :line_send, :mail_send
   after_update :sybc_update
