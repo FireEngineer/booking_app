@@ -48,6 +48,9 @@ class TasksController < ApplicationController
 
   def cancel
     @task = Task.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:notice] = "この予約はキャンセル済みか、存在しません。"
+      redirect_to user_tasks_url(params[:user_id])
   end
   
   def destroy

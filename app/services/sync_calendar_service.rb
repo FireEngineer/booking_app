@@ -97,9 +97,11 @@ class SyncCalendarService
 
   def calendar_event
     event = Google::Apis::CalendarV3::Event.new(
+                          id: task.calendar_event_uid,
                           summary: "【TEL】#{task.name}",
                           # location: '800 Howard St., San Francisco, CA 94103',
-                          description: "【セレブエンジニア電話相談】名前：#{task.name}、TEL：#{task.phone}",
+                          description: "【セレブエンジニア電話相談】名前：#{task.name}、TEL：#{task.phone}、
+                          キャンセルURL：#{ if Rails.env == "development" then "http://localhost:3000/user/#{task.user.id}/task/#{task.id}/cancel" end }",
                           start: {
                             date_time: "#{time(task.date_time, 0)}",
                             time_zone: 'Asia/Tokyo',

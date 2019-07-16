@@ -7,7 +7,7 @@ class Task < ApplicationRecord
   after_destroy :sybc_delete
 
   def calendar_event_uid
-    unique_id = "yosidatodo#{self.id}"
+    unique_id = "#{self.user.id}todo#{self.id}"
     Modules::Base32.encode32hex(unique_id).gsub("=","")
   end
 
