@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to user_task_complete_url(user, @task), notice: 'Task was successfully created.' }
+        format.html { redirect_to user_task_complete_url(user, @task), notice: '予約が完了しました。' }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new }
@@ -53,7 +53,7 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to user_tasks_url, notice: 'Task was successfully destroyed.' }
+      format.html { redirect_to user_tasks_url, notice: '予約をキャンセルしました。' }
       format.json { head :no_content }
       format.js {render :destroy}
     end

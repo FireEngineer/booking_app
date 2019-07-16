@@ -1,2 +1,6 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
+td.left_align {
+  text-align: left!important;
+}

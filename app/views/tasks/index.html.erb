@@ -2,21 +2,24 @@
   <div class="title">
     <h2 class="title_style">予約フォーム</h2>
   </div>
-  
-  <div class="card description">
-    <div class="inner_card">
-      <div class="label_zone">
-        <label>電話形式</label><p>LINEでの電話相談を承ります。</p>
-      </div>
-      <div class="label_zone">
-        <label>時間</label><p>３０分〜１時間となります。</p>
-      </div>
-      <div class="label_zone">
-        <label>空き状況</label><p><i class="far fa-circle"></i>:予約可能　<i class="fas fa-times"></i>:不可</p>
-      </div>
-    </div>
-  </div>
-  
+
+  <table class="table table-borderless">
+    <tbody>
+      <tr>
+        <th scope="row">電話形式</th>
+        <td class="left_align">LINEでの電話相談を承ります。</td>
+      </tr>
+      <tr>
+        <th scope="row">時間</th>
+        <td class="left_align">３０分〜１時間となります。</td>
+      </tr>
+      <tr>
+        <th scope="row">空き状況</th>
+        <td class="left_align"><i class="far fa-circle"></i>:予約可能　<i class="fas fa-times"></i>:不可</td>
+      </tr>
+    </tbody>
+  </table>
+
   <%= paginate @month %>
     <div class="tabel_scroll">
       <table class="table  table-bordered">

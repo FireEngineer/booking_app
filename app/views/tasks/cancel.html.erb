@@ -2,15 +2,31 @@
   <div class="title">
     <h2>キャンセルフォーム</h2>
   </div>
-  
-  <div class="complete_content card">
-    <h2 class="title_style">予約内容</h2>
-    <div class="content_zone">
-      <p>お名前 : <%= @task.name %></p>
-      <p>メールアドレス : <%= @task.email %></p>
-      <p>予約時間 : <%= reservation_date("#{@task.date_time}") %></p>
-    </div>
-  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>予約内容</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">お名前</th>
+        <td><%= @task.name %></td>
+      </tr>
+      <tr>
+        <th scope="row">メールアドレス</th>
+        <td><%= @task.email %></td>
+      </tr>
+      <tr>
+        <th scope="row">予約時間</th>
+        <td><%= reservation_date("#{@task.date_time}") %></td>
+      </tr>
+    </tbody>
+  </table>
+
   <%= link_to "戻る", user_tasks_path(params[:user_id]), class:"btn btn-secondary btn_style" %>
   <%= link_to "キャンセルを行う", user_task_path(params[:user_id], @task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
 </div>

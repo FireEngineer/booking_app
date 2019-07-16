@@ -1,1 +1,5 @@
 0Ga2CHkIUOrzbppA7AV1CokKSVq6nmeywFSeDxVvzgI
+
+task = Task.first
+user = User.first
+LineNotifyService.new(task, user).

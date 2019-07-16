@@ -8,6 +8,7 @@
       <th scope="col">電話番号</th>
       <th scope="col">予約時間</th>
       <th scope="col"></th>
+      <th scope="col">受付時間</th>
     </tr>
   </thead>
   <tbody>
@@ -17,8 +18,9 @@
         <td><%= task.name %></td>
         <td><%= task.email %></td>
         <td><%= task.phone %></td>
-        <td><%= task.date_time %></td>
+        <td><%= time_display(task.date_time) %></td>
         <td><%= link_to "キャンセル", user_task_path(params[:user_id], task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
+        <td><%= task.created_at %></td>
       </tr>
     <% end %>
   </tbody>

@@ -2,13 +2,26 @@
   <div class="title">
     <!--<h2>予約が完了しました。</h2>-->
   </div>
-  
-  <div class="complete_content card">
-    <h2 class="title_style">予約内容</h2>
-    <div class="content_zone">
-      <p>お名前 : <%= @task.name %></p>
-      <p>メールアドレス : <%= @task.email %></p>
-      <p>予約時間 : <%= reservation_date("#{@task.date_time}") %>(相談時間は30分〜１時間程度)</p>
+
+  <div class="card">
+    <div class="card-header">予約内容</div>
+    <table class="table mb-0">
+      <tbody>
+        <tr>
+          <th scope="row">お名前</th>
+          <td><%= @task.name %></td>
+        </tr>
+         <tr>
+          <th scope="row">メールアドレス</th>
+          <td><%= @task.email %></td>
+        </tr>
+         <tr>
+          <th scope="row">予約時間</th>
+          <td><%= reservation_date("#{@task.date_time}") %>(相談時間は30分〜１時間程度)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card-body">
       <p>ご予約申し込み頂きありがとうございます！<br>
         下記のリンクからLINEの友達追加してお名前（フルネーム）で、メッセージ下さいm(_ _)m<br>
         ↓↓↓<br>
@@ -17,6 +30,7 @@
       </p>
     </div>
   </div>
+
   <%= link_to "戻る", user_tasks_path(params[:user_id]), class:"btn btn-secondary btn_style" %>
 </div>
 
