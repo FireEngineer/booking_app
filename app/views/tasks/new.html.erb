@@ -23,7 +23,7 @@
         <label for="exampleInputPassword1">日時</label>
         <%= f.text_field :time, value: reservation_date("#{@task.date_time}"),  class: "form-control form_style", readonly: true %>
       </div>
-      <button type="submit" class="btn btn-primary btn_style" id="double" data-confirm= "予約を行います。">予約する</button>
+      <button type="submit" class="btn btn-primary btn_style" data-confirm= "予約を行います。">予約する</button>
       <%= link_to "戻る", user_tasks_path(params[:user_id]), class:"btn btn-secondary btn_style" %>
     <% end %>
   </div>
@@ -173,7 +173,3 @@
             };
         });
     </script>
-    
-<script>
-  
-</script>

@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
-  before_action :check_calendar_info
+  # before_action :authenticate_user!
+  # before_action :check_calendar_info
 
   # GET /tasks
   # GET /tasks.json
@@ -12,9 +12,10 @@ class TasksController < ApplicationController
     #   initialize_config
     # end
     # config = Config.first
+    user = User.find(params[:user_id])
     @times = [*10..22]
     @today = Time.current
-    @events = SyncCalendarService.new(task,current_user).read_event
+    @events = SyncCalendarService.new(task,user).read_event
     one_month = [*Date.current.days_since(1)..Date.current.weeks_since(10)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(7)
     @wild_time = []
@@ -65,7 +66,8 @@ class TasksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = current_user.tasks.find(params[:id])
+      @user = User.find(params[:user_id])
+      @task = @user.tasks.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
