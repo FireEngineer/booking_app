@@ -1,4 +1,6 @@
 class ConfigsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_calendar_info
 
   def tasks_index
     @tasks = Task.where(user_id: params[:user_id])

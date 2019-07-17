@@ -28,6 +28,16 @@
         <td>googleカレンダーから取得するデータの期間を設定</td>
       </tr>
       <tr>
+        <th scope="row">表示開始時間</th>
+        <td><%= f.number_field :start_time, class: "form-control" %></td>
+        <td>表示開始する時間（10に設定すると、10時からのカレンダー表示）</td>
+      </tr>
+      <tr>
+        <th scope="row">表示終了時間</th>
+        <td><%= f.number_field :end_time, class: "form-control" %></td>
+        <td>表示終了する時間（22に設定すると、22時までのカレンダー表示）</td>
+      </tr>
+      <tr>
         <th scope="row">表示カレンダー名</th>
         <td><%= f.text_field :calender_name, class: "form-control" %></td>
         <td></td>

@@ -6,30 +6,30 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarColor03">
-      <ul class="navbar-nav mr-auto">
-        <%# <li class="nav-item active">
-          <a class="nav-link" href="#">トップ <span class="sr-only">(current)</span></a>
-        </li> %>
-        <li class="nav-item">
-          <% if current_user %>
+      <% if current_user %>
+        <ul class="navbar-nav mr-auto">
+          <%# <li class="nav-item active">
+            <a class="nav-link" href="#">トップ <span class="sr-only">(current)</span></a>
+          </li> %>
+          <li class="nav-item">
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"nav-link" %>
-          <% end %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'マイカレンダーへ', user_tasks_path(current_user), class:"nav-link" %>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            サブメニュー
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <%= link_to "管理者ログイン", new_user_session_path, class:"dropdown-item" %>
-            <% if current_user %>
-              <%= link_to "設定", user_setting_path(current_user), class:"dropdown-item" %>
-            <% end %>
-          </div>
-        </li>
-      </ul>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'マイカレンダーへ', user_tasks_path(current_user), class:"nav-link" %>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              サブメニュー
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to "管理者ログイン", new_user_session_path, class:"dropdown-item" %>
+              <% if current_user %>
+                <%= link_to "設定", user_setting_path(current_user), class:"dropdown-item" %>
+              <% end %>
+            </div>
+          </li>
+        </ul>
+      <% end %>
       <%# <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">検索</button>
