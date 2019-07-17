@@ -1,27 +1,29 @@
-<table class="table table-hover">
-  <caption>テーブルの表題</caption>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th scope="col">名前</th>
-      <th scope="col">email</th>
-      <th scope="col">電話番号</th>
-      <th scope="col">予約時間</th>
-      <th scope="col"></th>
-      <th scope="col">受付時間</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tasks.each do |task| %>
+<div class="table_scroll">
+  <table class="table table-hover">
+    <caption>テーブルの表題</caption>
+    <thead>
       <tr>
-        <th scope="row"><%= task.id %></th>
-        <td><%= task.name %></td>
-        <td><%= task.email %></td>
-        <td><%= task.phone %></td>
-        <td><%= time_display(task.date_time) %></td>
-        <td><%= link_to "キャンセル", user_task_path(params[:user_id], task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
-        <td><%= task.created_at %></td>
+        <th>ID</th>
+        <th>名前</th>
+        <th>email</th>
+        <th>電話番号</th>
+        <th>予約時間</th>
+        <th></th>
+        <th>受付時間</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <th scope="row"><%= task.id %></th>
+          <td><%= task.name %></td>
+          <td><%= task.email %></td>
+          <td><%= task.phone %></td>
+          <td><%= time_display(task.date_time) %></td>
+          <td><%= link_to "キャンセル", user_task_path(params[:user_id], task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
+          <td><%= task.created_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

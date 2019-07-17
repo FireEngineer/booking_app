@@ -4,5 +4,12 @@ class ConfigsController < ApplicationController
     @tasks = Task.where(user_id: params[:user_id])
   end
 
+  def setting
+  end
+
+  def update
+  end
+
+
 
 end
