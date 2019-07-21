@@ -4,7 +4,7 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.string :title
       t.text :content
       t.datetime :due_at
-      t.references :user, foreign_key: true
+      t.references :calendar, foreign_key: true
       t.string :name
       t.string :email
       t.string :line_id

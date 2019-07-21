@@ -1,37 +1,44 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
-  # before_action :authenticate_user!
-  # before_action :check_calendar_info
+  before_action :set_task, only: [:complete, :cancel, :destroy]
+  before_action :authenticate_user!
+  before_action :check_calendar_info
 
   # GET /tasks
   # GET /tasks.json
   def index
     task = Task.new
-    user = User.find(params[:user_id])
-    @times = [*user.config.start_time..user.config.end_time]
+    @user = User.find(params[:user_id])
+    @calendar = Calendar.find(params[:calendar_id])
+    @times = [*@calendar.start_time..@calendar.end_time]
     @today = Time.current
-    @events = SyncCalendarService.new(task,user).read_event
-    one_month = [*Date.current.days_since(user.config.start_date)..Date.current.weeks_since(user.config.display_week_term)]
-    @month = Kaminari.paginate_array(one_month).page(params[:page]).per(user.config.end_date)
+    @events = SyncCalendarService.new(task,@user,@calendar).read_event
+    one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
+    @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
     @wild_time = []
     @wild_day = []
   end
 
   def new
+    @user = User.find(params[:user_id])
+    @calendar = Calendar.find(params[:calendar_id])
     @task = Task.new(date_time: params[:date_time])
   end
 
   # POST /tasks
   # POST /tasks.json
   def create
-    user = User.find(params[:user_id])
-    @task = user.tasks.build(task_params)
+    @user = User.find(params[:user_id])
+    @calendar = Calendar.find(params[:calendar_id])
+    @task = Task.new(task_params)
+    @task.calendar = @calendar
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to user_task_complete_url(user, @task), notice: '予約が完了しました。' }
+        flash[:success] = '予約が完了しました。'
+        format.html { redirect_to user_calendar_task_complete_path(@user, @calendar, @task) }
         format.json { render :show, status: :created, location: @task }
       else
+        flash.now[:danger] = "予約ができませんでした。"
         format.html { render :new }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
@@ -39,11 +46,11 @@ class TasksController < ApplicationController
   end
 
   def complete
-    @task = Task.find(params[:id])
+    
   end
 
   def cancel
-    @task = Task.find(params[:id])
+    
     rescue ActiveRecord::RecordNotFound
       flash[:notice] = "この予約はキャンセル済みか、存在しません。"
       redirect_to user_tasks_url(params[:user_id])
@@ -62,7 +69,8 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @user = User.find(params[:user_id])
-      @task = @user.tasks.find(params[:id])
+      @calendar = Calendar.find(params[:calendar_id])
+      @task = Task.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

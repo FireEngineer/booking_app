@@ -7,13 +7,18 @@ Rails.application.routes.draw do
     devise_for :users
   end
 
-  resources :user do
-    get "tasks_index", to: "configs#tasks_index"
-    get "setting", to: "configs#setting"
-    patch "update", to: "configs#update"
-    resources :tasks
-    get "task/:id/complete", to: "tasks#complete", as: :task_complete
-    get "task/:id/cancel", to: "tasks#cancel", as: :task_cancel
+  resources :users do
+    get "setting", to: "users#settiing"
+    # get "calendar/:id/tasks_index", to: "calendars#tasks_index", as: "task_index"
+    # get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
+    patch "calendar/:id/update", to: "calendars#update"
+
+    resources :calendars do
+      resources :tasks
+        get "tasks/:id/complete", to: "tasks#complete", as: :task_complete
+        get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
+    end
   end
+
 
 end

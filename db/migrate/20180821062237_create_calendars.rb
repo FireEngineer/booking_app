@@ -1,7 +1,7 @@
-class CreateConfigs < ActiveRecord::Migration[5.2]
+class CreateCalendars < ActiveRecord::Migration[5.2]
   def change
-    create_table :configs do |t|
-      t.string :calender_name, default: "予約システム"
+    create_table :calendars do |t|
+      t.string :calendar_name, default: "予約システム"
       t.integer :start_date, default: 1
       t.integer :end_date, default: 7
       t.integer :display_week_term, default: 3

@@ -8,9 +8,10 @@ class GoogleAuthController < ApplicationController
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
     _calendar = service.insert_calendar(calendar)
-    current_user.calendar_id = _calendar.id
+    calendar = current_user.calendars.build(calendar_id: _calendar.id)
     current_user.save
-    redirect_to user_tasks_path(current_user)
+    calendar.save
+    redirect_to user_calendar_tasks_path(current_user, calendar)
   end
 
   def redirect

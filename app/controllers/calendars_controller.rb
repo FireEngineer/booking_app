@@ -1,4 +1,4 @@
-class ConfigsController < ApplicationController
+class CalendarsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_calendar_info
 

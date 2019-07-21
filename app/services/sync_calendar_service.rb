@@ -1,6 +1,6 @@
 class SyncCalendarService
 
-  attr_accessor :task, :user
+  attr_accessor :task, :user, :calendar
 
   def self.client_options(user)
     option = {
@@ -15,9 +15,10 @@ class SyncCalendarService
     option
   end
 
-  def initialize(task,user)
+  def initialize(task,user,calendar)
     @task = task
     @user = user
+    @calendar = calendar
   end
 
   def read_event
@@ -26,14 +27,11 @@ class SyncCalendarService
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
     
-    # Fetch the next 10 events for the user
-    calendar_id = user.calendar_id
-    
     response = service.list_events(calendar_id,
                                    single_events: true,
                                    order_by: 'startTime',
-                                   time_max: Date.today.since(user.config.display_week_term.week).rfc3339,
-                                   time_min: Date.today.since(user.config.start_date.day).rfc3339)
+                                   time_max: Date.today.since(calendar.display_week_term.week).rfc3339,
+                                   time_min: Date.today.since(calendar.start_date.day).rfc3339)
                                   #  Config.first.end_day.to_i
     puts 'Upcoming events:'
     puts 'No upcoming events found' if response.items.empty?
@@ -56,7 +54,7 @@ class SyncCalendarService
     client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
-    service.insert_event(user.calendar_id, calendar_event)
+    service.insert_event(calendar_id, calendar_event)
     rescue Google::Apis::AuthorizationError
       refresh_token
       retry
@@ -67,7 +65,7 @@ class SyncCalendarService
     client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
-    service.update_event(user.calendar_id, task.calendar_event_uid, calendar_event)
+    service.update_event(calendar_id, task.calendar_event_uid, calendar_event)
     rescue Google::Apis::AuthorizationError
       refresh_token
       retry
@@ -78,7 +76,7 @@ class SyncCalendarService
     client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
-    service.delete_event(user.calendar_id, task.calendar_event_uid)
+    service.delete_event(calendar_id, task.calendar_event_uid)
     rescue Google::Apis::AuthorizationError
       refresh_token
       retry
@@ -101,7 +99,7 @@ class SyncCalendarService
                           summary: "【TEL】#{task.name}",
                           # location: '800 Howard St., San Francisco, CA 94103',
                           description: "【セレブエンジニア電話相談】名前：#{task.name}、TEL：#{task.phone}、
-                          キャンセルURL：#{ if Rails.env == "development" then "http://localhost:3000/user/#{task.user.id}/task/#{task.id}/cancel" end }",
+                          キャンセルURL：#{ if Rails.env == "development" then "http://localhost:3000/user/#{user.id}/task/#{task.id}/cancel" end }",
                           start: {
                             date_time: "#{time(task.date_time, 0)}",
                             time_zone: 'Asia/Tokyo',
@@ -124,6 +122,10 @@ class SyncCalendarService
                           #   ],
                           # },
                         )
+  end
+
+  def calendar_id
+    calendar.calendar_id
   end
 
   private

@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_17_095937) do
+ActiveRecord::Schema.define(version: 2019_07_18_110923) do
 
-  create_table "configs", force: :cascade do |t|
-    t.string "calender_name", default: "予約システム"
+  create_table "calendars", force: :cascade do |t|
+    t.string "calendar_name", default: "予約システム"
     t.integer "start_date", default: 1
     t.integer "end_date", default: 7
     t.integer "display_week_term", default: 3
@@ -22,14 +22,15 @@ ActiveRecord::Schema.define(version: 2019_07_17_095937) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_configs_on_user_id"
+    t.string "calendar_id"
+    t.index ["user_id"], name: "index_calendars_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.datetime "due_at"
-    t.integer "user_id"
+    t.integer "calendar_id"
     t.string "name"
     t.string "email"
     t.string "line_id"
@@ -38,7 +39,7 @@ ActiveRecord::Schema.define(version: 2019_07_17_095937) do
     t.string "google_event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_tasks_on_user_id"
+    t.index ["calendar_id"], name: "index_tasks_on_calendar_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,11 +50,10 @@ ActiveRecord::Schema.define(version: 2019_07_17_095937) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "google_api_token"
-    t.string "calendar_id"
+    t.string "line_token"
     t.text "client_id"
     t.text "client_secret"
-    t.string "line_token"
+    t.text "google_api_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

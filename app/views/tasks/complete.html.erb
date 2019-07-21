@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <%= link_to "戻る", user_tasks_path(params[:user_id]), class:"btn btn-secondary btn_style" %>
+  <%= link_to "戻る", user_calendar_tasks_path(@user, @calendar, @task), class:"btn btn-secondary btn_style" %>
 </div>
 
 <!--モーダル-->

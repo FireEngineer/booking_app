@@ -3,13 +3,14 @@ require 'uri'
 
 class LineNotifyService
 
-  attr_accessor :task, :user
+  attr_accessor :task, :user, :calendar
   TOKEN = "0Ga2CHkIUOrzbppA7AV1CokKSVq6nmeywFSeDxVvzgI"
   URI = URI.parse("https://notify-api.line.me/api/notify")
 
-  def initialize(task, user)
+  def initialize(task, user, calendar)
     @task = task
     @user = user
+    @calendar = calendar
   end
 
   def make_request
@@ -41,7 +42,7 @@ class LineNotifyService
           #{task.date_time.strftime("%Y年%-m月%-d日 %-H時")}~
           #{task.date_time.since(1.hours).hour}時
         ・キャンセルURL
-          #{ if Rails.env == "development" then "http://localhost:3000/user/#{task.user.id}/task/#{task.id}/cancel" end }
+          #{ if Rails.env == "development" then "http://localhost:3000/users/#{user.id}/calendar/#{calendar.id}/tasks/#{task.id}/cancel" end }
         ===================
       TEXT
     end
