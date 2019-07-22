@@ -1,0 +1,98 @@
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">会社名</a>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="検索" aria-label="検索">
+    <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"nav-link" %>
+    </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+            <%= link_to "ダッシュボード", user_dashboard_path(current_user), class:"nav-link" %>
+            </li>
+            <li class="nav-item">
+            <%= link_to "ユーザー", user_path(current_user), class:"nav-link" %>
+            </li>
+            <li class="nav-item">
+            <%= link_to "カレンダー", user_calendars_path(current_user), class:"nav-link" %>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span data-feather="users"></span>
+                顧客
+            </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span data-feather="bar-chart-2"></span>
+                報告
+            </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span data-feather="layers"></span>
+                統合
+            </a>
+            </li>
+        </ul>
+
+        
+        </div>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <%= render 'layouts/flash_messages' %>
+        <%= yield %>
+        </div><!-- /.table-responsive -->
+        <%= debug(params) if Rails.env.development? %>
+        </main>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+
+<!-- アイコン -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<script>
+feather.replace()
+</script>
+
+<!-- グラフ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+    labels: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
+    datasets: [{
+        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+        lineTension: 0,
+        backgroundColor: 'transparent',
+        borderColor: '#007bff',
+        borderWidth: 4,
+        pointBackgroundColor: '#007bff'
+    }]
+    },
+    options: {
+    scales: {
+        yAxes: [{
+        ticks: {
+            beginAtZero: false
+        }
+        }]
+    },
+    legend: {
+        display: false,
+    }
+    }
+});
+</script>
