@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     devise_for :users
   end
 
+  # public権限
   resources :users, only: [] do
     # get "setting", to: "users#setting"
     # # get "calendar/:id/tasks_index", to: "calendars#tasks_index", as: "task_index"
@@ -19,12 +20,15 @@ Rails.application.routes.draw do
         get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
     end
   end
-
+# ================================================================================================================-
+  # user権限
   scope module: :user do
     resources :users do
       get "dashboard", to: "users#dashboard"
       patch "calendar/:id/update", to: "calendars#update"
-      resources :calendars
+      resources :calendars do
+        resources :user_tasks
+      end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end
   end

@@ -1,0 +1,18 @@
+<div>
+  <ul id="myTab" class="nav nav-tabs" role="tablist">
+    <% @calendars.each do |calendar| %>
+      <li class="nav-item">
+        <a href="#<%= calendar.calendar_name %>" id="<%= calendar.calendar_name %>-tab" class="nav-link active" role="tab" data-toggle="tab" aria-controls="<%= calendar.calendar_name %>" aria-selected="true"><%= calendar.calendar_name %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div id="myTabContent" class="tab-content mt-3">
+  <% @calendars.each do |calendar| %>
+    <div id="<%= calendar.calendar_name %>" class="tab-pane active" role="tabpanel" aria-labelledby="<%= calendar.calendar_name %>-tab">
+      <%= render "tasks_index", calendar: calendar %>
+    </div>
+  <% end %>
+</div>
+

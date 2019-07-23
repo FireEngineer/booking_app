@@ -2,10 +2,6 @@ class User::CalendarsController < User::Base
   before_action :authenticate_user!
   # before_action :check_calendar_info
 
-  def in
-    @tasks = Task.where(user_id: params[:user_id])
-  end
-
   def index
     @calendars = current_user.calendars
     @user = current_user
