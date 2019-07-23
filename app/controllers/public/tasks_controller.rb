@@ -7,8 +7,8 @@ class Public::TasksController < Public::Base
   # GET /tasks.json
   def index
     task = Task.new
-    @user = User.find(params[:user_id])
-    @calendar = Calendar.find(params[:calendar_id])
+    @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    @user = @calendar.user
     @times = [*@calendar.start_time..@calendar.end_time]
     @today = Time.current
     @events = SyncCalendarService.new(task,@user,@calendar).read_event
@@ -19,23 +19,23 @@ class Public::TasksController < Public::Base
   end
 
   def new
-    @user = User.find(params[:user_id])
-    @calendar = Calendar.find(params[:calendar_id])
+    @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    @user = @calendar.user
     @task = Task.new(date_time: params[:date_time])
   end
 
   # POST /tasks
   # POST /tasks.json
   def create
-    @user = User.find(params[:user_id])
-    @calendar = Calendar.find(params[:calendar_id])
+    @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    @user = @calendar.user
     @task = Task.new(task_params)
     @task.calendar = @calendar
 
     respond_to do |format|
       if @task.save
         flash[:success] = '予約が完了しました。'
-        format.html { redirect_to user_calendar_task_complete_path(@user, @calendar, @task) }
+        format.html { redirect_to calendar_task_complete_path(@calendar, @task) }
         format.json { render :show, status: :created, location: @task }
       else
         flash.now[:danger] = "予約ができませんでした。"
@@ -46,14 +46,12 @@ class Public::TasksController < Public::Base
   end
 
   def complete
-    
   end
 
   def cancel
-    
     rescue ActiveRecord::RecordNotFound
       flash[:notice] = "この予約はキャンセル済みか、存在しません。"
-      redirect_to user_tasks_url(params[:user_id])
+      redirect_to calendar_tasks_path(@calendar)
   end
   
   def destroy
@@ -68,8 +66,8 @@ class Public::TasksController < Public::Base
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @user = User.find(params[:user_id])
-      @calendar = Calendar.find(params[:calendar_id])
+      @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+      @user = @calendar.user
       @task = Task.find(params[:id])
     end
 

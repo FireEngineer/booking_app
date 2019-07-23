@@ -19,6 +19,6 @@ LINE名：山田 剛
 ===============================================================================
 
 ※キャンセルをご希望のお方は以下のURLよりキャンセルしてください。
-<%= if Rails.env == "development" then "http://localhost:3000/users/#{@user.id}/calendars/#{@calendar.id}/tasks/#{@task.id}/cancel" end  %>
+<%= if Rails.env == "development" then "http://localhost:3000/calendars/#{@calendar.calendar_name}/tasks/#{@task.id}/cancel" end  %>
 
 セレブエンジニア事務局

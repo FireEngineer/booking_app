@@ -9,17 +9,10 @@ Rails.application.routes.draw do
 
   # public権限
   scope module: :public do
-    resources :users, only: [] do
-      # get "setting", to: "users#setting"
-      # # get "calendar/:id/tasks_index", to: "calendars#tasks_index", as: "task_index"
-      # # get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
-      # patch "calendar/:id/update", to: "calendars#update"
-
-      resources :calendars, only: [] do
-        resources :tasks
-          get "tasks/:id/complete", to: "tasks#complete", as: :task_complete
-          get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
-      end
+    resources :calendars, param: :calendar_name, only: [] do
+      resources :tasks
+        get "tasks/:id/complete", to: "tasks#complete", as: :task_complete
+        get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
     end
   end
 # ================================================================================================================-

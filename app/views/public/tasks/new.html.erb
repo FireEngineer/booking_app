@@ -5,7 +5,7 @@
   </div>
   
   <div class="form_area">
-    <%= form_for @task, url: user_calendar_tasks_path(@user, @calendar), method: :post do |f| %>
+    <%= form_for @task, url: calendar_tasks_path(@calendar), method: :post do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
       <%= f.hidden_field :date_time, value: @task.date_time %>
       <div class="form-group">
@@ -25,7 +25,7 @@
         <%= f.text_field :time, value: reservation_date("#{@task.date_time}"),  class: "form-control form_style", readonly: true %>
       </div>
       <button type="submit" class="btn btn-primary btn_style" data-confirm= "予約を行います。">予約する</button>
-      <%= link_to "戻る", user_calendar_tasks_path(@user, @calendar), class:"btn btn-secondary btn_style" %>
+      <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style" %>
     <% end %>
   </div>
   
