@@ -13,16 +13,10 @@ class User::UsersController < User::Base
     @user = current_user
     if @user.update(user_params)
       flash[:success] = "ユーザーの更新に成功しました。"
-      redirect_to user_dashboard_path(@user)
+      redirect_to user_path(@user)
     else
       render action: :show
     end
-  end
-
-  def calendar_setting
-  end
-
-  def task
   end
 
   private
