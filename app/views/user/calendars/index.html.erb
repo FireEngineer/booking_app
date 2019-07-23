@@ -1,5 +1,6 @@
 <div class="table_scroll">
 <% @calendars.each do |calendar| %>
+  <%= link_to calendar.calendar_name, user_calendar_tasks_path(current_user, calendar) %>
   <%= form_for calendar, url: user_calendar_path(current_user, calendar) do |f| %>
     <table class="table table-hover">
       <thead>

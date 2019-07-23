@@ -23,9 +23,6 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to "管理者ログイン", new_user_session_path, class:"dropdown-item" %>
-              <% if current_user %>
-                <%= link_to "設定", user_setting_path(current_user), class:"dropdown-item" %>
-              <% end %>
             </div>
           </li>
         </ul>

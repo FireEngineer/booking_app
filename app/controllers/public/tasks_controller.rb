@@ -1,4 +1,4 @@
-class TasksController < ApplicationController
+class Public::TasksController < Public::Base
   before_action :set_task, only: [:complete, :cancel, :destroy]
   before_action :authenticate_user!
   before_action :check_calendar_info
