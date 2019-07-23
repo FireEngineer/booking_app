@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
     unless current_user.client_id
       google_auth_ident_form_path
     else
-      user_setting_path(current_user) # ログイン後に遷移するpathを設定
+      user_dashboard_path(current_user) # ログイン後に遷移するpathを設定
     end
   end
 
