@@ -1,12 +1,20 @@
 Rails.application.routes.draw do
+# ================================================================================================================-
+  # googleカレンダー認証
   get 'google_auth/callback'
   get 'google_auth/redirect'
   get 'google_auth/ident_form'
   patch 'google_auth/identifier'
+# ================================================================================================================-
+  # devise
   scope :auth do
-    devise_for :users
+    devise_for :users 
   end
-
+  # rootページ用ルーティング
+  devise_scope :user do
+    root :to => 'devise/sessions#new'
+  end
+# ================================================================================================================-
   # public権限
   scope module: :public do
     resources :calendars, param: :calendar_name, only: [] do

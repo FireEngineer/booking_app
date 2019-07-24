@@ -99,7 +99,7 @@ class SyncCalendarService
                           summary: "【TEL】#{task.name}",
                           # location: '800 Howard St., San Francisco, CA 94103',
                           description: "【セレブエンジニア電話相談】名前：#{task.name}、TEL：#{task.phone}、
-                          キャンセルURL：#{ if Rails.env == "development" then "http://localhost:3000/user/#{user.id}/task/#{task.id}/cancel" end }",
+                          キャンセルURL：#{ if Rails.env == "development" then "http://localhost:3000/calendars/#{calendar.calendar_name}/tasks/#{task.id}/cancel" end }",
                           start: {
                             date_time: "#{time(task.date_time, 0)}",
                             time_zone: 'Asia/Tokyo',

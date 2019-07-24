@@ -27,8 +27,8 @@
     </tbody>
   </table>
 
-  <%= link_to "戻る", calendar_tasks(params[:user_id]), class:"btn btn-secondary btn_style" %>
-  <%= link_to "キャンセルを行う", user_task_path(params[:user_id], @task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
+  <%= link_to "戻る", calendar_tasks_path(params[:calendar_calendar_name]), class:"btn btn-secondary btn_style" %>
+  <%= link_to "キャンセルを行う", calendar_task_path(params[:calendar_calendar_name], @task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
 </div>
 
 

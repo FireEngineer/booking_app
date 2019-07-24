@@ -1,7 +1,7 @@
 class Public::TasksController < Public::Base
-  before_action :set_task, only: [:complete, :cancel, :destroy]
+  before_action :set_task, only: [:complete, :destroy]
   before_action :authenticate_user!
-  before_action :check_calendar_info
+  before_action :check_calendar_info, only: [:new, :create]
 
   # GET /tasks
   # GET /tasks.json
@@ -49,6 +49,7 @@ class Public::TasksController < Public::Base
   end
 
   def cancel
+    set_task
     rescue ActiveRecord::RecordNotFound
       flash[:notice] = "この予約はキャンセル済みか、存在しません。"
       redirect_to calendar_tasks_path(@calendar)
@@ -57,7 +58,7 @@ class Public::TasksController < Public::Base
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to user_tasks_url, notice: '予約をキャンセルしました。' }
+      format.html { redirect_to calendar_tasks_url(params[:calendar_calendar_name]), notice: '予約をキャンセルしました。' }
       format.json { head :no_content }
       format.js {render :destroy}
     end
@@ -74,5 +75,13 @@ class Public::TasksController < Public::Base
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:title, :content, :due_at, :date_time, :email, :phone, :name)
+    end
+
+    def check_calendar_info
+      task = Task.new(date_time: params[:date_time])
+      if task.invalid?
+        flash[:warnning] = "この時間はすでに予約が入っております。"
+        redirect_to calendar_tasks_url(params[:calendar_calendar_name])
+      end
     end
 end
