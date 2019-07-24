@@ -21,6 +21,22 @@ class SyncCalendarService
     @calendar = calendar
   end
 
+  def self.notify(calendar)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
+    client.update!(user.google_api_token)
+    service = Google::Apis::CalendarV3::CalendarService.new
+    service.authorization = client
+    client.execute!(
+      api_method: service.events.watch,
+      parameters: { calendarId: calendar.calendar_id },
+      body_object: {
+        id: '<CHANNEL_ID>',
+        type: 'web_hook',
+        address: '<YOUR_RECEIVING_URL>'
+      }
+    )
+  end
+
   def read_event
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
     client.update!(user.google_api_token)
