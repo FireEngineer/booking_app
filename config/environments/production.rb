@@ -84,7 +84,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  Rails.application.routes.default_url_options = { host: 'infinite-woodland-88790.herokuapp.com' }
+  Rails.application.routes.default_url_options = { host: 'https://infinite-woodland-88790.herokuapp.com' }
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
