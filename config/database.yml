@@ -22,8 +22,7 @@ test:
 
 production:
   <<: *default
-  adapter: postgresql
-  database: slack-app-test_production
-  username: slack-app-test
-  password: <%= ENV['RAILS_TODO_DATABASE_PASSWORD'] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: d0113bffc4a4f64c0b2704ddb42c6391
+  username: d0113bffc4a4f64c0b2704ddb42c6391
+  password: Shotaimai141421356
+  host: mysql-1.mc.lolipop.lan
