@@ -1,5 +1,7 @@
 class User::UsersController < User::Base
 
+  before_action :check_has_calendar
+
   def dashboard
     @user = current_user
     @calendars = @user.calendars
@@ -22,6 +24,12 @@ class User::UsersController < User::Base
   private
     def user_params
       params.require(:user).permit(:email, :line_token, :client_id, :client_secret)
+    end
+
+    def check_has_calendar
+      unless current_user.calendars.first
+        redirect_to google_auth_ident_form_url
+      end
     end
 
 end

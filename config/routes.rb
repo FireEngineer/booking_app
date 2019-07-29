@@ -17,10 +17,12 @@ Rails.application.routes.draw do
 # ================================================================================================================-
   # public権限
   scope module: :public do
+    get "task_create", to: "tasks#task_create", as: :task_create
     resources :calendars, param: :calendar_name, only: [] do
       resources :tasks
         get "tasks/:id/complete", to: "tasks#complete", as: :task_complete
         get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
+        post "tasks/redirect_register_line", to: "tasks#redirect_register_line", as: :redirect_line
     end
   end
 # ================================================================================================================-
