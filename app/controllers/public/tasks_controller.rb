@@ -27,7 +27,11 @@ class Public::TasksController < Public::Base
   def redirect_register_line
     @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     @user = @calendar.user
-    @task = Task.new(task_params)
+    
+
+    session[:calendar] = @calendar.id
+    session[:user] = @user.id
+    session[:task] = task_params
     
     # url = "https://www.google.com"
     client_id = "1603141730"
@@ -37,7 +41,6 @@ class Public::TasksController < Public::Base
     url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
     redirect_to url
   end
-
 
   def task_create
     
@@ -49,7 +52,6 @@ class Public::TasksController < Public::Base
       -d 'client_id=1603141730' \
       -d 'client_secret=a59f370b529454e32f779071d9b50454'`
     test = JSON.parse(test)
-    debugger
 
     params = `curl -X GET \
             -H "Authorization: Bearer #{test["access_token"]}" \
@@ -57,21 +59,22 @@ class Public::TasksController < Public::Base
 
     params = JSON.parse(params)
 
-    debugger
-    @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
-    @user = @calendar.user
-    @task = Task.new(task_params)
-    @task.calendar = @calendar
+    if params["friendFlag"] == true
+      @calendar = Calendar.find(session[:calendar])
+      @user = @calendar.user
+      @task = Task.new(session[:task])
+      @task.calendar = @calendar
 
-    respond_to do |format|
-      if @task.save
-        flash[:success] = '予約が完了しました。'
-        format.html { redirect_to calendar_task_complete_path(@calendar, @task) }
-        format.json { render :show, status: :created, location: @task }
-      else
-        flash.now[:danger] = "予約ができませんでした。"
-        format.html { render :new }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @task.save
+          flash[:success] = '予約が完了しました。'
+          format.html { redirect_to calendar_task_complete_path(@calendar, @task) }
+          format.json { render :show, status: :created, location: @task }
+        else
+          flash.now[:danger] = "予約ができませんでした。"
+          format.html { render :new }
+          format.json { render json: @task.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

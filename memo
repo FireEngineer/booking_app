@@ -3,3 +3,25 @@
 task = Task.first
 user = User.first
 LineNotifyService.new(task, user).
+
+curl -X POST https://api.line.me/v2/bot/user/Ufe072271906fe09327e21afb69e51cac/linkToken \
+-H 'Authorization: Bearer U27oKm8Zl04jKA2nE4gO5kW4fRUP4MPM7nzgbMRwwOoTHtOb0f7+zNY58ZKhSM/yZN4lAK74I7Un9CbxSRShJ3NoMs9zk2ORieUuakSvQal4Tn+hptS9AqInYnrfhECCvoN/ToL+uayAlDr0+aKHiAdB04t89/1O/w1cDnyilFU='
+
+https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1614160201&redirect_uri=https://www.google.com&state=fjlksajgjafjja3jjj&scope=openid%20profile&prompt=consent&bot_prompt=normal
+
+http://localhost:3000/task_create
+
+curl -X GET \
+-H 'Authorization: Bearer WMY2qKXaSuAdSDEfwVTqd8gAV9H1yffa' \
+
+curl -X GET \
+-H 'Authorization: Bearer GiVQl0NN8kbvA5Zq5ZP6' \
+https://api.line.me/friendship/v1/status
+
+curl -X POST https://api.line.me/oauth2/v2.1/token \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-d 'grant_type=authorization_code' \
+-d 'code=I8lnKCmhNewlmVwVkDtD' \
+-d 'redirect_uri=http://localhost:3000/task_create' \
+-d 'client_id=1603032553' \
+-d 'client_secret=6f3d86e5f90d1e65260bc62728874216'
