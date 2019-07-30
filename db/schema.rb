@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_18_110923) do
+ActiveRecord::Schema.define(version: 2019_07_30_005848) do
 
   create_table "calendars", force: :cascade do |t|
     t.string "calendar_name", default: "予約システム"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 2019_07_18_110923) do
     t.datetime "updated_at", null: false
     t.string "calendar_id"
     t.index ["user_id"], name: "index_calendars_on_user_id"
+  end
+
+  create_table "line_bots", force: :cascade do |t|
+    t.string "channel_id"
+    t.string "channel_secret"
+    t.integer "calendar_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calendar_id"], name: "index_line_bots_on_calendar_id"
   end
 
   create_table "tasks", force: :cascade do |t|
