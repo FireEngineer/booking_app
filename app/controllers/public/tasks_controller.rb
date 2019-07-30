@@ -34,7 +34,8 @@ class Public::TasksController < Public::Base
     session[:task] = task_params
     
     # url = "https://www.google.com"
-    client_id = "1603141730"
+    # 1603141730
+    client_id = @calendar.line_bot.channel_id
     redirect_uri = task_create_url
     state = SecureRandom.base64(10)
     # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=normal&scope=openid%20profile"
@@ -43,14 +44,14 @@ class Public::TasksController < Public::Base
   end
 
   def task_create
-    
+    @calendar = Calendar.find(session[:calendar])
     test = `curl -X POST https://api.line.me/oauth2/v2.1/token \
       -H 'Content-Type: application/x-www-form-urlencoded' \
       -d 'grant_type=authorization_code' \
       -d "code=#{params[:code]}" \
       -d 'redirect_uri=http://localhost:3000/task_create' \
-      -d 'client_id=1603141730' \
-      -d 'client_secret=a59f370b529454e32f779071d9b50454'`
+      -d "client_id=#{@calendar.line_bot.channel_id}" \
+      -d "client_secret=#{@calendar.line_bot.channel_secret}"`
     test = JSON.parse(test)
 
     params = `curl -X GET \
@@ -60,7 +61,6 @@ class Public::TasksController < Public::Base
     params = JSON.parse(params)
 
     if params["friendFlag"] == true
-      @calendar = Calendar.find(session[:calendar])
       @user = @calendar.user
       @task = Task.new(session[:task])
       @task.calendar = @calendar

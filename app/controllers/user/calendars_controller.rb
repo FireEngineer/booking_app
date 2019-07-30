@@ -9,7 +9,7 @@ class User::CalendarsController < User::Base
 
   def update
     @user = current_user
-    @calendar = Calendar.find(params[:id])
+    @calendar = Calendar.find_by(calendar_name: params[:id])
     if @calendar.update(params_calendar)
       flash[:succese] = "カレンダーの設定を更新しました。"
       redirect_to user_calendars_url(@user)
@@ -20,7 +20,7 @@ class User::CalendarsController < User::Base
 
   private
     def params_calendar
-      params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calender_name)
+      params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calender_name, line_bot_attributes: [:channel_id, :channel_secret, :_destroy, :id])
     end
 
 
