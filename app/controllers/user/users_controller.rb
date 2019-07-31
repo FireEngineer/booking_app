@@ -1,5 +1,5 @@
 class User::UsersController < User::Base
-
+  before_action :authenticate_user
   before_action :check_has_calendar
 
   def dashboard
@@ -27,7 +27,7 @@ class User::UsersController < User::Base
     end
 
     def check_has_calendar
-      unless current_user.calendars.first
+      if current_user.calendars.first == nil
         redirect_to google_auth_ident_form_url
       end
     end

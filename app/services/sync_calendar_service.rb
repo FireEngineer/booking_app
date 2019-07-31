@@ -4,8 +4,8 @@ class SyncCalendarService
 
   def self.client_options(user)
     option = {
-      client_id: user.client_id,
-      client_secret: user.client_secret,
+      client_id: decrypt(user.client_id),
+      client_secret: decrypt(user.client_secret),
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_credential_uri: 'https://www.googleapis.com/oauth2/v4/token',
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR,

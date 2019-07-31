@@ -17,7 +17,8 @@ class GoogleAuthController < ApplicationController
   def redirect
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_user))
     redirect_to client.authorization_uri.to_s
-  rescue
+  rescue => e
+    puts errors_log(e)
     redirect_to google_auth_ident_form_url
   end
 

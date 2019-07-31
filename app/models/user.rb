@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include Encryptor
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -6,10 +7,10 @@ class User < ApplicationRecord
   has_many :calendars
   serialize :google_api_token, Hash
 
-  # after_create :create_
+  before_update :encrypt_collumns
 
-  # private
-  #   def create_config
-  #     Config.create(user_id: self.id)
-  #   end
+  def encrypt_collumns
+    self.client_id = encrypt(self.client_id)
+    self.client_secret = encrypt(self.client_secret)
+  end
 end

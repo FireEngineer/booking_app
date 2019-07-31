@@ -18,4 +18,14 @@ class ApplicationController < ActionController::Base
     calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     redirect_to google_auth_redirect_path if calendar.calendar_id.blank?
   end
+
+  def errors_log(e)
+    text = <<-EOS
+      ===========errors start==============
+      =====================================
+      #{e}
+      =====================================
+      ==============end====================
+    EOS
+  end
 end
