@@ -44,11 +44,7 @@
           <td><%= f.text_field :calendar_name, class: "form-control" %></td>
           <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
         </tr>
-        <tr>
-          <th scope="row">カレンダーID</th>
-          <td><%= f.text_field :calendar_id, class: "form-control" %></td>
-          <td></td>
-        </tr>
+        
         <%= f.fields_for :line_bot do |f| %>
           <tr>
             <th scope="row">LINE_Channel_ID</th>

@@ -1,5 +1,5 @@
+include Encryptor
 class SyncCalendarService
-
   attr_accessor :task, :user, :calendar
 
   def self.client_options(user)

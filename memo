@@ -29,3 +29,6 @@ curl -X POST https://api.line.me/oauth2/v2.1/token \
 rails g model Line_bot channel_id:string channel_secret:string
 
 rails g controller User::LineBots
+
+iVoW30wF6RySWFKHwliWvBYef3iPysyT
+Rails.application.credentials.encrypt_secure_key
