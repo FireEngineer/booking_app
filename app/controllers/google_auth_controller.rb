@@ -29,6 +29,9 @@ class GoogleAuthController < ApplicationController
   def identifier
     user = current_user
     if user.update(params_identifier)
+      user.client_id = encrypt(user.client_id)
+      user.client_secret = encrypt(user.client_secret)
+      user.save
       redirect_to google_auth_redirect_url
     end
 

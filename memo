@@ -32,3 +32,5 @@ rails g controller User::LineBots
 
 iVoW30wF6RySWFKHwliWvBYef3iPysyT
 Rails.application.credentials.encrypt_secure_key
+
+"iVoW30wF6RySWFKHwliWvBYef3iPysyT"
