@@ -34,3 +34,6 @@ iVoW30wF6RySWFKHwliWvBYef3iPysyT
 Rails.application.credentials.encrypt_secure_key
 
 "iVoW30wF6RySWFKHwliWvBYef3iPysyT"
+
+8月7日(水)
+rails g model TaskCourse title:string description:text course_time:integer

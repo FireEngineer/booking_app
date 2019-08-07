@@ -1,20 +1,21 @@
 class ValidateTask
 
-    attr_accessor :tasks, :time
+    attr_accessor :tasks, :time, :task_course
 
-    def initialize(tasks, time, calendar)
+    def initialize(tasks, time, calendar, task_course)
         @tasks = tasks
         @time = time
         @calendar = calendar
+        @task_course = task_course
     end
 
-    def self.call(tasks, time, calendar)
-        new(tasks, time, calendar).call
+    def self.call(tasks, time, calendar, task_course)
+        new(tasks, time, calendar, task_course).call
     end
 
     def call
         time_start = Time.zone.parse(time)
-        time_end = time_start.since(90.minutes) 
+        time_end = time_start.since(task_course.course_time.to_i.minutes) 
         limit = 3 #予約可能件数
         count = 0
         tasks.each do |task|

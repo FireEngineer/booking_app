@@ -8,6 +8,11 @@ class Public::TasksController < Public::Base
   def index
     task = Task.new
     @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    if params[:course_id]
+      @task_course = TaskCourse.find(params[:course_id])
+    else
+      @task_course = @calendar.task_courses.first
+    end
     @user = @calendar.user
     @times = [*@calendar.start_time..@calendar.end_time]
     @today = Time.current

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       patch "calendar/:id/update", to: "calendars#update"
       resources :calendars do
         resources :user_tasks
+        resources :task_courses
       end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end

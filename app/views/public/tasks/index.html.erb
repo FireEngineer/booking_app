@@ -19,6 +19,19 @@
       </tr>
     </tbody>
   </table>
+  <div class="dropdown">
+    <!-- 切替ボタンの設定 -->
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= @task_course.title %>
+    </a>
+    <!-- ドロップメニューの設定 -->
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <% @calendar.task_courses.each do |course| %>
+        <%= link_to course.title, calendar_tasks_path(@calendar, course_id: course.id), class:"dropdown-item" %>
+      <% end %>
+    </div><!-- /.dropdown-menu -->
+  </div><!-- /.dropdown -->
+  
 
   <%= paginate @month %>
     <div class="tabel_scroll">
@@ -40,7 +53,7 @@
               
               <% @month.each.with_index do |day, index| %>
                 <% time_str = time(day, time) %>
-                  <% if ValidateTask.call(@events, time_str, @calendar) %>
+                  <% if ValidateTask.call(@events, time_str, @calendar, @task_course) %>
                     <td class="possible <%= if @wild_time.include?(time) || @wild_day.include?(time(day, 0)) || Time.zone.parse(time_str) < Time.current then "can_not_choice" end %>">
                       <%= link_to new_calendar_task_path(@calendar, date_time: time(Time.zone.parse("#{day}"), time)), class:"wide_link" do %>
                         <i class="far fa-circle"></i>
