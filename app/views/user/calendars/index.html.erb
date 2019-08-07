@@ -13,7 +13,9 @@
     </li> %>
   </ul>
   <div id="myTabContent" class="tab-content mt-3">
-    <div id="home" class="tab-pane active" role="tabpanel" aria-labelledby="home-tab">ホームの文章です。...</div>
+    <div id="home" class="tab-pane active" role="tabpanel" aria-labelledby="home-tab">
+      <%= render 'basic_setting', calendar: calendar %>
+    </div>
     <div id="profile" class="tab-pane" role="tabpanel" aria-labelledby="profile-tab">プロフィールの文章です。...</div>
     <%# <div id="contact" class="tab-pane" role="tabpanel" aria-labelledby="contact-tab">コンタクトの文章です。...</div> %>
   </div>
