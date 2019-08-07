@@ -1,0 +1,61 @@
+<%= form_for calendar, url: user_calendar_path(current_user, calendar) do |f| %>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>設定値</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">表示開始日</th>
+          <td><%= f.number_field :start_date, class: "form-control" %></td>
+          <td>カレンダーの表示開始日の設定です。（1と設定すると、本日から1日後の明日のカレンダーから表示）</td>
+        </tr>
+        <tr>
+          <th scope="row">表示終了日</th>
+          <td><%= f.number_field :end_date, class: "form-control" %></td>
+          <td>カレンダーの表示終了日の設定です。（6と設定すると、本日から6日後の日付で表示終了）</td>
+        </tr>
+        <tr>
+          <th scope="row">表示期間</th>
+          <td><%= f.number_field :display_week_term, class: "form-control" %></td>
+          <td>googleカレンダーから取得するデータの期間を設定</td>
+        </tr>
+        <tr>
+          <th scope="row">表示開始時間</th>
+          <td><%= f.number_field :start_time, class: "form-control" %></td>
+          <td>表示開始する時間（10に設定すると、10時からのカレンダー表示）</td>
+        </tr>
+        <tr>
+          <th scope="row">表示終了時間</th>
+          <td><%= f.number_field :end_time, class: "form-control" %></td>
+          <td>表示終了する時間（22に設定すると、22時までのカレンダー表示）</td>
+        </tr>
+        <tr>
+          <th scope="row">表示カレンダー名</th>
+          <td><%= f.text_field :calendar_name, class: "form-control" %></td>
+          <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
+        </tr>
+        
+        <%= f.fields_for :line_bot do |f| %>
+          <tr>
+            <th scope="row">LINE_Channel_ID</th>
+            <td><%= f.text_field :channel_id, class: "form-control" %></td>
+            <td>連携するLINE_loginのIDです。</td>
+          </tr>
+          <tr>
+            <th scope="row">LINE_Channel_Secret</th>
+            <td><%= f.text_field :channel_secret, class: "form-control" %></td>
+            <td>連携するLINE_loginのsecretです。</td>
+          </tr>
+        <% end %>
+        <tr>
+          <th scope="row"><%= f.submit "更新", class: "btn btn-primary" %></th>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+<% end %>
