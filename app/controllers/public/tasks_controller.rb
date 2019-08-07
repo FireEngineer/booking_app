@@ -16,7 +16,6 @@ class Public::TasksController < Public::Base
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
     @wild_time = []
     @wild_day = []
-    debugger
   end
 
   def new

@@ -16,7 +16,6 @@ module TasksHelper
       event_s = Time.zone.parse("#{event[0]}")
       event_e = Time.zone.parse("#{event[1]}")
       if event_s < time_e && time_s < event_e
-        debugger
         count += 1
       end
     end
