@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_07_011444) do
+ActiveRecord::Schema.define(version: 2019_08_08_011447) do
+
+  create_table "calendar_configs", force: :cascade do |t|
+    t.integer "capacity"
+    t.integer "calendar_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calendar_id"], name: "index_calendar_configs_on_calendar_id"
+  end
 
   create_table "calendars", force: :cascade do |t|
     t.string "calendar_name", default: "予約システム"
@@ -33,6 +41,15 @@ ActiveRecord::Schema.define(version: 2019_08_07_011444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calendar_id"], name: "index_line_bots_on_calendar_id"
+  end
+
+  create_table "regular_holidays", force: :cascade do |t|
+    t.string "day"
+    t.boolean "holiday_flag"
+    t.integer "calendar_config_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calendar_config_id"], name: "index_regular_holidays_on_calendar_config_id"
   end
 
   create_table "task_courses", force: :cascade do |t|
