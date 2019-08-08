@@ -31,7 +31,6 @@
       <% end %>
     </div><!-- /.dropdown-menu -->
   </div><!-- /.dropdown -->
-  
 
   <%= paginate @month %>
     <div class="tabel_scroll">
@@ -44,16 +43,13 @@
             <% end %>
           </tr>
         </thead>
-        
         <tbody>
-          
           <% @times.each do |time| %>
             <tr>
               <th scope="row"><%= time %>時</th>
-              
               <% @month.each.with_index do |day, index| %>
                 <% time_str = time(day, time) %>
-                  <% if ValidateTask.call(@events, time_str, @calendar, @task_course) %>
+                  <% if ValidateTask.call(@events, time_str, @task_course) %>
                     <td class="possible <%= if @wild_time.include?(time) || @wild_day.include?(time(day, 0)) || Time.zone.parse(time_str) < Time.current then "can_not_choice" end %>">
                       <%= link_to new_calendar_task_path(@calendar, date_time: time(Time.zone.parse("#{day}"), time)), class:"wide_link" do %>
                         <i class="far fa-circle"></i>

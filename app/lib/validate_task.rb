@@ -2,15 +2,14 @@ class ValidateTask
 
     attr_accessor :tasks, :time, :task_course
 
-    def initialize(tasks, time, calendar, task_course)
+    def initialize(tasks, time, task_course)
         @tasks = tasks
         @time = time
-        @calendar = calendar
         @task_course = task_course
     end
 
-    def self.call(tasks, time, calendar, task_course)
-        new(tasks, time, calendar, task_course).call
+    def self.call(tasks, time, task_course)
+        new(tasks, time, task_course).call
     end
 
     def call
@@ -28,11 +27,5 @@ class ValidateTask
         end
         true
     end
-
-    # def test
-    #     puts @tasks
-    #     puts @time
-    #     puts @calendar
-    # end
 
 end

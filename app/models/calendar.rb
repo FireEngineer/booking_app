@@ -7,8 +7,16 @@ class Calendar < ApplicationRecord
 
   validates :calendar_name, uniqueness: true
 
+  after_create :create_default_task_course
+
   def to_param
     calendar_name
+  end
+
+  def create_default_task_course
+    unless self.task_courses.first
+      self.task_courses.build(title: "60分コース", description: "60分のコースになります。", course_time: 60).save
+    end
   end
 
 end
