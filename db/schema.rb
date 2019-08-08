@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2019_08_08_011447) do
 
   create_table "regular_holidays", force: :cascade do |t|
     t.string "day"
-    t.boolean "holiday_flag"
+    t.boolean "holiday_flag", default: false
     t.integer "calendar_config_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

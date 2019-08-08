@@ -22,8 +22,8 @@ class Calendar < ApplicationRecord
   end
 
   def create_calendar_config
-    unless self.calendar_configs.first
-      config = self.calendar_configs.build(capacity: 1)
+    unless self.calendar_config
+      config = self.build_calendar_config(capacity: 1)
       array = ["日", "月", "火", "水", "木", "金", "土"]
       array.each do |day|
         config.regular_holidays.build(day: day)

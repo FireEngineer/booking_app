@@ -3,22 +3,30 @@
   <%= link_to calendar.calendar_name, calendar_tasks_path(calendar) %>
   <ul id="myTab" class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-      <a href="#home" id="home-tab" class="nav-link active" role="tab" data-toggle="tab" aria-controls="home" aria-selected="true">カレンダー基本設定</a>
+      <a href="#home" id="home-tab" class="nav-link active" role="tab" data-toggle="tab" aria-controls="home" aria-selected="true">
+        カレンダー基本設定
+      </a>
     </li>
     <li class="nav-item">
-      <a href="#profile" id="profile-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="profile" aria-selected="false">コース設定</a>
+      <a href="#contact" id="contact-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="contact" aria-selected="false">
+        カレンダー詳細設定
+      </a>
     </li>
-    <%# <li class="nav-item">
-      <a href="#contact" id="contact-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="contact" aria-selected="false">コンタクト</a>
-    </li> %>
+    <li class="nav-item">
+      <a href="#profile" id="profile-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="profile" aria-selected="false">
+        コース設定
+      </a>
+    </li>
   </ul>
   <div id="myTabContent" class="tab-content mt-3">
     <div id="home" class="tab-pane active" role="tabpanel" aria-labelledby="home-tab">
       <%= render 'basic_setting', calendar: calendar %>
     </div>
+    <div id="contact" class="tab-pane" role="tabpanel" aria-labelledby="contact-tab">
+      <%= render 'detail_setting', calendar: calendar %>
+    </div>
     <div id="profile" class="tab-pane" role="tabpanel" aria-labelledby="profile-tab">
       <%= render 'task_course_setting', calendar: calendar %>
     </div>
-    <%# <div id="contact" class="tab-pane" role="tabpanel" aria-labelledby="contact-tab">コンタクトの文章です。...</div> %>
   </div>
 <% end %>
