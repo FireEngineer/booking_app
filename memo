@@ -37,3 +37,7 @@ Rails.application.credentials.encrypt_secure_key
 
 8月7日(水)
 rails g model TaskCourse title:string description:text course_time:integer
+rails g model CalendarConfig capacity:integer
+rails g model RegularHoliday day:string holiday_flag:boolean
+
+rails g controller User::CalendarConfig

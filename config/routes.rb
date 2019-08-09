@@ -31,10 +31,10 @@ Rails.application.routes.draw do
     resources :users do
       get "dashboard", to: "users#dashboard"
       patch "calendar/:id/update", to: "calendars#update"
-      resources :calendars do
+      resources :calendars, param: :calendar_name do
         resources :user_tasks
         resources :task_courses
-        resource :calendar_coonfig
+        resource :calendar_config
       end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end

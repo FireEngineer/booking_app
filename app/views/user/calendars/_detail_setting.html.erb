@@ -1,32 +1,37 @@
-<%= form_for calendar.calendar_config, url: edit_user_calendar_calendar_coonfig_path(current_user, calendar, calendar.calendar_config) do |f| %>
+<%= form_for calendar.calendar_config, url: user_calendar_calendar_config_path(current_user, calendar) do |f| %>
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>項目</th>
-          <th>設定値</th>
-          <th>説明</th>
+          <th class="col-xs-2">項目</th>
+          <th class="col-xs-2">設定値</th>
+          <th class="col-xs-10">説明</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th scope="row">予約可能席数</th>
+          <th>予約可能席数</th>
           <td><%= f.number_field :capacity, class: "form-control" %></td>
           <td></td>
         </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="col-xs-2">曜日</th>
+          <th>定休日フラグ</th>
+        </tr>
+      </thead>
+      <tbody>
         <%= f.fields_for :regular_holidays do |f| %>
           <tr>
-            <th scope="row">曜日</th>
-            <td><%= f.text_field :day, class: "form-control" %></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">定休日フラグ</th>
-            <td><%= f.check_box :holiday_flag, class: "form-control" %></td>
-            <td></td>
+            <th class="col-xs-2"><%= f.object.day_of_the_week %></th>
+            <td><%= f.check_box :holiday_flag, {class: "form-control"}, "true", "false" %></td>
           </tr>
         <% end %>
         <tr>
-          <th scope="row"><%= f.submit "更新", class: "btn btn-primary" %></th>
+          <th class="col-xs-2"><%= f.submit "更新", class: "btn btn-primary" %></th>
           <td></td>
           <td></td>
         </tr>

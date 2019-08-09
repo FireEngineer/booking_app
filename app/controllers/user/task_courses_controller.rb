@@ -5,7 +5,7 @@ class User::TaskCoursesController < ApplicationController
     end
 
     def create
-        calendar = Calendar.find_by(calendar_name: params[:calendar_id])
+        calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
         @task_course = calendar.task_courses.build(task_course_params)
 
         respond_to do |format|

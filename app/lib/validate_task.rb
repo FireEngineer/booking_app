@@ -15,7 +15,7 @@ class ValidateTask
     def call
         time_start = Time.zone.parse(time)
         time_end = time_start.since(task_course.course_time.to_i.minutes) 
-        limit = 3 #予約可能件数
+        limit = calendar_config.capacity #予約可能件数
         count = 0
         tasks.each do |task|
             task_s = Time.zone.parse("#{task[0]}")
@@ -26,6 +26,12 @@ class ValidateTask
             end
         end
         true
+    end
+
+    private
+
+    def calendar_config
+        task_course.calendar.calendar_config
     end
 
 end
