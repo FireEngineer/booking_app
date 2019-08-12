@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
-    unless current_user.client_id
+    if current_admin
+      dash_board_top_path(resource)
+    elsif !current_user.client_id
       google_auth_ident_form_path
     else
       user_dashboard_path(current_user) # ログイン後に遷移するpathを設定

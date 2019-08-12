@@ -7,12 +7,21 @@ Rails.application.routes.draw do
   patch 'google_auth/identifier'
 # ================================================================================================================-
   # devise
+  devise_for :admins
   scope :auth do
-    devise_for :users 
+    devise_for :users
   end
   # rootページ用ルーティング
   devise_scope :user do
     root :to => 'devise/sessions#new'
+  end
+# ================================================================================================================-
+  # admin権限
+  scope module: :admin do
+    get "admins/:id/dash_board", to: "dash_boards#top", as: :dash_board_top
+    resources :admins do
+
+    end
   end
 # ================================================================================================================-
   # public権限
