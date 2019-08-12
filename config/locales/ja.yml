@@ -211,7 +211,7 @@ ja:
       long: "%Y/%m/%d %H:%M"
       middle: "%m月%d日（%a）%H : %M"
       short: "%m/%d %H:%M"
-      very_short: "%H : %M"
+      very_short: "%H:%M"
     pm: 午後
   date:
     formats:

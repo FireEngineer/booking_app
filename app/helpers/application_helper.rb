@@ -1,8 +1,8 @@
 module ApplicationHelper
   
   def time(date, time)
-    date_time = date.since(time.hours)
-    "#{date_time.year}-#{date_time.month}-#{date_time.day}T#{date_time.hour}:00:00+09:00"
+    puts time
+    "#{date.year}-#{date.month}-#{date.day}T#{time.hour}:#{time.min}:00+09:00"
   end
   
   def time_display(time)

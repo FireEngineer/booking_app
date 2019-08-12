@@ -14,7 +14,8 @@ class Public::TasksController < Public::Base
       @task_course = @calendar.task_courses.first
     end
     @user = @calendar.user
-    @times = [*@calendar.start_time..@calendar.end_time]
+    @times = time_interval(@calendar.start_time, @calendar.end_time)
+
     @today = Time.current
     @events = SyncCalendarService.new(task,@user,@calendar).read_event
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
@@ -145,5 +146,14 @@ class Public::TasksController < Public::Base
         flash[:warnning] = "この時間はすでに予約が入っております。"
         redirect_to calendar_tasks_url(params[:calendar_calendar_name])
       end
+    end
+
+    def time_interval(start_time, end_time)
+      array = []
+      1.step do |i|
+          array.push(Time.parse("#{start_time}:00")+5.minutes*i)
+          break if Time.parse("#{start_time}:00")+5.minutes*i == Time.parse("#{end_time}:00")
+      end
+      array
     end
 end
