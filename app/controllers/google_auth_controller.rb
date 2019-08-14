@@ -1,4 +1,5 @@
 class GoogleAuthController < ApplicationController
+  include Encryptor
   def callback
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_user))
     client.code = params[:code]

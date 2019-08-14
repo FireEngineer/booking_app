@@ -40,7 +40,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mini_racer'
 # for authentication
-gem 'devise'
+gem 'devise', '4.5.0'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 
