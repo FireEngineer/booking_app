@@ -54,10 +54,10 @@ ActiveRecord::Schema.define(version: 2019_08_12_073600) do
   create_table "line_bots", force: :cascade do |t|
     t.string "channel_id"
     t.string "channel_secret"
-    t.integer "calendar_id"
+    t.integer "admin_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["calendar_id"], name: "index_line_bots_on_calendar_id"
+    t.index ["admin_id"], name: "index_line_bots_on_admin_id"
   end
 
   create_table "regular_holidays", force: :cascade do |t|

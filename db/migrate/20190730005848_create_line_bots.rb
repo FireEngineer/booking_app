@@ -4,7 +4,7 @@ class CreateLineBots < ActiveRecord::Migration[5.2]
       t.string :channel_id
       t.string :channel_secret
 
-      t.references :calendar, foreign_key: true
+      t.references :admin, foreign_key: true
 
       t.timestamps
     end

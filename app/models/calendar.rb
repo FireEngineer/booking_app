@@ -3,8 +3,7 @@ class Calendar < ApplicationRecord
   has_many :tasks
   has_many :task_courses
   has_one :calendar_config
-  has_one :line_bot
-  accepts_nested_attributes_for :line_bot, allow_destroy: true
+  
 
   validates :calendar_name, uniqueness: true
 

@@ -1,3 +1,3 @@
 class LineBot < ApplicationRecord
-    belongs_to :calendar
+    belongs_to :admin
 end
