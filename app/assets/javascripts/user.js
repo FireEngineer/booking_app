@@ -15,6 +15,10 @@
 //= require turbolinks
 //= require jquery_ujs
 //= require jquery3
+//= require moment
+//= require fullcalendar
+//= require fullcalendar/lang/ja
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree ./user
+

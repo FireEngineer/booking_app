@@ -3,6 +3,11 @@ class Public::TasksController < Public::Base
   before_action :authenticate_user!
   before_action :check_calendar_info, only: [:new, :create]
 
+  require "base64"
+
+  CHANNEL_ID = Admin.first.line_bot.channel_id
+  CHANNEL_SECRET = Admin.first.line_bot.channel_secret
+
   # GET /tasks
   # GET /tasks.json
   def index
@@ -41,11 +46,10 @@ class Public::TasksController < Public::Base
     
     # url = "https://www.google.com"
     # 1603141730
-    client_id = 1603141730
     redirect_uri = task_create_url
     state = SecureRandom.base64(10)
     # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=normal&scope=openid%20profile"
-    url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
+    url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{CHANNEL_ID}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
     redirect_to url
   end
 
@@ -56,8 +60,8 @@ class Public::TasksController < Public::Base
       -d 'grant_type=authorization_code' \
       -d "code=#{params[:code]}" \
       -d 'redirect_uri=http://localhost:3000/task_create' \
-      -d "client_id=1603141730" \
-      -d "client_secret=a59f370b529454e32f779071d9b50454"`
+      -d "client_id=#{CHANNEL_ID}" \
+      -d "client_secret=#{CHANNEL_SECRET}"`
     test = JSON.parse(test)
 
     params = `curl -X GET \
@@ -65,7 +69,7 @@ class Public::TasksController < Public::Base
             https://api.line.me/friendship/v1/status`
 
     params = JSON.parse(params)
-
+    debugger
     if params["friendFlag"] == true
       @user = @calendar.user
       @task = Task.new(session[:task])

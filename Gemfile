@@ -64,6 +64,13 @@ gem 'active_decorator'
 # 決済機能
 gem 'payjp'
 
+# full_calendar
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
+
+# line_bot
+gem 'line-bot-api'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
