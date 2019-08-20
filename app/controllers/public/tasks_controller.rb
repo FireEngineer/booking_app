@@ -63,13 +63,14 @@ class Public::TasksController < Public::Base
       -d "client_id=#{CHANNEL_ID}" \
       -d "client_secret=#{CHANNEL_SECRET}"`
     test = JSON.parse(test)
-
+    decode_response(test["id_token"])
+    debugger
     params = `curl -X GET \
             -H "Authorization: Bearer #{test["access_token"]}" \
             https://api.line.me/friendship/v1/status`
 
     params = JSON.parse(params)
-    debugger
+    
     if params["friendFlag"] == true
       @user = @calendar.user
       @task = Task.new(session[:task])
@@ -160,4 +161,12 @@ class Public::TasksController < Public::Base
       end
       array
     end
+
+    def decode_response(response)
+      response.split(".").map do |res|
+        decode_res = Base64.decode64(res)
+        JSON.parse(decode_res)
+      end
+    end
+
 end
