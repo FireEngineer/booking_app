@@ -36,10 +36,10 @@ Rails.application.routes.draw do
   scope module: :public do
     get "task_create", to: "tasks#task_create", as: :task_create
     resources :calendars, param: :calendar_name, only: [] do
-      resources :tasks
+      resources :tasks, except: [:show]
         get "tasks/:id/complete", to: "tasks#complete", as: :task_complete
         get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
-        post "tasks/redirect_register_line", to: "tasks#redirect_register_line", as: :redirect_line
+        get "tasks/redirect_register_line", to: "tasks#redirect_register_line", as: :redirect_line
     end
   end
 # ================================================================================================================-

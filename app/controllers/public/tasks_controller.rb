@@ -38,19 +38,17 @@ class Public::TasksController < Public::Base
   def redirect_register_line
     @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     @user = @calendar.user
-    
 
     session[:calendar] = @calendar.id
     session[:user] = @user.id
     session[:task] = task_params
-    
     # url = "https://www.google.com"
     # 1603141730
-    redirect_uri = task_create_url
-    state = SecureRandom.base64(10)
-    # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=normal&scope=openid%20profile"
-    url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{CHANNEL_ID}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
-    redirect_to url
+    # redirect_uri = task_create_url
+    # state = SecureRandom.base64(10)
+    # # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=normal&scope=openid%20profile"
+    # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{CHANNEL_ID}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
+    # redirect_to url
   end
 
   def task_create

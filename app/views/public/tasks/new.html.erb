@@ -5,7 +5,7 @@
   </div>
   
   <div class="form_area">
-    <%= form_for @task, url: calendar_redirect_line_path(@calendar), method: :post do |f| %>
+    <%= form_for @task, url: calendar_redirect_line_path(@calendar), method: :get do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
       <%= f.hidden_field :date_time, value: @task.date_time %>
       <div class="form-group">
