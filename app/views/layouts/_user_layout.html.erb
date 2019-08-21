@@ -1,40 +1,4 @@
-<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <%# <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><></a> %>
-    <%# <input class="form-control form-control-dark w-100" type="text" placeholder="検索" aria-label="検索"> %>
-    <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"nav-link" %>
-    </li>
-    </ul>
-</nav>
-
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <%= link_to "ダッシュボード", user_dashboard_path(current_user), class:"nav-link" %>
-                    </li>
-                    <li class="nav-item">
-                        <%= link_to "ユーザー", user_path(current_user), class:"nav-link" %>
-                    </li>
-                    <li class="nav-item">
-                        <%= link_to "カレンダー", user_calendars_path(current_user), class:"nav-link" %>
-                    </li>
-                    <li class="nav-item">
-                        <%= link_to "予約管理", user_calendar_user_tasks_path(current_user, current_user.calendars.first), class:"nav-link" %>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <%= render 'layouts/flash_messages' %>
-            <%= yield %>
-            <%= debug(params) if Rails.env.development? %>
-        </main>
-    </div>
+<div class="container user_container">
+    <%= yield %>
+    <%= debug(params) if Rails.env.development? %>
 </div>
-
-
-
