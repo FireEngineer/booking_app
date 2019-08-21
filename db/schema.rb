@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_12_073600) do
+ActiveRecord::Schema.define(version: 2019_08_21_115707) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -69,6 +69,17 @@ ActiveRecord::Schema.define(version: 2019_08_12_073600) do
     t.index ["calendar_config_id"], name: "index_regular_holidays_on_calendar_config_id"
   end
 
+  create_table "store_members", force: :cascade do |t|
+    t.string "name"
+    t.string "gender"
+    t.integer "age"
+    t.string "email"
+    t.string "phone"
+    t.string "line_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "task_courses", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -83,16 +94,15 @@ ActiveRecord::Schema.define(version: 2019_08_12_073600) do
     t.string "title"
     t.text "content"
     t.datetime "due_at"
-    t.integer "calendar_id"
-    t.string "name"
-    t.string "email"
-    t.string "line_id"
-    t.datetime "date_time"
-    t.string "phone"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.string "google_event_id"
+    t.integer "calendar_id"
+    t.integer "task_course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calendar_id"], name: "index_tasks_on_calendar_id"
+    t.index ["task_course_id"], name: "index_tasks_on_task_course_id"
   end
 
   create_table "users", force: :cascade do |t|

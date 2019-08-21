@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   # validates :title, :content, :due_at, presence: true
-  validates :date_time, uniqueness: true
+  # validates :start_time, uniqueness: true
   belongs_to :calendar
 
 

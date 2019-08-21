@@ -51,7 +51,7 @@
                 <% time_str = time(day, time) %>
                   <% if ValidateTask.call(@events, time_str, @task_course) %>
                     <td class="possible <%= if @wild_time.include?(time) || RegularDay.call(@calendar, day) || Time.zone.parse(time_str) < Time.current then "can_not_choice" end %>">
-                      <%= link_to new_calendar_task_path(@calendar, date_time: time(Time.zone.parse("#{day}"), time)), class:"wide_link" do %>
+                      <%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id), class:"wide_link" do %>
                         <i class="far fa-circle"></i>
                       <% end %>
                     </td>

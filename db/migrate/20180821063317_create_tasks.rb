@@ -4,13 +4,13 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.string :title
       t.text :content
       t.datetime :due_at
-      t.references :calendar, foreign_key: true
-      t.string :name
-      t.string :email
-      t.string :line_id
-      t.datetime :date_time
-      t.string :phone
+      t.datetime :start_time
+      t.datetime :end_time
       t.string :google_event_id
+
+      t.references :calendar, foreign_key: true
+      t.references :task_course, foreign_key: true
+      # t.references :staff, foreign_key: true
 
       t.timestamps
     end

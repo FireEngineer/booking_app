@@ -5,8 +5,11 @@ class Public::TasksController < Public::Base
 
   require "base64"
 
-  CHANNEL_ID = Admin.first.line_bot.channel_id
-  CHANNEL_SECRET = Admin.first.line_bot.channel_secret
+  # CHANNEL_ID = Admin.first.line_bot.channel_id
+  # CHANNEL_SECRET = Admin.first.line_bot.channel_secret
+
+  CHANNEL_ID = "1610548594"
+  CHANNEL_SECRET = "2a3591a3789e3937403903e9dd87cabd"
 
   # GET /tasks
   # GET /tasks.json
@@ -32,7 +35,8 @@ class Public::TasksController < Public::Base
   def new
     @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     @user = @calendar.user
-    @task = Task.new(date_time: params[:date_time])
+    task_course = TaskCourse.find(params[:course_id])
+    @task = Task.new(start_time: params[:start_time])
   end
 
   def redirect_register_line
@@ -139,12 +143,12 @@ class Public::TasksController < Public::Base
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:title, :content, :due_at, :date_time, :email, :phone, :name)
+      params.require(:task).permit(:title, :content, :due_at, :start_time, :email, :phone, :name)
     end
 
     def check_calendar_info
       calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
-      task = calendar.tasks.build(date_time: params[:date_time])
+      task = calendar.tasks.build(start_time: params[:start_time])
       if task.invalid?
         flash[:warnning] = "この時間はすでに予約が入っております。"
         redirect_to calendar_tasks_url(params[:calendar_calendar_name])
