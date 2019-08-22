@@ -5,7 +5,7 @@
   </div>
   
   <div class="form_area">
-    <%= form_for @store_member, url: calendar_redirect_line_path(@calendar), method: :get do |f| %>
+    <%= form_for @store_member, url: calendar_redirect_line_path(@calendar), method: :post do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
       <div class="form-group">
         <label for="exampleInputPassword1">お名前</label><span id="msg-name"></span>
@@ -27,7 +27,7 @@
         <label for="exampleInputEmail1">性別</label><span id="msg-tel"></span>
         <%= f.select :gender, ["男性", "女性"], {class: "form-control form_style", id: "gender"}, required: "required" %>
       </div>
-      <%= f.fields_for :task do |task|  %>
+      <%= fields_for :task do |task|  %>
         <div class="form-group">
             <label for="exampleInputPassword1">日時</label>
             <%= task.text_field :time, value: reservation_date(@task),  class: "form-control form_style", readonly: true %>
@@ -39,6 +39,8 @@
             <%= task.text_field :time, value: "今井翔太",  class: "form-control form_style", readonly: true %>
         </div>
       <% end %>
+      <%= hidden_field_tag :task_course_id, @task_course.id %>
+
       <button type="submit" class="btn btn-primary btn_style" data-confirm= "予約を行います。">予約する</button>
       <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style" %>
     <% end %>

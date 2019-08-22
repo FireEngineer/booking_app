@@ -1,8 +1,9 @@
 class Calendar < ApplicationRecord
   belongs_to :user
-  has_many :tasks
+  has_many :store_member
   has_many :task_courses
   has_one :calendar_config
+  has_many :task
   
 
   validates :calendar_name, uniqueness: true

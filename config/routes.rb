@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       resources :tasks, except: [:show]
         get "tasks/:id/complete", to: "tasks#complete", as: :task_complete
         get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
-        get "tasks/redirect_register_line", to: "tasks#redirect_register_line", as: :redirect_line
+        post "tasks/redirect_register_line", to: "tasks#redirect_register_line", as: :redirect_line
     end
   end
 # ================================================================================================================-

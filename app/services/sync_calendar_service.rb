@@ -112,23 +112,23 @@ class SyncCalendarService
   def calendar_event
     event = Google::Apis::CalendarV3::Event.new(
                           id: task.calendar_event_uid,
-                          summary: "【TEL】#{task.name}",
+                          summary: "【TEL】#{task.store_member.name}",
                           # location: '800 Howard St., San Francisco, CA 94103',
-                          description: "【セレブエンジニア電話相談】名前：#{task.name}、TEL：#{task.phone}、
+                          description: "【セレブエンジニア電話相談】名前：#{task.store_member.name}、TEL：#{task.store_member.phone}、
                           キャンセルURL：#{ if Rails.env == "development" then "http://localhost:3000/calendars/#{calendar.calendar_name}/tasks/#{task.id}/cancel" end }",
                           start: {
-                            date_time: "#{time(task.date_time, 0)}",
+                            date_time: "#{time(task.start_time, 0)}",
                             time_zone: 'Asia/Tokyo',
                           },
                           end: {
-                            date_time: "#{time(task.date_time, 1)}",
+                            date_time: "#{time(task.end_time, 0)}",
                             time_zone: 'Asia/Tokyo',
                           },
                           # recurrence: [
                           #   'RRULE:FREQ=DAILY;COUNT=2'
                           # ],
                           attendees: [
-                            {email: "#{task.email}"},
+                            {email: "#{task.store_member.email}"},
                           ],
                           # reminders: {
                           #   use_default: false,

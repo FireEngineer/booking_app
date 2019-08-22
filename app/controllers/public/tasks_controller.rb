@@ -8,8 +8,8 @@ class Public::TasksController < Public::Base
   # CHANNEL_ID = Admin.first.line_bot.channel_id
   # CHANNEL_SECRET = Admin.first.line_bot.channel_secret
 
-  CHANNEL_ID = "1610548594"
-  CHANNEL_SECRET = "2a3591a3789e3937403903e9dd87cabd"
+  CHANNEL_ID = "1603141730"
+  CHANNEL_SECRET = "a59f370b529454e32f779071d9b50454"
 
   # GET /tasks
   # GET /tasks.json
@@ -47,14 +47,15 @@ class Public::TasksController < Public::Base
 
     session[:calendar] = @calendar.id
     session[:user] = @user.id
+    session[:store_member] = store_member_params
     session[:task] = task_params
+    session[:task_course_id] = params[:task_course_id]
     # url = "https://www.google.com"
-    # 1603141730
-    # redirect_uri = task_create_url
-    # state = SecureRandom.base64(10)
-    # # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=normal&scope=openid%20profile"
-    # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{CHANNEL_ID}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
-    # redirect_to url
+    redirect_uri = task_create_url
+    state = SecureRandom.base64(10)
+    # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=normal&scope=openid%20profile"
+    url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{CHANNEL_ID}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
+    redirect_to url
   end
 
   def task_create
@@ -68,7 +69,6 @@ class Public::TasksController < Public::Base
       -d "client_secret=#{CHANNEL_SECRET}"`
     test = JSON.parse(test)
     decode_response(test["id_token"])
-    debugger
     params = `curl -X GET \
             -H "Authorization: Bearer #{test["access_token"]}" \
             https://api.line.me/friendship/v1/status`
@@ -77,18 +77,28 @@ class Public::TasksController < Public::Base
     
     if params["friendFlag"] == true
       @user = @calendar.user
-      @task = Task.new(session[:task])
+      @task_course = TaskCourse.find(session[:task_course_id])
+      @store_member = StoreMember.new(session[:store_member])
+      @store_member.calendar = @calendar
+      @task = @store_member.tasks.build(session[:task])
       @task.calendar = @calendar
+      @task.task_course = @task_course
 
       respond_to do |format|
-        if @task.save
-          flash[:success] = '予約が完了しました。'
-          format.html { redirect_to calendar_task_complete_path(@calendar, @task) }
-          format.json { render :show, status: :created, location: @task }
-        else
-          flash.now[:danger] = "予約ができませんでした。"
-          format.html { render :new }
-          format.json { render json: @task.errors, status: :unprocessable_entity }
+        begin
+          if @store_member.save
+            flash[:success] = '予約が完了しました。'
+            format.html { redirect_to calendar_task_complete_path(@calendar, @task) }
+            format.json { render :show, status: :created, location: @task }
+          else
+            flash.now[:danger] = "予約ができませんでした。"
+
+            format.html { render :new }
+            format.json { render json: @store_member.errors, status: :unprocessable_entity }
+          end
+        rescue
+          flash[:warnning] = "この時間はすでに予約が入っております。"
+          redirect_to calendar_tasks_url(@calendar)
         end
       end
     end
@@ -144,8 +154,12 @@ class Public::TasksController < Public::Base
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    def store_member_params
+      params.require(:store_member).permit(:name, :email, :phone, :gender, :age, tasks_attributes: [:start_time, :end_time])
+    end
+
     def task_params
-      params.require(:task).permit(:title, :content, :due_at, :start_time, :email, :phone, :name)
+      params.require(:task).permit(:start_time, :end_time)
     end
 
     # def check_calendar_info
@@ -169,7 +183,7 @@ class Public::TasksController < Public::Base
     def decode_response(response)
       response.split(".").map do |res|
         decode_res = Base64.decode64(res)
-        JSON.parse(decode_res)
+        # JSON.parse(decode_res)
       end
     end
 

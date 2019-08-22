@@ -8,7 +8,7 @@ class NotificationMailer < ApplicationMailer
     @calendar = calendar
     mail(
       from: "tech.leaders.kk@gmail.com",
-      to:   task.email,
+      to:   task.store_member.email,
       subject: '予約確定通知'
     )
   end

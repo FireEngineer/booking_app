@@ -76,8 +76,10 @@ ActiveRecord::Schema.define(version: 2019_08_21_115707) do
     t.string "email"
     t.string "phone"
     t.string "line_user_id"
+    t.integer "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["calendar_id"], name: "index_store_members_on_calendar_id"
   end
 
   create_table "task_courses", force: :cascade do |t|
@@ -91,16 +93,17 @@ ActiveRecord::Schema.define(version: 2019_08_21_115707) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "title"
-    t.text "content"
+    t.text "request"
     t.datetime "due_at"
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "google_event_id"
     t.integer "store_member_id"
     t.integer "task_course_id"
+    t.integer "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["calendar_id"], name: "index_tasks_on_calendar_id"
     t.index ["store_member_id"], name: "index_tasks_on_store_member_id"
     t.index ["task_course_id"], name: "index_tasks_on_task_course_id"
   end
