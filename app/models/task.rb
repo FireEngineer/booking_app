@@ -2,6 +2,7 @@ class Task < ApplicationRecord
   # validates :title, :content, :due_at, presence: true
   # validates :start_time, uniqueness: true
   belongs_to :calendar
+  belongs_to :store_member
 
 
 

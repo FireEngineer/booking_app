@@ -1,9 +1,9 @@
 module TasksHelper
   
   # 予約ページの予約日時表示用ヘルパー
-  def reservation_date(str_time)
-    time = Time.zone.parse(str_time)
-    l(time, format: :middle) + " 〜 " + l(time.change(hour: time.hour + 1), format: :very_short)
+  def reservation_date(task)
+    
+    l(task.start_time, format: :middle) + " 〜 " + l(task.end_time, format: :very_short)
   end
   
   

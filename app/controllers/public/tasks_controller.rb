@@ -1,7 +1,7 @@
 class Public::TasksController < Public::Base
   before_action :set_task, only: [:complete, :destroy]
   before_action :authenticate_user!
-  before_action :check_calendar_info, only: [:new, :create]
+  # before_action :check_calendar_info, only: [:new, :create]
 
   require "base64"
 
@@ -35,8 +35,10 @@ class Public::TasksController < Public::Base
   def new
     @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     @user = @calendar.user
-    task_course = TaskCourse.find(params[:course_id])
-    @task = Task.new(start_time: params[:start_time])
+    @task_course = TaskCourse.find(params[:course_id])
+    @store_member = StoreMember.new()
+    @task = @store_member.tasks.build(start_time: params[:start_time],
+                                      end_time: end_time(params[:start_time], @task_course))
   end
 
   def redirect_register_line
@@ -146,14 +148,14 @@ class Public::TasksController < Public::Base
       params.require(:task).permit(:title, :content, :due_at, :start_time, :email, :phone, :name)
     end
 
-    def check_calendar_info
-      calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
-      task = calendar.tasks.build(start_time: params[:start_time])
-      if task.invalid?
-        flash[:warnning] = "この時間はすでに予約が入っております。"
-        redirect_to calendar_tasks_url(params[:calendar_calendar_name])
-      end
-    end
+    # def check_calendar_info
+    #   calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    #   task = calendar.tasks.build(start_time: params[:start_time])
+    #   if task.invalid?
+    #     flash[:warnning] = "この時間はすでに予約が入っております。"
+    #     redirect_to calendar_tasks_url(params[:calendar_calendar_name])
+    #   end
+    # end
 
     def time_interval(start_time, end_time)
       array = []
@@ -169,6 +171,11 @@ class Public::TasksController < Public::Base
         decode_res = Base64.decode64(res)
         JSON.parse(decode_res)
       end
+    end
+
+    def end_time(start_time, task_course)
+      t = Time.parse(start_time)
+      t.since(task_course.course_time.minutes)
     end
 
 end
