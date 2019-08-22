@@ -7,7 +7,7 @@ class User::UserTasksController < User::Base
         @task = Task.find(params[:id])
         if @task.destroy
             respond_to do |format|
-            format.html { redirect_to user_calendar_user_tasks_url(params[:user_id], params[:calendar_id]), notice: '予約をキャンセルしました。' }
+            format.html { redirect_to user_calendar_user_tasks_url(current_user, params[:calendar_calendar_name]), notice: '予約をキャンセルしました。' }
             format.json { head :no_content }
             format.js {render :destroy}
             end

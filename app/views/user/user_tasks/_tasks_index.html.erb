@@ -16,10 +16,10 @@
       <% calendar.tasks.each do |task| %>
         <tr>
           <th scope="row"><%= task.id %></th>
-          <td><%= task.name %></td>
-          <td><%= task.email %></td>
-          <td><%= task.phone %></td>
-          <td><%= time_display(task.date_time) %></td>
+          <td><%= task.store_member.name %></td>
+          <td><%= task.store_member.email %></td>
+          <td><%= task.store_member.phone %></td>
+          <td><%= time_display(task.start_time) %></td>
           <td><%= link_to "キャンセル", user_calendar_user_task_path(current_user, calendar, task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
           <td><%= task.created_at %></td>
         </tr>
