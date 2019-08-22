@@ -21,6 +21,7 @@
           <div class="dropdown-divider"></div>
           <%= link_to "カレンダー", user_calendars_path(current_user), class:"dropdown-item" %>
           <%= link_to "予約管理", user_calendar_user_tasks_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
+          <%= link_to "スタッフ", user_calendar_staffs_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
         </div>
       </li>
       <li class="nav-item">

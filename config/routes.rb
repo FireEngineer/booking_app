@@ -52,6 +52,7 @@ Rails.application.routes.draw do
         resources :user_tasks
         resources :task_courses
         resource :calendar_config
+        resources :staffs
       end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end

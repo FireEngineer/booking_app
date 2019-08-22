@@ -43,5 +43,4 @@ rails g model RegularHoliday day:string holiday_flag:boolean
 rails g controller User::CalendarConfig
 
 RegularDay.call(a, Time.current)
-
-Admin.first.line_bot.create()
+rails g model StoreMember name:string gender:string age:integer email:string phone:string line_user_id:string

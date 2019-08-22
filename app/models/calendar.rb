@@ -3,7 +3,8 @@ class Calendar < ApplicationRecord
   has_many :store_member
   has_many :task_courses
   has_one :calendar_config
-  has_many :task
+  has_many :tasks
+  has_many :staffs
   
 
   validates :calendar_name, uniqueness: true
