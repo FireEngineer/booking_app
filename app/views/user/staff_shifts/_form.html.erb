@@ -1,0 +1,32 @@
+<%= form_with(model: user_staff_shift, local: true) do |form| %>
+  <% if user_staff_shift.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user_staff_shift.errors.count, "error") %> prohibited this user_staff_shift from being saved:</h2>
+
+      <ul>
+      <% user_staff_shift.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :work_start_time %>
+    <%= form.datetime_select :work_start_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :work_end_time %>
+    <%= form.datetime_select :work_end_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :staff_id %>
+    <%= form.text_field :staff_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

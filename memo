@@ -44,3 +44,5 @@ rails g controller User::CalendarConfig
 
 RegularDay.call(a, Time.current)
 rails g model StoreMember name:string gender:string age:integer email:string phone:string line_user_id:string
+
+rails g scaffold User::StaffShifts work_start_time:datetime work_end_time:datetime staff:references

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>スタッフシフト</h1>
+<%= link_to "一括設定", url:"##", class:"btn btn-secondary" %>
+
+<table class="table thead-dark table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>日付</th>
+      <th>出勤時間</th>
+      <th>退勤時間</th>
+      <th></th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @staff_shifts.each do |shift| %>
+      <tr>
+        <td><%= l shift.work_date, format: :long %></td>
+        <td><%= l(shift.work_start_time, format: :very_short)%></td>
+        <td><%= l(shift.work_end_time, format: :very_short) %></td>
+        <td>
+          <%#= link_to 'Show', user_staff_shift %>
+          <%= link_to 'Edit', edit_calendar_staff_staff_shift_path(@calendar, @staff, shift) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%# <%= link_to 'New User Staff Shift', new_user_staff_shift_path %> %>

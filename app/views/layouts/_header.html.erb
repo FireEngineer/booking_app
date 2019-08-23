@@ -12,16 +12,25 @@
         <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"nav-link" %>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
+        <a class="nav-link dropdown-toggle" href="#" id="settingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          設定
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu" aria-labelledby="settingDropdown">
           <%= link_to "ダッシュボード", user_dashboard_path(current_user), class:"dropdown-item" %>
           <%= link_to "ユーザー", user_path(current_user), class:"dropdown-item" %>
           <div class="dropdown-divider"></div>
           <%= link_to "カレンダー", user_calendars_path(current_user), class:"dropdown-item" %>
           <%= link_to "予約管理", user_calendar_user_tasks_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
           <%= link_to "スタッフ", user_calendar_staffs_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="shiftDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          シフト
+        </a>
+        <div class="dropdown-menu" aria-labelledby="shiftDropdown">
+          <%= link_to "シフト一覧", user_calendar_staffs_shifts_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
+          <%# <div class="dropdown-divider"></div> %>
         </div>
       </li>
       <li class="nav-item">

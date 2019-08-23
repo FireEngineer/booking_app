@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
 # ================================================================================================================-
   # googleカレンダー認証
   get 'google_auth/callback'
@@ -52,9 +53,15 @@ Rails.application.routes.draw do
         resources :user_tasks
         resources :task_courses
         resource :calendar_config
+        get "staffs/staffs_shifts", to: "staffs#staffs_shifts", as: "staffs_shifts"
         resources :staffs
       end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
+    end
+    resources :calendars, param: :calendar_name, only: [] do
+      resources :staffs, only: [] do
+        resources :staff_shifts
+      end
     end
   end
 
