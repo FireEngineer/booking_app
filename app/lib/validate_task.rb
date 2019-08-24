@@ -1,15 +1,15 @@
 class ValidateTask
 
-    attr_accessor :tasks, :time, :task_course
+    attr_accessor :events, :time, :task_course
 
-    def initialize(tasks, time, task_course)
-        @tasks = tasks
+    def initialize(events, time, task_course)
+        @events = events
         @time = time
         @task_course = task_course
     end
 
-    def self.call(tasks, time, task_course)
-        new(tasks, time, task_course).call
+    def self.call(events, time, task_course)
+        new(events, time, task_course).call
     end
 
     def call
@@ -17,9 +17,9 @@ class ValidateTask
         time_end = time_start.since(task_course.course_time.to_i.minutes) 
         limit = calendar_config.capacity #予約可能件数
         count = 0
-        tasks.each do |task|
-            task_s = Time.zone.parse("#{task[0]}")
-            task_e = Time.zone.parse("#{task[1]}")
+        events.each do |event|
+            task_s = Time.zone.parse("#{event[0]}")
+            task_e = Time.zone.parse("#{event[1]}")
             if task_s < time_end && time_start < task_e
                 count += 1
                 return false if count >= limit

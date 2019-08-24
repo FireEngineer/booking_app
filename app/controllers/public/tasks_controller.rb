@@ -21,6 +21,9 @@ class Public::TasksController < Public::Base
     else
       @task_course = @calendar.task_courses.first
     end
+    staff_id = params[:staff_id] || @calendar.staffs.first.id
+    @staff = Staff.find(staff_id)
+
     @user = @calendar.user
     @times = time_interval(@calendar.start_time, @calendar.end_time)
 
@@ -104,27 +107,6 @@ class Public::TasksController < Public::Base
     end
   end
 
-  # POST /tasks
-  # POST /tasks.json
-  # def create
-  #   raise
-  #   @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
-  #   @user = @calendar.user
-  #   @task = Task.new(task_params)
-  #   @task.calendar = @calendar
-
-  #   respond_to do |format|
-  #     if @task.save
-  #       flash[:success] = '予約が完了しました。'
-  #       format.html { redirect_to calendar_task_complete_path(@calendar, @task) }
-  #       format.json { render :show, status: :created, location: @task }
-  #     else
-  #       flash.now[:danger] = "予約ができませんでした。"
-  #       format.html { render :new }
-  #       format.json { render json: @task.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   def complete
   end

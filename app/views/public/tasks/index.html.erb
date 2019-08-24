@@ -19,6 +19,21 @@
       </tr>
     </tbody>
   </table>
+  <%# スタッフ選択 %>
+  <div class="dropdown">
+    <!-- 切替ボタンの設定 -->
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= @staff.name %>
+    </a>
+    <!-- ドロップメニューの設定 -->
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <% @calendar.staffs.each do |staff| %>
+        <%= link_to staff.name, calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id), class:"dropdown-item" %>
+      <% end %>
+    </div><!-- /.dropdown-menu -->
+  </div><!-- /.dropdown -->
+
+  <%# コースの選択 %>
   <div class="dropdown">
     <!-- 切替ボタンの設定 -->
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,7 +42,7 @@
     <!-- ドロップメニューの設定 -->
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <% @calendar.task_courses.each do |course| %>
-        <%= link_to course.title, calendar_tasks_path(@calendar, course_id: course.id), class:"dropdown-item" %>
+        <%= link_to course.title, calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id), class:"dropdown-item" %>
       <% end %>
     </div><!-- /.dropdown-menu -->
   </div><!-- /.dropdown -->
@@ -49,7 +64,7 @@
               <th scope="row"><%= l( time, format: :very_short) %></th>
               <% @month.each.with_index do |day, index| %>
                 <% time_str = time(day, time) %>
-                  <% if ValidateTask.call(@events, time_str, @task_course) %>
+                  <% if ValidateTask.call(@events, time_str, @task_course) && ValidateStaffShift.call(@staff.staff_shifts, time_str) %>
                     <td class="possible <%= if @wild_time.include?(time) || RegularDay.call(@calendar, day) || Time.zone.parse(time_str) < Time.current then "can_not_choice" end %>">
                       <%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id), class:"wide_link" do %>
                         <i class="far fa-circle"></i>
