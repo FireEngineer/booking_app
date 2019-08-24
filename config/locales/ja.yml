@@ -213,6 +213,7 @@ ja:
       short: "%m/%d %H:%M"
       very_short: "%H:%M"
       to_date: "%Y年%m月"
+      to_work_json: "%Y-%m-%dT%H:%M:%S"
     pm: 午後
   date:
     formats:

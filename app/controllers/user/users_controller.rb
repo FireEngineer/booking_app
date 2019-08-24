@@ -5,6 +5,11 @@ class User::UsersController < User::Base
   def dashboard
     @user = current_user
     @calendars = @user.calendars
+    @staff_shifts = Staff.first.staff_shifts.map do |shift|
+                      { start: l(shift.work_start_time, format: :to_work_json),
+                        end: l(shift.work_end_time, format: :to_work_json),
+                        rendering: 'background' }
+                    end.to_json
   end
 
   def show
