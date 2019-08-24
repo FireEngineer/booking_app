@@ -20,6 +20,7 @@ module RailsTodo
     config.i18n.default_locale = :ja # デフォルトのlocaleを日本語(:ja)にする
     config.time_zone = 'Tokyo'
     config.filter_parameters += [:client_secret, :client_id]
+    # config.active_record.default_timezone = :local
     config.paths.add 'lib', eager_load: true
   end
 end

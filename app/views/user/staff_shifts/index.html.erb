@@ -1,16 +1,24 @@
 <p id="notice"><%= notice %></p>
 
 <h1>スタッフシフト</h1>
-<%= link_to "一括設定", url:"##", class:"btn btn-secondary" %>
+<%= link_to(calendar_staff_staff_shifts_path(@calendar, @staff, month: @month.prev_month), class: "btn btn-primary") do %>
+  <i class="fas fa-angle-left"></i>
+<% end %>
+<h2 class="month_display"><%= l @month, format: :to_date %></h2>
+<%= link_to(calendar_staff_staff_shifts_path(@calendar, @staff, month: @month.next_month), class: "btn btn-primary") do %>
+  <i class="fas fa-angle-right"></i>
+<% end %>
+<div>
+  <%= link_to "一括設定", url:"##", class:"btn btn-secondary" %>
+</div>
 
-<table class="table thead-dark table-striped table-bordered table-hover">
+<table class="table table-bordered table-hover">
   <thead>
     <tr>
       <th>日付</th>
       <th>出勤時間</th>
       <th>退勤時間</th>
       <th></th>
-      
     </tr>
   </thead>
 
@@ -22,8 +30,9 @@
         <td><%= l(shift.work_end_time, format: :very_short) %></td>
         <td>
           <%#= link_to 'Show', user_staff_shift %>
-          <%= link_to 'Edit', edit_calendar_staff_staff_shift_path(@calendar, @staff, shift) %>
+          <%= link_to 'Edit', edit_calendar_staff_staff_shift_path(@calendar, @staff, shift), remote: true %>
         </td>
+        <div id="staff_shift_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
       </tr>
     <% end %>
   </tbody>
@@ -31,4 +40,3 @@
 
 <br>
 
-<%# <%= link_to 'New User Staff Shift', new_user_staff_shift_path %> %>
