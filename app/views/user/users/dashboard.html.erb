@@ -1,3 +1,12 @@
+<ul id="myTab" class="nav nav-tabs" role="tablist">
+  <% @staffs.each do |staff| %>
+    <li class="nav-item">
+      <%= link_to staff.name, user_dashboard_path(current_user, staff_id: staff), class:"nav-link #{staff.active_display(@staff)}" %>
+    </li>
+  <% end %>
+</ul>
+
+
 <div id="calendar"></div>
-<div id="data" data-date_current='{"key":"2019-08-24"}' data-staff_shifts="<%= @staff_shifts %>"></div>
+<div id="data" data-date_current='{"key":"2019-08-24"}' data-events="<%= @events %>"></div>
 

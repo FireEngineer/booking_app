@@ -1,28 +1,25 @@
 class ValidateStaffShift
 
-    attr_accessor :shifts, :time
+    attr_accessor :staff, :time
 
-    def initialize(shifts, time)
-        @shifts = shifts
+    def initialize(staff, time)
+        @staff = staff
         @time = time
     end
 
-    def self.call(shifts, time)
-        new(shifts, time).call
+    def self.call(staff, time)
+        new(staff, time).call
     end
 
     def call
-        time_start = Time.zone.parse(time)
-        time_end = Time.zone.parse(time).since(set_interval_time.minutes)
-        shifts.each do |shift|
-            shift_start = shift.work_start_time
-            shift_end = shift.work_end_time
-            if shift_start < time_end && time_start < shift_end
-                return false
-            end
-
+        shift = staff.staff_shifts.find_by(work_date: time.to_date)
+        start_time = time.to_datetime
+        end_time = time.to_datetime.since(set_interval_time.minutes)
+        if shift.work_start_time < end_time && shift.work_end_time > start_time
+            true
+        else
+            false
         end
-        true
     end
 
     private

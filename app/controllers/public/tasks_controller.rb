@@ -38,6 +38,7 @@ class Public::TasksController < Public::Base
   def new
     @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     @user = @calendar.user
+    @staff = Staff.find(params[:staff_id])
     @task_course = TaskCourse.find(params[:course_id])
     @store_member = StoreMember.new()
     @task = @store_member.tasks.build(start_time: params[:start_time],
@@ -53,6 +54,7 @@ class Public::TasksController < Public::Base
     session[:store_member] = store_member_params
     session[:task] = task_params
     session[:task_course_id] = params[:task_course_id]
+    session[:staff_id] = params[:staff_id]
     # url = "https://www.google.com"
     redirect_uri = task_create_url
     state = SecureRandom.base64(10)
@@ -86,6 +88,7 @@ class Public::TasksController < Public::Base
       @task = @store_member.tasks.build(session[:task])
       @task.calendar = @calendar
       @task.task_course = @task_course
+      @task.staff = Staff.find(session[:staff_id])
 
       respond_to do |format|
         begin

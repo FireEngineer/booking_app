@@ -1,10 +1,10 @@
 $(document).on 'turbolinks:load', ->
   date_current = $('#data').data('date_current');
-  staff_shifts = $('#data').data('staff_shifts');
+  events = $('#data').data('events');
   $('#calendar').fullCalendar {
     defaultDate: date_current["value"],
     defaultView: 'agendaWeek',
-    events: staff_shifts
+    events: events,
   }
   return
 

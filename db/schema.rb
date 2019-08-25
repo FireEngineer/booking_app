@@ -119,9 +119,11 @@ ActiveRecord::Schema.define(version: 2019_08_22_234200) do
     t.integer "store_member_id"
     t.integer "task_course_id"
     t.integer "calendar_id"
+    t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calendar_id"], name: "index_tasks_on_calendar_id"
+    t.index ["staff_id"], name: "index_tasks_on_staff_id"
     t.index ["store_member_id"], name: "index_tasks_on_store_member_id"
     t.index ["task_course_id"], name: "index_tasks_on_task_course_id"
   end

@@ -36,11 +36,11 @@
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">担当者</label>
-            <%= task.text_field :time, value: "今井翔太",  class: "form-control form_style", readonly: true %>
+            <%= task.text_field :name, value: @staff.name,  class: "form-control form_style", readonly: true %>
         </div>
       <% end %>
       <%= hidden_field_tag :task_course_id, @task_course.id %>
-
+      <%= hidden_field_tag :staff_id, @staff.id %>
       <button type="submit" class="btn btn-primary btn_style" data-confirm= "予約を行います。">予約する</button>
       <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style" %>
     <% end %>
