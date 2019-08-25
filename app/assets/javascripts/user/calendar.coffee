@@ -13,7 +13,7 @@ $(document).on 'turbolinks:load', ->
 
         return false; 
       else 
-        alert('Clicked ' + eventObj.title);
+        $(".modal").modal('show');
       
     ,
     plugins: [ 'timeGrid' ],
