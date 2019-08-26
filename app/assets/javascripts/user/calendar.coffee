@@ -13,7 +13,7 @@ $(document).on 'turbolinks:load', ->
 
         return false; 
       else 
-        $(".modal").modal('show');
+        $.get("user_tasks/#{eventObj.id}");
       
     ,
     plugins: [ 'timeGrid' ],

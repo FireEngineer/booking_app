@@ -1,0 +1,55 @@
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= task.store_member.name %>様:<%= l task.start_time, format: :middle %>~</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div><!-- /.modal-header -->
+      <div class="modal-body">
+        <% member = task.store_member %>
+        <table class="table table-sm">
+          <caption>詳細情報</caption>
+          <tbody>
+            <tr>
+              <th scope="row">名前</th>
+              <td><%= member.name %></td>
+            </tr>
+            <tr>
+              <th scope="row">性別</th>
+              <td><%= member.gender %></td>
+            </tr>
+            <tr>
+              <th scope="row">年齢</th>
+              <td><%= member.age %></td>
+            </tr>
+            <tr>
+              <th scope="row">メールアドレス</th>
+              <td><%= member.email %></td>
+            </tr>
+            <tr>
+              <th scope="row">電話番号</th>
+              <td><%= member.phone %></td>
+            </tr>
+            <tr>
+              <th scope="row">予約時間</th>
+              <td><%= l(task.start_time, format: :very_short) %>~<%= l(task.end_time, format: :very_short) %></td>
+            </tr>
+            <tr>
+              <th scope="row">予約コース</th>
+              <td><%= task.task_course.title %></td>
+            </tr>
+            <tr>
+              <th scope="row">担当者名</th>
+              <td><%= task.staff.name %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div><!-- /.modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        <button type="button" class="btn btn-primary">変更を保存</button>
+      </div><!-- /.modal-footer -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->

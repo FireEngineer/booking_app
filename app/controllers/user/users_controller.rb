@@ -54,6 +54,7 @@ class User::UsersController < User::Base
           title: "#{task.store_member.name}:#{task.task_course.title}",
           start: l(task.start_time, format: :to_work_json),
           end: l(task.end_time, format: :to_work_json),
+          id: task.id,
         }
       end rescue nil
     end

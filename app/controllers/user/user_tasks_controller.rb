@@ -3,6 +3,10 @@ class User::UserTasksController < User::Base
         @calendars = current_user.calendars
     end
 
+    def show
+        @task = Task.find(params[:id])
+    end
+
     def destroy
         @task = Task.find(params[:id])
         if @task.destroy
