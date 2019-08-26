@@ -4,12 +4,17 @@ class Public::TasksController < Public::Base
   # before_action :check_calendar_info, only: [:new, :create]
 
   require "base64"
+  require 'json'
+  require 'jwt'
+  require 'line/bot'
+  require 'net/http'
+  require 'uri'
 
   # CHANNEL_ID = Admin.first.line_bot.channel_id
   # CHANNEL_SECRET = Admin.first.line_bot.channel_secret
 
-  CHANNEL_ID = "1603141730"
-  CHANNEL_SECRET = "a59f370b529454e32f779071d9b50454"
+  CHANNEL_ID = "1613295225"
+  CHANNEL_SECRET = "f08e3e3f843cd24675469fd5b1ddf930"
 
   # GET /tasks
   # GET /tasks.json
@@ -31,8 +36,6 @@ class Public::TasksController < Public::Base
     @events = SyncCalendarService.new(task,@user,@calendar).read_event
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
-    @wild_time = []
-    @wild_day = []
   end
 
   def new
@@ -55,7 +58,6 @@ class Public::TasksController < Public::Base
     session[:task] = task_params
     session[:task_course_id] = params[:task_course_id]
     session[:staff_id] = params[:staff_id]
-    # url = "https://www.google.com"
     redirect_uri = task_create_url
     state = SecureRandom.base64(10)
     # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=normal&scope=openid%20profile"
@@ -73,11 +75,17 @@ class Public::TasksController < Public::Base
       -d "client_id=#{CHANNEL_ID}" \
       -d "client_secret=#{CHANNEL_SECRET}"`
     test = JSON.parse(test)
-    decode_response(test["id_token"])
+    decoded_id_token = JWT.decode(test["id_token"], nil, false)
+                                  # CHANNEL_SECRET,
+                                  # audience=CHANNEL_ID,
+                                  # issuer='https://access.line.me',
+                                  # algorithms=['HS256'])
     params = `curl -X GET \
             -H "Authorization: Bearer #{test["access_token"]}" \
             https://api.line.me/friendship/v1/status`
-
+    
+    user_id = decoded_id_token[0]["sub"]
+    
     params = JSON.parse(params)
     
     if params["friendFlag"] == true
@@ -90,22 +98,21 @@ class Public::TasksController < Public::Base
       @task.task_course = @task_course
       @task.staff = Staff.find(session[:staff_id])
 
-      respond_to do |format|
-        begin
-          if @store_member.save
-            flash[:success] = '予約が完了しました。'
-            format.html { redirect_to calendar_task_complete_path(@calendar, @task) }
-            format.json { render :show, status: :created, location: @task }
-          else
-            flash.now[:danger] = "予約ができませんでした。"
-
-            format.html { render :new }
-            format.json { render json: @store_member.errors, status: :unprocessable_entity }
-          end
-        rescue
-          flash[:warnning] = "この時間はすでに予約が入っております。"
-          redirect_to calendar_tasks_url(@calendar)
+      
+      begin
+        if @store_member.save
+          LineBot.push_message(@task, user_id)
+          flash[:success] = '予約が完了しました。'
+          redirect_to calendar_task_complete_path(@calendar, @task)
+          # render :show, status: :created, location: @task
+        else
+          flash.now[:danger] = "予約ができませんでした。"
+          render :new
+          # render json: @store_member.errors, status: :unprocessable_entity
         end
+      rescue
+        flash[:warnning] = "この時間はすでに予約が入っております。"
+        redirect_to calendar_tasks_url(@calendar)
       end
     end
   end
@@ -159,8 +166,8 @@ class Public::TasksController < Public::Base
     def time_interval(start_time, end_time)
       array = []
       1.step do |i|
-          array.push(Time.parse("#{start_time}:00")+5.minutes*i)
-          break if Time.parse("#{start_time}:00")+5.minutes*i == Time.parse("#{end_time}:00")
+          array.push(Time.parse("#{start_time}:00")+15.minutes*i)
+          break if Time.parse("#{start_time}:00")+15.minutes*i == Time.parse("#{end_time}:00")
       end
       array
     end
@@ -168,7 +175,7 @@ class Public::TasksController < Public::Base
     def decode_response(response)
       response.split(".").map do |res|
         decode_res = Base64.decode64(res)
-        # JSON.parse(decode_res)
+        JSON.parse(decode_res)
       end
     end
 

@@ -14,15 +14,15 @@
     <tbody>
       <tr>
         <th scope="row">お名前</th>
-        <td><%= @task.name %></td>
+        <td><%= @task.store_member.name %></td>
       </tr>
       <tr>
         <th scope="row">メールアドレス</th>
-        <td><%= @task.email %></td>
+        <td><%= @task.store_member.email %></td>
       </tr>
       <tr>
         <th scope="row">予約時間</th>
-        <td><%= reservation_date("#{@task.date_time}") %></td>
+        <td><%= reservation_date(@task) %></td>
       </tr>
     </tbody>
   </table>

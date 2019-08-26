@@ -64,14 +64,14 @@
               <th scope="row"><%= l( time, format: :very_short) %></th>
               <% @month.each.with_index do |day, index| %>
                 <% time_str = time(day, time) %>
-                  <% if ValidateTask.call(@events, time_str, @task_course) && ValidateStaffShift.call(@staff, time_str) && !(@wild_time.include?(time) || RegularDay.call(@calendar, day) || Time.zone.parse(time_str) < Time.current) %>
+                  <% if ValidateTask.call(@events, time_str, @task_course) && ValidateStaffShift.call(@staff, time_str) && !RegularDay.call(@calendar, day) %>
                     <td class="possible">
                       <%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: @staff.id), class:"wide_link btn btn-primary" do %>
                         <i class="far fa-circle"></i>
                       <% end %>
                     </td>
                   <% else %>
-                    <td class="impossible <%= if @wild_time.include?(time) || RegularDay.call(@calendar, day) || Time.zone.parse(time_str) < Time.current then "can_not_choice" end %>">
+                    <td class="impossible">
                       <i class="fas fa-times"></i>
                     </td>
                   <% end %>

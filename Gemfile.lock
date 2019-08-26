@@ -328,6 +328,7 @@ DEPENDENCIES
   google-api-client
   jbuilder (~> 2.5)
   jquery-rails
+  jwt
   kaminari (~> 0.17.0)
   line-bot-api
   listen (>= 3.0.5, < 3.2)
