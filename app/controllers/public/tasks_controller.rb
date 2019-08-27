@@ -48,10 +48,12 @@ class Public::TasksController < Public::Base
                                       end_time: end_time(params[:start_time], @task_course))
   end
 
+  # ラインログインボタンでこのアクションが呼ばれる
   def redirect_register_line
     @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     @user = @calendar.user
-
+    
+    # セッションにフォーム値を保持して、ラインログイン後レコード保存
     session[:calendar] = @calendar.id
     session[:user] = @user.id
     session[:store_member] = store_member_params
@@ -60,35 +62,22 @@ class Public::TasksController < Public::Base
     session[:staff_id] = params[:staff_id]
     redirect_uri = task_create_url
     state = SecureRandom.base64(10)
-    # url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=normal&scope=openid%20profile"
+    # このURLがラインログインへのURL
     url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{CHANNEL_ID}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
     redirect_to url
   end
 
   def task_create
-    @calendar = Calendar.find(session[:calendar])
-    test = `curl -X POST https://api.line.me/oauth2/v2.1/token \
-      -H 'Content-Type: application/x-www-form-urlencoded' \
-      -d 'grant_type=authorization_code' \
-      -d "code=#{params[:code]}" \
-      -d 'redirect_uri=http://localhost:3000/task_create' \
-      -d "client_id=#{CHANNEL_ID}" \
-      -d "client_secret=#{CHANNEL_SECRET}"`
-    test = JSON.parse(test)
-    decoded_id_token = JWT.decode(test["id_token"], nil, false)
-                                  # CHANNEL_SECRET,
-                                  # audience=CHANNEL_ID,
-                                  # issuer='https://access.line.me',
-                                  # algorithms=['HS256'])
-    params = `curl -X GET \
-            -H "Authorization: Bearer #{test["access_token"]}" \
-            https://api.line.me/friendship/v1/status`
-    
-    user_id = decoded_id_token[0]["sub"]
-    
-    params = JSON.parse(params)
-    
-    if params["friendFlag"] == true
+    get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code])
+    # アクセストークンを使用して、BOTとお客との友達関係を取得
+    friend_response = `curl -X GET \
+                      -H "Authorization: Bearer #{get_access_token["access_token"]}" \
+                      https://api.line.me/friendship/v1/status`
+    friend_response = JSON.parse(friend_response)
+    user_id = decode_response(get_access_token)
+
+    if friend_response["friendFlag"] == true
+      @calendar = Calendar.find(session[:calendar])
       @user = @calendar.user
       @task_course = TaskCourse.find(session[:task_course_id])
       @store_member = StoreMember.new(session[:store_member])
@@ -98,17 +87,14 @@ class Public::TasksController < Public::Base
       @task.task_course = @task_course
       @task.staff = Staff.find(session[:staff_id])
 
-      
       begin
         if @store_member.save
           LineBot.push_message(@task, user_id)
           flash[:success] = '予約が完了しました。'
           redirect_to calendar_task_complete_path(@calendar, @task)
-          # render :show, status: :created, location: @task
         else
           flash.now[:danger] = "予約ができませんでした。"
           render :new
-          # render json: @store_member.errors, status: :unprocessable_entity
         end
       rescue
         flash[:warnning] = "この時間はすでに予約が入っております。"
@@ -138,14 +124,12 @@ class Public::TasksController < Public::Base
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_task
       @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
       @user = @calendar.user
       @task = Task.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def store_member_params
       params.require(:store_member).permit(:name, :email, :phone, :gender, :age, tasks_attributes: [:start_time, :end_time])
     end
@@ -173,10 +157,8 @@ class Public::TasksController < Public::Base
     end
 
     def decode_response(response)
-      response.split(".").map do |res|
-        decode_res = Base64.decode64(res)
-        JSON.parse(decode_res)
-      end
+      decoded_id_token = JWT.decode(response["id_token"], nil, false) #gem 'jwt'を利用して、デコードして、user_idを取得
+      return user_id = decoded_id_token[0]["sub"]
     end
 
     def end_time(start_time, task_course)
