@@ -19,9 +19,9 @@
           <%= link_to "ダッシュボード", user_calendar_dashboard_path(current_user, @calendar), class:"dropdown-item" %>
           <%= link_to "ユーザー", user_path(current_user), class:"dropdown-item" %>
           <div class="dropdown-divider"></div>
-          <%= link_to "カレンダー", user_calendars_path(current_user), class:"dropdown-item" %>
-          <%= link_to "予約管理", user_calendar_user_tasks_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
-          <%= link_to "スタッフ", user_calendar_staffs_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
+          <%= link_to "カレンダー", user_calendar_path(current_user, @calendar), class:"dropdown-item" %>
+          <%= link_to "予約管理", user_calendar_user_tasks_path(current_user, @calendar), class:"dropdown-item" %>
+          <%= link_to "スタッフ", user_calendar_staffs_path(current_user, @calendar), class:"dropdown-item" %>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -37,10 +37,11 @@
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-    <%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calender), class:"form-inline my-2 my-lg-0" do |f| %>
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calendar), class:"form-inline my-2 my-lg-0" do |f| %>
+      <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2" %>
+      <%= f.submit "検索", class:"btn btn-outline-success my-2 my-sm-0" %>
+      <%# <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> %>
     <% end %>
   </div>
 </nav>

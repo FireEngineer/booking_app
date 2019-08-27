@@ -1,7 +1,7 @@
 class User::StaffShiftsController < User::Base
   before_action :set_staff_shift, only: [:edit, :update, :destroy]
   before_action :set_staff, only: [:index, :edit, :update, :destroy]
-  before_action :set_calendar, only: [:index, :edit, :update, :destroy]
+  before_action :calendar, only: [:index, :edit, :update, :destroy]
 
   # GET /user/staff_shifts
   # GET /user/staff_shifts.json
@@ -47,10 +47,6 @@ class User::StaffShiftsController < User::Base
 
     def set_staff
       @staff = Staff.find(params[:staff_id])
-    end
-
-    def set_calendar
-      @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

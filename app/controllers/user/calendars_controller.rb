@@ -1,15 +1,14 @@
 class User::CalendarsController < User::Base
   before_action :authenticate_user!
+  before_action :calendar
   # before_action :check_calendar_info
 
-  def index
-    @calendars = current_user.calendars
+  def show
     @user = current_user
   end
 
   def update
     @user = current_user
-    @calendar = Calendar.find_by(calendar_name: params[:calendar_name])
     if @calendar.update(params_calendar)
       flash[:succese] = "カレンダーの設定を更新しました。"
       redirect_to user_calendars_url(@user)

@@ -1,6 +1,6 @@
-<%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calender) do |f| %>
+<%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calendar) do |f| %>
   <%= f.label :store_member_name_or_store_member_phone, "名前or電話番号" %>
-  <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control col" %>
+  <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2" %>
   <%= f.submit "検索", class:"btn btn-primary" %>
 <% end %>
 
@@ -27,7 +27,7 @@
           <td><%= task.store_member.email %></td>
           <td><%= task.store_member.phone %></td>
           <td><%= reservation_date(task) %></td>
-          <td><%= link_to "キャンセル", user_calendar_user_task_path(current_user, @calender, task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
+          <td><%= link_to "キャンセル", user_calendar_user_task_path(current_user, @calendar, task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
           <td><%= task.created_at %></td>
         </tr>
       <% end %>

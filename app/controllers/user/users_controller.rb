@@ -1,9 +1,11 @@
 class User::UsersController < User::Base
   before_action :authenticate_user!
   before_action :check_has_calendar
+  before_action :calendar
 
   def dashboard
-    @calendar = Calendar.find_by(calenar_name: params[:calendar_calendar_name])
+    @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        @q = Task.with_store_member.ransack(params[:q])
     @staffs = @calendar.staffs
     @staff = Staff.find_by(id: params[:staff_id]) || @calendar.staffs.first
     staff_shifts = staff_shifts(@staff)

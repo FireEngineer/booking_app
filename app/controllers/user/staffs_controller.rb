@@ -1,5 +1,4 @@
 class User::StaffsController < User::Base
-
   before_action :staff, only: %i(show edit update destroy)
   before_action :calendar
 
@@ -59,9 +58,5 @@ class User::StaffsController < User::Base
 
       def staff
         @staff = Staff.find(params[:id])
-      end
-
-      def calendar
-        @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
       end
 end
