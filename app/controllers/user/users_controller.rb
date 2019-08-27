@@ -3,7 +3,7 @@ class User::UsersController < User::Base
   before_action :check_has_calendar
 
   def dashboard
-    @calendar = current_user.calendars.first
+    @calendar = Calendar.find_by(calenar_name: params[:calendar_calendar_name])
     @staffs = @calendar.staffs
     @staff = Staff.find_by(id: params[:staff_id]) || @calendar.staffs.first
     staff_shifts = staff_shifts(@staff)

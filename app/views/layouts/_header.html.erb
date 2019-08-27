@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <%= link_to "ダッシュボード", user_dashboard_path(current_user), class:"nav-link" %>
+        <%= link_to "ダッシュボード", user_calendar_dashboard_path(current_user, @calendar), class:"nav-link" %>
       </li>
       <li class="nav-item">
         <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"nav-link" %>
@@ -16,7 +16,7 @@
           設定
         </a>
         <div class="dropdown-menu" aria-labelledby="settingDropdown">
-          <%= link_to "ダッシュボード", user_dashboard_path(current_user), class:"dropdown-item" %>
+          <%= link_to "ダッシュボード", user_calendar_dashboard_path(current_user, @calendar), class:"dropdown-item" %>
           <%= link_to "ユーザー", user_path(current_user), class:"dropdown-item" %>
           <div class="dropdown-divider"></div>
           <%= link_to "カレンダー", user_calendars_path(current_user), class:"dropdown-item" %>
@@ -38,8 +38,9 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
+    <%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calender), class:"form-inline my-2 my-lg-0" do |f| %>
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <% end %>
   </div>
 </nav>
