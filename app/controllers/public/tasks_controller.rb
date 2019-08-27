@@ -63,19 +63,19 @@ class Public::TasksController < Public::Base
     redirect_uri = task_create_url
     state = SecureRandom.base64(10)
     # このURLがラインログインへのURL
-    url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{CHANNEL_ID}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&prompt=consent&bot_prompt=normal"
+    url = LineAccess.redirect_url(CHANNEL_ID, redirect_uri, state)
     redirect_to url
   end
 
   def task_create
+    # アクセストークンを取得
     get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code])
     # アクセストークンを使用して、BOTとお客との友達関係を取得
-    friend_response = `curl -X GET \
-                      -H "Authorization: Bearer #{get_access_token["access_token"]}" \
-                      https://api.line.me/friendship/v1/status`
-    friend_response = JSON.parse(friend_response)
-    user_id = decode_response(get_access_token)
+    friend_response = LineAccess.get_friend_relation(get_access_token["access_token"])
+    # アクセストークンのIDトークンを"gem jwt"を利用してデコード
+    user_id = LineAccess.decode_response(get_access_token)
 
+    # BOTと友達かどうか確認する。
     if friend_response["friendFlag"] == true
       @calendar = Calendar.find(session[:calendar])
       @user = @calendar.user
@@ -100,6 +100,7 @@ class Public::TasksController < Public::Base
         flash[:warnning] = "この時間はすでに予約が入っております。"
         redirect_to calendar_tasks_url(@calendar)
       end
+    
     end
   end
 
@@ -154,11 +155,6 @@ class Public::TasksController < Public::Base
           break if Time.parse("#{start_time}:00")+15.minutes*i == Time.parse("#{end_time}:00")
       end
       array
-    end
-
-    def decode_response(response)
-      decoded_id_token = JWT.decode(response["id_token"], nil, false) #gem 'jwt'を利用して、デコードして、user_idを取得
-      return user_id = decoded_id_token[0]["sub"]
     end
 
     def end_time(start_time, task_course)
