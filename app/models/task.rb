@@ -6,11 +6,13 @@ class Task < ApplicationRecord
   belongs_to :calendar
   belongs_to :staff
 
-
-
   after_create :sync_create, :line_send, :mail_send
   after_update :sybc_update
   after_destroy :sybc_delete
+
+  def self.with_store_member
+    joins(:store_member).select('tasks.*, store_members.*')
+  end
 
   def calendar_event_uid
     unique_id = "#{self.calendar.user.id}todo#{self.id}"
@@ -20,19 +22,19 @@ class Task < ApplicationRecord
   private
 
   def sync_create
-    SyncCalendarService.new(self,self.calendar.user,self.calendar).create_event
+    SyncCalendarService.new(self, self.calendar.user, self.calendar).create_event
   end
 
   def sybc_update
-    SyncCalendarService.new(self,self.calendar.user,self.calendar).update_event
+    SyncCalendarService.new(self, self.calendar.user, self.calendar).update_event
   end
 
   def sybc_delete
-    SyncCalendarService.new(self,self.calendar.user,self.calendar).delete_event
+    SyncCalendarService.new(self, self.calendar.user, self.calendar).delete_event
   end
 
   def line_send
-    LineNotifyService.new(self,self.calendar.user,self.calendar).send
+    LineNotifyService.new(self, self.calendar.user, self.calendar).send
   end
 
   def mail_send

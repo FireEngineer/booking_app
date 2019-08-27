@@ -1,6 +1,8 @@
 class User::UserTasksController < User::Base
     def index
-        @calendars = current_user.calendars
+        @calender = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        @q = Task.with_store_member.ransack(params[:q])
+        @tasks = @q.result(distinct: true)
     end
 
     def show

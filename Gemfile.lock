@@ -183,6 +183,8 @@ GEM
     os (1.0.1)
     payjp (0.0.7)
       rest-client (~> 2.0)
+    polyamorous (2.3.0)
+      activerecord (>= 5.0)
     popper_js (1.14.5)
     public_suffix (3.1.1)
     puma (3.12.1)
@@ -224,6 +226,12 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
     rake (12.3.3)
+    ransack (2.3.0)
+      actionpack (>= 5.0)
+      activerecord (>= 5.0)
+      activesupport (>= 5.0)
+      i18n
+      polyamorous (= 2.3.0)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -340,6 +348,7 @@ DEPENDENCIES
   rails (~> 5.2.3)
   rails-erd
   rails-i18n (~> 5.1)
+  ransack
   redis-namespace
   sass-rails (~> 5.0)
   selenium-webdriver
