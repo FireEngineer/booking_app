@@ -19,7 +19,7 @@
           <td><%= task.store_member.name %></td>
           <td><%= task.store_member.email %></td>
           <td><%= task.store_member.phone %></td>
-          <td><%= time_display(task.start_time) %></td>
+          <td><%= reservation_date(task) %></td>
           <td><%= link_to "キャンセル", user_calendar_user_task_path(current_user, calendar, task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
           <td><%= task.created_at %></td>
         </tr>
