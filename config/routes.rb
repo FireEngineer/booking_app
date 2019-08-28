@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   # public権限
   scope module: :public do
     get "task_create", to: "tasks#task_create", as: :task_create
+    get "task_create_without_line", to: "tasks#task_create_without_line", as: :task_create_without_line
     resources :calendars, param: :calendar_name, only: [] do
       resources :tasks, except: [:show]
         get "tasks/:id/complete", to: "tasks#complete", as: :task_complete

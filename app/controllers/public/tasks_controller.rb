@@ -53,6 +53,35 @@ class Public::TasksController < Public::Base
     @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
     @user = @calendar.user
     
+    if params[:commit] == "そのまま予約する"
+      @task_course = TaskCourse.find(params[:task_course_id])
+      # 電話番号で、既存の会員データがあれば、そのデータを使用する
+      if StoreMember.find_by(phone: task_params["phone"])
+        @store_member = StoreMember.find_by(phone: task_params["phone"])
+      else
+        @store_member = StoreMember.new(store_member_params)
+        @store_member.calendar = @calendar
+      end
+      @task = @store_member.tasks.build(task_params)
+      @task.calendar = @calendar
+      @task.task_course = @task_course
+      @task.staff = Staff.find(params[:staff_id])
+      begin
+        if @store_member.save
+          flash[:success] = '予約が完了しました。'
+          redirect_to calendar_task_complete_path(@calendar, @task)
+          return
+        else
+          flash.now[:danger] = "予約ができませんでした。"
+          render :new
+          return
+        end
+      rescue
+        flash[:warnning] = "この時間はすでに予約が入っております。"
+        redirect_to calendar_tasks_url(@calendar)
+        return
+      end
+    end
     # セッションにフォーム値を保持して、ラインログイン後レコード保存
     session[:calendar] = @calendar.id
     session[:user] = @user.id
@@ -73,15 +102,20 @@ class Public::TasksController < Public::Base
     # アクセストークンを使用して、BOTとお客との友達関係を取得
     friend_response = LineAccess.get_friend_relation(get_access_token["access_token"])
     # アクセストークンのIDトークンを"gem jwt"を利用してデコード
-    user_id = LineAccess.decode_response(get_access_token)
+    line_user_id = LineAccess.decode_response(get_access_token)
 
     # BOTと友達かどうか確認する。
     if friend_response["friendFlag"] == true
       @calendar = Calendar.find(session[:calendar])
       @user = @calendar.user
       @task_course = TaskCourse.find(session[:task_course_id])
-      @store_member = StoreMember.new(session[:store_member])
-      @store_member.calendar = @calendar
+      # 電話番号で、既存の会員データがあれば、そのデータを使用する
+      if StoreMember.find_by(phone: session[:store_member]["phone"])
+        @store_member = StoreMember.find_by(phone: session[:store_member]["phone"])
+      else
+        @store_member = StoreMember.new(session[:store_member])
+        @store_member.calendar = @calendar
+      end
       @task = @store_member.tasks.build(session[:task])
       @task.calendar = @calendar
       @task.task_course = @task_course
@@ -89,7 +123,8 @@ class Public::TasksController < Public::Base
 
       begin
         if @store_member.save
-          LineBot.push_message(@task, user_id)
+          LineBot.push_message(@task, line_user_id)
+          @store_member.update(line_user_id: line_user_id)
           flash[:success] = '予約が完了しました。'
           redirect_to calendar_task_complete_path(@calendar, @task)
         else
@@ -102,6 +137,9 @@ class Public::TasksController < Public::Base
       end
     
     end
+  end
+
+  def task_create_without_line
   end
 
 
