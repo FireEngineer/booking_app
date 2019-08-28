@@ -1,3 +1,31 @@
+<button class="btn btn-primary" id="button">
+test
+</button>
+
+<div id="wrapper">
+	<!--
+	All your content must go here.
+	This wrapper must be relative positioned, unless Simple-Sidebar won't work properly.
+	* Every POSITION-FIXED ELEMENT must be positioned outside of this wrapper.
+	* Every POSITION-ABSOLUTE ELEMENT must be positioned inside a POSITION-RELATIVE div.
+	-->
+</div>
+
+<div id="navbar">
+	<!--
+	#navbar is positioned fixed.
+
+	It does not matter what element #toggle-sidebar is, give it a selector (in this example #toggle-sidebar).
+	-->
+	<span id="toggle-sidebar" class="button icon"></span>
+</div>
+
+<div id="sidebar">
+	<a class="close-sidebar" href="#">Link</a>
+	<a class="close-sidebar" href="#">Link</a>
+	<a class="close-sidebar" href="#">Link</a>
+	<a class="close-sidebar" href="#">Link</a>
+</div>
 <ul id="myTab" class="nav nav-tabs" role="tablist">
   <% @staffs.each do |staff| %>
     <li class="nav-item">
@@ -12,4 +40,26 @@
 
 <div id="user_task_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
-
+<script>
+    $('#sidebar').simpleSidebar({
+        opener: '#button',
+        wrapper: '#wrapper',
+        sidebar: {
+            align: 'right', //or 'left' - This option can be ignored, the sidebar will authomatically align to right.
+            width: 300, //You can ingnore this option, the sidebar will authomatically size itselt to 300px.
+            closingLinks: '.close-sidebar', // If you ignore this option, the plugin will lool for all links and can be buggy. Choose a class for every object inside the sidebar that once clicked will close the sidebar.
+            css: {
+                //Here you can add more css rules but you should use your own stylesheet.
+                zIndex: 3000,
+                background: "red", //Choose the amount of zIndex you want. It must be the higher zIndex number.
+            }
+        },
+        mask: {                             //コンテンツにかかるマスクの設定
+        style: {
+            backgroundColor: "red",    //カラー
+            opacity: 0.9,               //透明度
+            filter: 'Alpha(opacity=90)'
+        }
+    }
+    });
+</script>
