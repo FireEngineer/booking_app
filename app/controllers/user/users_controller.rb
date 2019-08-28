@@ -35,28 +35,5 @@ class User::UsersController < User::Base
         redirect_to google_auth_ident_form_url
       end
     end
-    
-    # スタッフのシフトのJSON
-    def staff_shifts(staff)
-      staff.staff_shifts.map do |shift|
-        { 
-          start: l(shift.work_start_time, format: :to_work_json),
-          end: l(shift.work_end_time, format: :to_work_json),
-          rendering: 'background' ,
-        }
-      end rescue nil
-    end
-    
-    # スタッフのタスクのJSON
-    def staff_tasks(staff)
-      staff.tasks.map do |task|
-        { 
-          title: "#{task.store_member.name}:#{task.task_course.title}",
-          start: l(task.start_time, format: :to_work_json),
-          end: l(task.end_time, format: :to_work_json),
-          id: task.id,
-        }
-      end rescue nil
-    end
 
 end

@@ -13,7 +13,11 @@
   </head>
   <body>
     <header>
-      <%= render "layouts/header" %>
+      <% if controller.controller_name == "users" %>
+        <%= render "layouts/header_user" %>
+      <% else %>
+        <%= render "layouts/header" %>
+      <% end %>
     </header>
     <%= render 'layouts/user_layout' %>
   </body>
