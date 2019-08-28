@@ -38,19 +38,6 @@
           <td><%= f.text_field :calendar_name, class: "form-control" %></td>
           <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
         </tr>
-        
-        <%= f.fields_for :line_bot do |f| %>
-          <tr>
-            <th scope="row">LINE_Channel_ID</th>
-            <td><%= f.text_field :channel_id, class: "form-control" %></td>
-            <td>連携するLINE_loginのIDです。</td>
-          </tr>
-          <tr>
-            <th scope="row">LINE_Channel_Secret</th>
-            <td><%= f.text_field :channel_secret, class: "form-control" %></td>
-            <td>連携するLINE_loginのsecretです。</td>
-          </tr>
-        <% end %>
         <tr>
           <th scope="row"><%= f.submit "更新", class: "btn btn-primary" %></th>
           <td></td>

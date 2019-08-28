@@ -3,6 +3,7 @@ class User::TopController < User::Base
     before_action :calendar
 
   def dashboard
+    @user = current_user
     @staffs = @calendar.staffs
     @staff = Staff.find_by(id: params[:staff_id]) || @calendar.staffs.first
     staff_shifts = staff_shifts(@staff)

@@ -1,0 +1,85 @@
+<div id="sidebar">
+    <head>
+        <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Bootstrap</span>
+        </nav>
+    </head>
+	<%= form_for calendar, url: user_calendar_path(current_user, calendar) do |f| %>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>設定値</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">表示開始日</th>
+          <td><%= f.number_field :start_date, class: "form-control" %></td>
+        </tr>
+        <tr>
+          <th scope="row">表示終了日</th>
+          <td><%= f.number_field :end_date, class: "form-control" %></td>
+        </tr>
+        <tr>
+          <th scope="row">表示期間</th>
+          <td><%= f.number_field :display_week_term, class: "form-control" %></td>
+        </tr>
+        <tr>
+          <th scope="row">表示開始時間</th>
+          <td><%= f.number_field :start_time, class: "form-control" %></td>
+        </tr>
+        <tr>
+          <th scope="row">表示終了時間</th>
+          <td><%= f.number_field :end_time, class: "form-control" %></td>
+        </tr>
+        <tr>
+          <th scope="row">表示カレンダー名</th>
+          <td><%= f.text_field :calendar_name, class: "form-control" %></td>
+        </tr>
+        
+        <%= f.fields_for :line_bot do |f| %>
+          <tr>
+            <th scope="row">LINE_Channel_ID</th>
+            <td><%= f.text_field :channel_id, class: "form-control" %></td>
+          </tr>
+          <tr>
+            <th scope="row">LINE_Channel_Secret</th>
+            <td><%= f.text_field :channel_secret, class: "form-control" %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th scope="row"><%= f.submit "更新", class: "btn btn-primary" %></th>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+<% end %>
+</div>
+
+
+
+<script>
+    $('#sidebar').simpleSidebar({
+        opener: '#button',
+        wrapper: '#wrapper',
+        sidebar: {
+            align: 'right', //or 'left' - This option can be ignored, the sidebar will authomatically align to right.
+            width: 300, //You can ingnore this option, the sidebar will authomatically size itselt to 300px.
+            closingLinks: '.close-sidebar', // If you ignore this option, the plugin will lool for all links and can be buggy. Choose a class for every object inside the sidebar that once clicked will close the sidebar.
+            css: {
+                //Here you can add more css rules but you should use your own stylesheet.
+                zIndex: 3000,
+                background: "white", //Choose the amount of zIndex you want. It must be the higher zIndex number.
+            }
+        },
+        mask: {                             //コンテンツにかかるマスクの設定
+        style: {
+            backgroundColor: "red",    //カラー
+            opacity: 0.9,               //透明度
+            filter: 'Alpha(opacity=90)'
+        }
+    }
+    });
+</script>
