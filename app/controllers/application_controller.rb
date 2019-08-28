@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     elsif !current_user.client_id
       google_auth_ident_form_path
     else
-      user_dashboard_path(current_user) # ログイン後に遷移するpathを設定
+      user_calendar_dashboard_path(current_user, current_user.calendars.first) # ログイン後に遷移するpathを設定
     end
   end
 

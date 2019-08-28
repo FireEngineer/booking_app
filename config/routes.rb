@@ -47,9 +47,9 @@ Rails.application.routes.draw do
   # user権限
   scope module: :user do
     resources :users do
-      get 'user_tasks/:id', to: 'user_tasks#show'
       patch "calendar/:id/update", to: "calendars#update"
       resources :calendars, param: :calendar_name do
+        get 'user_tasks/:id', to: 'user_tasks#show'
         get "dashboard", to: "users#dashboard"
         resources :user_tasks, except: [:show]
         resources :task_courses
