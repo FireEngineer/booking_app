@@ -24,6 +24,11 @@ $(document).on 'turbolinks:load', ->
       center: 'title',
       right: 'agendaDay,agendaWeek,listDay,listWeek,listMonth'
     },
+    businessHours: {
+      dow: [ 1, 2, 3, 4 ],
+      start: '10:00',
+      end: '18:00',
+    },
     events: events,
   }
   return
