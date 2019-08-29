@@ -3,6 +3,9 @@
 </button>
 
 <ul id="myTab" class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <%= link_to "全体", user_calendar_dashboard_path(current_user, @calendar), class:"nav-link #{"active" unless @staff}" %>
+  </li>
   <% @staffs.each do |staff| %>
     <li class="nav-item">
       <%= link_to staff.name, user_calendar_dashboard_path(current_user, @calendar, staff_id: staff), class:"nav-link #{staff.active_display(@staff)}" %>

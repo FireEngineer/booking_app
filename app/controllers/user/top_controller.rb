@@ -5,7 +5,7 @@ class User::TopController < User::Base
   def dashboard
     @user = current_user
     @staffs = @calendar.staffs
-    @staff = Staff.find_by(id: params[:staff_id]) || @calendar.staffs.first
+    @staff = Staff.find_by(id: params[:staff_id])
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff)
     @events = (staff_shifts + staff_tasks)&.to_json rescue nil
