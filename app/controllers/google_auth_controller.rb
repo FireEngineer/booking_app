@@ -12,7 +12,7 @@ class GoogleAuthController < ApplicationController
     calendar = current_user.calendars.build(calendar_id: _calendar.id)
     current_user.save
     calendar.save
-    redirect_to calendar_tasks_path(calendar)
+    redirect_to user_calendar_dashboard_url(current_user, calendar)
   end
 
   def redirect

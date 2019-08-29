@@ -8,7 +8,7 @@ class User::TopController < User::Base
     @staff = Staff.find_by(id: params[:staff_id]) || @calendar.staffs.first
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff)
-    @events = (staff_shifts + staff_tasks)&.to_json
+    @events = (staff_shifts + staff_tasks)&.to_json rescue nil
   end
 
   private
