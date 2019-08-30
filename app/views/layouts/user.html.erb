@@ -13,8 +13,10 @@
   </head>
   <body>
     <header>
-      <% if controller.controller_name == "users" %>
+      <% if ["users"].include?(controller.controller_name) %>
         <%= render "layouts/header_user" %>
+      <% elsif ["introductions"].include?(controller.controller_name) %>
+        
       <% else %>
         <%= render "layouts/header" %>
       <% end %>

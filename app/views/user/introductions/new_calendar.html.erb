@@ -1,0 +1,29 @@
+<div>
+  <h1>カレンダー初期設定</h1>
+  <p>店舗の名前を設定します。後から変更可能です。</p>
+</div>
+
+
+<%= form_for @calendar, url: introductions_create_calendar_path do |f| %>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>設定値</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">表示カレンダー名</th>
+          <td><%= f.text_field :calendar_name, class: "form-control" %></td>
+          <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
+        </tr>
+        <tr>
+          <th scope="row"><%= f.submit "登録", class: "btn btn-primary" %></th>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+<% end %>

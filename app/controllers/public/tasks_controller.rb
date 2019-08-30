@@ -1,7 +1,7 @@
 class Public::TasksController < Public::Base
   before_action :set_task, only: [:complete, :destroy]
-  before_action :authenticate_user!
   # before_action :check_calendar_info, only: [:new, :create]
+  before_action :calendar_is_released?
 
   require "base64"
   require 'json'
@@ -33,7 +33,9 @@ class Public::TasksController < Public::Base
     @times = time_interval(@calendar.start_time, @calendar.end_time)
 
     @today = Time.current
-    @events = SyncCalendarService.new(task,@user,@calendar).read_event
+    # DBタスクデータを引き出す
+    @events = @staff.tasks.map {|task| [task.start_time, task.end_time]}
+    # @events = SyncCalendarService.new(task,@user,@calendar).read_event
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
   end

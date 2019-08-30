@@ -22,15 +22,15 @@ class Task < ApplicationRecord
   private
 
   def sync_create
-    SyncCalendarService.new(self, self.calendar.user, self.calendar).create_event
+    # SyncCalendarService.new(self, self.calendar.user, self.calendar).create_event
   end
 
   def sybc_update
-    SyncCalendarService.new(self, self.calendar.user, self.calendar).update_event
+    # SyncCalendarService.new(self, self.calendar.user, self.calendar).update_event
   end
 
   def sybc_delete
-    SyncCalendarService.new(self, self.calendar.user, self.calendar).delete_event
+    # SyncCalendarService.new(self, self.calendar.user, self.calendar).delete_event
   end
 
   def line_send

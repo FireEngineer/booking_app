@@ -43,6 +43,8 @@ Rails.application.routes.draw do
         get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
         post "tasks/redirect_register_line", to: "tasks#redirect_register_line", as: :redirect_line
     end
+    # カレンダーが公開してない場合のページ
+    get "not_released_page", to: "templetes#not_released_page"
   end
 # ================================================================================================================-
   # user権限
@@ -65,6 +67,13 @@ Rails.application.routes.draw do
         resources :staff_shifts
       end
     end
+    # =====userがアカウント登録した時の最初の設定ページ
+    get "introductions/new_calendar", to: "introductions#new_calendar"
+    post "introductions/create_calendar", to: "introductions#create_calendar"
+    # get "introductions/new_calendar", to: "introductions#new_calendar"
+    # post "introductions/create_calendar", to: "introductions#create_calendar"
+    # =========
+
   end
 
 

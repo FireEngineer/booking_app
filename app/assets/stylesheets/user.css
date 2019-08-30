@@ -12,4 +12,5 @@
  *
  *= require fullcalendar
  *= require_tree ./user
+ *= require_tree ./share
  */

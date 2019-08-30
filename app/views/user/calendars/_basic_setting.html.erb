@@ -38,11 +38,10 @@
           <td><%= f.text_field :calendar_name, class: "form-control" %></td>
           <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
         </tr>
-        <tr>
-          <th scope="row"><%= f.submit "更新", class: "btn btn-primary" %></th>
-          <td></td>
-          <td></td>
-        </tr>
       </tbody>
     </table>
+    <%= f.label :is_released, "公開する場合はチェックを入れてください" %>
+    <%= f.check_box :is_released, {} , "true", "false" %>
+    <br>
+    <%= f.submit "更新", class: "btn btn-primary" %>
 <% end %>

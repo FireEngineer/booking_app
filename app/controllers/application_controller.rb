@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if current_admin
       dash_board_top_path(resource)
-    elsif !current_user.client_id
-      google_auth_ident_form_path
+    elsif current_user.calendars.size == 0
+      introductions_new_calendar_path
     else
       user_calendar_dashboard_path(current_user, current_user.calendars.first) # ログイン後に遷移するpathを設定
     end
