@@ -21,7 +21,11 @@ class Task < ApplicationRecord
   end
 
   def check_time_original
-    unless Task.where("start_time < ?", self.end_time).where("end_time > ?", self.start_time).where(staff_id: self.staff_id).empty?
+    unless Task.where("start_time < ?", self.end_time)
+                .where("end_time > ?", self.start_time)
+                .where(staff_id: self.staff_id)
+                .where.not(id: self.id)
+                .empty?
       errors.add(:start_time, "予約時間が重複しています") # エラーメッセージ
     end
   end

@@ -8,7 +8,7 @@ class User::TopController < User::Base
     @staff = Staff.find_by(id: params[:staff_id])
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff)
-    @events = (staff_shifts + staff_tasks)&.to_json rescue nil
+    @events = (staff_shifts + staff_tasks)&.to_json rescue calendar_tasks(@calendar).to_json
   end
 
   private
@@ -34,5 +34,15 @@ class User::TopController < User::Base
           }
         end rescue nil
       end
-
+      
+      def calendar_tasks(calendar)
+        calendar.tasks.map do |task|
+          { 
+            title: "#{task.store_member.name}:#{task.task_course.title}",
+            start: l(task.start_time, format: :to_work_json),
+            end: l(task.end_time, format: :to_work_json),
+            id: task.id,
+          }
+        end
+      end
 end

@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
     new_user_session_path # ログアウト後に遷移するpathを設定
   end
 
+  def end_time(start_time, task_course)
+    t = Time.parse(start_time)
+    t.since(task_course.course_time.minutes)
+  end
+
 
   private
   def check_calendar_info
