@@ -1,6 +1,5 @@
 class Public::TasksController < Public::Base
   before_action :set_task, only: [:complete, :destroy]
-  # before_action :check_calendar_info, only: [:new, :create]
   before_action :calendar_is_released?
 
   require "base64"
@@ -47,7 +46,11 @@ class Public::TasksController < Public::Base
     @task_course = TaskCourse.find(params[:course_id])
     @store_member = StoreMember.new()
     @task = @store_member.tasks.build(start_time: params[:start_time],
-                                      end_time: end_time(params[:start_time], @task_course))
+                                      end_time: end_time(params[:start_time], @task_course),
+                                      staff_id: @staff.id,
+                                      task_course_id: @task_course.id,
+                                      calendar_id: @calendar.id)
+    check_task_validation(@task)
   end
 
   # ラインログインボタンでこのアクションが呼ばれる
@@ -179,14 +182,12 @@ class Public::TasksController < Public::Base
       params.require(:task).permit(:start_time, :end_time)
     end
 
-    # def check_calendar_info
-    #   calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
-    #   task = calendar.tasks.build(start_time: params[:start_time])
-    #   if task.invalid?
-    #     flash[:warnning] = "この時間はすでに予約が入っております。"
-    #     redirect_to calendar_tasks_url(params[:calendar_calendar_name])
-    #   end
-    # end
+    def check_task_validation(task)
+      if task.invalid?
+        flash[:warnning] = "この時間はすでに予約が入っております。"
+        redirect_to calendar_tasks_url(params[:calendar_calendar_name])
+      end
+    end
 
     def time_interval(start_time, end_time)
       array = []

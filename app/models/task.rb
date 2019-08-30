@@ -1,6 +1,7 @@
 class Task < ApplicationRecord
   # validates :title, :content, :due_at, presence: true
   # validates :start_time, uniqueness: true
+  validate :check_time_original
   belongs_to :task_course
   belongs_to :store_member
   belongs_to :calendar
@@ -17,6 +18,12 @@ class Task < ApplicationRecord
   def calendar_event_uid
     unique_id = "#{self.calendar.user.id}todo#{self.id}"
     Modules::Base32.encode32hex(unique_id).gsub("=","")
+  end
+
+  def check_time_original
+    unless Task.where("start_time < ?", self.end_time).where("end_time > ?", self.start_time).where(staff_id: self.staff_id).empty?
+      errors.add(:start_time, "予約時間が重複しています") # エラーメッセージ
+    end
   end
 
   private
