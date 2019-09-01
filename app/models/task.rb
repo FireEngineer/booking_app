@@ -10,8 +10,8 @@ class Task < ApplicationRecord
   belongs_to :staff
 
   after_create :sync_create, :line_send, :mail_send
-  after_update :sybc_update
-  after_destroy :sybc_delete
+  after_update :sybc_update, :line_send_with_edit_task
+  after_destroy :sybc_delete, :line_send_with_delete_task
 
   def self.with_store_member
     joins(:store_member).select('tasks.*, store_members.name, store_members.email, store_members.phone, store_members.id as member_id')
@@ -63,11 +63,28 @@ class Task < ApplicationRecord
 
   def line_send
     if self.store_member.line_user_id
-      LineBot.push_message(self, self.store_member.line_user_id)
+      debugger
+      LineBot.new().push_message(self, self.store_member.line_user_id)
+    end
+  end
+
+  def line_send_with_edit_task
+    if self.store_member.line_user_id
+      LineBot.new().push_message_with_edit_task(self, self.store_member.line_user_id)
+    end
+  end
+
+  def line_send_with_delete_task
+    if self.store_member.line_user_id
+      LineBot.new().push_message_with_delete_task(self, self.store_member.line_user_id)
     end
   end
 
   def mail_send
+    NotificationMailer.send_confirm_to_user(self, self.calendar.user, self.calendar).deliver
+  end
+
+  def mail_send_with_edit_task
     NotificationMailer.send_confirm_to_user(self, self.calendar.user, self.calendar).deliver
   end
 end

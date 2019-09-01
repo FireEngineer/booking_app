@@ -126,7 +126,7 @@ class Public::TasksController < Public::Base
       @task.task_course = @task_course
       @task.staff = Staff.find(session[:staff_id])
 
-      begin
+      # begin
         if @store_member.save
           @store_member.update(line_user_id: line_user_id)
           flash[:success] = '予約が完了しました。'
@@ -135,10 +135,10 @@ class Public::TasksController < Public::Base
           flash.now[:danger] = "予約ができませんでした。"
           render :new
         end
-      rescue
-        flash[:warnning] = "この時間はすでに予約が入っております。"
-        redirect_to calendar_tasks_url(@calendar)
-      end
+      # rescue
+      #   flash[:warnning] = "この時間はすでに予約が入っております。"
+      #   redirect_to calendar_tasks_url(@calendar)
+      # end
     
     end
   end
