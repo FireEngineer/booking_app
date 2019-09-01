@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       patch "calendar/:id/update", to: "calendars#update"
       resources :calendars, param: :calendar_name do
         get "dashboard", to: "top#dashboard"
+        get "user_tasks/:id/update_by_drop", to: "user_tasks#update_by_drop"
         resources :user_tasks
         resources :task_courses
         resource :calendar_config

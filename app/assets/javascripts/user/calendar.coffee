@@ -2,6 +2,8 @@ $(document).on 'turbolinks:load', ->
   date_current = $('#data').data('date_current');
   events = $('#data').data('events');
   $('#calendar').fullCalendar {
+    editable: true,
+    eventDurationEditable: false,
     selectable: true,
     eventClick: (eventObj)->
       if eventObj.url
@@ -34,6 +36,23 @@ $(document).on 'turbolinks:load', ->
     select: (startStr, endStr) ->
       $.get("user_tasks/new?start_time=#{startStr.format()}&end_time=#{endStr.format()}");
       return
+    eventDrop: (event, delta, revertFunc) ->
+      if !confirm('予約時間を変更しますか？')
+        revertFunc()
+        return
+      $.get("user_tasks/#{event.id}/update_by_drop?start_time=#{event.start.format()}&end_time=#{event.end.format()}").always((data, textStatus, jqXHR) ->
+          if data["responseText"] == "success"
+          # 成功の場合の処理
+            console.log("成功");
+            console.log(data);
+            return
+          else
+            alert("時間が重複しています")
+            console.log("失敗");
+            console.log(data);
+            revertFunc()
+            return
+        )
   }
   return
 

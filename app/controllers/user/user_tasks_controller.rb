@@ -40,13 +40,22 @@ class User::UserTasksController < User::Base
     def update
         @task = Task.find(params[:id])
         task_course = @task.task_course
-        # start_time = @task.start_time.to_s
-        if @task.update(task_params) && @task.update(end_time: end_time(@task.start_time.to_s, task_course))
+        @task.end_time = end_time(@task.start_time.to_s, task_course)
+        if @task.update(task_params)
             flash[:success] = "予約を更新しました"
             redirect_to user_calendar_dashboard_url(current_user, @calendar)
         else
             flash[:success] = "予約の更新ができませんでした。"
             redirect_to user_calendar_dashboard_url(current_user, @calendar)
+        end
+    end
+
+    def update_by_drop
+        @task = Task.find_by(id: params[:id])
+        if @task.update(start_time: params[:start_time], end_time: params[:end_time])
+            render json: "success"
+        else
+            render json: @staff.errors.full_messages
         end
     end
 
