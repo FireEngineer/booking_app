@@ -27,7 +27,10 @@
           <td><%= task.store_member.email %></td>
           <td><%= task.store_member.phone %></td>
           <td><%= reservation_date(task) %></td>
-          <td><%= link_to "キャンセル", user_calendar_user_task_path(current_user, @calendar, task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %></td>
+          <td>
+            <%= link_to "カレンダーへ", user_calendar_dashboard_path(current_user, @calendar, staff_id: task.staff.id, task_id: task.id), class:"btn btn-outline-primary"  %>
+            <%= link_to "キャンセル", user_calendar_user_task_path(current_user, @calendar, task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
+          </td>
           <td><%= task.created_at %></td>
         </tr>
       <% end %>

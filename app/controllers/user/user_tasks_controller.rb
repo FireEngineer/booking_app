@@ -1,4 +1,5 @@
 class User::UserTasksController < User::Base
+    before_action :authenticate_user!
     before_action :calendar
 
     def index
@@ -20,6 +21,7 @@ class User::UserTasksController < User::Base
         else
             @store_member = StoreMember.new(store_member_params)
         end
+        @store_member.calendar = @calendar
         task = @store_member.tasks.build(task_params)
         task_course = TaskCourse.find_by(id: task_params["task_course_id"])
         task.end_time = end_time(task.start_time.to_s, task_course)

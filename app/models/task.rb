@@ -14,7 +14,7 @@ class Task < ApplicationRecord
   after_destroy :sybc_delete
 
   def self.with_store_member
-    joins(:store_member).select('tasks.*, store_members.*')
+    joins(:store_member).select('tasks.*, store_members.name, store_members.email, store_members.phone, store_members.id as member_id')
   end
 
   def calendar_event_uid

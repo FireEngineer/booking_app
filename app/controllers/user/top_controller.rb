@@ -1,5 +1,5 @@
 class User::TopController < User::Base
-
+    before_action :authenticate_user!
     before_action :calendar
 
   def dashboard
@@ -7,9 +7,14 @@ class User::TopController < User::Base
     @staffs = @calendar.staffs
     @staff = Staff.find_by(id: params[:staff_id])
     staff_shifts = staff_shifts(@staff)
-    staff_tasks = staff_tasks(@staff, 3)
+    staff_tasks = staff_tasks(@staff, params[:task_id])
     @events = (staff_shifts + staff_tasks)&.to_json rescue calendar_tasks(@calendar).to_json
-    @current_date = l(Date.current, format: :to_json)
+    if params[:task_id]
+      task_date = Task.find_by(id: params[:task_id]).start_time.to_date
+      @current_date = l(task_date, format: :to_json)
+    else
+      @current_date = l(Date.current, format: :to_json)
+    end
   end
 
   private
@@ -27,7 +32,7 @@ class User::TopController < User::Base
       # スタッフのタスクのJSON
       def staff_tasks(staff, search_id)
         staff.tasks.map do |task|
-          if search_id && task.id == search_id
+          if search_id && task.id == search_id.to_i
             { 
               title: "#{task.store_member.name}:#{task.task_course.title}",
               start: l(task.start_time, format: :to_work_json),
