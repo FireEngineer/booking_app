@@ -1,7 +1,8 @@
 $(document).on 'turbolinks:load', ->
-  date_current = $('#data').data('date_current');
+  default_date = $('#data').data('date_current')["key"];
   events = $('#data').data('events');
   $('#calendar').fullCalendar {
+    defaultDate: default_date,
     editable: true,
     eventDurationEditable: false,
     selectable: true,
@@ -19,7 +20,6 @@ $(document).on 'turbolinks:load', ->
         $.get("user_tasks/#{eventObj.id}");
     ,
     plugins: [ 'timeGrid' ],
-    defaultDate: date_current["value"],
     defaultView: 'agendaWeek',
     header: {
       left: 'prev,next today',

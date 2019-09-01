@@ -222,4 +222,5 @@ ja:
       top: |
         %m/%d
         (%a)
+      to_json: "%Y-%m-%d"
     
