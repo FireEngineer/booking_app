@@ -7,6 +7,32 @@ class User::UserTasksController < User::Base
         @tasks = @q.result(distinct: true).page(params[:page]).per(10)
     end
 
+    def new
+        @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        @store_member = StoreMember.new()
+        @task = Task.new(start_time: params[:start_time])
+    end
+
+    def create
+        @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        if StoreMember.find_by(phone: params[:store_member]["phone"])
+            @store_member = StoreMember.find_by(phone: params[:store_member]["phone"])
+        else
+            @store_member = StoreMember.new(store_member_params)
+        end
+        task = @store_member.tasks.build(task_params)
+        task_course = TaskCourse.find_by(id: task_params["task_course_id"])
+        task.end_time = end_time(task.start_time.to_s, task_course)
+        task.calendar = @calendar
+        if @store_member.save
+            flash[:success] = "予約を作成しました"
+            redirect_to user_calendar_dashboard_url(current_user, @calendar)
+        else
+            flash[:error] = @store_member.errors.full_messages[0]
+            redirect_to user_calendar_dashboard_url(current_user, @calendar)
+        end
+    end
+
     def show
         @task = Task.find(params[:id])
     end
@@ -44,7 +70,9 @@ class User::UserTasksController < User::Base
     end
 
     def task_params
-        params.require(:task).permit(:start_time, :end_time)
+        params.require(:task).permit(:start_time, :end_time, :staff_id, :task_course_id)
     end
+
+
 
 end

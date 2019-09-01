@@ -52,9 +52,8 @@ Rails.application.routes.draw do
     resources :users do
       patch "calendar/:id/update", to: "calendars#update"
       resources :calendars, param: :calendar_name do
-        get 'user_tasks/:id', to: 'user_tasks#show'
         get "dashboard", to: "top#dashboard"
-        resources :user_tasks, except: [:show]
+        resources :user_tasks
         resources :task_courses
         resource :calendar_config
         get "staffs/staffs_shifts", to: "staffs#staffs_shifts", as: "staffs_shifts"

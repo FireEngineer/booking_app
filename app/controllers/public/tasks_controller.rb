@@ -128,7 +128,6 @@ class Public::TasksController < Public::Base
 
       begin
         if @store_member.save
-          LineBot.push_message(@task, line_user_id)
           @store_member.update(line_user_id: line_user_id)
           flash[:success] = '予約が完了しました。'
           redirect_to calendar_task_complete_path(@calendar, @task)
@@ -198,10 +197,7 @@ class Public::TasksController < Public::Base
       array
     end
 
-    def end_time(start_time, task_course)
-      t = Time.parse(start_time)
-      t.since(task_course.course_time.minutes)
-    end
+    
 
     
 

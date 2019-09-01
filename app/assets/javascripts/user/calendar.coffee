@@ -2,6 +2,7 @@ $(document).on 'turbolinks:load', ->
   date_current = $('#data').data('date_current');
   events = $('#data').data('events');
   $('#calendar').fullCalendar {
+    selectable: true,
     eventClick: (eventObj)->
       if eventObj.url
         alert(
@@ -30,6 +31,9 @@ $(document).on 'turbolinks:load', ->
       end: '18:00',
     },
     events: events,
+    select: (startStr, endStr) ->
+      $.get("user_tasks/new?start_time=#{startStr.format()}&end_time=#{endStr.format()}");
+      return
   }
   return
 

@@ -45,7 +45,9 @@ class Task < ApplicationRecord
   end
 
   def line_send
-    LineNotifyService.new(self, self.calendar.user, self.calendar).send
+    if self.store_member.line_user_id
+      LineBot.push_message(self, self.store_member.line_user_id)
+    end
   end
 
   def mail_send
