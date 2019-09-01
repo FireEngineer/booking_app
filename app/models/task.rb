@@ -2,6 +2,8 @@ class Task < ApplicationRecord
   # validates :title, :content, :due_at, presence: true
   # validates :start_time, uniqueness: true
   validate :check_time_original
+  validate :check_include_work_time
+  validate :start_end_check
   belongs_to :task_course
   belongs_to :store_member
   belongs_to :calendar
@@ -20,6 +22,7 @@ class Task < ApplicationRecord
     Modules::Base32.encode32hex(unique_id).gsub("=","")
   end
 
+  # バリデーション======================================================
   def check_time_original
     unless Task.where("start_time < ?", self.end_time)
                 .where("end_time > ?", self.start_time)
@@ -28,6 +31,20 @@ class Task < ApplicationRecord
                 .empty?
       errors.add(:start_time, "予約時間が重複しています") # エラーメッセージ
     end
+  end
+
+  def check_include_work_time
+    date = self.start_time.to_date
+    staff = self.staff
+    shift = staff.staff_shifts.find_by(work_date: date)
+    unless self.start_time >= shift.work_start_time && self.end_time <= shift.work_end_time
+      errors.add(:start_time, "スタッフの勤務時間外です。") # エラーメッセージ
+    end
+  end
+
+  def start_end_check
+    errors.add(:end_date, "の時間を正しく記入してください。") unless
+    self.start_time < self.end_time
   end
 
   private

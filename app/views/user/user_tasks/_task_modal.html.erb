@@ -38,12 +38,17 @@
               
                 <tr>
                   <th scope="row">予約開始時間</th>
-                  <td><%= f.datetime_select(
+                  <td>
+                    <p class="disabled_form"><%= l(task.start_time, format: :very_short) %></p>
+                    <P class="display_none">
+                      <%= f.datetime_select(
                           :start_time,          
                           # discard_day: true,
                           # discard_month: true,
                           # discard_year: true,
-                          ) %></td>
+                          ) %>
+                    </p>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">予約終了時間</th>
@@ -51,7 +56,12 @@
                 </tr>
                 <tr>
                   <th scope="row">予約コース</th>
-                  <td><%= task.task_course.title %></td>
+                  <td>
+                    <p class="disabled_form"><%= task.task_course.title %></p>
+                    <P class="display_none">
+                      <%= f.collection_select :task_course_id, task.calendar.task_courses, :id, :title, {prompt: ""},  class: "form-control form_style display_none", required: "required" %>
+                    </p>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">担当者名</th>
@@ -62,9 +72,10 @@
           </table>
       </div><!-- /.modal-body -->
       <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
+        <%= link_to "キャンセル", user_calendar_user_task_path(current_user, task.calendar, task), method: :delete, class:"btn btn-outline-danger btn-sm display_none", data: {confirm: "本当に削除しますか？"} %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >閉じる</button>
-        <%= f.submit "更新", class:"btn btn-primary" %>
-        <%= link_to "キャンセル", user_calendar_user_task_path(current_user, task.calendar, task), method: :delete, class:"btn btn-outline-danger btn-sm", data: {confirm: "本当に削除しますか？"} %>
+        <%= f.submit "更新", class:"btn btn-primary task_update_submit", id:"task_update_submit" %>
       </div><!-- /.modal-footer -->
       <% end %>
     </div><!-- /.modal-content -->
@@ -105,5 +116,9 @@
     });
 </script>
 <script>
-
+  $('#start_edit_btn').on('click', function() {
+    $(".disabled_form").css("display","none")
+    $(".display_none").removeClass("display_none");
+    $(this).remove();
+  });
 </script>

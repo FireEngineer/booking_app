@@ -40,8 +40,9 @@ class User::UserTasksController < User::Base
     def update
         @task = Task.find(params[:id])
         task_course = @task.task_course
+        @task.attributes = task_params
         @task.end_time = end_time(@task.start_time.to_s, task_course)
-        if @task.update(task_params)
+        if @task.save
             flash[:success] = "予約を更新しました"
             redirect_to user_calendar_dashboard_url(current_user, @calendar)
         else
@@ -55,7 +56,7 @@ class User::UserTasksController < User::Base
         if @task.update(start_time: params[:start_time], end_time: params[:end_time])
             render json: "success"
         else
-            render json: @staff.errors.full_messages
+            render json: @task.errors.full_messages
         end
     end
 

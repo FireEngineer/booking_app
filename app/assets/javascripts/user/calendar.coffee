@@ -17,7 +17,6 @@ $(document).on 'turbolinks:load', ->
         return false; 
       else 
         $.get("user_tasks/#{eventObj.id}");
-      
     ,
     plugins: [ 'timeGrid' ],
     defaultDate: date_current["value"],
@@ -47,8 +46,8 @@ $(document).on 'turbolinks:load', ->
             console.log(data);
             return
           else
-            alert("時間が重複しています")
-            console.log("失敗");
+            alert(data)
+            console.log(data["responseText"]);
             console.log(data);
             revertFunc()
             return
@@ -59,5 +58,3 @@ $(document).on 'turbolinks:load', ->
 $(document).on 'turbolinks:before-cache', ->
   $('#calendar').empty()
   return
-
-  
