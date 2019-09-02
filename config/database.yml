@@ -22,7 +22,8 @@ test:
 
 production:
   <<: *default
-  database: d0113bffc4a4f64c0b2704ddb42c6391
-  username: d0113bffc4a4f64c0b2704ddb42c6391
-  password: Shotaimai141421356
-  host: mysql-1.mc.lolipop.lan
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
