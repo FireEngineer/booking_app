@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_02_083522) do
+ActiveRecord::Schema.define(version: 2019_09_02_124414) do
 
-  create_table "admins", force: :cascade do |t|
+  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -29,9 +29,9 @@ ActiveRecord::Schema.define(version: 2019_09_02_083522) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "calendar_configs", force: :cascade do |t|
+  create_table "calendar_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "capacity"
-    t.integer "calendar_id"
+    t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "before_time", default: 0
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2019_09_02_083522) do
     t.index ["calendar_id"], name: "index_calendar_configs_on_calendar_id"
   end
 
-  create_table "calendars", force: :cascade do |t|
+  create_table "calendars", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "calendar_name"
     t.integer "start_date", default: 1
     t.integer "end_date", default: 7
@@ -47,104 +47,106 @@ ActiveRecord::Schema.define(version: 2019_09_02_083522) do
     t.integer "start_time", default: 10
     t.integer "end_time", default: 22
     t.boolean "is_released", default: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "calendar_id"
     t.index ["user_id"], name: "index_calendars_on_user_id"
   end
 
-  create_table "line_bots", force: :cascade do |t|
+  create_table "line_bots", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "channel_id"
     t.string "channel_secret"
-    t.integer "admin_id"
+    t.bigint "admin_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_line_bots_on_admin_id"
   end
 
-  create_table "regular_holidays", force: :cascade do |t|
+  create_table "regular_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "day"
     t.boolean "holiday_flag", default: false
     t.datetime "business_start_at"
     t.datetime "business_end_at"
-    t.integer "calendar_config_id"
+    t.bigint "calendar_config_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calendar_config_id"], name: "index_regular_holidays_on_calendar_config_id"
   end
 
-  create_table "staff_regular_holidays", force: :cascade do |t|
+  create_table "staff_regular_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "day"
     t.boolean "is_holiday"
     t.time "work_start_at"
     t.time "work_end_at"
-    t.integer "staff_id"
+    t.bigint "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["staff_id"], name: "index_staff_regular_holidays_on_staff_id"
   end
 
-  create_table "staff_shifts", force: :cascade do |t|
+  create_table "staff_shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "work_start_time"
     t.datetime "work_end_time"
     t.date "work_date"
-    t.integer "staff_id"
+    t.bigint "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["staff_id"], name: "index_staff_shifts_on_staff_id"
   end
 
-  create_table "staffs", force: :cascade do |t|
+  create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.integer "calendar_id"
+    t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calendar_id"], name: "index_staffs_on_calendar_id"
   end
 
-  create_table "store_members", force: :cascade do |t|
+  create_table "store_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "gender"
     t.integer "age"
     t.string "email"
     t.string "phone"
     t.string "line_user_id"
-    t.integer "calendar_id"
+    t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calendar_id"], name: "index_store_members_on_calendar_id"
   end
 
-  create_table "task_courses", force: :cascade do |t|
+  create_table "task_courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.integer "course_time"
-    t.integer "calendar_id"
+    t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calendar_id"], name: "index_task_courses_on_calendar_id"
   end
 
-  create_table "tasks", force: :cascade do |t|
+  create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "request"
     t.datetime "due_at"
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "google_event_id"
-    t.integer "store_member_id"
-    t.integer "task_course_id"
-    t.integer "calendar_id"
-    t.integer "staff_id"
+    t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "store_member_id"
+    t.bigint "task_course_id"
+    t.bigint "staff_id"
     t.index ["calendar_id"], name: "index_tasks_on_calendar_id"
     t.index ["staff_id"], name: "index_tasks_on_staff_id"
     t.index ["store_member_id"], name: "index_tasks_on_store_member_id"
     t.index ["task_course_id"], name: "index_tasks_on_task_course_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -165,4 +167,17 @@ ActiveRecord::Schema.define(version: 2019_09_02_083522) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "calendar_configs", "calendars"
+  add_foreign_key "line_bots", "admins"
+  add_foreign_key "regular_holidays", "calendar_configs"
+  add_foreign_key "staff_regular_holidays", "staffs"
+  add_foreign_key "staff_shifts", "staffs"
+  add_foreign_key "staffs", "calendars"
+  add_foreign_key "store_members", "calendars"
+  add_foreign_key "task_courses", "calendars"
+  add_foreign_key "tasks", "calendars"
+  add_foreign_key "tasks", "staffs"
+  add_foreign_key "tasks", "store_members"
+  add_foreign_key "tasks", "task_courses"
+  add_foreign_key "tasks", "users"
 end

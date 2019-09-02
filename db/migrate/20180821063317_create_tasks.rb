@@ -7,10 +7,7 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.datetime :end_time
       t.string :google_event_id
 
-      t.references :store_member, foreign_key: true
-      t.references :task_course, foreign_key: true
       t.references :calendar, foreign_key: true
-      t.references :staff, foreign_key: true
 
       t.timestamps
     end
