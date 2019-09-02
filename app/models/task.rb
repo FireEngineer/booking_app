@@ -63,7 +63,6 @@ class Task < ApplicationRecord
 
   def line_send
     if self.store_member.line_user_id
-      debugger
       LineBot.new().push_message(self, self.store_member.line_user_id)
     end
   end

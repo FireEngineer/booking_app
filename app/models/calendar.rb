@@ -26,8 +26,10 @@ class Calendar < ApplicationRecord
     unless self.calendar_config
       config = self.build_calendar_config(capacity: 1)
       array = ["日", "月", "火", "水", "木", "金", "土"]
+      start_time = Time.current.change(hour: self.start_time, min: 0)
+      end_time = Time.current.change(hour: self.end_time, min: 0)
       array.each do |day|
-        config.regular_holidays.build(day: day)
+        config.regular_holidays.build(day: day, business_start_at: start_time, business_end_at: end_time)
       end
       config.save
     end
