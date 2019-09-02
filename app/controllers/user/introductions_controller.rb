@@ -1,5 +1,4 @@
 class User::IntroductionsController < User::Base
-    before_action :authenticate_user!
 
     def new_calendar
       @calendar = current_user.calendars.build()

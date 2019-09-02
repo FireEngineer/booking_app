@@ -1,5 +1,4 @@
 class User::UsersController < User::Base
-  before_action :authenticate_user!
   before_action :check_has_calendar
   before_action :calendar
 

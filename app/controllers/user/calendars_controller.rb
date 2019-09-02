@@ -1,5 +1,4 @@
 class User::CalendarsController < User::Base
-  before_action :authenticate_user!
   before_action :calendar, except: %i(new, create)
 
   def new

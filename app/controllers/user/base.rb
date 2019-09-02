@@ -1,4 +1,5 @@
 class User::Base < ApplicationController
+  before_action :authenticate_user!
     layout 'user'
 
     # def after_sign_in_path_for(resource)

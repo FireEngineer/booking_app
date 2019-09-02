@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_22_234200) do
+ActiveRecord::Schema.define(version: 2019_09_02_005333) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -70,6 +70,17 @@ ActiveRecord::Schema.define(version: 2019_08_22_234200) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calendar_config_id"], name: "index_regular_holidays_on_calendar_config_id"
+  end
+
+  create_table "staff_regular_holidays", force: :cascade do |t|
+    t.string "day"
+    t.boolean "is_holiday"
+    t.time "work_start_at"
+    t.time "work_end_at"
+    t.integer "staff_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["staff_id"], name: "index_staff_regular_holidays_on_staff_id"
   end
 
   create_table "staff_shifts", force: :cascade do |t|
