@@ -1,0 +1,18 @@
+branch-defaults:
+  aws_eb:
+    environment: booking-env
+global:
+  application_name: "\u4E88\u7D04\u30B7\u30B9\u30C6\u30E0"
+  branch: master
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:ap-northeast-1::platform/Puma with Ruby
+    2.6 running on 64bit Amazon Linux/2.10.1
+  default_region: ap-northeast-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  repository: origin
+  sc: git
+  workspace_type: Application
