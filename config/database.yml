@@ -21,7 +21,7 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
+  adapter: mysql2
   database: <%= ENV['RDS_DB_NAME'] %>
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
