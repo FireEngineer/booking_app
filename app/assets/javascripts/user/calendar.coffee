@@ -21,10 +21,15 @@ $(document).on 'turbolinks:load', ->
     ,
     plugins: [ 'timeGrid' ],
     defaultView: 'agendaWeek',
+    views: {
+      listDay: { buttonText: 'list(日)' },
+      listWeek: { buttonText: 'list(週)' },
+      listMonth: { buttonText: 'list(月)' }
+    },
     header: {
       left: 'prev,next today',
       center: 'title',
-      right: 'agendaDay,agendaWeek,listDay,listWeek,listMonth'
+      right: 'agendaDay,agendaWeek,month,listDay,listWeek,listMonth'
     },
     businessHours: {
       dow: [ 1, 2, 3, 4 ],
