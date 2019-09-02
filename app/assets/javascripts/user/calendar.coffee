@@ -2,6 +2,7 @@ $(document).on 'turbolinks:load', ->
   default_date = $('#data').data('date_current')["key"];
   events = $('#data').data('events');
   $('#calendar').fullCalendar {
+    navLinks: true,
     defaultDate: default_date,
     editable: true,
     eventDurationEditable: false,

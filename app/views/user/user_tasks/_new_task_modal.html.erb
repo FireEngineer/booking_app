@@ -34,8 +34,15 @@
                 <%= fields_for :task do |task|  %>
                     <div class="form-group">
                         <label for="exampleInputPassword1">日時</label>
-                        <%= task.text_field :time, value: "#{l(@task.start_time, format: :long)}~",  class: "form-control form_style", readonly: true %>
-                        <%= task.hidden_field :start_time, value: @task.start_time %>
+                        <%#= task.text_field :time, value: "#{l(@task.start_time, format: :long)}~",  class: "form-control form_style", readonly: true %>
+                        <%= raw sprintf(
+                                task.datetime_select(
+                                    :start_time,
+                                    use_month_numbers: true,
+                                    )
+                            )
+                            %>
+                        <%#= task.hidden_field :start_time, value: @task.start_time %>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">担当者</label>
