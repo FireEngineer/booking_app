@@ -41,8 +41,8 @@ class User::UserTasksController < User::Base
 
     def update
         @task = Task.find(params[:id])
-        task_course = @task.task_course
         @task.attributes = task_params
+        task_course = @task.task_course
         @task.end_time = end_time(@task.start_time.to_s, task_course)
         if @task.save
             flash[:success] = "予約を更新しました"
