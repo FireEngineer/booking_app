@@ -16,13 +16,15 @@ class Staff < ApplicationRecord
         end
     end
 
-    def create_staff_shifts
-        [*start_of_month..end_of_month].each do |date|
-            start_time = Time.parse("#{date}").since(10.hours).since(0.minutes)
-            end_time = start_time.since(8.hours).since(0.minutes)
-            @staff.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time).save
-          rescue
-            puts "エラー"
-          end
-    end
+    # def create_staff_shifts
+    #     start_of_month = Time.current.
+    #     [*start_of_month..end_of_month].each do |date|
+    #         start_time = Time.parse("#{date}").since(10.hours).since(0.minutes)
+    #         end_time = start_time.since(8.hours).since(0.minutes)
+    #         @staff.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time).save
+    #       rescue
+    #         puts "エラー"
+    #       end
+    #     end
+    # end
 end
