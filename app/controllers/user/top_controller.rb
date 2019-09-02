@@ -33,7 +33,7 @@ class User::TopController < User::Base
         staff.tasks.map do |task|
           if search_id && task.id == search_id.to_i
             { 
-              title: "#{task.store_member.name}:#{task.task_course.title}",
+              title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{staff.name}",
               start: l(task.start_time, format: :to_work_json),
               end: l(task.end_time, format: :to_work_json),
               id: task.id,
@@ -41,7 +41,7 @@ class User::TopController < User::Base
             }
           else
             { 
-              title: "#{task.store_member.name}:#{task.task_course.title}",
+              title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{staff.name}",
               start: l(task.start_time, format: :to_work_json),
               end: l(task.end_time, format: :to_work_json),
               id: task.id,
@@ -53,7 +53,7 @@ class User::TopController < User::Base
       def calendar_tasks(calendar)
         calendar.tasks.map do |task|
           { 
-            title: "#{task.store_member.name}:#{task.task_course.title}",
+            title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{task.staff.name}",
             start: l(task.start_time, format: :to_work_json),
             end: l(task.end_time, format: :to_work_json),
             id: task.id,

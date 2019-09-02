@@ -18,8 +18,8 @@ class ValidateTask
         limit = calendar_config.capacity #予約可能件数
         count = 0
         events.each do |event|
-            task_s = Time.zone.parse("#{event[0]}")
-            task_e = Time.zone.parse("#{event[1]}")
+            task_s = Time.zone.parse("#{event[0]}").ago(10.minutes)  
+            task_e = Time.zone.parse("#{event[1]}").since(10.minutes) 
             if task_s < time_end && time_start < task_e
                 count += 1
                 return false if count >= limit
@@ -33,5 +33,9 @@ class ValidateTask
     def calendar_config
         task_course.calendar.calendar_config
     end
+
+    def before_time
+    end
+
 
 end

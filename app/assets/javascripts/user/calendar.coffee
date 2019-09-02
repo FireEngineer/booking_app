@@ -29,7 +29,7 @@ $(document).on 'turbolinks:load', ->
     businessHours: {
       dow: [ 1, 2, 3, 4 ],
       start: '10:00',
-      end: '18:00',
+      end: '20:00',
     },
     events: events,
     select: (startStr, endStr) ->
