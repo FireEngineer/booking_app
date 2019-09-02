@@ -19,35 +19,59 @@
       </tr>
     </tbody>
   </table>
+  <%# スタッフ選択 %>
+  <div class="dropdown">
+    <!-- 切替ボタンの設定 -->
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= @staff.name %>
+    </a>
+    <!-- ドロップメニューの設定 -->
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <% @calendar.staffs.each do |staff| %>
+        <%= link_to staff.name, calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id), class:"dropdown-item" %>
+      <% end %>
+    </div><!-- /.dropdown-menu -->
+  </div><!-- /.dropdown -->
+
+  <%# コースの選択 %>
+  <div class="dropdown">
+    <!-- 切替ボタンの設定 -->
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= @task_course.title %>
+    </a>
+    <!-- ドロップメニューの設定 -->
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <% @calendar.task_courses.each do |course| %>
+        <%= link_to course.title, calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id), class:"dropdown-item" %>
+      <% end %>
+    </div><!-- /.dropdown-menu -->
+  </div><!-- /.dropdown -->
 
   <%= paginate @month %>
     <div class="tabel_scroll">
       <table class="table  table-bordered">
         <thead>
           <tr>
-            <th scope="col"></th>
+            <th scope="col">時間</th>
             <% @month.each do |day| %>
               <th scope="col"><%= l(day, format: :top) %></th>
             <% end %>
           </tr>
         </thead>
-        
         <tbody>
-          
           <% @times.each do |time| %>
             <tr>
-              <th scope="row"><%= time %>時</th>
-              
+              <th scope="row"><%= l( time, format: :very_short) %></th>
               <% @month.each.with_index do |day, index| %>
                 <% time_str = time(day, time) %>
-                  <% if include_time?(@events, time_str) %>
-                    <td class="possible <%= if @wild_time.include?(time) || @wild_day.include?(time(day, 0)) || Time.zone.parse(time_str) < Time.current then "can_not_choice" end %>">
-                      <%= link_to new_calendar_task_path(@calendar, date_time: time(Time.zone.parse("#{day}"), time)), class:"wide_link" do %>
+                  <% if ValidateTask.call(@events, time_str, @task_course) && ValidateStaffShift.call(@staff, time_str) && !RegularDay.call(@calendar, day) %>
+                    <td class="possible">
+                      <%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: @staff.id), class:"wide_link btn btn-primary" do %>
                         <i class="far fa-circle"></i>
                       <% end %>
                     </td>
                   <% else %>
-                    <td class="impossible <%= if @wild_time.include?(time) || @wild_day.include?(time(day, 0)) || Time.zone.parse(time_str) < Time.current then "can_not_choice" end %>">
+                    <td class="impossible">
                       <i class="fas fa-times"></i>
                     </td>
                   <% end %>

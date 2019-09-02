@@ -25,3 +25,24 @@ curl -X POST https://api.line.me/oauth2/v2.1/token \
 -d 'redirect_uri=http://localhost:3000/task_create' \
 -d 'client_id=1603032553' \
 -d 'client_secret=6f3d86e5f90d1e65260bc62728874216'
+
+rails g model Line_bot channel_id:string channel_secret:string
+
+rails g controller User::LineBots
+
+iVoW30wF6RySWFKHwliWvBYef3iPysyT
+Rails.application.credentials.encrypt_secure_key
+
+"iVoW30wF6RySWFKHwliWvBYef3iPysyT"
+
+8月7日(水)
+rails g model TaskCourse title:string description:text course_time:integer
+rails g model CalendarConfig capacity:integer
+rails g model RegularHoliday day:string holiday_flag:boolean
+
+rails g controller User::CalendarConfig
+
+RegularDay.call(a, Time.current)
+rails g model StoreMember name:string gender:string age:integer email:string phone:string line_user_id:string
+
+rails g scaffold User::StaffShifts work_start_time:datetime work_end_time:datetime staff:references

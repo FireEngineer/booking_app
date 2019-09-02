@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Work start time:</strong>
+  <%= @user_staff_shift.work_start_time %>
+</p>
+
+<p>
+  <strong>Work end time:</strong>
+  <%= @user_staff_shift.work_end_time %>
+</p>
+
+<p>
+  <strong>Staff:</strong>
+  <%= @user_staff_shift.staff %>
+</p>
+
+<%= link_to 'Edit', edit_user_staff_shift_path(@user_staff_shift) %> |
+<%= link_to 'Back', user_staff_shifts_path %>

@@ -1,10 +1,13 @@
 class User::UsersController < User::Base
-
   before_action :check_has_calendar
+  before_action :calendar
 
   def dashboard
-    @user = current_user
-    @calendars = @user.calendars
+    @staffs = @calendar.staffs
+    @staff = Staff.find_by(id: params[:staff_id]) || @calendar.staffs.first
+    staff_shifts = staff_shifts(@staff)
+    staff_tasks = staff_tasks(@staff)
+    @events = (staff_shifts + staff_tasks)&.to_json
   end
 
   def show
@@ -27,7 +30,7 @@ class User::UsersController < User::Base
     end
 
     def check_has_calendar
-      unless current_user.calendars.first
+      if current_user.calendars.first == nil
         redirect_to google_auth_ident_form_url
       end
     end

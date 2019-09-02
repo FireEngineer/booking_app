@@ -1,12 +1,6 @@
-<div class="table_scroll">
-<% @calendars.each do |calendar| %>
-  <%= link_to calendar.calendar_name, calendar_tasks_path(calendar) %>
-  <%= form_for calendar, url: user_calendar_path(current_user, calendar) do |f| %>
+<%= form_for calendar, url: user_calendar_path(current_user, calendar) do |f| %>
     <table class="table table-hover">
       <thead>
-        <tr>
-          <th><strong>カレンダー設定</strong></th>
-        </tr>
         <tr>
           <th>項目</th>
           <th>設定値</th>
@@ -30,31 +24,24 @@
           <td>googleカレンダーから取得するデータの期間を設定</td>
         </tr>
         <tr>
-          <th scope="row">表示開始時間</th>
+          <th scope="row">基本営業時間</th>
           <td><%= f.number_field :start_time, class: "form-control" %></td>
           <td>表示開始する時間（10に設定すると、10時からのカレンダー表示）</td>
         </tr>
         <tr>
-          <th scope="row">表示終了時間</th>
+          <th scope="row">基本終了時間</th>
           <td><%= f.number_field :end_time, class: "form-control" %></td>
           <td>表示終了する時間（22に設定すると、22時までのカレンダー表示）</td>
         </tr>
         <tr>
           <th scope="row">表示カレンダー名</th>
           <td><%= f.text_field :calendar_name, class: "form-control" %></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">カレンダーID</th>
-          <td><%= f.text_field :calendar_id, class: "form-control" %></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row"><%= f.submit "更新", class: "btn btn-primary" %></th>
-          <td></td>
-          <td></td>
+          <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
         </tr>
       </tbody>
     </table>
-  <% end %>
+    <%= f.label :is_released, "公開する場合はチェックを入れてください" %>
+    <%= f.check_box :is_released, {} , "true", "false" %>
+    <br>
+    <%= f.submit "更新", class: "btn btn-primary" %>
 <% end %>

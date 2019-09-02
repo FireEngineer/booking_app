@@ -33,14 +33,14 @@ class LineNotifyService
         予定が登録されました!
         ===================
         ・名前
-          #{task.name}
+          #{task.store_member.name}
         ・email
-          #{task.email}
+          #{task.store_member.email}
         ・TEL
-          #{task.phone}
+          #{task.store_member.phone}
         ・開始時間
-          #{task.date_time.strftime("%Y年%-m月%-d日 %-H時")}~
-          #{task.date_time.since(1.hours).hour}時
+          #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
+          #{task.end_time.strftime("%H:%M")}
         ・キャンセルURL
           #{ if Rails.env == "development" then "http://localhost:3000/calendars/#{calendar.calendar_name}/tasks/#{task.id}/cancel" end }
         ===================

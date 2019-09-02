@@ -1,0 +1,50 @@
+<%= form_for staff_shift, url: calendar_staff_staff_shift_path(calendar, staff, staff_shift) do |f| %>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">シフト編集＜<%= l(staff_shift.work_date, format: :long) %>＞</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <%= f.label :出勤時間 %>
+        </div>
+        <%= raw sprintf(
+              f.datetime_select(
+                  :work_start_time,
+                  use_month_numbers: true,
+                  start_year:        1930,
+                  end_year:          (Time.now.year - 18),
+                  default:           Date.new(1989, 1, 1),
+                  date_separator:    '%s',
+                  :discard_day => true,
+                  :discard_month => true,
+                  :discard_year => true), # 年月日区切りをそれぞれ指定
+        )
+        %>
+        <div>
+          <%= f.label :退勤時間 %>
+        </div>
+        <%= raw sprintf(
+              f.datetime_select(
+                  :work_end_time,
+                  use_month_numbers: true,
+                  start_year:        1930,
+                  end_year:          (Time.now.year - 18),
+                  default:           Date.new(1989, 1, 1),
+                  date_separator:    '%s',
+                  :discard_day => true,
+                  :discard_month => true,
+                  :discard_year => true), # 年月日区切りをそれぞれ指定
+        )
+        %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        <%= f.submit "更新", class:"btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,124 @@
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= task.store_member.name %>様:<%= l task.start_time, format: :middle %>~</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div><!-- /.modal-header -->
+      <%= form_for task, url: user_calendar_user_task_path(current_user, task.calendar, task) do |f| %>
+      <div class="modal-body">
+        <% member = task.store_member %>
+          <table class="table table-sm">
+            <caption>詳細情報</caption>
+            <tbody>
+              <%= fields_for member do |f| %>
+                <tr>
+                  <th scope="row">名前</th>
+                  <td><%= member.name %><%#= f.text_field :name %></td>
+                </tr>
+                <tr>
+                  <th scope="row">性別</th>
+                  <td><%= member.gender %><%#= f.select :gender, ["男性", "女性"] %></td>
+                </tr>
+                <tr>
+                  <th scope="row">年齢</th>
+                  <td><%= member.age %><%#= f.number_field :age %></td>
+                </tr>
+                <tr>
+                  <th scope="row">メールアドレス</th>
+                  <td><%= member.email %><%#= f.email_field :email %></td>
+                </tr>
+                <tr>
+                  <th scope="row">電話番号</th>
+                  <td><%= member.phone %><%#= f.text_field :phone %></td>
+                </tr>
+              <% end %>
+              
+                <tr>
+                  <th scope="row">予約開始時間</th>
+                  <td>
+                    <p class="disabled_form"><%= l(task.start_time, format: :very_short) %></p>
+                    <P class="display_none">
+                      <%= f.datetime_select(
+                          :start_time,          
+                          # discard_day: true,
+                          # discard_month: true,
+                          # discard_year: true,
+                          ) %>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">予約終了時間</th>
+                  <td><%= l(task.end_time, format: :very_short) %></td>
+                </tr>
+                <tr>
+                  <th scope="row">予約コース</th>
+                  <td>
+                    <p class="disabled_form"><%= task.task_course.title %></p>
+                    <P class="display_none">
+                      <%= f.collection_select :task_course_id, task.calendar.task_courses, :id, :title, {prompt: ""},  class: "form-control form_style display_none", required: "required" %>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">担当者名</th>
+                  <td><%= task.staff.name %></td>
+                </tr>
+              
+            </tbody>
+          </table>
+      </div><!-- /.modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
+        <%= link_to "キャンセル", user_calendar_user_task_path(current_user, task.calendar, task), method: :delete, class:"btn btn-outline-danger btn-sm display_none", data: {confirm: "本当に削除しますか？"} %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >閉じる</button>
+        <%= f.submit "更新", class:"btn btn-primary display_none" %>
+      </div><!-- /.modal-footer -->
+      <% end %>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+
+
+  <div id="sidebar">
+    <head>
+        <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Bootstrap</span>
+        </nav>
+    </head>
+</div>
+
+
+
+<script>
+    $('#sidebar').simpleSidebar({
+        opener: '#button',
+        wrapper: '#wrapper',
+        sidebar: {
+            align: 'right', //or 'left' - This option can be ignored, the sidebar will authomatically align to right.
+            width: 200, //You can ingnore this option, the sidebar will authomatically size itselt to 300px.
+            closingLinks: '.close-sidebar', // If you ignore this option, the plugin will lool for all links and can be buggy. Choose a class for every object inside the sidebar that once clicked will close the sidebar.
+            css: {
+                //Here you can add more css rules but you should use your own stylesheet.
+                zIndex: 10000,
+                background: "white", //Choose the amount of zIndex you want. It must be the higher zIndex number.
+            }
+        },
+        mask: {                             //コンテンツにかかるマスクの設定
+        style: {
+            backgroundColor: "red",    //カラー
+            opacity: 0.9,               //透明度
+            filter: 'Alpha(opacity=90)'
+        }
+    }
+    });
+</script>
+<script>
+  $('#start_edit_btn').on('click', function() {
+    $(".disabled_form").css("display","none")
+    $(".display_none").removeClass("display_none");
+    $(this).remove();
+  });
+</script>

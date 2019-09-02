@@ -211,12 +211,16 @@ ja:
       long: "%Y/%m/%d %H:%M"
       middle: "%m月%d日（%a）%H : %M"
       short: "%m/%d %H:%M"
-      very_short: "%H : %M"
+      very_short: "%H:%M"
+      to_date: "%Y年%m月"
+      to_work_json: "%Y-%m-%dT%H:%M:%S"
     pm: 午後
   date:
     formats:
       default: "%Y年%m月%d日(%a)"
+      long: "%m月%d日(%a)"
       top: |
         %m/%d
         (%a)
+      to_json: "%Y-%m-%d"
     

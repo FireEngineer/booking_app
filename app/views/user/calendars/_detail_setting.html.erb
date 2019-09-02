@@ -1,0 +1,64 @@
+<%= form_for calendar.calendar_config, url: user_calendar_calendar_config_path(current_user, calendar) do |f| %>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="col-xs-2">項目</th>
+          <th class="col-xs-2">設定値</th>
+          <th class="col-xs-10">説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>予約可能席数</th>
+          <td><%= f.number_field :capacity, class: "form-control" %></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="col-xs-2">曜日</th>
+          <th>定休日フラグ</th>
+          <th>営業時間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= f.fields_for :regular_holidays do |f| %>
+          <tr>
+            <th class="col-xs-2"><%= f.object.day_of_the_week %></th>
+            <td><%= f.check_box :holiday_flag, {class: "form-control"}, "true", "false" %></td>
+            <td>
+              <%= raw sprintf(
+              f.time_select(
+                  :business_start_at,
+                  use_month_numbers: true,
+                  start_year:        1930,
+                  end_year:          (Time.now.year - 18),
+                  default:           Date.new(1989, 1, 1),
+                  date_separator:    '%s'), # 年月日区切りをそれぞれ指定
+              '年 ', '月 ')
+               %>
+              ~
+              <%= raw sprintf(
+              f.time_select(
+                  :business_end_at,
+                  use_month_numbers: true,
+                  start_year:        1930,
+                  end_year:          (Time.now.year - 18),
+                  default:           Date.new(1989, 1, 1),
+                  date_separator:    '%s'), # 年月日区切りをそれぞれ指定
+              '年 ', '月 ')
+              %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <th class="col-xs-2"><%= f.submit "更新", class: "btn btn-primary" %></th>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+<% end %>

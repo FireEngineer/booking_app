@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  day: 2019-09-02
+  is_holiday: false
+  business_start_at: 2019-09-02 09:53:33
+  business_end_at: 2019-09-02 09:53:33
+
+two:
+  day: 2019-09-02
+  is_holiday: false
+  business_start_at: 2019-09-02 09:53:33
+  business_end_at: 2019-09-02 09:53:33

@@ -1,0 +1,15 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <%= form_for @task_course, url: user_calendar_task_course_path(current_user, current_user.calendars.first, @task_course) do |f| %>
+            <div class="modal-header">
+                <h4 class="modal-title">コース編集</h4>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <%= render "share_form", f: f %>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                <%= f.submit "更新", class:"btn btn-primary" %>
+            </div>
+        <% end %>
+    </div>
+</div>

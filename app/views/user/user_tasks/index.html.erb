@@ -1,18 +1,40 @@
-<div>
-  <ul id="myTab" class="nav nav-tabs" role="tablist">
-    <% @calendars.each do |calendar| %>
-      <li class="nav-item">
-        <a href="#<%= calendar.calendar_name %>" id="<%= calendar.calendar_name %>-tab" class="nav-link active" role="tab" data-toggle="tab" aria-controls="<%= calendar.calendar_name %>" aria-selected="true"><%= calendar.calendar_name %></a>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calendar) do |f| %>
+  <%= f.label :store_member_name_or_store_member_phone, "名前or電話番号" %>
+  <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2" %>
+  <%= f.submit "検索", class:"btn btn-primary" %>
+<% end %>
 
-<div id="myTabContent" class="tab-content mt-3">
-  <% @calendars.each do |calendar| %>
-    <div id="<%= calendar.calendar_name %>" class="tab-pane active" role="tabpanel" aria-labelledby="<%= calendar.calendar_name %>-tab">
-      <%= render "tasks_index", calendar: calendar %>
-    </div>
-  <% end %>
+<%= paginate @tasks %>
+<div class="table_scroll">
+  <table class="table table-hover">
+    <caption>テーブルの表題</caption>
+    <thead>
+      <tr>
+        <th><%= sort_link(@q, :id, "ID") %></th>
+        <th><%= sort_link(@q, :name, "名前") %></th>
+        <th><%= sort_link(@q, :email, "email") %></th>
+        <th><%= sort_link(@q, :phone, "電話番号") %></th>
+        <th><%= sort_link(@q, :start_time, "予約時間") %></th>
+        <th></th>
+        <th><%= sort_link(@q, :created_at, "受付時間") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <th scope="row"><%= task.id %></th>
+          <td><%= task.store_member.name %></td>
+          <td><%= task.store_member.email %></td>
+          <td><%= task.store_member.phone %></td>
+          <td><%= reservation_date(task) %></td>
+          <td>
+            <%= link_to "カレンダーへ", user_calendar_dashboard_path(current_user, @calendar, staff_id: task.staff.id, task_id: task.id), class:"btn btn-outline-primary"  %>
+            <%= link_to "キャンセル", user_calendar_user_task_path(current_user, @calendar, task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
+          </td>
+          <td><%= task.created_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 

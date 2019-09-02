@@ -1,16 +1,16 @@
 class CreateTasks < ActiveRecord::Migration[5.2]
   def change
     create_table :tasks do |t|
-      t.string :title
-      t.text :content
+      t.text :request
       t.datetime :due_at
-      t.references :calendar, foreign_key: true
-      t.string :name
-      t.string :email
-      t.string :line_id
-      t.datetime :date_time
-      t.string :phone
+      t.datetime :start_time
+      t.datetime :end_time
       t.string :google_event_id
+
+      t.references :store_member, foreign_key: true
+      t.references :task_course, foreign_key: true
+      t.references :calendar, foreign_key: true
+      t.references :staff, foreign_key: true
 
       t.timestamps
     end

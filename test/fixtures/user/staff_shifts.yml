@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  work_start_time: 2019-08-23 08:42:19
+  work_end_time: 2019-08-23 08:42:19
+  staff: one
+
+two:
+  work_start_time: 2019-08-23 08:42:19
+  work_end_time: 2019-08-23 08:42:19
+  staff: two

@@ -40,7 +40,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mini_racer'
 # for authentication
-gem 'devise'
+gem 'devise', '4.5.0'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 
@@ -55,10 +55,27 @@ gem 'redis-namespace'
 gem 'sidekiq'
 
 gem 'kaminari', '~> 0.17.0'
+gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
 
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails'
+gem 'active_decorator'
+
+# 決済機能
+gem 'payjp'
+
+# full_calendar
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
+
+# line_bot
+gem 'line-bot-api'
+# idデコード用
+gem 'jwt'
+
+# 検索機能
+gem 'ransack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -73,6 +90,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "rails-erd"
+  # N+1問題の改善
+  gem 'bullet'
 end
 
 group :test do

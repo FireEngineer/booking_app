@@ -1,4 +1,5 @@
 class GoogleAuthController < ApplicationController
+  include Encryptor
   def callback
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_user))
     client.code = params[:code]
@@ -11,13 +12,14 @@ class GoogleAuthController < ApplicationController
     calendar = current_user.calendars.build(calendar_id: _calendar.id)
     current_user.save
     calendar.save
-    redirect_to calendar_tasks_path(calendar)
+    redirect_to user_calendar_dashboard_url(current_user, calendar)
   end
 
   def redirect
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_user))
     redirect_to client.authorization_uri.to_s
-  rescue
+  rescue => e
+    puts errors_log(e)
     redirect_to google_auth_ident_form_url
   end
 
@@ -28,6 +30,9 @@ class GoogleAuthController < ApplicationController
   def identifier
     user = current_user
     if user.update(params_identifier)
+      user.client_id = encrypt(user.client_id)
+      user.client_secret = encrypt(user.client_secret)
+      user.save
       redirect_to google_auth_redirect_url
     end
 

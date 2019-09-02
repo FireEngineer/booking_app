@@ -7,13 +7,20 @@
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= stylesheet_link_tag    'user', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'user', 'data-turbolinks-track': 'reload' %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   </head>
-  
-
   <body>
+    <header>
+      <% if ["users"].include?(controller.controller_name) %>
+        <%= render "layouts/header_user" %>
+      <% elsif ["introductions"].include?(controller.controller_name) %>
+        
+      <% else %>
+        <%= render "layouts/header" %>
+      <% end %>
+    </header>
     <%= render 'layouts/user_layout' %>
   </body>
 </html>

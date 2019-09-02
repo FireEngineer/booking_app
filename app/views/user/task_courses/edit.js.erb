@@ -1,0 +1,2 @@
+$("#edit_course_<%= @task_course.id %>_modal").html("<%= escape_javascript(render 'course_edit_form') %>")
+$("#edit_course_<%= @task_course.id %>_modal").modal("show")
