@@ -1,5 +1,5 @@
 $(document).on 'turbolinks:load', ->
-  default_date = $('#data').data('date_current')["key"];
+  default_date = $('#data').data('date_current');
   events = $('#data').data('events');
   $('#calendar').fullCalendar {
     navLinks: true,

@@ -18,8 +18,17 @@
         <div class="dropdown-menu" aria-labelledby="settingDropdown">
           <%= link_to "ユーザー設定", user_path(current_user), class:"dropdown-item" %>
           <div class="dropdown-divider"></div>
-          <%= link_to "カレンダー設定", user_calendar_path(current_user, @calendar), class:"dropdown-item" %>
           <%= link_to "予約一覧", user_calendar_user_tasks_path(current_user, @calendar), class:"dropdown-item" %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="shiftDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          カレンダー
+        </a>
+        <div class="dropdown-menu" aria-labelledby="shiftDropdown">
+          <%= link_to "カレンダー設定", user_calendar_path(current_user, @calendar), class:"dropdown-item" %>
+          <%= link_to "休日設定", calendar_iregular_holidays_path(@calendar), class:"dropdown-item" %>
+          <%# <div class="dropdown-divider"></div> %>
         </div>
       </li>
       <li class="nav-item dropdown">

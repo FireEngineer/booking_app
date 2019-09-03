@@ -19,14 +19,14 @@ class User::TopController < User::Base
   private
     # スタッフのシフトのJSON
     def staff_shifts(staff)
-        staff.staff_shifts.map do |shift|
-          { 
-            start: l(shift.work_start_time, format: :to_work_json),
-            end: l(shift.work_end_time, format: :to_work_json),
-            rendering: 'background' ,
-          }
-        end rescue nil
-      end
+      staff.staff_shifts.map do |shift|
+        { 
+          start: l(shift.work_start_time, format: :to_work_json),
+          end: l(shift.work_end_time, format: :to_work_json),
+          rendering: 'background' ,
+        }
+      end rescue nil
+    end
       
       # スタッフのタスクのJSON
       def staff_tasks(staff, search_id)
