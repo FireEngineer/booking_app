@@ -2,24 +2,8 @@
   <div class="title">
     <h2 class="title_style">予約フォーム</h2>
   </div>
-
-  <table class="table table-borderless">
-    <tbody>
-      <tr>
-        <th scope="row">電話形式</th>
-        <td class="left_align">LINEでの電話相談を承ります。</td>
-      </tr>
-      <tr>
-        <th scope="row">時間</th>
-        <td class="left_align">３０分〜１時間となります。</td>
-      </tr>
-      <tr>
-        <th scope="row">空き状況</th>
-        <td class="left_align"><i class="far fa-circle"></i>:予約可能　<i class="fas fa-times"></i>:不可</td>
-      </tr>
-    </tbody>
-  </table>
   <%# スタッフ選択 %>
+  <p>・担当スタッフを選択してください</p>
   <div class="dropdown">
     <!-- 切替ボタンの設定 -->
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -32,8 +16,10 @@
       <% end %>
     </div><!-- /.dropdown-menu -->
   </div><!-- /.dropdown -->
+  <br>
 
   <%# コースの選択 %>
+  <p>・コースを選択してください</p>
   <div class="dropdown">
     <!-- 切替ボタンの設定 -->
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

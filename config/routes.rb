@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   scope module: :user do
     resources :users do
       patch "calendar/:id/update", to: "calendars#update"
+      patch "calendar/:id/update_is_released", to: "calendars#update_is_released", as: "calendar_update_is_released"
       resources :calendars, param: :calendar_name do
         get "dashboard", to: "top#dashboard"
         get "user_tasks/:id/update_by_drop", to: "user_tasks#update_by_drop"

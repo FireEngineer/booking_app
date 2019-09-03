@@ -8,15 +8,13 @@
       <li class="nav-item active">
         <%= link_to @calendar.calendar_name, user_calendar_dashboard_path(current_user, @calendar), class:"nav-link" %>
       </li>
-      <li class="nav-item">
-        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"nav-link" %>
-      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="settingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           設定
         </a>
         <div class="dropdown-menu" aria-labelledby="settingDropdown">
           <%= link_to "ユーザー設定", user_path(current_user), class:"dropdown-item" %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"dropdown-item" %>
           <div class="dropdown-divider"></div>
           <%= link_to "予約一覧", user_calendar_user_tasks_path(current_user, @calendar), class:"dropdown-item" %>
         </div>
@@ -39,6 +37,18 @@
           <%= link_to "シフト設定", user_calendar_staffs_shifts_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
           <%= link_to "スタッフ設定", user_calendar_staffs_path(current_user, @calendar), class:"dropdown-item" %>
           <%# <div class="dropdown-divider"></div> %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="shiftDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= @calendar.display_release %>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="shiftDropdown">
+          <% if @calendar.is_released %>
+            <%= link_to "非公開にする", user_calendar_update_is_released_path(current_user, @calendar, commit:"非公開にする"), class:"dropdown-item", method: :patch %>
+          <% else %>
+            <%= link_to "カレンダーを公開する", user_calendar_update_is_released_path(current_user, @calendar, commit:"公開にする"), class:"dropdown-item", method: :patch %>
+          <% end %>
         </div>
       </li>
     </ul>

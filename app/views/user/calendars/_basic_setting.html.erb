@@ -24,19 +24,19 @@
           <td>googleカレンダーから取得するデータの期間を設定</td>
         </tr>
         <tr>
-          <th scope="row">基本営業時間</th>
-          <td><%= f.number_field :start_time, class: "form-control" %></td>
-          <td>表示開始する時間（10に設定すると、10時からのカレンダー表示）</td>
-        </tr>
-        <tr>
-          <th scope="row">基本終了時間</th>
-          <td><%= f.number_field :end_time, class: "form-control" %></td>
-          <td>表示終了する時間（22に設定すると、22時までのカレンダー表示）</td>
-        </tr>
-        <tr>
           <th scope="row">表示カレンダー名</th>
           <td><%= f.text_field :calendar_name, class: "form-control" %></td>
           <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
+        </tr>
+        <tr>
+          <th scope="row">お店の住所</th>
+          <td><%= f.text_field :address, class: "form-control" %></td>
+          <td>お店の住所です。公開されます。</td>
+        </tr>
+        <tr>
+          <th scope="row">お店の電話番号</th>
+          <td><%= f.text_field :phone, class: "form-control" %></td>
+          <td>お店の電話番号です。公開されます。</td>
         </tr>
       </tbody>
     </table>
