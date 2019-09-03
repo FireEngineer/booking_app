@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_03_004613) do
+ActiveRecord::Schema.define(version: 2019_09_03_021011) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(version: 2019_09_03_004613) do
     t.bigint "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "regular_holiday_id"
+    t.index ["regular_holiday_id"], name: "index_staff_regular_holidays_on_regular_holiday_id"
     t.index ["staff_id"], name: "index_staff_regular_holidays_on_staff_id"
   end
 
@@ -171,6 +173,7 @@ ActiveRecord::Schema.define(version: 2019_09_03_004613) do
   add_foreign_key "calendar_configs", "calendars"
   add_foreign_key "line_bots", "admins"
   add_foreign_key "regular_holidays", "calendar_configs"
+  add_foreign_key "staff_regular_holidays", "regular_holidays"
   add_foreign_key "staff_regular_holidays", "staffs"
   add_foreign_key "staff_shifts", "staffs"
   add_foreign_key "staffs", "calendars"
