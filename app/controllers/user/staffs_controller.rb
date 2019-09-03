@@ -53,7 +53,7 @@ class User::StaffsController < User::Base
 
     private
       def staff_params
-        params.require(:staff).permit(:name)
+        params.require(:staff).permit(:name, :description, staff_regular_holidays_attributes:[:is_holiday, :work_start_at, :work_end_at, :id])
       end
 
       def staff
