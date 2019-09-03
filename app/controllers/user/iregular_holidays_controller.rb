@@ -29,13 +29,21 @@ class User::IregularHolidaysController < User::Base
 
   def update
     if @iregular_holiday.update(iregular_holiday_params)
+      flash[:success] = "休日を更新しました"
+      redirect_to calendar_iregular_holidays_path(@calendar)
     else
+      flash[:danger] = "休日を更新できませんでした"
+      redirect_to calendar_iregular_holidays_path(@calendar)
     end
   end
 
   def destroy
     if @iregular_holiday.destroy
+      flash[:success] = "休日を削除しました"
+      redirect_to calendar_iregular_holidays_path(@calendar)
     else
+      flash[:danger] = "休日を削除できませんでした"
+      redirect_to calendar_iregular_holidays_path(@calendar)
     end
   end
 
@@ -78,6 +86,7 @@ class User::IregularHolidaysController < User::Base
           start: l(date.date, format: :to_json),
           end: l(date.date.tomorrow, format: :to_json),
           overlap: false,
+          id: date.id
           # rendering: 'background'
         }
       end

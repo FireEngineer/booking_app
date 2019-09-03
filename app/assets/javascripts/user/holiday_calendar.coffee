@@ -7,6 +7,9 @@ $(document).on 'turbolinks:load', ->
       # alert('clicked ' + date.format());
       $.get("iregular_holidays/new/?date=#{date.format()}");
       return
+    eventClick: (eventObj) -> 
+      $.get("iregular_holidays/#{eventObj.id}/edit");
+      return
     defaultView: 'month',
     validRange: {
       start: json_data["start_date"],

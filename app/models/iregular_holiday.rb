@@ -12,7 +12,7 @@ class IregularHoliday < ApplicationRecord
 
     def check_regular_holiday
         day = ["日", "月", "火", "水", "木", "金", "土"][self.date.wday]
-        if self.calendar_config.regular_holidays.find_by(day: day)
+        if self.calendar_config.regular_holidays.where(holiday_flag: true).find_by(day: day)
             errors.add(:date, "この日は定休日です") # エラーメッセージ
         end
     end

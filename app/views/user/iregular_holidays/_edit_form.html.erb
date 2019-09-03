@@ -1,20 +1,20 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">新規休日</h5>
+        <h5 class="modal-title">休日編集</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
           <span aria-hidden="true">&times;</span>
         </button>
       </div><!-- /.modal-header -->
       <div class="modal-body">
         <div class="form_area">
-            <%= form_for iregular_holiday, url: calendar_iregular_holidays_path(calendar), method: :post do |f| %>
+            <%= form_for iregular_holiday, url: calendar_iregular_holiday_path(calendar, iregular_holiday), method: :patch do |f| %>
                     <div class="form-group">
                         <label for="exampleInputPassword1">説明</label><span id="msg-name"></span>
                         <%= f.text_area :description, class: "form-control form_style", id: "name", placeholder: "必須ではありません" %>
                     </div>
-                    <%= f.hidden_field :date %>
-                <%= f.submit "休日を作成する", class:"btn btn-primary btn_style", data:{confirm: "休日を作成しますか？"} %>
+                <%= f.submit "休日を編集する", class:"btn btn-primary btn_style", data:{confirm: "休日を作成しますか？"} %>
+                <%= link_to "削除する", calendar_iregular_holiday_path(calendar, iregular_holiday), class:"btn btn-danger", data:{confirm: "休日削除しますか？"}, method: :delete %>
             <% end %>
         </div>
       </div><!-- /.modal-body -->
