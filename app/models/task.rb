@@ -23,6 +23,7 @@ class Task < ApplicationRecord
   end
 
   # バリデーション======================================================
+  # 時間がかぶっていないかどうか
   def check_time_original
     before_time = self.calendar.calendar_config.before_time
     after_time = self.calendar.calendar_config.after_time
@@ -35,6 +36,7 @@ class Task < ApplicationRecord
     end
   end
 
+  # 勤務時間内かどうか
   def check_include_work_time
     date = self.start_time.to_date
     staff = self.staff
@@ -44,6 +46,7 @@ class Task < ApplicationRecord
     end
   end
 
+  # 開始時間が終了時間より遅くないか
   def start_end_check
     errors.add(:end_date, "の時間を正しく記入してください。") unless
     self.start_time < self.end_time

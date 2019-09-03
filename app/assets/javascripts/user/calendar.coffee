@@ -32,11 +32,6 @@ $(document).on 'turbolinks:load', ->
       center: 'title',
       right: 'agendaDay,agendaWeek,month,listDay,listWeek,listMonth'
     },
-    businessHours: {
-      dow: [ 1, 2, 3, 4 ],
-      start: '10:00',
-      end: '20:00',
-    },
     events: events,
     select: (startStr, endStr) ->
       $.get("user_tasks/new?start_time=#{startStr.format()}&end_time=#{endStr.format()}");
