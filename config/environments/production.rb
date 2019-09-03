@@ -84,7 +84,19 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  Rails.application.routes.default_url_options = { host: 'https://throbbing-shimabara-2717.lolipop.io' }
+  Rails.application.routes.default_url_options = { host: 'http://booking-env.6pvxjhkqqx.ap-northeast-1.elasticbeanstalk.com' }
+  config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+   address:              'smtp.gmail.com',
+   port:                  587,
+   domain:               'gmail.com',
+   user_name:            'tech.leaders.kk@gmail.com',
+   password:             'uwqlpjiwuigrmqop',
+   authentication:       'plain',
+   enable_starttls_auto:  true
+  }
+
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
