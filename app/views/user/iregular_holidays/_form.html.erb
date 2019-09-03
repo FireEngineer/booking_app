@@ -1,0 +1,28 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">新規予約フォーム</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div><!-- /.modal-header -->
+      <div class="modal-body">
+        <div class="form_area">
+            <%= form_for iregular_holiday, url: calendar_iregular_holidays_path(calendar), method: :post do |f| %>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">説明</label><span id="msg-name"></span>
+                        <%= f.text_area :description, class: "form-control form_style", id: "name", placeholder: "必須ではありません" %>
+                    </div>
+                    <%= f.hidden_field :date %>
+                <%= f.submit "休日を作成する", class:"btn btn-primary btn_style", data:{confirm: "休日を作成しますか？"} %>
+            <% end %>
+        </div>
+      </div><!-- /.modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >閉じる</button>
+      </div><!-- /.modal-footer -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+
+
+  

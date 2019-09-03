@@ -1,8 +1,12 @@
 $(document).on 'turbolinks:load', ->
   json_data = $('#holiday_data').data('json_data');
-  debugger
   # events = $('#data').data('events');
   $('#holiday_calendar').fullCalendar {
+    selectable: true,
+    dayClick: (date) ->
+      # alert('clicked ' + date.format());
+      $.get("iregular_holidays/new/?date=#{date.format()}");
+      return
     defaultView: 'month',
     validRange: {
       start: json_data["start_date"],

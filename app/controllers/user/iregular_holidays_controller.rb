@@ -8,13 +8,18 @@ class User::IregularHolidaysController < User::Base
   end
   
   def new
-    @iregular_holiday = IregularHoliday.new(calendar_config_id: calendar_config.id)
+    @iregular_holiday = IregularHoliday.new(calendar_config_id: calendar_config.id, date: params[:date])
   end
 
   def create
     @iregular_holiday = IregularHoliday.new(iregular_holiday_params)
+    @iregular_holiday.calendar_config = calendar_config
     if @iregular_holiday.save
+      flash[:success] = "休日を作成しました"
+      redirect_to calendar_iregular_holidays_path(@calendar)
     else
+      flash[:danger] = "休日を作成できませんでした"
+      redirect_to calendar_iregular_holidays_path(@calendar)
     end
   end
 
@@ -66,6 +71,17 @@ class User::IregularHolidaysController < User::Base
       end rescue nil
     end
 
+    def iregular_holidays
+      calendar_config.iregular_holidays.map do |date|
+        { 
+          title: "休日",
+          start: l(date.date, format: :to_json),
+          end: l(date.date.tomorrow, format: :to_json),
+          overlap: false,
+          # rendering: 'background'
+        }
+      end
+    end
 
     def staff_shifts(staff)
       staff.staff_shifts.map do |shift|
@@ -81,7 +97,7 @@ class User::IregularHolidaysController < User::Base
       hash = {
        "start_date": Date.current.beginning_of_month,
        "end_date": Date.current.since(6.months).end_of_month,
-       "holidays": regular_holidays,
+       "holidays": regular_holidays + iregular_holidays,
       }.to_json
     end
 end
