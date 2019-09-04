@@ -72,8 +72,8 @@ Rails.application.routes.draw do
     # =====userがアカウント登録した時の最初の設定ページ
     get "introductions/new_calendar", to: "introductions#new_calendar"
     post "introductions/create_calendar", to: "introductions#create_calendar"
-    # get "introductions/new_calendar", to: "introductions#new_calendar"
-    # post "introductions/create_calendar", to: "introductions#create_calendar"
+    get "introductions/new_staff", to: "introductions#new_staff"
+    post "introductions/create_staff", to: "introductions#create_staff"
     # =========
 
   end

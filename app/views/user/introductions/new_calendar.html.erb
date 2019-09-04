@@ -16,7 +16,7 @@
       <tbody>
         <tr>
           <th scope="row">表示カレンダー名</th>
-          <td><%= f.text_field :calendar_name, class: "form-control" %></td>
+          <td><%= f.text_field :calendar_name, class: "form-control", required: true %></td>
           <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
         </tr>
         <tr>
