@@ -49,4 +49,6 @@ class User::CalendarsController < User::Base
       params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calender_name, :is_released, :address, :phone)
     end
 
+    
+
 end

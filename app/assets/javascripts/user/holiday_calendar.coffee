@@ -1,6 +1,5 @@
 $(document).on 'turbolinks:load', ->
   json_data = $('#holiday_data').data('json_data');
-  # events = $('#data').data('events');
   $('#holiday_calendar').fullCalendar {
     selectable: true,
     dayClick: (date) ->

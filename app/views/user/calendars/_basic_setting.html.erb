@@ -11,17 +11,12 @@
         <tr>
           <th scope="row">表示開始日</th>
           <td><%= f.number_field :start_date, class: "form-control" %></td>
-          <td>カレンダーの表示開始日の設定です。（1と設定すると、本日から1日後の明日のカレンダーから表示）</td>
-        </tr>
-        <tr>
-          <th scope="row">表示終了日</th>
-          <td><%= f.number_field :end_date, class: "form-control" %></td>
-          <td>カレンダーの表示終了日の設定です。（6と設定すると、本日から6日後の日付で表示終了）</td>
+          <td>カレンダーの表示開始日の設定です。（1と設定すると、本日から1日後の日付から表示）</td>
         </tr>
         <tr>
           <th scope="row">表示期間</th>
           <td><%= f.number_field :display_week_term, class: "form-control" %></td>
-          <td>googleカレンダーから取得するデータの期間を設定</td>
+          <td>カレンダーに表示する期間を設定（ヶ月）</td>
         </tr>
         <tr>
           <th scope="row">表示カレンダー名</th>

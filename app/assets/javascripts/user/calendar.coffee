@@ -1,7 +1,13 @@
 $(document).on 'turbolinks:load', ->
   default_date = $('#data').data('date_current');
   events = $('#data').data('events');
+  data_calendar = $('#data').data('data_calendar');
   $('#calendar').fullCalendar {
+    validRange: {
+      start: data_calendar["start_date"],
+      end: data_calendar["end_date"]
+    },
+    allDaySlot: false,
     navLinks: true,
     defaultDate: default_date,
     editable: true,

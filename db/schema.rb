@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_03_123838) do
+ActiveRecord::Schema.define(version: 2019_09_04_045341) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2019_09_03_123838) do
     t.bigint "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_holiday"
     t.index ["staff_id"], name: "index_staff_shifts_on_staff_id"
   end
 
