@@ -14,7 +14,7 @@ class User::StaffShiftsController < User::Base
           day = ["日", "月", "火", "水", "木", "金", "土"][date.wday]
           staff_regular_holiday = @staff.staff_regular_holidays.find_by(day:day)
           start_time = Time.parse("#{date}").change(hour: staff_regular_holiday.work_start_at.hour, min: staff_regular_holiday.work_start_at.min)
-          end_time = start_time.since(8.hours).change(hour: staff_regular_holiday.work_end_at.hour, min: staff_regular_holiday.work_end_at.min)
+          end_time = start_time.change(hour: staff_regular_holiday.work_end_at.hour, min: staff_regular_holiday.work_end_at.min)
           @staff.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time).save
       end
     end
