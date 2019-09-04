@@ -6,5 +6,7 @@ class Public::Base < ApplicationController
         unless calendar.is_released?
             redirect_to not_released_page_url
         end
+    rescue
+        redirect_to not_released_page_url
     end
 end

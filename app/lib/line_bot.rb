@@ -3,6 +3,11 @@ require 'net/http'
 require 'uri'
 class LineBot
   attr_reader :client
+  if Rails.env == "production"
+    HOST_URL = "http://booking-env.6pvxjhkqqx.ap-northeast-1.elasticbeanstalk.com"
+  else
+    HOST_URL = "http://localhost:3000"
+  end
 
   def initialize()
     channel_secret = "2a3591a3789e3937403903e9dd87cabd"
@@ -29,7 +34,7 @@ class LineBot
         #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
         #{task.end_time.strftime("%H:%M")}
       ・キャンセルURL
-        #{ if Rails.env == "development" then "http://localhost:3000/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel" end }
+        #{HOST_URL}/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel
       ==================="
     }
     response = client.push_message(user_id, message)
@@ -51,7 +56,7 @@ class LineBot
         #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
         #{task.end_time.strftime("%H:%M")}
       ・キャンセルURL
-        #{ if Rails.env == "development" then "http://localhost:3000/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel" end }
+        #{HOST_URL}/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel
       ==================="
     }
     response = client.push_message(user_id, message)
