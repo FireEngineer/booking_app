@@ -1,12 +1,14 @@
 $(document).on 'turbolinks:load', ->
   json_data = $('#holiday_data').data('json_data');
+  unless json_data
+    return
   $('#holiday_calendar').fullCalendar {
     selectable: true,
     dayClick: (date) ->
       # alert('clicked ' + date.format());
       $.get("iregular_holidays/new/?date=#{date.format()}");
       return
-    eventClick: (eventObj) -> 
+    eventClick: (eventObj) ->
       $.get("iregular_holidays/#{eventObj.id}/edit");
       return
     defaultView: 'month',

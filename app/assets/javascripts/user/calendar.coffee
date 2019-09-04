@@ -2,6 +2,8 @@ $(document).on 'turbolinks:load', ->
   default_date = $('#data').data('date_current');
   events = $('#data').data('events');
   data_calendar = $('#data').data('data_calendar');
+  unless data_calendar
+    return
   $('#calendar').fullCalendar {
     validRange: {
       start: data_calendar["start_date"],
