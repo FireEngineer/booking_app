@@ -9,7 +9,7 @@ class Task < ApplicationRecord
   belongs_to :calendar
   belongs_to :staff
 
-  after_create :sync_create, :line_send, :mail_send
+  after_save :sync_create, :line_send, :mail_send
   after_update :sybc_update, :line_send_with_edit_task
   after_destroy :sybc_delete, :line_send_with_delete_task
 
@@ -67,9 +67,9 @@ class Task < ApplicationRecord
   end
 
   def line_send
-    if self.store_member.line_user_id
       LineBot.new().push_message(self, self.store_member.line_user_id)
-    end
+  rescue
+    false
   end
 
   def line_send_with_edit_task
