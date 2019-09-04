@@ -1,25 +1,20 @@
 <%= form_for @user, url: user_path(@user), method: :patch do |f| %>
     <table class="table">
-    <caption>ユーザーの設定</caption>
-    <thead>
-        <tr>
-        <th>項目</th>
-        <th scope="col">設定</th>
-        <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">email</th>
-            <td><%= f.text_field :email, class:"form-control" %></td>
-        </tr>
-        <tr>
-            <th scope="row">line_token</th>
-            <td><%= f.text_field :line_token, class:"form-control" %></td>
-        </tr>
-            <th scope="row"><%= f.submit "更新", class:"btn btn-primary" %></th>
-            <td></td>
-        </tr>
-    </tbody>
+        <thead>
+            <tr>
+            <th>項目</th>
+            <th scope="col">設定</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">email</th>
+                <td><%= f.text_field :email, class:"form-control" %></td>
+            </tr>
+                <th scope="row"><%= f.submit "更新", class:"btn btn-primary" %></th>
+                <td></td>
+            </tr>
+        </tbody>
     </table>
 <% end %>
