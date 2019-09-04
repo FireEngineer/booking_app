@@ -5,6 +5,8 @@ class Task < ApplicationRecord
   validate :check_include_work_time
   validate :start_end_check
   validate :check_after_timenow
+  validate :check_calendar_holiday
+  
   belongs_to :task_course
   belongs_to :store_member
   belongs_to :calendar
@@ -53,9 +55,19 @@ class Task < ApplicationRecord
     self.start_time < self.end_time
   end
 
+  # 予約時間が現時刻より先かどうか
   def check_after_timenow
     if self.start_time < Time.current
       errors.add(:start_time, "現時刻より前の予定は作成できません。")
+    end
+  end
+
+  # 休みの日かどうか
+  def check_calendar_holiday
+    day = ["日", "月", "火", "水", "木", "金", "土"][self.start_time.wday]
+    if self.calendar.calendar_config.regular_holidays.where(holiday_flag: true).find_by(day: day) ||
+      self.calendar.calendar_config.iregular_holidays.where("date >= ?", Date.current ).find_by(date: self.start_time.to_date)
+      errors.add(:start_time, "この日は休みです。")
     end
   end
 

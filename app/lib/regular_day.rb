@@ -12,13 +12,21 @@ class RegularDay
   end
 
   def call
-    regular_holidays.include?(w_day)
+    if regular_holidays.include?(w_day) || iregular_holidays.find_by(date: date)
+      true
+    else
+      false
+    end
   end
 
   private
 
     def regular_holidays
       @calendar.calendar_config.regular_holidays.where(holiday_flag: true).pluck(:day)
+    end
+
+    def iregular_holidays
+      @calendar.calendar_config.iregular_holidays.where("date >= ?", Date.current)
     end
 
     def w_day
