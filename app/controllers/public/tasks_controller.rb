@@ -61,8 +61,8 @@ class Public::TasksController < Public::Base
     if params[:commit] == "そのまま予約する"
       @task_course = TaskCourse.find(params[:task_course_id])
       # 電話番号で、既存の会員データがあれば、そのデータを使用する
-      if StoreMember.find_by(phone: task_params["phone"])
-        @store_member = StoreMember.find_by(phone: task_params["phone"])
+      if StoreMember.find_by(phone: store_member_params["phone"])
+        @store_member = StoreMember.find_by(phone: store_member_params["phone"])
       else
         @store_member = StoreMember.new(store_member_params)
         @store_member.calendar = @calendar
@@ -84,7 +84,8 @@ class Public::TasksController < Public::Base
           render :new
           return
         end
-      rescue
+      rescue e
+        puts errors_log(e)
         flash[:warnning] = "この時間はすでに予約が入っております。"
         redirect_to calendar_tasks_url(@calendar)
         return

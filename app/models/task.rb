@@ -13,8 +13,8 @@ class Task < ApplicationRecord
   belongs_to :staff
 
   after_save :sync_create, :mail_send
-  after_update :sybc_update, :line_send_with_edit_task
-  after_destroy :sybc_delete, :line_send_with_delete_task
+  after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
+  after_destroy :sybc_delete, :line_send_with_delete_task, :mail_send_with_delete_task
 
   def self.with_store_member
     joins(:store_member).select('tasks.*, store_members.name, store_members.email, store_members.phone, store_members.id as member_id')
@@ -102,6 +102,10 @@ class Task < ApplicationRecord
   end
 
   def mail_send_with_edit_task
-    NotificationMailer.send_confirm_to_user(self, self.calendar.user, self.calendar).deliver
+    NotificationMailer.send_edit_task_to_user(self, self.calendar.user, self.calendar).deliver
+  end
+
+  def mail_send_with_delete_task
+    NotificationMailer.send_delete_task_to_user(self, self.calendar.user, self.calendar).deliver
   end
 end

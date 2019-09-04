@@ -13,4 +13,27 @@ class NotificationMailer < ApplicationMailer
     )
   end
 
+  def send_edit_task_to_user(task, user, calendar)
+    @task = task
+    @user = user
+    @calendar = calendar
+    mail(
+      from: "tech.leaders.kk@gmail.com",
+      to:   task.store_member.email,
+      subject: '予約内容変更通知'
+    )
+  end
+
+  def send_delete_task_to_user(task, user, calendar)
+    @task = task
+    @user = user
+    @calendar = calendar
+    mail(
+      from: "tech.leaders.kk@gmail.com",
+      to:   task.store_member.email,
+      subject: '予約キャンセル通知'
+    )
+  end
+
+
 end

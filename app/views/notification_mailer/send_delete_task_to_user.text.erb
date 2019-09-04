@@ -1,0 +1,18 @@
+<%= @task.store_member.name %>様
+以下の内容のご予約をキャンセルしました。
+ご確認ください。
+
+お名前：<%= @task.store_member.name %>
+
+日時　：<%= @task.start_time.strftime("%Y年%-m月%-d日 %H:%M") %>~<%= @task.end_time.strftime("%H:%M") %>時
+
+
+
+==========================================================
+<%= @calendar.calendar_name %>
+<% if @calendar.phone %>
+電話番号：<%= @calendar.phone %>
+<% end %>
+<% if @calendar.address %>
+住所: <%= @calendar.address %>
+<% end %>
