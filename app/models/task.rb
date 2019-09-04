@@ -4,6 +4,7 @@ class Task < ApplicationRecord
   validate :check_time_original
   validate :check_include_work_time
   validate :start_end_check
+  validate :check_after_timenow
   belongs_to :task_course
   belongs_to :store_member
   belongs_to :calendar
@@ -50,6 +51,12 @@ class Task < ApplicationRecord
   def start_end_check
     errors.add(:end_date, "の時間を正しく記入してください。") unless
     self.start_time < self.end_time
+  end
+
+  def check_after_timenow
+    if self.start_time < Time.current
+      errors.add(:start_time, "現時刻より前の予定は作成できません。")
+    end
   end
 
   private

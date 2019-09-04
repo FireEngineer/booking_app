@@ -20,7 +20,7 @@ class User::TopController < User::Base
   private
     # スタッフのシフトのJSON
     def staff_shifts(staff)
-      staff.staff_shifts.map do |shift|
+      staff.staff_shifts.where(work_date: [*Date.current..Date.current.since(staff.calendar.display_week_term.months).end_of_month]).map do |shift|
         day = ["日", "月", "火", "水", "木", "金", "土"][shift.work_date.wday]
         if staff.calendar.calendar_config.regular_holidays.where(holiday_flag: true).find_by(day: day)
           { 
@@ -28,7 +28,8 @@ class User::TopController < User::Base
             start: l(shift.work_start_time.beginning_of_day, format: :to_work_json),
             end: l(shift.work_end_time.end_of_day, format: :to_work_json),
             backgroundColor: '#afabab',
-            editable: false
+            editable: false,
+            overlap: false
           }
         elsif staff.calendar.calendar_config.iregular_holidays.find_by(date: shift.work_date)
           { 
@@ -36,7 +37,8 @@ class User::TopController < User::Base
             start: l(shift.work_start_time.beginning_of_day, format: :to_work_json),
             end: l(shift.work_end_time.end_of_day, format: :to_work_json),
             backgroundColor: '#afabab',
-            editable: false
+            editable: false,
+            overlap: false
           }
         elsif staff.staff_regular_holidays.where(is_holiday: true).find_by(day: day)
           { 
@@ -44,7 +46,8 @@ class User::TopController < User::Base
             start: l(shift.work_start_time.beginning_of_day, format: :to_work_json),
             end: l(shift.work_end_time.end_of_day, format: :to_work_json),
             backgroundColor: '#afabab',
-            editable: false
+            editable: false,
+            overlap: false
           }
         else
           { 
@@ -99,7 +102,8 @@ class User::TopController < User::Base
               start: l(date.beginning_of_day, format: :to_work_json),
               end: l(date.end_of_day, format: :to_work_json),
               backgroundColor: '#afabab',
-              editable: false
+              editable: false,
+              overlap: false
             }
           elsif calendar.calendar_config.iregular_holidays.find_by(date: date)
             { 
@@ -107,7 +111,8 @@ class User::TopController < User::Base
               start: l(date.beginning_of_day, format: :to_work_json),
               end: l(date.end_of_day, format: :to_work_json),
               backgroundColor: '#afabab',
-              editable: false
+              editable: false,
+              overlap: false
             }
           else
             {}
