@@ -19,6 +19,16 @@
           <td>カレンダーに表示する期間を設定（ヶ月）</td>
         </tr>
         <tr>
+          <th scope="row">表示開始時刻</th>
+          <td><%= f.number_field :start_time, class: "form-control" %></td>
+          <td>カレンダーに表示する1日の表示開始時刻</td>
+        </tr>
+        <tr>
+          <th scope="row">表示終了時刻</th>
+          <td><%= f.number_field :end_time, class: "form-control" %></td>
+          <td>カレンダーに表示する1日の表示終了時刻</td>
+        </tr>
+        <tr>
           <th scope="row">表示カレンダー名</th>
           <td><%= f.text_field :calendar_name, class: "form-control" %></td>
           <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>

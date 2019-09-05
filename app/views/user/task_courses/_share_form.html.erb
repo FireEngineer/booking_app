@@ -20,7 +20,12 @@
         </tr>
         <tr>
             <th scope="row">コース時間（必須）</th>
-            <td><%= f.number_field :course_time, class: "form-control" %></td>
+            <td><%= f.number_field :course_time, class: "form-control" %>分</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">コース料金（必須）</th>
+            <td><%= f.text_field :charge, class: "form-control" %>円</td>
             <td></td>
         </tr>
     </tbody>

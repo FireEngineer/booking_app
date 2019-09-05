@@ -175,11 +175,11 @@ class Public::TasksController < Public::Base
     end
 
     def store_member_params
-      params.require(:store_member).permit(:name, :email, :phone, :gender, :age, tasks_attributes: [:start_time, :end_time])
+      params.require(:store_member).permit(:name, :email, :phone, :gender, :age, tasks_attributes: [:start_time, :end_time, :request])
     end
 
     def task_params
-      params.require(:task).permit(:start_time, :end_time)
+      params.require(:task).permit(:start_time, :end_time, :request)
     end
 
     def check_task_validation(task)

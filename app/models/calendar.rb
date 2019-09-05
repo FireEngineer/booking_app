@@ -18,7 +18,7 @@ class Calendar < ApplicationRecord
 
   def create_default_task_course
     unless self.task_courses.first
-      self.task_courses.build(title: "60分コース", description: "60分のコースになります。", course_time: 60).save
+      self.task_courses.build(title: "60分コース", description: "60分のコースになります。", course_time: 60, charge: "5000").save
     end
   end
 

@@ -36,7 +36,15 @@
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">担当者</label>
-            <%= task.text_field :name, value: @staff.name,  class: "form-control form_style", readonly: true %>
+            <%= task.text_field :staff_value, value: @staff.name,  class: "form-control form_style", readonly: true %>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">コース名:コース時間：料金</label>
+            <%= task.text_field :course_value, value: "#{@task_course.title}：#{@task_course.course_time}分：#{@task_course.charge}円",  class: "form-control form_style", readonly: true %>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">ご要望</label>
+            <%= task.text_area :request, class: "form-control form_style" %>
         </div>
       <% end %>
       <%= hidden_field_tag :task_course_id, @task_course.id %>
