@@ -8,6 +8,12 @@ class Calendar < ApplicationRecord
   
 
   validates :calendar_name, uniqueness: true
+  validates :calendar_name, presence: true
+  validates :desplay_week_term, presence: true
+  validates :end_date, presence: true
+  validates :start_date, presence: true
+  validates :end_time, presence: true
+  validates :start_time, presence: true
 
   after_create :create_default_task_course
   after_create :create_calendar_config
@@ -35,4 +41,7 @@ class Calendar < ApplicationRecord
     end
   end
 
+  # validation
+  def date_check
+  end
 end

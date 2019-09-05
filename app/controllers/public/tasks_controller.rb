@@ -215,7 +215,7 @@ class Public::TasksController < Public::Base
     def task_params
       params.require(:task).permit(:start_time, :end_time, :request)
     end
-
+    
     def check_task_validation(task)
       if task.invalid?
         flash[:warnning] = "この時間はすでに予約が入っております。"
@@ -223,6 +223,7 @@ class Public::TasksController < Public::Base
       end
     end
 
+    # 予約カレンダーの表示間隔
     def time_interval(start_time, end_time)
       array = []
       1.step do |i|
