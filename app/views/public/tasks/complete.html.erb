@@ -1,6 +1,6 @@
 <div class="complete_page">
   <div class="title">
-    <!--<h2>予約が完了しました。</h2>-->
+    <h2>予約が完了しました。</h2>
   </div>
 
   <div class="card">
@@ -11,71 +11,36 @@
           <th scope="row">お名前</th>
           <td><%= @task.store_member.name %></td>
         </tr>
-         <tr>
+        <tr>
           <th scope="row">メールアドレス</th>
           <td><%= @task.store_member.email %></td>
+        </tr>
+        <tr>
+          <th scope="row">電話番号</th>
+          <td><%= @task.store_member.phone %></td>
         </tr>
          <tr>
           <th scope="row">予約時間</th>
           <td><%= reservation_date(@task) %></td>
         </tr>
+        <tr>
+          <th scope="row">予約コース</th>
+          <td><%= @task.task_course.title %></td>
+        </tr>
+        <tr>
+          <th scope="row">予約担当者</th>
+          <td><%= @task.staff.name %></td>
+        </tr>
+        <tr>
+          <th scope="row">ご要望</th>
+          <td><%= @task.request %></td>
+        </tr>
       </tbody>
     </table>
     <div class="card-body">
-      <p>ご予約申し込み頂きありがとうございます！<br>
-        下記のリンクからLINEの友達追加してお名前（フルネーム）で、メッセージ下さいm(_ _)m<br>
-        ↓↓↓<br>
-        <a href="https://www.google.com" class="line_btn">担当者LINE登録をここから行ってください。</a><br>
-        LINE名：予約システム事務局<br>
-      </p>
+      
     </div>
   </div>
 
   <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style" %>
 </div>
-
-<!--モーダル-->
-<div class="popup" id="js-popup">
-  <div class="popup-inner">
-    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
-    <p>ご予約申し込み頂きありがとうございます！<br>
-        下記のリンクからLINEの友達追加してお名前（フルネーム）で、メッセージ下さいm(_ _)m<br>
-        ↓↓↓<br>
-        <a href="https://www.google.com" class="line_btn">担当者LINE登録をここから行ってください。</a><br>
-        LINE名：予約システム事務局<br>
-      </p>
-  </div>
-  <div class="black-background" id="js-black-bg"></div>
-</div>
-
-<script>
-  window.onload = function() {
-  var popup = document.getElementById('js-popup');
-  if(!popup) return;
-  popup.classList.add('is-show');
-
-  var blackBg = document.getElementById('js-black-bg');
-  var closeBtn = document.getElementById('js-close-btn');
-
-  // closePopUp(blackBg);
-  closePopUp(closeBtn);
-
-  function closePopUp(elem) {
-    if(!elem) return;
-    elem.addEventListener('click', function() {
-      popup.classList.remove('is-show');
-    })
-  }
-}
-
-
-// 戻るボタン禁止
-history.pushState(null, null, null);
-$(window).on("popstate", function (event) {
-    if (!event.originalEvent.state) {
-        alert("戻る操作はできません。")
-        history.pushState(null, null, null);
-        return;
-    }
-});
-</script>
