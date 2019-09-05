@@ -34,8 +34,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_233207) do
     t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "before_time", default: 0
-    t.integer "after_time", default: 0
+    t.integer "interval_time", default: 0
     t.index ["calendar_id"], name: "index_calendar_configs_on_calendar_id"
   end
 

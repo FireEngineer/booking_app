@@ -4,8 +4,17 @@
 
 お名前：<%= @task.store_member.name %>
 
-日時　：<%= @task.start_time.strftime("%Y年%-m月%-d日 %H:%M") %>~<%= @task.end_time.strftime("%H:%M") %>
+お名前：<%= @task.store_member.name %>
 
+予約日時　：<%= @task.start_time.strftime("%Y年%-m月%-d日 %H:%M") %>~<%= @task.end_time.strftime("%H:%M") %>
+
+コース名：<%= @task.task_course.title %>
+
+コース料金：<%= @task.task_course.charge %>
+
+担当者：<%= @task.staff.name %>
+
+ご要望：<%= @task.request %>
 
 ※キャンセルをご希望のお方は以下のURLよりキャンセルしてください。
 <%= if Rails.env == "production" then "http://booking-env.6pvxjhkqqx.ap-northeast-1.elasticbeanstalk.com/calendars/#{@calendar.calendar_name}/tasks/#{@task.id}/cancel"

@@ -9,19 +9,9 @@
       </thead>
       <tbody>
         <tr>
-          <th>予約可能席数</th>
-          <td><%= f.number_field :capacity, class: "form-control" %></td>
-          <td>一人のスタッフが同じ時間に重複できる予約の数</td>
-        </tr>
-        <tr>
-          <th>予約時間前の時間（分）</th>
-          <td><%= f.number_field :before_time, class: "form-control" %></td>
-          <td>予約時間前の準備時間</td>
-        </tr>
-        <tr>
-          <th>予約時間後の時間（分）</th>
-          <td><%= f.number_field :after_time, class: "form-control" %></td>
-          <td>予約時間後の準備時間</td>
+          <th>予約間の余裕時間（分）</th>
+          <td><%= f.number_field :interval_time, class: "form-control" %></td>
+          <td>一つ一つの予約の間に準備時間を入れることができます。</td>
         </tr>
       </tbody>
     </table>

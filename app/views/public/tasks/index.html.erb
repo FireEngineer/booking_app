@@ -2,36 +2,53 @@
   <div class="title">
     <h2 class="title_style">予約フォーム</h2>
   </div>
-  <%# スタッフ選択 %>
-  <p>・担当スタッフを選択してください</p>
-  <div class="dropdown">
-    <!-- 切替ボタンの設定 -->
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <%= @staff.name %>
-    </a>
-    <!-- ドロップメニューの設定 -->
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <% @calendar.staffs.each do |staff| %>
-        <%= link_to staff.name, calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id), class:"dropdown-item" %>
-      <% end %>
-    </div><!-- /.dropdown-menu -->
-  </div><!-- /.dropdown -->
-  <br>
+    <%# スタッフ選択 %>
+    <div class="col-sm-6">
+      <div class="card card-body">
+        <h5 class="card-title">担当スタッフを選択してください</h5>
+        <p class="card-text">
+          <%= @staff.description %>
+        </p>
+        <div class="dropdown">
+          <!-- 切替ボタンの設定 -->
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= @staff.name %>
+          </a>
+          <!-- ドロップメニューの設定 -->
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <% @calendar.staffs.each do |staff| %>
+              <%= link_to staff.name, calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id), class:"dropdown-item" %>
+            <% end %>
+          </div><!-- /.dropdown-menu -->
+        </div><!-- /.dropdown -->
+      </div>
+    </div>
 
-  <%# コースの選択 %>
-  <p>・コースを選択してください</p>
-  <div class="dropdown">
-    <!-- 切替ボタンの設定 -->
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <%= @task_course.title %>
-    </a>
-    <!-- ドロップメニューの設定 -->
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <% @calendar.task_courses.each do |course| %>
-        <%= link_to course.title, calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id), class:"dropdown-item" %>
-      <% end %>
-    </div><!-- /.dropdown-menu -->
-  </div><!-- /.dropdown -->
+    <%# コースの選択 %>
+    <div class="col-sm-6">
+      <div class="card card-body">
+        <h5 class="card-title">コースを選択してください</h5>
+        <p class="card-text">
+          <% if @task_course.charge %>
+            <%= @task_course.charge %>円<br>
+          <% end %>
+          <%= @task_course.description %>
+        </p>
+        <div class="dropdown">
+          <!-- 切替ボタンの設定 -->
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= @task_course.title %>
+          </a>
+          <!-- ドロップメニューの設定 -->
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <% @calendar.task_courses.each do |course| %>
+              <%= link_to course.title, calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id), class:"dropdown-item" %>
+            <% end %>
+          </div><!-- /.dropdown-menu -->
+        </div><!-- /.dropdown -->
+      </div>
+    </div>
+
 
   <%= paginate @month %>
     <div class="tabel_scroll">

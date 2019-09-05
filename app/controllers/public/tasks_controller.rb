@@ -106,6 +106,25 @@ class Public::TasksController < Public::Base
   end
 
   def task_create
+    # ラインログインをキャンセルした時
+    if params[:error]
+      @calendar = Calendar.find_by(id: session[:calendar])
+      @user = @calendar.user
+      @staff = Staff.find(session[:staff_id])
+      @task_course = TaskCourse.find(session[:task_course_id])
+      @store_member = StoreMember.new()
+      @task = @store_member.tasks.build(start_time: session[:task]["start_time"],
+                                        end_time: end_time(session[:task]["start_time"], @task_course),
+                                        staff_id: @staff.id,
+                                        task_course_id: @task_course.id,
+                                        calendar_id: @calendar.id)
+    check_task_validation(@task)
+      flash.now[:notice] = "キャンセルしました。"
+      render :new
+      return
+    end
+
+  # ここからが正常処理
     # アクセストークンを取得
     get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code])
     # アクセストークンを使用して、BOTとお客との友達関係を取得
@@ -144,8 +163,23 @@ class Public::TasksController < Public::Base
         flash[:warnning] = "この時間はすでに予約が入っております。"
         redirect_to calendar_tasks_url(@calendar)
       end
-    
+    else #ラインログインでボットと友達にならなかった時の処理
+      @calendar = Calendar.find_by(id: session[:calendar])
+      @user = @calendar.user
+      @staff = Staff.find(session[:staff_id])
+      @task_course = TaskCourse.find(session[:task_course_id])
+      @store_member = StoreMember.new()
+      @task = @store_member.tasks.build(start_time: session[:task]["start_time"],
+                                        end_time: end_time(session[:task]["start_time"], @task_course),
+                                        staff_id: @staff.id,
+                                        task_course_id: @task_course.id,
+                                        calendar_id: @calendar.id)
+      check_task_validation(@task)
+        flash.now[:notice] = "ラインボットと友達になってください"
+        render :new
+        return
     end
+
   end
 
   def complete

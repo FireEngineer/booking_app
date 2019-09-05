@@ -33,6 +33,12 @@ class LineBot
       ・開始時間
         #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
         #{task.end_time.strftime("%H:%M")}
+      ・コース名
+        #{task.task_course.title}
+      ・コース料金
+        #{task.task_course.charge}
+      ・担当者
+        #{task.staff.name}
       ・キャンセルURL
         #{HOST_URL}/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel
       ==================="
@@ -55,6 +61,12 @@ class LineBot
       ・開始時間
         #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
         #{task.end_time.strftime("%H:%M")}
+      ・コース名
+        #{task.task_course.title}
+      ・コース料金
+        #{task.task_course.charge}
+      ・担当者
+        #{task.staff.name}
       ・キャンセルURL
         #{HOST_URL}/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel
       ==================="
@@ -77,6 +89,12 @@ class LineBot
       ・開始時間
         #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
         #{task.end_time.strftime("%H:%M")}
+      ・コース名
+        #{task.task_course.title}
+      ・コース料金
+        #{task.task_course.charge}
+      ・担当者
+        #{task.staff.name}
       ==================="
     }
     response = client.push_message(user_id, message)

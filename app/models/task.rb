@@ -28,10 +28,9 @@ class Task < ApplicationRecord
   # バリデーション======================================================
   # 時間がかぶっていないかどうか
   def check_time_original
-    before_time = self.calendar.calendar_config.before_time
-    after_time = self.calendar.calendar_config.after_time
-    unless Task.where("start_time < ?", self.end_time.since(before_time.minutes))
-                .where("end_time > ?", self.start_time.ago(after_time.minutes))
+    interval_time = self.calendar.calendar_config.interval_time
+    unless Task.where("start_time < ?", self.end_time.since(interval_time.minutes))
+                .where("end_time > ?", self.start_time.ago(interval_time.minutes))
                 .where(staff_id: self.staff_id)
                 .where.not(id: self.id)
                 .empty?
