@@ -9,7 +9,7 @@ class Calendar < ApplicationRecord
 
   validates :calendar_name, uniqueness: true
   validates :calendar_name, presence: true
-  validates :desplay_week_term, presence: true
+  validates :display_week_term, presence: true
   validates :end_date, presence: true
   validates :start_date, presence: true
   validates :end_time, presence: true
