@@ -71,7 +71,7 @@ class Public::TasksController < Public::Base
       @task.calendar = @calendar
       @task.task_course = @task_course
       @task.staff = Staff.find(params[:staff_id])
-      begin
+      # begin
         if @store_member.save
           if @task.store_member.line_user_id
             LineBot.new().push_message(@task, @task.store_member.line_user_id)
@@ -80,16 +80,16 @@ class Public::TasksController < Public::Base
           redirect_to calendar_task_complete_path(@calendar, @task)
           return
         else
+          @staff = @task.staff
           flash.now[:danger] = "予約ができませんでした。"
           render :new
           return
         end
-      rescue e
-        puts errors_log(e)
-        flash[:warnning] = "この時間はすでに予約が入っております。"
-        redirect_to calendar_tasks_url(@calendar)
-        return
-      end
+      # rescue
+      #   flash[:warnning] = "この時間はすでに予約が入っております。"
+      #   redirect_to calendar_tasks_url(@calendar)
+      #   return
+      # end
     end
     # セッションにフォーム値を保持して、ラインログイン後レコード保存
     session[:calendar] = @calendar.id

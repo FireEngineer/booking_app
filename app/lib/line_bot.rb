@@ -10,6 +10,7 @@ class LineBot
   end
 
   def initialize()
+    debugger
     channel_secret = ENV['CHANNEL_SECRET']
     channel_token = ENV['CHANNEL_TOKEN']
     @client = initialize_client(channel_secret, channel_token)
