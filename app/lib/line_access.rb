@@ -14,9 +14,9 @@ module LineAccess
 
     def get_access_token(channel_id, channel_secret, code)
         if Rails.env == "production"
-            redirect_uri = "http://booking-env.6pvxjhkqqx.ap-northeast-1.elasticbeanstalk.com/task_create"
+            redirect_uri = "#{ENV['PRODUCTION_HOST_URL']}/task_create"
         else
-            redirect_uri = "http://localhost:3000/task_create"
+            redirect_uri = "#{ENV['DEVELOPMENT_HOST_URL']}/task_create"
         end
         uri = URI.parse("https://api.line.me/oauth2/v2.1/token")
         request = Net::HTTP::Post.new(uri)
