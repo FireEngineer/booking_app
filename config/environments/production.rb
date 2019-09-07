@@ -84,7 +84,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  Rails.application.routes.default_url_options = { host: 'http://booking-env.6pvxjhkqqx.ap-northeast-1.elasticbeanstalk.com' }
+  Rails.application.routes.default_url_options = { host: ENV['PRODUCTION_HOST_URL']}
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

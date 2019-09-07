@@ -4,14 +4,14 @@ require 'uri'
 class LineBot
   attr_reader :client
   if Rails.env == "production"
-    HOST_URL = "http://booking-env.6pvxjhkqqx.ap-northeast-1.elasticbeanstalk.com"
+    HOST_URL = ENV['PRODUCTION_HOST_URL']
   else
-    HOST_URL = "http://localhost:3000"
+    HOST_URL = ENV['DEVELOPMENT_HOST_URL']
   end
 
   def initialize()
-    channel_secret = "2a3591a3789e3937403903e9dd87cabd"
-    channel_token = "s61bzMv2/Ta8mhRMaI9kP08sjtdQ0Kfa99ofal8PyOCa0QaNAnAtfrAmNEGO3bnigM0L7tHsPiqRy548ps8r0SXUPZazJKYhxS5sjle/OQ+2opbgYGrdrDYHZl5oKJQJ4i7n3Hi8XB8L91B1SZU4+AdB04t89/1O/w1cDnyilFU="
+    channel_secret = ENV['CHANNEL_SECRET']
+    channel_token = ENV['CHANNEL_TOKEN']
     @client = initialize_client(channel_secret, channel_token)
   end
 

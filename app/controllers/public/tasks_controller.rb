@@ -12,8 +12,8 @@ class Public::TasksController < Public::Base
   # CHANNEL_ID = Admin.first.line_bot.channel_id
   # CHANNEL_SECRET = Admin.first.line_bot.channel_secret
 
-  CHANNEL_ID = "1613295225"
-  CHANNEL_SECRET = "f08e3e3f843cd24675469fd5b1ddf930"
+  CHANNEL_ID = ENV['LINE_LOGIN_CHANNEL_ID']
+  CHANNEL_SECRET = ENV['LINE_LOGIN_CHANNEL_SECRET']
 
   # GET /tasks
   # GET /tasks.json

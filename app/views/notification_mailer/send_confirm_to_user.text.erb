@@ -19,8 +19,8 @@
 
 
 ※キャンセルをご希望のお方は以下のURLよりキャンセルしてください。
-<%= if Rails.env == "production" then "http://booking-env.6pvxjhkqqx.ap-northeast-1.elasticbeanstalk.com/calendars/#{@calendar.calendar_name}/tasks/#{@task.id}/cancel"
-else "http://localhost:3000/calendars/#{@calendar.calendar_name}/tasks/#{@task.id}/cancel" end  %>
+<%= if Rails.env == "production" then "#{ENV['PRODUCTION_HOST_URL']}/calendars/#{@calendar.calendar_name}/tasks/#{@task.id}/cancel"
+else "http://#{ENV['DEVELOPMENT_HOST_URL']}/calendars/#{@calendar.calendar_name}/tasks/#{@task.id}/cancel" end  %>
 
 ==========================================================
 <%= @calendar.calendar_name %>
