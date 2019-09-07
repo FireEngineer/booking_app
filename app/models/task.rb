@@ -16,6 +16,15 @@ class Task < ApplicationRecord
   after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
   after_destroy :sybc_delete, :line_send_with_delete_task, :mail_send_with_delete_task
 
+  after_create do
+    # lockメソッドを使う
+    interval_time = self.calendar.calendar_config.interval_time
+    if Task.lock.where("start_time < ? && ? < end_time", self.end_time.since(interval_time.minutes), self.start_time.ago(interval_time.minutes)).where(staff_id: self.staff_id).where.not(id: self.id).any?
+      raise ActiveRecord::RecordNotUnique.new(self)
+    end
+  end
+  
+
   def self.with_store_member
     joins(:store_member).select('tasks.*, store_members.name, store_members.email, store_members.phone, store_members.id as member_id')
   end
