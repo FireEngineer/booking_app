@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  root :to => 'tops#top'
 # ================================================================================================================-
   # googleカレンダー認証
   get 'google_auth/callback'
@@ -21,9 +21,9 @@ Rails.application.routes.draw do
     }
   end
   # rootページ用ルーティング
-  devise_scope :user do
-    root :to => 'devise/sessions#new'
-  end
+  # devise_scope :user do
+  #   root :to => 'devise/sessions#new'
+  # end
 # ================================================================================================================-
   # admin権限
   scope module: :admin do
