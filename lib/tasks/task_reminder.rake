@@ -9,6 +9,7 @@ namespace :task_reminder do
                 puts "line送信（ユーザー:#{member.name}, タスクID:#{task.id}）"
             end
             NotificationMailer.send_remind_task_to_user(task, task.calendar.user, task.calendar).deliver
+            puts Time.current
         end
     end
 
@@ -17,5 +18,6 @@ namespace :task_reminder do
         user_id = ENV['TEST_LINE_USER_ID']
         LineBot.new().push_test(user_id)
         puts "テストrakeタスク送信"
+        puts Time.current
     end
 end
