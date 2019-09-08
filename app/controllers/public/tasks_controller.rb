@@ -72,7 +72,7 @@ class Public::TasksController < Public::Base
       @task.task_course = @task_course
       @task.staff = Staff.find(params[:staff_id])
       # begin
-        if @store_member.save
+        if @store_member.save!
           if @task.store_member.line_user_id
             LineBot.new().push_message(@task, @task.store_member.line_user_id)
           end
