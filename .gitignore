@@ -16,6 +16,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+!/log/cron.log
 
 # Ignore uploaded files in development
 /storage/*

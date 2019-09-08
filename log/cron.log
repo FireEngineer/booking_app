@@ -1,0 +1,198 @@
+rake aborted!
+NameError: uninitialized constant Task
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+
+Caused by:
+NameError: uninitialized constant Task
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+NameError: uninitialized constant Task
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+
+Caused by:
+NameError: uninitialized constant Task
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+NameError: uninitialized constant Task
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+
+Caused by:
+NameError: uninitialized constant Task
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+NameError: uninitialized constant Task
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+
+Caused by:
+NameError: uninitialized constant Task
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+ActiveRecord::StatementInvalid: Mysql2::Error: Unknown column 'time_start' in 'where clause': SELECT `tasks`.* FROM `tasks` WHERE (time_start > '2019-09-08 03:58:02.551047')
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+
+Caused by:
+Mysql2::Error: Unknown column 'time_start' in 'where clause'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+ActiveRecord::StatementInvalid: Mysql2::Error: Unknown column 'time_start' in 'where clause': SELECT `tasks`.* FROM `tasks` WHERE (time_start > '2019-09-08 03:59:02.810431')
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+
+Caused by:
+Mysql2::Error: Unknown column 'time_start' in 'where clause'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+NoMethodError: undefined method `member' for #<Task:0x00007f87b0ae5f08>
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:5:in `block (3 levels) in <main>'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+NameError: undefined local variable or method `user_id' for main:Object
+Did you mean?  user_mask
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:7:in `block (3 levels) in <main>'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+NameError: undefined local variable or method `user_id' for main:Object
+Did you mean?  user_mask
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:7:in `block (3 levels) in <main>'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+NoMethodError: undefined method `push_message_with_reminder' for LineBot:Class
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:7:in `block (3 levels) in <main>'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+rake aborted!
+NoMethodError: undefined method `push_message_with_reminder' for LineBot:Class
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:7:in `block (3 levels) in <main>'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:4:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+ユーザー:3, タスクID:3
+ユーザー:3, タスクID:4
+ユーザー:3, タスクID:5
+ユーザー:3, タスクID:6
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+rake aborted!
+Don't know how to build task 'task_reminder:test' (See the list of available tasks with `rake --tasks`)
+Did you mean?  task_reminder:line
+               task_reminder:email
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'task_reminder:test' (See the list of available tasks with `rake --tasks`)
+Did you mean?  task_reminder:line
+               task_reminder:email
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+rake aborted!
+SocketError: Failed to open TCP connection to api.line.me:443 (getaddrinfo: nodename nor servname provided, or not known)
+/Users/shota6/rails/app/rails_todo/app/lib/line_bot.rb:128:in `push_message_with_reminder'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:29:in `block (3 levels) in <main>'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:26:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+
+Caused by:
+SocketError: getaddrinfo: nodename nor servname provided, or not known
+/Users/shota6/rails/app/rails_todo/app/lib/line_bot.rb:128:in `push_message_with_reminder'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:29:in `block (3 levels) in <main>'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:26:in `block (2 levels) in <main>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:test
+(See full trace by running task with --trace)
+ユーザー:今井, タスクID:3
+ユーザー:今井, タスクID:4
+ユーザー:今井, タスクID:5
+ユーザー:今井, タスクID:6
+テストrakeタスク送信
+テストrakeタスク送信
+2019-09-08 15:54:05 +0900
+テストrakeタスク送信
+2019-09-08 20:18:11 +0900
+テストrakeタスク送信
+2019-09-08 21:00:56 +0900
