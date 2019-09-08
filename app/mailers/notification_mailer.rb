@@ -35,5 +35,16 @@ class NotificationMailer < ApplicationMailer
     )
   end
 
+  def send_remind_task_to_user(task, user, calendar)
+    @task = task
+    @user = user
+    @calendar = calendar
+    mail(
+      from: "tech.leaders.kk@gmail.com",
+      to:   task.store_member.email,
+      subject: '明日の予約リマインド'
+    )
+  end
+
 
 end

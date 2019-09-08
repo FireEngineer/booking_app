@@ -1,6 +1,5 @@
 <%= @task.store_member.name %>様
-ご予約ありがとうございます。
-以下の内容でご予約を受け付けました。ご確認ください。
+明日のご予約のリマインド通知です。
 
 お名前：<%= @task.store_member.name %>
 
@@ -15,12 +14,6 @@
 担当者：<%= @task.staff.name %>
 
 ご要望：<%= @task.request %>
-
-
-※キャンセルをご希望のお方は以下のURLよりキャンセルしてください。
-<%= if Rails.env == "production" then "#{ENV['PRODUCTION_HOST_URL']}/calendars/#{@calendar.calendar_name}/tasks/#{@task.id}/cancel"
-else "http://#{ENV['DEVELOPMENT_HOST_URL']}/calendars/#{@calendar.calendar_name}/tasks/#{@task.id}/cancel" end  %>
-
 ==========================================================
 <%= @calendar.calendar_name %>
 <% if @calendar.phone %>
