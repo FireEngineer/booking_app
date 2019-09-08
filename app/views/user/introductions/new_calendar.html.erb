@@ -5,6 +5,7 @@
 
 
 <%= form_for @calendar, url: introductions_create_calendar_path do |f| %>
+  <%= render 'layouts/error_messages', model: @calendar %>
     <table class="table table-hover">
       <thead>
         <tr>

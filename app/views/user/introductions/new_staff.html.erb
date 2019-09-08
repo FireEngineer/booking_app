@@ -5,6 +5,7 @@
 
 
 <%= form_for @staff, url: introductions_create_staff_path do |f| %>
+  <%= render 'layouts/error_messages', model: @staff %>
     <table class="table table-hover">
       <thead>
         <tr>
