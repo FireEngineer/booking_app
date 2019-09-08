@@ -187,6 +187,13 @@ class Public::TasksController < Public::Base
 
   def cancel
     set_task
+    if @task.start_time <= Time.current
+      flash[:notice] = "予定時間を過ぎているので、キャンセルできません。"
+      redirect_to calendar_tasks_path(@calendar)
+    elsif @task.start_time > Time.current && @task.start_time <= Time.current.end_of_day.to_time
+      flash[:notice] = "予定時間まで一日を過ぎているので、キャンセルできません。"
+      redirect_to calendar_tasks_path(@calendar)
+    end
     rescue ActiveRecord::RecordNotFound
       flash[:notice] = "この予約はキャンセル済みか、存在しません。"
       redirect_to calendar_tasks_path(@calendar)
