@@ -32,7 +32,7 @@ if rails_env.to_sym != :development
         rake "task_reminder:push"
     end
 
-    every 1.day, :at => '3:35 pm' do
+    every 1.day, :at => '3:50 pm' do
         rake "task_reminder:test"
     end
 
