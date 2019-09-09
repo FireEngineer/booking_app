@@ -1,4 +1,5 @@
 class Staff < ApplicationRecord
+    acts_as_paranoid
     belongs_to :calendar
     has_many :staff_shifts, dependent: :destroy
     has_many :tasks
@@ -11,12 +12,8 @@ class Staff < ApplicationRecord
 
     def create_staff_regular_holiday
         regular_holidays = get_regular_holidays
-        array = ["日", "月", "火", "水", "木", "金", "土"]
-        array.each do |day|
-            regular_holiday = get_regular_holidays.find_by(day: day)
-            start_time = Time.current.change(hour: regular_holiday.business_start_at.hour, min: regular_holiday.business_start_at.min)
-            end_time = Time.current.change(hour: regular_holiday.business_end_at.hour, min: regular_holiday.business_end_at.min)
-            self.staff_regular_holidays.build(day: day, work_start_at: start_time, work_end_at: end_time, regular_holiday_id: regular_holiday.id).save
+        get_regular_holidays.each do |holiday|
+            self.staff_regular_holidays.build(day: holiday.day, work_start_at: holiday.business_start_at, work_end_at: holiday.business_end_at, regular_holiday_id: holiday.id).save
         end
     end
 

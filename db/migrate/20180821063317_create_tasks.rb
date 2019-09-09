@@ -6,6 +6,7 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.datetime :start_time
       t.datetime :end_time
       t.string :google_event_id
+      t.datetime :deleted_at
 
       t.references :calendar, foreign_key: true
 

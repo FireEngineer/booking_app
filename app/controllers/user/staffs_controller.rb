@@ -42,9 +42,14 @@ class User::StaffsController < User::Base
     end
 
     def destroy
-      @staff.destroy
-      flash[:danger] = "スタッフを削除しました"
-      redirect_to user_calendar_staffs_url(current_user, @calendar)
+      if @staff.tasks.where("start_time > ?", Time.current).any?
+        flash[:danger] = "#{@staff.name}の予約が#{@staff.tasks.where("start_time > ?", Time.current).count}件残っているので削除できません。予約をキャンセルするか、担当者を変更してください。"
+        redirect_to user_calendar_staffs_url(current_user, @calendar)
+      else
+        @staff.destroy
+        flash[:danger] = "スタッフを削除しました"
+        redirect_to user_calendar_staffs_url(current_user, @calendar)
+      end
     end
 
     def staffs_shifts

@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_233207) do
 
   create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
+    t.datetime "deleted_at"
     t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -147,6 +148,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_233207) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "google_event_id"
+    t.datetime "deleted_at"
     t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

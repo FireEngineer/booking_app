@@ -65,7 +65,12 @@
                 </tr>
                 <tr>
                   <th scope="row">担当者名</th>
-                  <td><%= task.staff.name %></td>
+                  <td>
+                    <p class="disabled_form"><%= task.staff.name %></p>
+                    <P class="display_none">
+                      <%= f.collection_select :staff_id, task.calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style display_none", required: "required" %>
+                    </p>
+                  </td>
                 </tr>
               
             </tbody>

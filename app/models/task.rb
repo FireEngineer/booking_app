@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  acts_as_paranoid
   # validates :title, :content, :due_at, presence: true
   # validates :start_time, uniqueness: true
   validate :check_time_original
@@ -10,7 +11,7 @@ class Task < ApplicationRecord
   belongs_to :task_course
   belongs_to :store_member
   belongs_to :calendar
-  belongs_to :staff
+  belongs_to :staff, optional: true
 
   after_save :sync_create, :mail_send
   after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
