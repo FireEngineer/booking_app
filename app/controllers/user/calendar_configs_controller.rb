@@ -19,4 +19,5 @@ class User::CalendarConfigsController < User::Base
         params.require(:calendar_config).permit(:capacity, :interval_time, regular_holidays_attributes: [:holiday_flag, :id, :business_start_at, :business_end_at])
     end
 
+
 end

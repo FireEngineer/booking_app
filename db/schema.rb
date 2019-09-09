@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_233207) do
 
   create_table "staff_regular_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "day"
-    t.boolean "is_holiday"
+    t.boolean "is_holiday", default: false
     t.time "work_start_at"
     t.time "work_end_at"
     t.bigint "staff_id"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_233207) do
     t.bigint "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_holiday"
+    t.boolean "is_holiday", default: false
     t.index ["staff_id"], name: "index_staff_shifts_on_staff_id"
   end
 

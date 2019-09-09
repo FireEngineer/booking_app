@@ -2,7 +2,7 @@ class CreateStaffRegularHolidays < ActiveRecord::Migration[5.2]
   def change
     create_table :staff_regular_holidays do |t|
       t.string :day
-      t.boolean :is_holiday
+      t.boolean :is_holiday, default: false
       t.time :work_start_at
       t.time :work_end_at
 
