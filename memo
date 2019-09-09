@@ -60,3 +60,9 @@ Task.where("start_time < ? && ? < end_time", self.end_time.since(interval_time.m
    34:                 
    35:                 .where(staff_id: self.staff_id)
    36:                 .where.not(id
+
+
+   https://access.line.me/oauth2/v2.1/login?returnUri=%2Foauth2%2Fv2.1%2Fauthorize%2Fconsent%3Fbot_prompt%3Dnormal%26scope%3Dopenid%2Bprofile%26response_type%3Dcode%26state%3D2qeXbNaBPItm0Q%253D%253D%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A3000%252Ftask_create%26prompt%3Dconsent%26client_id%3D1613295225&loginChannelId=1613295225&loginState=TKeD3qvfwTYCZa4GSDFZyd#/
+
+
+   https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1613295225&redirect_uri=https://www.yoyaku-app.com/task_create&state=12345abcde&scope=openid%20profile

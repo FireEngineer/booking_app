@@ -98,7 +98,7 @@ class Public::TasksController < Public::Base
     session[:task] = task_params
     session[:task_course_id] = params[:task_course_id]
     session[:staff_id] = params[:staff_id]
-    redirect_uri = task_create_url
+    redirect_uri = URI.escape(task_create_url)
     state = SecureRandom.base64(10)
     # このURLがラインログインへのURL
     url = LineAccess.redirect_url(CHANNEL_ID, redirect_uri, state)
