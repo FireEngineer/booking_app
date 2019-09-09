@@ -25,12 +25,6 @@ class User::IntroductionsController < User::Base
         flash[:success] = "スタッフ登録が完了しました"
         redirect_to user_calendar_dashboard_url(current_user, @staff.calendar)
       else
-        # if @staff.errors
-        #   flash[:danger] = []
-        #   @staff.errors.full_messages.each do |message|
-        #     flash[:danger] << message
-        #   end
-        # end
         render :new_staff
       end
     end
