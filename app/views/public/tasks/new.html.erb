@@ -19,14 +19,6 @@
         <label for="exampleInputEmail1">電話番号</label><span id="msg-tel"></span>
         <%= f.number_field :phone, class: "form-control form_style", id: "tel", placeholder: "電話番号(09012345678)", required: "required" %>
       </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">年齢</label><span id="msg-tel"></span>
-        <%= f.number_field :age, class: "form-control form_style", id: "age", placeholder: "", required: "required" %>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">性別</label><span id="msg-tel"></span>
-        <%= f.select :gender, ["男性", "女性"], {class: "form-control form_style", id: "gender"}, required: "required" %>
-      </div>
       <%= fields_for :task do |task|  %>
         <div class="form-group">
             <label for="exampleInputPassword1">日時</label>
