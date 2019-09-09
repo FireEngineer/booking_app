@@ -17,12 +17,24 @@
         <td><%= @task.store_member.name %></td>
       </tr>
       <tr>
+        <th scope="row">電話番号</th>
+        <td><%= @task.store_member.phone %></td>
+      </tr>
+      <tr>
         <th scope="row">メールアドレス</th>
         <td><%= @task.store_member.email %></td>
       </tr>
       <tr>
         <th scope="row">予約時間</th>
         <td><%= reservation_date(@task) %></td>
+      </tr>
+      <tr>
+        <th scope="row">予約コース</th>
+        <td><%= @task.task_course.title %></td>
+      </tr>
+      <tr>
+        <th scope="row">担当者名</th>
+        <td><%= @task.staff.name %></td>
       </tr>
     </tbody>
   </table>
