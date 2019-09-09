@@ -7,6 +7,8 @@
           <th class="col-xs-2">曜日</th>
           <th>定休日フラグ</th>
           <th>基本勤務時間</th>
+          <th>休憩フラグ</th>
+          <th>基本休憩時間</th>
         </tr>
       </thead>
       <tbody>
@@ -29,6 +31,30 @@
               <%= raw sprintf(
               f.time_select(
                   :work_end_at,
+                  use_month_numbers: true,
+                  start_year:        1930,
+                  end_year:          (Time.now.year - 18),
+                  default:           Date.new(1989, 1, 1),
+                  date_separator:    '%s'), # 年月日区切りをそれぞれ指定
+              '年 ', '月 ')
+              %>
+            </td>
+            <td><%= f.check_box :is_rest, {class: "form-control"}, "true", "false" %></td>
+            <td>
+              <%= raw sprintf(
+              f.time_select(
+                  :rest_start_time,
+                  use_month_numbers: true,
+                  start_year:        1930,
+                  end_year:          (Time.now.year - 18),
+                  default:           Date.new(1989, 1, 1),
+                  date_separator:    '%s'), # 年月日区切りをそれぞれ指定
+              '年 ', '月 ')
+               %>
+              ~
+              <%= raw sprintf(
+              f.time_select(
+                  :rest_end_time,
                   use_month_numbers: true,
                   start_year:        1930,
                   end_year:          (Time.now.year - 18),

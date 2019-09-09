@@ -35,7 +35,7 @@ class Calendar < ApplicationRecord
       start_time = Time.current.change(hour: self.start_time, min: 0)
       end_time = Time.current.change(hour: self.end_time, min: 0)
       array.each do |day|
-        config.regular_holidays.build(day: day, business_start_at: start_time, business_end_at: end_time)
+        config.regular_holidays.build(day: day, business_start_at: start_time, business_end_at: end_time, rest_start_time: start_time.change(hour: 12), rest_end_time: end_time.change(hour: 13))
       end
       config.save
     end

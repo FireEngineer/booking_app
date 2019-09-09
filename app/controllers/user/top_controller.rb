@@ -5,9 +5,12 @@ class User::TopController < User::Base
     @user = current_user
     @staffs = @calendar.staffs
     @staff = Staff.find_by(id: params[:staff_id])
+    # スタッフの情報を取得
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff, params[:task_id])
-    @events = (staff_shifts + staff_tasks)&.to_json rescue (calendar_tasks(@calendar)+calendar_holidays(@calendar)).to_json
+    staff_rests = staff_rests(@staff)
+
+    @events = (staff_shifts + staff_tasks + staff_rests)&.to_json rescue (calendar_tasks(@calendar)+calendar_holidays(@calendar)).to_json
     if params[:task_id]
       task_date = Task.find_by(id: params[:task_id]).start_time.to_date
       @current_date = l(task_date, format: :to_json)
@@ -58,7 +61,22 @@ class User::TopController < User::Base
         end
       end rescue nil
     end
-      
+    
+    def staff_rests(staff)
+      staff.staff_shifts.where(work_date: [*Date.current..Date.current.since(staff.calendar.display_week_term.months).end_of_month]).map do |shift|
+        shift.staff_rest_times.map do |rest|
+          { 
+            title: "スタッフ休憩",
+            start: l(rest.rest_start_time, format: :to_work_json),
+            end: l(rest.rest_end_time, format: :to_work_json),
+            backgroundColor: '#afabab',
+            editable: false,
+            overlap: false
+          }
+        end
+      end.flatten rescue nil
+    end
+
       # スタッフのタスクのJSON
       def staff_tasks(staff, search_id)
         staff.tasks.map do |task|

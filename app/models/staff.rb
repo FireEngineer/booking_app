@@ -13,7 +13,12 @@ class Staff < ApplicationRecord
     def create_staff_regular_holiday
         regular_holidays = get_regular_holidays
         get_regular_holidays.each do |holiday|
-            self.staff_regular_holidays.build(day: holiday.day, work_start_at: holiday.business_start_at, work_end_at: holiday.business_end_at, regular_holiday_id: holiday.id).save
+            self.staff_regular_holidays.build(day: holiday.day,
+                                              work_start_at: holiday.business_start_at,
+                                              work_end_at: holiday.business_end_at,
+                                              regular_holiday_id: holiday.id,
+                                              rest_start_time: holiday.rest_start_time,
+                                              rest_end_time: holiday.rest_end_time).save
         end
     end
 
@@ -26,7 +31,15 @@ class Staff < ApplicationRecord
             staff_regular_holiday = self.staff_regular_holidays.find_by(day: day)
             start_time = Time.parse("#{date}").change(hour: (staff_regular_holiday.work_start_at.hour-9), min: staff_regular_holiday.work_start_at.min)
             end_time = start_time.change(hour: (staff_regular_holiday.work_end_at.hour-9), min: staff_regular_holiday.work_end_at.min)
-            self.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time).save
+
+            # 休憩フラグかtrueなら、休憩を作成
+            if staff_regular_holiday.is_rest?
+                shift = self.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time)
+                shift.staff_rest_times.build(rest_start_time: start_time.change(hour: staff_regular_holiday.rest_start_time.hour),
+                                             rest_end_time: end_time.change(hour: staff_regular_holiday.rest_end_time.hour)).save
+            else
+                shift = self.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time).save
+            end
         end
     end
 

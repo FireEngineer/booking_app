@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_04_233207) do
+ActiveRecord::Schema.define(version: 2019_09_09_100246) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -78,6 +78,9 @@ ActiveRecord::Schema.define(version: 2019_09_04_233207) do
     t.boolean "holiday_flag", default: false
     t.datetime "business_start_at"
     t.datetime "business_end_at"
+    t.boolean "is_rest", default: false
+    t.datetime "rest_start_time"
+    t.datetime "rest_end_time"
     t.bigint "calendar_config_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -89,12 +92,25 @@ ActiveRecord::Schema.define(version: 2019_09_04_233207) do
     t.boolean "is_holiday", default: false
     t.time "work_start_at"
     t.time "work_end_at"
+    t.boolean "is_rest", default: false
+    t.datetime "rest_start_time"
+    t.datetime "rest_end_time"
     t.bigint "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "regular_holiday_id"
     t.index ["regular_holiday_id"], name: "index_staff_regular_holidays_on_regular_holiday_id"
     t.index ["staff_id"], name: "index_staff_regular_holidays_on_staff_id"
+  end
+
+  create_table "staff_rest_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "rest_start_time"
+    t.datetime "rest_end_time"
+    t.boolean "is_default", default: false
+    t.bigint "staff_shift_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["staff_shift_id"], name: "index_staff_rest_times_on_staff_shift_id"
   end
 
   create_table "staff_shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -190,6 +206,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_233207) do
   add_foreign_key "regular_holidays", "calendar_configs"
   add_foreign_key "staff_regular_holidays", "regular_holidays"
   add_foreign_key "staff_regular_holidays", "staffs"
+  add_foreign_key "staff_rest_times", "staff_shifts"
   add_foreign_key "staff_shifts", "staffs"
   add_foreign_key "staffs", "calendars"
   add_foreign_key "store_members", "calendars"

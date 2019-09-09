@@ -6,7 +6,10 @@ class RegularHoliday < ApplicationRecord
 
     def update_staff_regular_holiday
         self.staff_regular_holidays.where(is_holiday: false).each do |holiday|
-            holiday.update(is_holiday: self.holiday_flag, work_start_at: self.business_start_at, work_end_at: self.business_end_at)
+            holiday.update(is_holiday: self.holiday_flag,
+                           work_start_at: self.business_start_at,
+                           work_end_at: self.business_end_at,
+                           )
         end
     end
 end
