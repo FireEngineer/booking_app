@@ -24,8 +24,8 @@ class Staff < ApplicationRecord
         [*start_of_month..end_of_month].each do |date|
             day = ["日", "月", "火", "水", "木", "金", "土"][date.wday]
             staff_regular_holiday = self.staff_regular_holidays.find_by(day: day)
-            start_time = Time.parse("#{date}").change(hour: (staff_regular_holiday.work_start_at + 9).hour, min: staff_regular_holiday.work_start_at.min)
-            end_time = start_time.change(hour: (staff_regular_holiday.work_end_at + 9).hour, min: staff_regular_holiday.work_end_at.min)
+            start_time = Time.parse("#{date}").change(hour: (staff_regular_holiday.work_start_at - 9).hour, min: staff_regular_holiday.work_start_at.min)
+            end_time = start_time.change(hour: (staff_regular_holiday.work_end_at - 9).hour, min: staff_regular_holiday.work_end_at.min)
             self.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time).save
         end
     end
