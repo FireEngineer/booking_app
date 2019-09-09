@@ -58,7 +58,7 @@ class Task < ApplicationRecord
     end
     # 休憩時間に被っているかどうか検証
     shift.staff_rest_times.each do |rest|
-      unless (self.start_time >= rest.rest_end_time && self.end_time <= rest.rest_start_time)
+      if (self.start_time < rest.rest_end_time && self.end_time > rest.rest_start_time)
         errors.add(:start_time, "スタッフの勤務時間外です。") # エラーメッセージ
         return
       end
