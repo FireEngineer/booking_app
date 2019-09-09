@@ -43,10 +43,15 @@
           <td><%= f.text_field :phone, class: "form-control" %></td>
           <td>お店の電話番号です。公開されます。</td>
         </tr>
+        <tr>
+          <th scope="row">予約を入れられる開始時間</th>
+          <td><%= f.text_field :display_time, class: "form-control" %></td>
+          <td>現時刻から、何時間後の予約を許容するかの設定です。</td>
+        </tr>
       </tbody>
     </table>
     <%= f.label :is_released, "公開する場合はチェックを入れてください" %>
     <%= f.check_box :is_released, {} , "true", "false" %>
     <br>
-    <%= f.submit "更新", class: "btn btn-primary" %>
+    <%= f.submit "更新", class: "btn btn-primary", data: {confirm: "更新しますか？"} %>
 <% end %>

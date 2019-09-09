@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_09_09_100246) do
     t.integer "start_time", default: 9
     t.integer "end_time", default: 18
     t.boolean "is_released", default: false
+    t.integer "display_time", default: 5
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
