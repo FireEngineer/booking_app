@@ -18,6 +18,13 @@ class ValidateStaffShift
         start_time = time.to_datetime
         end_time = time.to_datetime.since(task_course.course_time.minutes)
         if shift.work_start_time <= start_time && shift.work_end_time >= end_time && !staff.staff_regular_holidays.where(is_holiday: true).find_by(day: day)
+            # 休憩時間と被って無いか検証
+            shift.staff_rest_times.each do |rest|
+                if (start_time < rest.rest_end_time && end_time > rest.rest_start_time)
+                    false
+                    return
+                end
+            end
             true
         else
             false
