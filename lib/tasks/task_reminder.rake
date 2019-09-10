@@ -8,7 +8,8 @@ namespace :task_reminder do
                 LineBot.new().push_message_with_reminder(task, member.line_user_id)
                 puts "line送信（ユーザー:#{member.name}, タスクID:#{task.id}）"
             end
-            NotificationMailer.send_remind_task_to_user(task, task.calendar.user, task.calendar).deliver
+            if NotificationMailer.send_remind_task_to_user(task, task.calendar.user, task.calendar).deliver
+                
             puts Time.current
         end
     end
