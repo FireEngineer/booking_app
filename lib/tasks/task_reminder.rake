@@ -2,7 +2,7 @@ namespace :task_reminder do
     desc "リマインダー配信"
     task push: :environment do
         # 翌日のタスクを検索して、リマインド通知
-        Task.where("start_time > ? && start_time <= ?", Time.current, Time.current.end_of_day.to_time).each do |task|
+        Task.where("start_time > ? && start_time <= ?", Time.current, Time.current.tomorrow.end_of_day.to_time).each do |task|
             member = task.store_member
             if member.line_user_id
                 LineBot.new().push_message_with_reminder(task, member.line_user_id)

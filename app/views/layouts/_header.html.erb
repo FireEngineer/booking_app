@@ -50,7 +50,7 @@
         </div>
       </li>
     </ul>
-    <%= button_tag "公開リンク", value:"#{calendar_tasks_url(openExternalBrowser: 1)}", type: 'button', class:"btn btn-outline-light", id:"copy_public_url" %>
+    <%= button_tag "公開リンク", value:"#{calendar_tasks_url(@calendar, openExternalBrowser: 1)}", type: 'button', class:"btn btn-outline-light", id:"copy_public_url" %>
     <%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calendar), class:"form-inline my-2 my-lg-0" do |f| %>
       <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2", :placeholder => "電話番号or名前" %>
       <%= f.submit "検索", class:"btn btn-outline-success my-2 my-sm-0" %>
