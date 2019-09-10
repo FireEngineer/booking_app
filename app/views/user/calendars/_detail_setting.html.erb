@@ -13,6 +13,11 @@
           <td><%= f.number_field :interval_time, class: "form-control" %></td>
           <td>一つ一つの予約の間に準備時間を入れることができます。</td>
         </tr>
+        <tr>
+          <th>キャンセル可能時間設定</th>
+          <td><%= f.number_field :cancelable_time, class: "form-control" %></td>
+          <td>お客様が、web上でキャンセルが可能な時間（予約時間の何時間前）</td>
+        </tr>
       </tbody>
     </table>
 

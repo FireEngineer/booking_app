@@ -21,7 +21,12 @@
           <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
         </tr>
         <tr>
-          <th scope="row"><%= f.submit "登録", class: "btn btn-primary" %></th>
+          <th scope="row">お店連絡先</th>
+          <td><%= f.text_field :phone, class: "form-control", required: true %></td>
+          <td>お店の連絡先です。後から変更可能です。</td>
+        </tr>
+        <tr>
+          <th scope="row"><%= f.submit "登録", class: "btn btn-primary", data:{confirm:"登録します。"} %></th>
           <td></td>
           <td></td>
         </tr>

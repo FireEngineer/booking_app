@@ -31,7 +31,7 @@ class User::IntroductionsController < User::Base
 
     private
     def params_calendar
-      params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calendar_name)
+      params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calendar_name, :phone)
     end
 
     def params_staff

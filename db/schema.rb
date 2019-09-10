@@ -30,7 +30,8 @@ ActiveRecord::Schema.define(version: 2019_09_09_100246) do
   end
 
   create_table "calendar_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "capacity"
+    t.integer "capacity", default: 1
+    t.integer "cancelable_time", default: 24
     t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
