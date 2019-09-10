@@ -26,7 +26,6 @@
         <div class="dropdown-menu" aria-labelledby="shiftDropdown">
           <%= link_to "カレンダー設定", user_calendar_path(current_user, @calendar), class:"dropdown-item" %>
           <%= link_to "休日設定", calendar_iregular_holidays_path(@calendar), class:"dropdown-item" %>
-          <%# <div class="dropdown-divider"></div> %>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -36,7 +35,6 @@
         <div class="dropdown-menu" aria-labelledby="shiftDropdown">
           <%= link_to "シフト設定", user_calendar_staffs_shifts_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
           <%= link_to "スタッフ設定", user_calendar_staffs_path(current_user, @calendar), class:"dropdown-item" %>
-          <%# <div class="dropdown-divider"></div> %>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -52,11 +50,25 @@
         </div>
       </li>
     </ul>
+    <%= button_tag "公開リンク", value:"#{calendar_tasks_url(openExternalBrowser: 1)}", type: 'button', class:"btn btn-outline-light", id:"copy_public_url" %>
     <%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calendar), class:"form-inline my-2 my-lg-0" do |f| %>
       <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2", :placeholder => "電話番号or名前" %>
       <%= f.submit "検索", class:"btn btn-outline-success my-2 my-sm-0" %>
-      <%# <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> %>
     <% end %>
   </div>
 </nav>
+
+<script>
+  jQuery(function($) {
+    $('#copy_public_url').click(function() {
+        var clipboard = $('<textarea></textarea>');
+        clipboard.addClass('clipboard');
+        clipboard.html( $(this).val() );
+        $(this).append(clipboard);
+        clipboard.select();
+        document.execCommand('copy');
+        clipboard.remove();
+        alert("クリップボードに公開リンクをコピーしました。");
+    });
+});
+</script>
