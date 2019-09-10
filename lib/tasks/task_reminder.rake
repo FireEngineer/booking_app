@@ -9,7 +9,8 @@ namespace :task_reminder do
                 puts "line送信（ユーザー:#{member.name}, タスクID:#{task.id}）"
             end
             if NotificationMailer.send_remind_task_to_user(task, task.calendar.user, task.calendar).deliver
-                
+                puts "メール送信完了"
+            end
             puts Time.current
         end
     end
