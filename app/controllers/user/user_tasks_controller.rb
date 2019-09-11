@@ -15,6 +15,7 @@ class User::UserTasksController < User::Base
 
     def create
         @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        # 会員がいるかどうか
         if StoreMember.find_by(phone: params[:store_member]["phone"])
             @store_member = StoreMember.find_by(phone: params[:store_member]["phone"])
         else

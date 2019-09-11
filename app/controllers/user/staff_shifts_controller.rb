@@ -10,23 +10,8 @@ class User::StaffShiftsController < User::Base
     end_of_month = @month.end_of_month
     regular_holidays = get_regular_holidays
     unless @staff_shifts.find_by(work_date: start_of_month)
-      [*start_of_month..end_of_month].each do |date|
-          day = ["日", "月", "火", "水", "木", "金", "土"][date.wday]
-          staff_regular_holiday = @staff.staff_regular_holidays.find_by(day:day)
-          start_time = Time.parse("#{date}").change(hour: staff_regular_holiday.work_start_at.hour, min: staff_regular_holiday.work_start_at.min)
-          end_time = start_time.change(hour: staff_regular_holiday.work_end_at.hour, min: staff_regular_holiday.work_end_at.min)
-          @staff.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time).save
-      end
+      StaffShiftsCreator.call(start_of_month, end_of_month, @staff)
     end
-    # unless @staff_shifts.find_by(work_date: start_of_month)
-    #   [*start_of_month..end_of_month].each do |date|
-    #     start_time = Time.parse("#{date}").since(10.hours).since(0.minutes)
-    #     end_time = start_time.since(8.hours).since(0.minutes)
-    #     @staff.staff_shifts.build(work_date: date, work_start_time: start_time, work_end_time: end_time).save
-    #   rescue
-    #     puts "エラー"
-    #   end
-    # end
   end
 
   def edit
