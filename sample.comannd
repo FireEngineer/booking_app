@@ -1,0 +1,2 @@
+# タイムゾーンの確認ファイル
+cat /etc/sysconfig/clock
