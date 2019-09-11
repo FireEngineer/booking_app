@@ -17,7 +17,7 @@
           <!-- ドロップメニューの設定 -->
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <% @calendar.staffs.each do |staff| %>
-              <%= link_to staff.name, calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id), class:"dropdown-item" %>
+              <%= link_to staff.name, calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id), class:"dropdown-item load_btn" %>
             <% end %>
           </div><!-- /.dropdown-menu -->
         </div><!-- /.dropdown -->
@@ -42,7 +42,7 @@
           <!-- ドロップメニューの設定 -->
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <% @calendar.task_courses.each do |course| %>
-              <%= link_to course.title, calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id), class:"dropdown-item" %>
+              <%= link_to course.title, calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id), class:"dropdown-item load_btn" %>
             <% end %>
           </div><!-- /.dropdown-menu -->
         </div><!-- /.dropdown -->

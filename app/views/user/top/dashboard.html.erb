@@ -6,7 +6,7 @@
   </li>
   <% @staffs.each do |staff| %>
     <li class="nav-item">
-      <%= link_to staff.name, user_calendar_dashboard_path(current_user, @calendar, staff_id: staff), class:"nav-link #{staff.active_display(@staff)}" %>
+      <%= link_to staff.name, user_calendar_dashboard_path(current_user, @calendar, staff_id: staff), class:"nav-link #{staff.active_display(@staff)} load_btn" %>
     </li>
   <% end %>
 </ul>

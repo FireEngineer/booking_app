@@ -45,7 +45,7 @@
                         <%= task.collection_select :task_course_id, @calendar.task_courses, :id, :title, {prompt: ""},  class: "form-control form_style", required: "required" %>
                     </div>
                 <% end %>
-                <%= f.submit "予約する", class:"btn btn-primary btn_style", data:{confirm:"予約を確定しますか？"} %>
+                <%= f.submit "予約する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"予約を確定しますか？"} %>
             <% end %>
         </div>
       </div><!-- /.modal-body -->
@@ -55,5 +55,3 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 
-
-  

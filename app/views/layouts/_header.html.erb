@@ -6,17 +6,17 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <%= link_to @calendar.calendar_name, user_calendar_dashboard_path(current_user, @calendar), class:"nav-link" %>
+        <%= link_to @calendar.calendar_name, user_calendar_dashboard_path(current_user, @calendar), class:"nav-link load_btn" %>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="settingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           設定
         </a>
         <div class="dropdown-menu" aria-labelledby="settingDropdown">
-          <%= link_to "ユーザー設定", user_path(current_user), class:"dropdown-item" %>
-          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"dropdown-item" %>
+          <%= link_to "ユーザー設定", user_path(current_user), class:"dropdown-item load_btn" %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"dropdown-item load_btn" %>
           <div class="dropdown-divider"></div>
-          <%= link_to "予約一覧", user_calendar_user_tasks_path(current_user, @calendar), class:"dropdown-item" %>
+          <%= link_to "予約一覧", user_calendar_user_tasks_path(current_user, @calendar), class:"dropdown-item load_btn" %>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -24,8 +24,8 @@
           カレンダー
         </a>
         <div class="dropdown-menu" aria-labelledby="shiftDropdown">
-          <%= link_to "カレンダー設定", user_calendar_path(current_user, @calendar), class:"dropdown-item" %>
-          <%= link_to "休日設定", calendar_iregular_holidays_path(@calendar), class:"dropdown-item" %>
+          <%= link_to "カレンダー設定", user_calendar_path(current_user, @calendar), class:"dropdown-item load_btn" %>
+          <%= link_to "休日設定", calendar_iregular_holidays_path(@calendar), class:"dropdown-item load_btn" %>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -33,8 +33,8 @@
           スタッフ
         </a>
         <div class="dropdown-menu" aria-labelledby="shiftDropdown">
-          <%= link_to "シフト設定", user_calendar_staffs_shifts_path(current_user, current_user.calendars.first), class:"dropdown-item" %>
-          <%= link_to "スタッフ設定", user_calendar_staffs_path(current_user, @calendar), class:"dropdown-item" %>
+          <%= link_to "シフト設定", user_calendar_staffs_shifts_path(current_user, current_user.calendars.first), class:"dropdown-item load_btn" %>
+          <%= link_to "スタッフ設定", user_calendar_staffs_path(current_user, @calendar), class:"dropdown-item load_btn" %>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -43,9 +43,9 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="shiftDropdown">
           <% if @calendar.is_released %>
-            <%= link_to "非公開にする", user_calendar_update_is_released_path(current_user, @calendar, commit:"非公開にする"), class:"dropdown-item", method: :patch %>
+            <%= link_to "非公開にする", user_calendar_update_is_released_path(current_user, @calendar, commit:"非公開にする"), class:"dropdown-item load_btn", method: :patch %>
           <% else %>
-            <%= link_to "カレンダーを公開する", user_calendar_update_is_released_path(current_user, @calendar, commit:"公開にする"), class:"dropdown-item", method: :patch %>
+            <%= link_to "カレンダーを公開する", user_calendar_update_is_released_path(current_user, @calendar, commit:"公開にする"), class:"dropdown-item load_btn", method: :patch %>
           <% end %>
         </div>
       </li>
@@ -53,7 +53,7 @@
     <%= button_tag "公開リンク", value:"#{calendar_tasks_url(@calendar, openExternalBrowser: 1)}", type: 'button', class:"btn btn-outline-light", id:"copy_public_url" %>
     <%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calendar), class:"form-inline my-2 my-lg-0" do |f| %>
       <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2", :placeholder => "電話番号or名前" %>
-      <%= f.submit "検索", class:"btn btn-outline-success my-2 my-sm-0" %>
+      <%= f.submit "検索", class:"btn btn-outline-success my-2 my-sm-0 load_btn" %>
     <% end %>
   </div>
 </nav>

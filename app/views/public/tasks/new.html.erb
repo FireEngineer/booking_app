@@ -1,9 +1,7 @@
 <div class="form_page">
-  
   <div class="title">
     <h2 class="title_style">予約フォーム</h2>
   </div>
-  
   <div class="form_area">
     <%= form_for @store_member, url: calendar_redirect_line_path(@calendar), method: :post do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
@@ -42,12 +40,12 @@
       <%= hidden_field_tag :task_course_id, @task_course.id %>
       <%= hidden_field_tag :staff_id, @staff.id %>
       <button type="submit" class="btn btn-success btn_style" data-confirm= "予約を行います。">LINE_botに登録して予約する</button>
-      <%= f.submit "そのまま予約する", class:"btn btn-primary btn_style" %>
-      <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style" %>
+      <%= f.submit "そのまま予約する", class:"btn btn-primary btn_style", data:{confirm:"予約しますか？"} %>
+      <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style load_btn" %>
     <% end %>
   </div>
-  
 </div>
+
 
 <script>
         $(function () {
