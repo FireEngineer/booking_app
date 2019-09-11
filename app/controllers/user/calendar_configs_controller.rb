@@ -6,10 +6,8 @@ class User::CalendarConfigsController < User::Base
         respond_to do |format|
             if @calendar_config.update(calendar_config_regular_holidays_params)
                 format.html { redirect_to user_calendar_url(current_user, @calendar), notice: '詳細設定を更新しました。' }
-                # format.json { render :show, status: :ok, location: @fruit }
             else
                 format.html { redirect_to user_calendar_url(current_user, @calendar), notice: '詳細設定の更新に失敗しました。' }
-                # format.json { render json: @fruit.errors, status: :unprocessable_entity }
             end
         end
     end
