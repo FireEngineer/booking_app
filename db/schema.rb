@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_09_100246) do
+ActiveRecord::Schema.define(version: 2019_09_12_231808) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2019_09_09_100246) do
     t.string "calendar_id"
     t.string "address"
     t.string "phone"
+    t.string "unique_id"
     t.index ["user_id"], name: "index_calendars_on_user_id"
   end
 

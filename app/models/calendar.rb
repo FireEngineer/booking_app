@@ -6,7 +6,7 @@ class Calendar < ApplicationRecord
   has_many :tasks
   has_many :staffs
   
-
+  validates :unique_id, uniqueness: true, presence: true
   validates :calendar_name, uniqueness: true
   validates :calendar_name, presence: true
   validates :display_week_term, presence: true
