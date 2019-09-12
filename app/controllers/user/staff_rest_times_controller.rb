@@ -28,7 +28,13 @@ class User::StaffRestTimesController < User::Base
             flash[:success] = "休憩を更新しました"
             redirect_to user_calendar_dashboard_url(current_user, @calendar)
         else
-            flash[:danger] = "休憩を更新できませんでした"
+            if @staff_rest_time.errors
+                @staff_rest_time.errors.full_messages.each do |msg|
+                    flash[:danger] = msg
+                end
+            else
+                flash[:danger] = "休憩を更新できませんでした"
+            end
             redirect_to user_calendar_dashboard_url(current_user, @calendar)
         end
     end
