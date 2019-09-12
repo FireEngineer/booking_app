@@ -20,7 +20,8 @@ class User::IregularHolidaysController < User::Base
     else
       if @iregular_holiday.errors
         @iregular_holiday.errors.full_messages.each do |msg|
-        flash[:danger] = msg
+          flash[:danger] = msg
+        end
       else
         flash[:danger] = "休日を作成できませんでした"
       end
@@ -39,7 +40,8 @@ class User::IregularHolidaysController < User::Base
     else
       if @iregular_holiday.errors
         @iregular_holiday.errors.full_messages.each do |msg|
-        flash[:danger] = msg
+          flash[:danger] = msg
+        end
       else
         flash[:danger] = "休日を更新できませんでした"
       end
