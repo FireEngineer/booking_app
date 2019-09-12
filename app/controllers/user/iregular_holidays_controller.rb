@@ -18,7 +18,12 @@ class User::IregularHolidaysController < User::Base
       flash[:success] = "休日を作成しました"
       redirect_to calendar_iregular_holidays_path(@calendar)
     else
-      flash[:danger] = "休日を作成できませんでした"
+      if @iregular_holiday.errors
+        @iregular_holiday.errors.full_messages.each do |msg|
+        flash[:danger] = msg
+      else
+        flash[:danger] = "休日を作成できませんでした"
+      end
       redirect_to calendar_iregular_holidays_path(@calendar)
     end
   end
@@ -32,7 +37,12 @@ class User::IregularHolidaysController < User::Base
       flash[:success] = "休日を更新しました"
       redirect_to calendar_iregular_holidays_path(@calendar)
     else
-      flash[:danger] = "休日を更新できませんでした"
+      if @iregular_holiday.errors
+        @iregular_holiday.errors.full_messages.each do |msg|
+        flash[:danger] = msg
+      else
+        flash[:danger] = "休日を更新できませんでした"
+      end
       redirect_to calendar_iregular_holidays_path(@calendar)
     end
   end

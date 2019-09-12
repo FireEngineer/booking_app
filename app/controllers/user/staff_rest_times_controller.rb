@@ -39,6 +39,15 @@ class User::StaffRestTimesController < User::Base
         end
     end
 
+    def update_by_drop
+        @staff_rest_time = StaffRestTime.find(params[:id])
+        if @staff_rest_time.update(rest_start_time: params[:rest_start_time], rest_end_time: params[:rest_end_time])
+            render json: "success"
+        else
+            render json: @staff_rest_time.errors.full_messages.first
+        end
+    end
+
     def destroy
         @staff_rest_time = StaffRestTime.find(params[:id])
         @staff_rest_time.destroy

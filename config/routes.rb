@@ -61,6 +61,7 @@ Rails.application.routes.draw do
         get "staffs/staffs_shifts", to: "staffs#staffs_shifts", as: "staffs_shifts"
         resources :staffs
         resources :staff_rest_times
+        get "staff_rest_times/:id/update_by_drop", to: "staff_rest_times#update_by_drop"
       end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end
