@@ -66,12 +66,14 @@ class User::TopController < User::Base
       staff.staff_shifts.where(work_date: [*Date.current..Date.current.since(staff.calendar.display_week_term.months).end_of_month]).map do |shift|
         shift.staff_rest_times.map do |rest|
           { 
+            id: rest.id,
             title: "スタッフ休憩",
             start: l(rest.rest_start_time, format: :to_work_json),
             end: l(rest.rest_end_time, format: :to_work_json),
             backgroundColor: '#afabab',
             editable: false,
-            overlap: false
+            overlap: false,
+            classNames: "staff_rest"
           }
         end
       end.flatten rescue nil
@@ -94,6 +96,7 @@ class User::TopController < User::Base
               start: l(task.start_time, format: :to_work_json),
               end: l(task.end_time, format: :to_work_json),
               id: task.id,
+              classNames: "staff_task"
             }
           end
         end rescue nil

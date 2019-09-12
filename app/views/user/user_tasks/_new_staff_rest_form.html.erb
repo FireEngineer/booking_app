@@ -1,4 +1,4 @@
-<%= form_for staff_rest_time, url:calendar_staff_rest_times_path(calendar) do |f| %>
+<%= form_for staff_rest_time, url:user_calendar_staff_rest_times_path(current_user, calendar) do |f| %>
     <%= fields_for staff_rest_time.staff_shift do |shift| %>
         <div class="form-group">
             <label for="exampleInputPassword1">スタッフ</label>

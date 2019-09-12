@@ -60,6 +60,7 @@ Rails.application.routes.draw do
         resource :calendar_config
         get "staffs/staffs_shifts", to: "staffs#staffs_shifts", as: "staffs_shifts"
         resources :staffs
+        resources :staff_rest_times
       end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end
@@ -68,7 +69,6 @@ Rails.application.routes.draw do
       resources :staffs, only: [] do
         resources :staff_shifts
       end
-      resources :staff_rest_times
     end
     # =====userがアカウント登録した時の最初の設定ページ
     get "introductions/new_calendar", to: "introductions#new_calendar"
