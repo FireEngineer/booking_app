@@ -6,6 +6,16 @@ class User::StaffRestTimesController < User::Base
     end
 
     def create
+        @staff = Staff.find(params[:staff_id])
+        @shift = @staff.staff_shifts.find_by(work_date: params[:work_date])
+        @rest = @shift.staff_rest_times.build(staff_rest_time_params)
+        if @rest.save
+            flash[:success] = "休憩を登録しました"
+            redirect_to user_calendar_dashboard_url(current_user, @calendar)
+        else
+            flash[:success] = "休憩を登録しました"
+            redirect_to user_calendar_dashboard_url(current_user, @calendar)
+        end
     end
 
     private

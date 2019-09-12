@@ -1,8 +1,11 @@
 <%= form_for staff_rest_time, url:calendar_staff_rest_times_path(calendar) do |f| %>
-    <div class="form-group">
-        <label for="exampleInputPassword1">スタッフ</label>
-        <%= f.collection_select :staff_id, calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style", required: "required" %>
-    </div>
+    <%= fields_for staff_rest_time.staff_shift do |shift| %>
+        <div class="form-group">
+            <label for="exampleInputPassword1">スタッフ</label>
+            <%= shift.collection_select :staff_id, calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style", required: "required" %>
+        </div>
+        <%= shift.hidden_field :work_date, value: staff_rest_time.rest_start_time.to_date %>
+    <% end %>
     <div class="form-group">
         <label for="exampleInputPassword1">開始時間</label>
         <%= raw sprintf(
@@ -23,4 +26,5 @@
                 )
                 %>
     </div>
+    <%= f.submit "登録する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"スタッフの休憩を登録しますか？"} %>
 <% end %>
