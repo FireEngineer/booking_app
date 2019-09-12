@@ -11,6 +11,8 @@ class User::UserTasksController < User::Base
         @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
         @store_member = StoreMember.new()
         @task = Task.new(start_time: params[:start_time])
+        # スタッフの休憩作成用
+        @staff_rest_time = StaffRestTime.new(rest_start_time: params[:start_time], rest_end_time: params[:start_time].to_time.since(1.hours))
     end
 
     def create

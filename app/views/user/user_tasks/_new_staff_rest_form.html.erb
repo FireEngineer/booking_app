@@ -1,0 +1,26 @@
+<%= form_for staff_rest_time, url:calendar_staff_rest_times_path(calendar) do |f| %>
+    <div class="form-group">
+        <label for="exampleInputPassword1">スタッフ</label>
+        <%= f.collection_select :staff_id, calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style", required: "required" %>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">開始時間</label>
+        <%= raw sprintf(
+                    f.datetime_select(
+                        :rest_start_time,
+                        use_month_numbers: true,
+                        )
+                )
+                %>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">終了時間</label>
+        <%= raw sprintf(
+                    f.datetime_select(
+                        :rest_end_time,
+                        use_month_numbers: true,
+                        )
+                )
+                %>
+    </div>
+<% end %>

@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       resources :staffs, only: [] do
         resources :staff_shifts
       end
+      resources :staff_rest_times
     end
     # =====userがアカウント登録した時の最初の設定ページ
     get "introductions/new_calendar", to: "introductions#new_calendar"
