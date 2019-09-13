@@ -17,7 +17,7 @@ class Public::Base < ApplicationController
 
 
     def calendar_is_released?
-        calendar = Calendar.find_by(public_uid: params[:id]) || Calendar.find_by(id: session[:calendar])
+        calendar = Calendar.find_by(public_uid: params[:calendar_id]) || Calendar.find_by(id: session[:calendar])
         unless calendar.is_released?
             redirect_to not_released_page_url
         end

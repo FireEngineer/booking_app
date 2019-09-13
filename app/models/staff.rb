@@ -29,8 +29,8 @@ class Staff < ApplicationRecord
         [*start_of_month..end_of_month].each do |date|
             day = ["日", "月", "火", "水", "木", "金", "土"][date.wday]
             staff_regular_holiday = self.staff_regular_holidays.find_by(day: day)
-            start_time = Time.parse("#{date}").change(hour: (staff_regular_holiday.work_start_at.hour-9), min: staff_regular_holiday.work_start_at.min)
-            end_time = start_time.change(hour: (staff_regular_holiday.work_end_at.hour-9), min: staff_regular_holiday.work_end_at.min)
+            start_time = Time.parse("#{date}").change(hour: (staff_regular_holiday.work_start_at.hour), min: staff_regular_holiday.work_start_at.min)
+            end_time = start_time.change(hour: (staff_regular_holiday.work_end_at.hour), min: staff_regular_holiday.work_end_at.min)
 
             # 休憩フラグかtrueなら、休憩を作成
             if staff_regular_holiday.is_rest?
