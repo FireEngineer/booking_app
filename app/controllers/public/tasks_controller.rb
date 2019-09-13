@@ -17,7 +17,7 @@ class Public::TasksController < Public::Base
 
   def index
     task = Task.new
-    @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     if params[:course_id]
       @task_course = TaskCourse.find(params[:course_id])
     else
@@ -38,7 +38,7 @@ class Public::TasksController < Public::Base
   end
 
   def new
-    @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @user = @calendar.user
     @staff = Staff.find(params[:staff_id])
     @task_course = TaskCourse.find(params[:course_id])
@@ -53,7 +53,7 @@ class Public::TasksController < Public::Base
 
   # ラインログインボタンでこのアクションが呼ばれる
   def redirect_register_line
-    @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @user = @calendar.user
     if params[:commit] == "そのまま予約する"
       task_create_without_line(params, store_member_params, task_params)
@@ -138,7 +138,7 @@ class Public::TasksController < Public::Base
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to calendar_tasks_url(params[:calendar_calendar_name]), notice: '予約をキャンセルしました。' }
+      format.html { redirect_to calendar_tasks_url(params[:id]), notice: '予約をキャンセルしました。' }
       format.json { head :no_content }
       format.js {render :destroy}
     end
@@ -148,7 +148,7 @@ class Public::TasksController < Public::Base
 
   private
     def set_task
-      @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+      @calendar = Calendar.find_by(public_uid: params[:calendar_id])
       @user = @calendar.user
       @task = Task.find(params[:id])
     end
@@ -165,7 +165,7 @@ class Public::TasksController < Public::Base
     def check_task_validation(task)
       if task.invalid?
         flash[:warnning] = "この時間はすでに予約が入っております。"
-        redirect_to calendar_tasks_url(params[:calendar_calendar_name])
+        redirect_to calendar_tasks_url(params[:id])
       end
     end
 

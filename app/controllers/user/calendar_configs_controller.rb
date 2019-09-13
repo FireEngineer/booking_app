@@ -2,7 +2,7 @@ class User::CalendarConfigsController < User::Base
     before_action :calendar
 
     def update
-        @calendar_config = Calendar.find_by(calendar_name: params[:calendar_calendar_name]).calendar_config
+        @calendar_config = Calendar.find_by(public_uid: params[:calendar_id]).calendar_config
         respond_to do |format|
             if @calendar_config.update(calendar_config_regular_holidays_params)
                 format.html { redirect_to user_calendar_url(current_user, @calendar), notice: '詳細設定を更新しました。' }

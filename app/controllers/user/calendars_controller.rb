@@ -26,7 +26,7 @@ class User::CalendarsController < User::Base
   end
 
   def update_is_released
-    @calendar = Calendar.find_by(calendar_name: params[:id])
+    @calendar = Calendar.find_by(public_uid: params[:id])
     if params[:commit] == "公開にする"
       if @calendar.update(is_released: true)
         flash[:succese] = "カレンダーを公開しました"
@@ -46,7 +46,7 @@ class User::CalendarsController < User::Base
 
   private
     def params_calendar
-      params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calendar_name, :is_released, :address, :phone, :start_time, :end_time, :display_time)
+      params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :public_uid, :is_released, :address, :phone, :start_time, :end_time, :display_time)
     end
 
     

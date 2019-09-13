@@ -42,7 +42,7 @@ class LineNotifyService
           #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
           #{task.end_time.strftime("%H:%M")}
         ・キャンセルURL
-          #{ if Rails.env == "development" then "http://localhost:3000/calendars/#{calendar.calendar_name}/tasks/#{task.id}/cancel" end }
+          #{ if Rails.env == "development" then "http://localhost:3000/calendars/#{calendar.public_uid}/tasks/#{task.id}/cancel" end }
         ===================
       TEXT
     end

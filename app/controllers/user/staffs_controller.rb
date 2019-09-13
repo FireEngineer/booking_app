@@ -10,6 +10,7 @@ class User::StaffsController < User::Base
     end
 
     def new
+      debugger
       @staff = Staff.new()
     end
 

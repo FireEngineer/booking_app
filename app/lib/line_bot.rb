@@ -40,7 +40,7 @@ class LineBot
       ・担当者
         #{task.staff.name}
       ・キャンセルURL
-        #{HOST_URL}/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel
+        #{HOST_URL}/calendars/#{task.calendar.public_uid}/tasks/#{task.id}/cancel
       ==================="
     }
     response = client.push_message(user_id, message)
@@ -68,7 +68,7 @@ class LineBot
       ・担当者
         #{task.staff.name}
       ・キャンセルURL
-        #{HOST_URL}/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel
+        #{HOST_URL}/calendars/#{task.calendar.public_uid}/tasks/#{task.id}/cancel
       ==================="
     }
     response = client.push_message(user_id, message)
@@ -122,7 +122,7 @@ class LineBot
       ・担当者
         #{task.staff.name}
       ・キャンセルURL
-        #{HOST_URL}/calendars/#{task.calendar.calendar_name}/tasks/#{task.id}/cancel
+        #{HOST_URL}/calendars/#{task.calendar.public_uid}/tasks/#{task.id}/cancel
       ==================="
     }
     response = client.push_message(user_id, message)

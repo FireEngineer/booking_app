@@ -1,4 +1,7 @@
 class Calendar < ApplicationRecord
+  #gem "public_uid"でDBに保存される前にpublic_uidに8桁のランダムな文字列が付与される
+  generate_public_uid
+
   belongs_to :user
   has_many :store_member
   has_many :task_courses
@@ -6,9 +9,6 @@ class Calendar < ApplicationRecord
   has_many :tasks
   has_many :staffs
   
-  validates :unique_id, uniqueness: true, presence: true
-  validates :calendar_name, uniqueness: true
-  validates :calendar_name, presence: true
   validates :display_week_term, presence: true
   validates :end_date, presence: true
   validates :start_date, presence: true
@@ -19,7 +19,9 @@ class Calendar < ApplicationRecord
   after_create :create_calendar_config
 
   def to_param
-    calendar_name
+    public_uid
+    # public_uid: params[:id]
+    # public_uid
   end
 
   def create_default_task_course
@@ -41,7 +43,4 @@ class Calendar < ApplicationRecord
     end
   end
 
-  # validation
-  def date_check
-  end
 end

@@ -10,14 +10,14 @@ class Public::Base < ApplicationController
     # 予約が同時にかぶった時に発動
     def handle_ununiqueness_task
         flash[:success] = '予約が重複しています。他の日にちをご指定ください。'
-        calendar = Calendar.find_by(calendar_name: params["calendar_calendar_name"])
+        calendar = Calendar.find_by(public_uid: params["id"])
         redirect_to calendar_tasks_path(calendar)
     end
 
 
 
     def calendar_is_released?
-        calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name]) || Calendar.find_by(id: session[:calendar])
+        calendar = Calendar.find_by(public_uid: params[:id]) || Calendar.find_by(id: session[:calendar])
         unless calendar.is_released?
             redirect_to not_released_page_url
         end

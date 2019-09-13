@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   scope module: :public do
     get "task_create", to: "tasks#task_create", as: :task_create
     get "task_create_without_line", to: "tasks#task_create_without_line", as: :task_create_without_line
-    resources :calendars, param: :calendar_name, only: [] do
+    resources :calendars, only: [] do
       resources :tasks, except: [:show]
         get "tasks/:id/complete", to: "tasks#complete", as: :task_complete
         get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
@@ -52,7 +52,7 @@ Rails.application.routes.draw do
     resources :users do
       patch "calendar/:id/update", to: "calendars#update"
       patch "calendar/:id/update_is_released", to: "calendars#update_is_released", as: "calendar_update_is_released"
-      resources :calendars, param: :calendar_name do
+      resources :calendars do
         get "dashboard", to: "top#dashboard"
         get "user_tasks/:id/update_by_drop", to: "user_tasks#update_by_drop"
         resources :user_tasks
@@ -65,7 +65,7 @@ Rails.application.routes.draw do
       end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end
-    resources :calendars, param: :calendar_name, only: [] do
+    resources :calendars, only: [] do
       resources :iregular_holidays
       resources :staffs, only: [] do
         resources :staff_shifts

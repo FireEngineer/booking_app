@@ -13,8 +13,8 @@ class User::Base < ApplicationController
     # end
 
     def calendar
-        calendar_params = params[:calendar_name] || params[:calendar_calendar_name]
-        @calendar = Calendar.find_by(calendar_name: calendar_params)
+        calendar_params = params[:calendar_id] || params[:id]
+        @calendar = Calendar.find_by(public_uid: calendar_params)
         @q = Task.with_store_member.ransack(params[:q])
     end
 

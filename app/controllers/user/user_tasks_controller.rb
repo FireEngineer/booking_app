@@ -2,13 +2,13 @@ class User::UserTasksController < User::Base
     before_action :calendar
 
     def index
-        @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        @calendar = Calendar.find_by(public_uid: params[:calendar_id])
         @q = Task.with_store_member.ransack(params[:q])
         @tasks = @q.result(distinct: true).page(params[:page]).per(10)
     end
 
     def new
-        @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        @calendar = Calendar.find_by(public_uid: params[:calendar_id])
         @store_member = StoreMember.new()
         @task = Task.new(start_time: params[:start_time])
         # スタッフの休憩作成用
@@ -16,7 +16,7 @@ class User::UserTasksController < User::Base
     end
 
     def create
-        @calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        @calendar = Calendar.find_by(public_uid: params[:calendar_id])
         # 会員がいるかどうか
         if StoreMember.find_by(phone: params[:store_member]["phone"])
             @store_member = StoreMember.find_by(phone: params[:store_member]["phone"])
@@ -65,10 +65,10 @@ class User::UserTasksController < User::Base
     end
 
     def destroy
-        @task = Task.find(params[:id])
+        @task = Task.find_by(id: params[:id])
         if @task.destroy
             respond_to do |format|
-            format.html { redirect_to user_calendar_dashboard_url(current_user, params[:calendar_calendar_name]), notice: '予約をキャンセルしました。' }
+            format.html { redirect_to user_calendar_dashboard_url(current_user, @calendar), notice: '予約をキャンセルしました。' }
             format.json { head :no_content }
             format.js {render :destroy}
             end

@@ -19,7 +19,7 @@ m_Calendar [label = <{<table border="0" align="center" cellspacing="0.5" cellpad
 |
 <table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
   <tr><td align="left" width="130" port="calendar_id">calendar_id <font face="Arial ItalicMT" color="grey60">string FK</font></td></tr>
-  <tr><td align="left" width="130" port="calendar_name">calendar_name <font face="Arial ItalicMT" color="grey60">string U</font></td></tr>
+  <tr><td align="left" width="130" port="public_uid">public_uid <font face="Arial ItalicMT" color="grey60">string U</font></td></tr>
   <tr><td align="left" width="130" port="display_week_term">display_week_term <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
   <tr><td align="left" width="130" port="end_date">end_date <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
   <tr><td align="left" width="130" port="end_time">end_time <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>

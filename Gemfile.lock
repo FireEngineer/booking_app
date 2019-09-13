@@ -196,6 +196,8 @@ GEM
       activerecord (>= 5.0)
     popper_js (1.14.5)
     public_suffix (3.1.1)
+    public_uid (1.3.1)
+      orm_adapter (~> 0.5)
     puma (3.12.1)
     rack (2.0.7)
     rack-protection (2.0.5)
@@ -358,6 +360,7 @@ DEPENDENCIES
   mysql2
   paranoia (~> 2.3, >= 2.3.1)
   payjp
+  public_uid
   puma (~> 3.11)
   rails (~> 5.2.3)
   rails-erd

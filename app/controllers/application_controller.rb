@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
 
   private
   def check_calendar_info
-    calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+    calendar = Calendar.find_by(public_uid: params[:id])
     redirect_to google_auth_redirect_path if calendar.calendar_id.blank?
   end
 

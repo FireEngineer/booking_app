@@ -6,7 +6,7 @@ class User::TaskCoursesController < User::Base
     end
 
     def create
-        calendar = Calendar.find_by(calendar_name: params[:calendar_calendar_name])
+        calendar = Calendar.find_by(public_uid: params[:id])
         @task_course = calendar.task_courses.build(task_course_params)
 
         respond_to do |format|

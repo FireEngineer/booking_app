@@ -86,6 +86,9 @@ gem 'whenever', require: false
 # 論理削除
 gem 'paranoia', '~> 2.3', '>= 2.3.1'
 
+# ランダムな文字列を生成して、URLにする
+gem 'public_uid'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
