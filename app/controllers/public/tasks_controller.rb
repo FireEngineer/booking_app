@@ -233,7 +233,7 @@ class Public::TasksController < Public::Base
       @task.task_course = @task_course
       @task.staff = Staff.find(session[:staff_id])
       @staff = @task.staff
-      if @store_member.save
+      if @store_member.save!
         @store_member.update(line_user_id: line_user_id)
         LineBot.new().push_message(@task, line_user_id)
         flash[:success] = '予約が完了しました。'
