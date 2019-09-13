@@ -1,5 +1,5 @@
 class Public::TasksController < Public::Base
-  before_action :set_task, only: [:complete, :destroy]
+  before_action :set_task, only: [:complete, :destroy, :cancel]
   before_action :calendar_is_released?
 
   require "base64"
@@ -121,7 +121,6 @@ class Public::TasksController < Public::Base
   end
 
   def cancel
-    set_task
     cancelable_time = @calendar.calendar_config.cancelable_time
     if @task.start_time <= Time.current
       flash[:notice] = "予定時間を過ぎているので、キャンセルできません。"
@@ -138,7 +137,7 @@ class Public::TasksController < Public::Base
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to calendar_tasks_url(params[:id]), notice: '予約をキャンセルしました。' }
+      format.html { redirect_to calendar_tasks_url(params[:calendar_id]), notice: '予約をキャンセルしました。' }
       format.json { head :no_content }
       format.js {render :destroy}
     end
