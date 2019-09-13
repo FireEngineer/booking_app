@@ -1,6 +1,3 @@
 class TopsController < ApplicationController
-
-    def top
-    end
-    
+  def top; end
 end

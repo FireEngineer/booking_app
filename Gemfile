@@ -104,6 +104,7 @@ group :development do
   gem "rails-erd"
   # N+1問題の改善
   gem 'bullet'
+  gem 'rubocop', require: false
 end
 
 group :test do

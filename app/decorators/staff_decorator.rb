@@ -1,9 +1,5 @@
 module StaffDecorator
-
-    def active_display(staff)
-        if self == staff
-            "active"
-        end
-    end
-
+  def active_display(staff)
+    'active' if self == staff
+  end
 end

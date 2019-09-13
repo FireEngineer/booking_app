@@ -1,10 +1,10 @@
 class PayJp
-require "payjp"
-API_KEY = "sk_test_d2392c2fbb33eaae53381b10"
+  require 'payjp'
+  API_KEY = 'sk_test_d2392c2fbb33eaae53381b10'.freeze
 
   # attr_reader :key
 
-  def initialize()
+  def initialize
     Payjp.api_key = API_KEY
   end
 
@@ -42,5 +42,4 @@ API_KEY = "sk_test_d2392c2fbb33eaae53381b10"
     -XDELETE`
     JSON.parse(response)
   end
-
 end

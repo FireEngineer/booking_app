@@ -1,8 +1,8 @@
 class User::CalendarsController < User::Base
-  before_action :calendar, except: %i(new, create)
+  before_action :calendar, except: %i[new create]
 
   def new
-    @calendar = current_user.calendars.build()
+    @calendar = current_user.calendars.build
   end
 
   def create
@@ -18,7 +18,7 @@ class User::CalendarsController < User::Base
   def update
     @user = current_user
     if @calendar.update(params_calendar)
-      flash[:succese] = "カレンダーの設定を更新しました。"
+      flash[:succese] = 'カレンダーの設定を更新しました。'
       redirect_to user_calendar_url(@user, @calendar)
     else
       render action: :index
@@ -27,28 +27,25 @@ class User::CalendarsController < User::Base
 
   def update_is_released
     @calendar = Calendar.find_by(public_uid: params[:id])
-    if params[:commit] == "公開にする"
+    if params[:commit] == '公開にする'
       if @calendar.update(is_released: true)
-        flash[:succese] = "カレンダーを公開しました"
+        flash[:succese] = 'カレンダーを公開しました'
         redirect_to user_calendar_dashboard_url(current_user, @calendar)
       end
     else
       if @calendar.update(is_released: false)
-        flash[:succese] = "カレンダーを非公開にしました"
+        flash[:succese] = 'カレンダーを非公開にしました'
         redirect_to user_calendar_dashboard_url(current_user, @calendar)
       end
     end
-
-    rescue
-      flash[:danger] = "更新できませんでした"
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+  rescue StandardError
+    flash[:danger] = '更新できませんでした'
+    redirect_to user_calendar_dashboard_url(current_user, @calendar)
   end
 
   private
-    def params_calendar
-      params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :public_uid, :is_released, :address, :phone, :start_time, :end_time, :display_time)
-    end
 
-    
-
+  def params_calendar
+    params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :public_uid, :is_released, :address, :phone, :start_time, :end_time, :display_time)
+  end
 end

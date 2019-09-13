@@ -1,3 +1,3 @@
 class LineBot < ApplicationRecord
-    belongs_to :admin
+  belongs_to :admin
 end

@@ -1,5 +1,5 @@
 class Calendar < ApplicationRecord
-  #gem "public_uid"でDBに保存される前にpublic_uidに8桁のランダムな文字列が付与される
+  # gem "public_uid"でDBに保存される前にpublic_uidに8桁のランダムな文字列が付与される
   generate_public_uid
 
   belongs_to :user
@@ -8,7 +8,7 @@ class Calendar < ApplicationRecord
   has_one :calendar_config
   has_many :tasks
   has_many :staffs
-  
+
   validates :display_week_term, presence: true
   validates :end_date, presence: true
   validates :start_date, presence: true
@@ -25,15 +25,13 @@ class Calendar < ApplicationRecord
   end
 
   def create_default_task_course
-    unless self.task_courses.first
-      self.task_courses.build(title: "60分コース", description: "60分のコースになります。", course_time: 60, charge: "5000").save
-    end
+    task_courses.build(title: '60分コース', description: '60分のコースになります。', course_time: 60, charge: '5000').save unless task_courses.first
   end
 
   def create_calendar_config
-    unless self.calendar_config
-      config = self.build_calendar_config(capacity: 1)
-      array = ["日", "月", "火", "水", "木", "金", "土"]
+    unless calendar_config
+      config = build_calendar_config(capacity: 1)
+      array = %w[日 月 火 水 木 金 土]
       start_time = Time.current.change(hour: self.start_time, min: 0)
       end_time = Time.current.change(hour: self.end_time, min: 0)
       array.each do |day|
@@ -42,5 +40,4 @@ class Calendar < ApplicationRecord
       config.save
     end
   end
-
 end

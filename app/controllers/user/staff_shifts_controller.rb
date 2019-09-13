@@ -1,7 +1,7 @@
 class User::StaffShiftsController < User::Base
-  before_action :set_staff_shift, only: [:edit, :update, :destroy]
-  before_action :set_staff, only: [:index, :edit, :update, :destroy]
-  before_action :calendar, only: [:index, :edit, :update, :destroy]
+  before_action :set_staff_shift, only: %i[edit update destroy]
+  before_action :set_staff, only: %i[index edit update destroy]
+  before_action :calendar, only: %i[index edit update destroy]
 
   def index
     @month = params[:month]&.to_datetime || DateTime.current
@@ -9,14 +9,10 @@ class User::StaffShiftsController < User::Base
     start_of_month = @month.beginning_of_month
     end_of_month = @month.end_of_month
     regular_holidays = get_regular_holidays
-    unless @staff_shifts.find_by(work_date: start_of_month)
-      StaffShiftsCreator.call(start_of_month, end_of_month, @staff)
-    end
+    StaffShiftsCreator.call(start_of_month, end_of_month, @staff) unless @staff_shifts.find_by(work_date: start_of_month)
   end
 
-  def edit
-    
-  end
+  def edit; end
 
   # PATCH/PUT /user/staff_shifts/1
   # PATCH/PUT /user/staff_shifts/1.json
@@ -33,22 +29,22 @@ class User::StaffShiftsController < User::Base
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_staff_shift
-      @staff_shift = StaffShift.find(params[:id])
-    end
 
-    def set_staff
-      @staff = Staff.find(params[:staff_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_staff_shift
+    @staff_shift = StaffShift.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def staff_shift_params
-      params.require(:staff_shift).permit(:work_start_time, :work_end_time, :staff_id)
-    end
+  def set_staff
+    @staff = Staff.find(params[:staff_id])
+  end
 
-    def get_regular_holidays
-        regular_holidays = @staff.calendar.calendar_config.regular_holidays
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def staff_shift_params
+    params.require(:staff_shift).permit(:work_start_time, :work_end_time, :staff_id)
+  end
 
+  def get_regular_holidays
+    regular_holidays = @staff.calendar.calendar_config.regular_holidays
+  end
 end

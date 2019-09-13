@@ -1,5 +1,5 @@
 module Encryptor
-  CIPHER = "aes-256-cbc"
+  CIPHER = 'aes-256-cbc'.freeze
   def encrypt(password)
     secure = Rails.application.credentials.encrypt_secure_key
     crypt = ActiveSupport::MessageEncryptor.new(secure, CIPHER)

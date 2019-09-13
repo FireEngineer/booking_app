@@ -3,23 +3,21 @@ require 'net/http'
 require 'uri'
 class LineBot
   attr_reader :client
-  if Rails.env == "production"
-    HOST_URL = ENV['PRODUCTION_HOST_URL']
-  else
-    HOST_URL = ENV['DEVELOPMENT_HOST_URL']
-  end
+  HOST_URL = if Rails.env == 'production'
+               ENV['PRODUCTION_HOST_URL']
+             else
+               ENV['DEVELOPMENT_HOST_URL']
+             end
 
-  def initialize()
+  def initialize
     channel_secret = ENV['CHANNEL_SECRET']
     channel_token = ENV['CHANNEL_TOKEN']
     @client = initialize_client(channel_secret, channel_token)
   end
 
-  def new()
-  end
+  def new; end
 
   def push_message(task, user_id)
-
     message = {
       type: 'text',
       text: "予約ありがとうございます!
@@ -31,8 +29,8 @@ class LineBot
       ・TEL
         #{task.store_member.phone}
       ・開始時間
-        #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
-        #{task.end_time.strftime("%H:%M")}
+        #{task.start_time.strftime('%Y年%-m月%-d日 %H:%M')}~
+        #{task.end_time.strftime('%H:%M')}
       ・コース名
         #{task.task_course.title}
       ・コース料金
@@ -47,7 +45,6 @@ class LineBot
   end
 
   def push_message_with_edit_task(task, user_id)
-
     message = {
       type: 'text',
       text: "予約内容を変更しました!
@@ -59,8 +56,8 @@ class LineBot
       ・TEL
         #{task.store_member.phone}
       ・開始時間
-        #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
-        #{task.end_time.strftime("%H:%M")}
+        #{task.start_time.strftime('%Y年%-m月%-d日 %H:%M')}~
+        #{task.end_time.strftime('%H:%M')}
       ・コース名
         #{task.task_course.title}
       ・コース料金
@@ -75,7 +72,6 @@ class LineBot
   end
 
   def push_message_with_delete_task(task, user_id)
-
     message = {
       type: 'text',
       text: "予約をキャンセルしました!
@@ -87,8 +83,8 @@ class LineBot
       ・TEL
         #{task.store_member.phone}
       ・開始時間
-        #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
-        #{task.end_time.strftime("%H:%M")}
+        #{task.start_time.strftime('%Y年%-m月%-d日 %H:%M')}~
+        #{task.end_time.strftime('%H:%M')}
       ・コース名
         #{task.task_course.title}
       ・コース料金
@@ -101,7 +97,6 @@ class LineBot
   end
 
   def push_message_with_reminder(task, user_id)
-
     message = {
       type: 'text',
       text: "明日の予約内容のお知らせ。
@@ -113,8 +108,8 @@ class LineBot
       ・TEL
         #{task.store_member.phone}
       ・開始時間
-        #{task.start_time.strftime("%Y年%-m月%-d日 %H:%M")}~
-        #{task.end_time.strftime("%H:%M")}
+        #{task.start_time.strftime('%Y年%-m月%-d日 %H:%M')}~
+        #{task.end_time.strftime('%H:%M')}
       ・コース名
         #{task.task_course.title}
       ・コース料金
@@ -129,7 +124,6 @@ class LineBot
   end
 
   def push_test(user_id)
-
     message = {
       type: 'text',
       text: "test送信
@@ -146,12 +140,11 @@ class LineBot
   end
 
   private
-    def initialize_client(channel_secret, channel_token)
-      client = Line::Bot::Client.new { |config|
-          config.channel_secret = channel_secret
-          config.channel_token = channel_token
-      }
+
+  def initialize_client(channel_secret, channel_token)
+    client = Line::Bot::Client.new do |config|
+      config.channel_secret = channel_secret
+      config.channel_token = channel_token
     end
-
-
+  end
 end

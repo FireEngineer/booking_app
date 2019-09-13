@@ -5,7 +5,7 @@ class GoogleAuthController < ApplicationController
     client.code = params[:code]
     response = client.fetch_access_token!
     current_user.google_api_token = response
-    calendar = Google::Apis::CalendarV3::Calendar.new({ discription: 'yosida-todo', summary:(current_user.email.sub(/@.*/, "")+'-todo')})
+    calendar = Google::Apis::CalendarV3::Calendar.new(discription: 'yosida-todo', summary: (current_user.email.sub(/@.*/, '') + '-todo'))
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
     _calendar = service.insert_calendar(calendar)
@@ -18,14 +18,12 @@ class GoogleAuthController < ApplicationController
   def redirect
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_user))
     redirect_to client.authorization_uri.to_s
-  rescue => e
+  rescue StandardError => e
     puts errors_log(e)
     redirect_to google_auth_ident_form_url
   end
 
-  def ident_form
-
-  end
+  def ident_form; end
 
   def identifier
     user = current_user
@@ -35,7 +33,6 @@ class GoogleAuthController < ApplicationController
       user.save
       redirect_to google_auth_redirect_url
     end
-
   end
 
   private
