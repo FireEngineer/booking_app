@@ -1,4 +1,9 @@
 @import "bootstrap";
 .user_container {
-  margin-top: 56px;
+  margin-top: 20px;
+
+  @media screen and (max-width:450px){
+    padding:0
+  }
+
 }
