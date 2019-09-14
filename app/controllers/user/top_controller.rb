@@ -117,7 +117,7 @@ class User::TopController < User::Base
         start: l(task.start_time, format: :to_work_json),
         end: l(task.end_time, format: :to_work_json),
         id: task.id,
-        overlap: false
+        classNames: 'staff_task',
       }
     end
   end
