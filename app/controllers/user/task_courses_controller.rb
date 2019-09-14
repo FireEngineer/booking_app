@@ -60,6 +60,6 @@ class User::TaskCoursesController < User::Base
   private
 
   def task_course_params
-    params.require(:task_course).permit(:title, :description, :course_time, :calendar_id)
+    params.require(:task_course).permit(:title, :description, :course_time, :charge, :calendar_id)
   end
 end
