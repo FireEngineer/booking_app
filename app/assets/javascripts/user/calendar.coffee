@@ -5,6 +5,7 @@ $(document).on 'turbolinks:load', ->
   unless data_calendar
     return
   $('#calendar').fullCalendar {
+    selectLongPressDelay: 1,
     validRange: {
       start: data_calendar["start_date"],
       end: data_calendar["end_date"]
@@ -76,8 +77,10 @@ $(document).on 'turbolinks:load', ->
                 revertFunc()
                 return
             )
+          return
   }
   return
+  $('#calendar').addTouch();
 
 $(document).on 'turbolinks:before-cache', ->
   $('#calendar').empty()
