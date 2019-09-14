@@ -11,10 +11,10 @@ class User::TopController < User::Base
     staff_rests = staff_rests(@staff)
 
     @events = begin
-                  (staff_shifts + staff_tasks + staff_rests)&.to_json
+                (staff_shifts + staff_tasks + staff_rests)&.to_json
               rescue StandardError
                 (calendar_tasks(@calendar) + calendar_holidays(@calendar)).to_json
-                end
+              end
     if params[:task_id]
       task_date = Task.find_by(id: params[:task_id]).start_time.to_date
       @current_date = l(task_date, format: :to_json)
