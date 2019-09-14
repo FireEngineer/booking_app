@@ -82,7 +82,7 @@ class Public::TasksController < Public::Base
                                         task_course_id: @task_course.id,
                                         calendar_id: @calendar.id)
       check_task_validation(@task)
-      flash.now[:notice] = 'キャンセルしました。'
+      flash.now[:success] = 'キャンセルしました。'
       render :new
       return
     end
@@ -110,7 +110,7 @@ class Public::TasksController < Public::Base
                                         task_course_id: @task_course.id,
                                         calendar_id: @calendar.id)
       check_task_validation(@task)
-      flash.now[:notice] = 'ラインボットと友達になってください'
+      flash.now[:danger] = 'ラインボットと友達になってください'
       render :new
       return
     end
@@ -121,14 +121,14 @@ class Public::TasksController < Public::Base
   def cancel
     cancelable_time = @calendar.calendar_config.cancelable_time
     if @task.start_time <= Time.current
-      flash[:notice] = '予定時間を過ぎているので、キャンセルできません。'
+      flash[:danger] = '予定時間を過ぎているので、キャンセルできません。'
       redirect_to calendar_tasks_path(@calendar)
     elsif @task.start_time > Time.current && @task.start_time <= Time.current.since(cancelable_time.hours).to_time
-      flash[:notice] = "予定時間まで#{cancelable_time}時間を過ぎているので、キャンセルできません。直接お店まで電話してください。"
+      flash[:danger] = "予定時間まで#{cancelable_time}時間を過ぎているので、キャンセルできません。直接お店まで電話してください。"
       redirect_to calendar_tasks_path(@calendar)
     end
   rescue ActiveRecord::RecordNotFound
-    flash[:notice] = 'この予約はキャンセル済みか、存在しません。'
+    flash[:danger] = 'この予約はキャンセル済みか、存在しません。'
     redirect_to calendar_tasks_path(@calendar)
   end
 
