@@ -95,6 +95,7 @@ class User::TopController < User::Base
           end: l(task.end_time, format: :to_work_json),
           id: task.id,
           color: 'purple'
+          classNames: 'staff_task'
         }
       else
         {

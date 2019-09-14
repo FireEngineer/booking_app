@@ -6,7 +6,7 @@ $(document).on 'turbolinks:load', ->
     return
   $('#calendar').fullCalendar {
     height: window.innerHeight - 100,
-    selectLongPressDelay: 500,
+    selectLongPressDelay: 300,
     validRange: {
       start: data_calendar["start_date"],
       end: data_calendar["end_date"]
