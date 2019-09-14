@@ -11,10 +11,10 @@ class User::StaffRestTimesController < User::Base
     @rest = @shift.staff_rest_times.build(staff_rest_time_params)
     if @rest.save
       flash[:success] = '休憩を登録しました'
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @staff.id, rest_id: @rest.id)
     else
       flash[:danger] = '休憩を登録できませんでした'
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @staff.id, rest_id: @rest.id)
     end
   end
 
@@ -24,9 +24,10 @@ class User::StaffRestTimesController < User::Base
 
   def update
     @staff_rest_time = StaffRestTime.find(params[:id])
+    staff = @staff_rest_time.staff_shift.staff
     if @staff_rest_time.update(staff_rest_time_params)
       flash[:success] = '休憩を更新しました'
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: staff.id, rest_id: @staff_rest_time.id)
     else
       if @staff_rest_time.errors
         @staff_rest_time.errors.full_messages.each do |msg|
@@ -35,7 +36,7 @@ class User::StaffRestTimesController < User::Base
       else
         flash[:danger] = '休憩を更新できませんでした'
       end
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: staff.id, rest_id: @staff_rest_time.id)
     end
   end
 
@@ -50,9 +51,10 @@ class User::StaffRestTimesController < User::Base
 
   def destroy
     @staff_rest_time = StaffRestTime.find(params[:id])
+    staff = @staff_rest_time.staff_shift.staff
     @staff_rest_time.destroy
     flash[:cation] = '休憩を削除しました。'
-    redirect_to user_calendar_dashboard_url(current_user, @calendar)
+    redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: staff.id)
   end
 
   private

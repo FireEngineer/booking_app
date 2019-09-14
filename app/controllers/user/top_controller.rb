@@ -18,6 +18,9 @@ class User::TopController < User::Base
     if params[:task_id]
       task_date = Task.find_by(id: params[:task_id]).start_time.to_date
       @current_date = l(task_date, format: :to_json)
+    elsif params[:rest_id]
+      rest_date = StaffRestTime.find(params[:rest_id]).staff_shift.work_date
+      @current_date = l(rest_date, format: :to_json)
     else
       @current_date = l(Date.current, format: :to_json)
     end
@@ -94,8 +97,8 @@ class User::TopController < User::Base
           start: l(task.start_time, format: :to_work_json),
           end: l(task.end_time, format: :to_work_json),
           id: task.id,
-          color: 'purple'
-          classNames: 'staff_task'
+          color: 'purple',
+          classNames: 'staff_task',
         }
       else
         {
@@ -103,7 +106,7 @@ class User::TopController < User::Base
           start: l(task.start_time, format: :to_work_json),
           end: l(task.end_time, format: :to_work_json),
           id: task.id,
-          classNames: 'staff_task'
+          classNames: 'staff_task',
         }
       end
     end

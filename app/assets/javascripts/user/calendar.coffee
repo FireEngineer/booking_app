@@ -26,15 +26,10 @@ $(document).on 'turbolinks:load', ->
     ,
     plugins: [ 'timeGrid' ],
     defaultView: 'agendaWeek',
-    views: {
-      listDay: { buttonText: 'list(日)' },
-      listWeek: { buttonText: 'list(週)' },
-      listMonth: { buttonText: 'list(月)' }
-    },
     header: {
       left: 'prev,next today',
       center: 'title',
-      right: 'agendaDay,agendaWeek,month,listDay,listWeek,listMonth'
+      right: 'agendaDay,agendaWeek,month'
     },
     events: events,
     select: (startStr, endStr) ->

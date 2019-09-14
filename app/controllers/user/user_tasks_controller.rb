@@ -26,10 +26,10 @@ class User::UserTasksController < User::Base
     task.calendar = @calendar
     if @store_member.save
       flash[:success] = '予約を作成しました'
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
     else
       flash[:error] = @store_member.errors.full_messages[0]
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
     end
   end
 
@@ -44,10 +44,10 @@ class User::UserTasksController < User::Base
     @task.end_time = end_time(@task.start_time.to_s, task_course)
     if @task.save
       flash[:success] = '予約を更新しました'
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id, task_id: @task.id)
     else
       flash[:success] = '予約の更新ができませんでした。'
-      redirect_to user_calendar_dashboard_url(current_user, @calendar)
+      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id, task_id: @task.id)
     end
   end
 
@@ -64,7 +64,7 @@ class User::UserTasksController < User::Base
     @task = Task.find_by(id: params[:id])
     if @task.destroy
       respond_to do |format|
-        format.html { redirect_to user_calendar_dashboard_url(current_user, @calendar), notice: '予約をキャンセルしました。' }
+        format.html { redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id), notice: '予約をキャンセルしました。' }
         format.json { head :no_content }
         format.js { render :destroy }
       end
