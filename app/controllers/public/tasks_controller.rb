@@ -149,6 +149,9 @@ class Public::TasksController < Public::Base
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @user = @calendar.user
     @task = Task.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:danger] = 'キャンセル済みか存在しない予約です。'
+      redirect_to calendar_tasks_path(@calendar) 
   end
 
   def store_member_params
