@@ -3,39 +3,50 @@
     <h2 class="title_style">予約フォーム</h2>
   </div>
   <div>
-
+    <h4 class="booking_content">予約内容</h4>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">日時</label></th>
+                    <th class="col-xs-10"><%= reservation_date(@task) %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">担当者</label></th>
+                    <th class="col-xs-10"><%= @staff.name %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース名</label></th>
+                    <th class="col-xs-10"><%= @task_course.title %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース時間</label></th>
+                    <th class="col-xs-10"><%= "#{@task_course.course_time}分"%></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">料金</label></th>
+                    <th class="col-xs-10"><%= "#{@task_course.charge}円" %></td>
+                </tr>
+            </tbody>
+        </table>
   </div>
   <div class="form_area">
     <%= form_for @store_member, url: calendar_redirect_line_path(@calendar), method: :post do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
       <div class="form-group">
-        <label for="exampleInputPassword1">お名前</label><span id="msg-name"></span>
+        <label for="exampleInputPassword1">お名前</label><span id="msg-name"></span><span class="badge badge-danger">必須</span></h6>
         <%= f.text_field :name, class: "form-control form_style", id: "name", placeholder: "お名前（山田太郎）", required: "required" %>
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1">メールアドレス</label><span id="msg-email"></span>
+        <label for="exampleInputEmail1">メールアドレス</label><span id="msg-email"></span><span class="badge badge-danger">必須</span></h6>
         <%= f.email_field :email, class: "form-control form_style", id: "email", placeholder: "メールアドレス(test@test.com)", required: "required" %>
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1">電話番号</label><span id="msg-tel"></span>
+        <label for="exampleInputEmail1">電話番号</label><span id="msg-tel"></span><span class="badge badge-danger">必須</span></h6>
         <%= f.number_field :phone, class: "form-control form_style", id: "tel", placeholder: "電話番号(09012345678)", required: "required" %>
       </div>
       <%= fields_for :task do |task|  %>
-        <div class="form-group">
-            <label for="exampleInputPassword1">日時</label>
-            <%= reservation_date(@task) %>
             <%= task.hidden_field :start_time, value: @task.start_time %>
             <%= task.hidden_field :end_time, value: @task.end_time %>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">担当者</label>
-            <%= task.text_field :staff_value, value: @staff.name,  class: "form-control form_style", readonly: true %>
-            <%= task.hidden_field :start_time, value: @task.start_time %>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">コース名:コース時間：料金</label>
-            <%= task.text_field :course_value, value: "#{@task_course.title}：#{@task_course.course_time}分：#{@task_course.charge}円",  class: "form-control form_style", readonly: true %>
-        </div>
         <div class="form-group">
             <label for="exampleInputPassword1">ご要望</label>
             <%= task.text_area :request, class: "form-control form_style" %>
@@ -43,9 +54,11 @@
       <% end %>
       <%= hidden_field_tag :task_course_id, @task_course.id %>
       <%= hidden_field_tag :staff_id, @staff.id %>
-      <button type="submit" class="btn btn-success btn_style" data-confirm= "予約を行います。">LINE_botに登録して予約する</button>
-      <%= f.submit "そのまま予約する", class:"btn btn-primary btn_style", data:{confirm:"予約しますか？"} %>
-      <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style load_btn" %>
+      <div class="task_submit_btn">
+        <button type="submit" class="btn btn-success btn_style" data-confirm= "予約を行います。">LINE_botに登録して予約する</button>
+        <%= f.submit "そのまま予約する", class:"btn btn-primary btn_style", data:{confirm:"予約しますか？"} %>
+        <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style load_btn" %>
+      </div>
     <% end %>
   </div>
 </div>
