@@ -16,15 +16,15 @@
               <%= fields_for member do |f| %>
                 <tr>
                   <th scope="row">名前</th>
-                  <td><%= member.name %><%#= f.text_field :name %></td>
+                  <td><%= member.name %>  <%= link_to "次回予約をする", user_calendar_dashboard_path(current_user, task.calendar, staff_id: task.staff_id, store_member_id: task.store_member.id)%></td>
                 </tr>
                 <tr>
                   <th scope="row">メールアドレス</th>
-                  <td><%= member.email %><%#= f.email_field :email %></td>
+                  <td><%= member.email %></td>
                 </tr>
                 <tr>
                   <th scope="row">電話番号</th>
-                  <td><%= member.phone %><%#= f.text_field :phone %></td>
+                  <td><%= member.phone %></td>
                 </tr>
               <% end %>
               

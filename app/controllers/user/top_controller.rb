@@ -23,6 +23,13 @@ class User::TopController < User::Base
     else
       @current_date = l(Date.current, format: :to_json)
     end
+    if params[:store_member_id]
+      store_member = StoreMember.find(params[:store_member_id])
+      flash.now[:warning] = "【#{store_member.name}様：次回予約】時間を選択してください。"
+      @store_member_id = store_member.id
+    else
+      @store_member_id = nil
+    end
     @data_calendar = date_range(@calendar)
   end
 

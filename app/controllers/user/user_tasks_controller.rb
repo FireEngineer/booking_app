@@ -9,7 +9,11 @@ class User::UserTasksController < User::Base
 
   def new
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
-    @store_member = StoreMember.new
+    if params[:store_member_id]
+      @store_member = StoreMember.find(params[:store_member_id])
+    else
+      @store_member = StoreMember.new
+    end
     @task = Task.new(start_time: params[:start_time])
     # スタッフの休憩作成用
     @staff_rest_time = StaffRestTime.new(rest_start_time: params[:start_time], rest_end_time: params[:start_time].to_time.since(1.hours))

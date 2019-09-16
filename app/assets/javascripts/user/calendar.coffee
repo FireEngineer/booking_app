@@ -2,6 +2,7 @@ $(document).on 'turbolinks:load', ->
   default_date = $('#data').data('date_current');
   events = $('#data').data('events');
   data_calendar = $('#data').data('data_calendar');
+  store_member_id = $('#data').data('store_member_id')
   unless data_calendar
     return
   $('#calendar').fullCalendar {
@@ -33,7 +34,10 @@ $(document).on 'turbolinks:load', ->
     },
     events: events,
     select: (startStr, endStr) ->
-      $.get("user_tasks/new?start_time=#{startStr.format()}&end_time=#{endStr.format()}");
+      if store_member_id
+        $.get("user_tasks/new?start_time=#{startStr.format()}&end_time=#{endStr.format()}&store_member_id=#{store_member_id}");
+      else
+        $.get("user_tasks/new?start_time=#{startStr.format()}&end_time=#{endStr.format()}");
       return
     eventDrop: (event, delta, revertFunc) ->
       if event.classNames[0] == "staff_rest"
