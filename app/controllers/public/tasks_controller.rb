@@ -151,7 +151,7 @@ class Public::TasksController < Public::Base
     @task = Task.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:danger] = 'キャンセル済みか存在しない予約です。'
-      redirect_to calendar_tasks_path(@calendar) 
+      redirect_to calendar_tasks_path(@calendar)
   end
 
   def store_member_params

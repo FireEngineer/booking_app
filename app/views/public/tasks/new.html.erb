@@ -2,6 +2,9 @@
   <div class="title">
     <h2 class="title_style">予約フォーム</h2>
   </div>
+  <div>
+
+  </div>
   <div class="form_area">
     <%= form_for @store_member, url: calendar_redirect_line_path(@calendar), method: :post do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
@@ -20,13 +23,14 @@
       <%= fields_for :task do |task|  %>
         <div class="form-group">
             <label for="exampleInputPassword1">日時</label>
-            <%= task.text_field :time, value: reservation_date(@task),  class: "form-control form_style", readonly: true %>
+            <%= reservation_date(@task) %>
             <%= task.hidden_field :start_time, value: @task.start_time %>
             <%= task.hidden_field :end_time, value: @task.end_time %>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">担当者</label>
             <%= task.text_field :staff_value, value: @staff.name,  class: "form-control form_style", readonly: true %>
+            <%= task.hidden_field :start_time, value: @task.start_time %>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">コース名:コース時間：料金</label>
@@ -175,7 +179,7 @@
                     $("#tel-icon").hide();
                 }
 //                電話以外の値が入っている場合、背景へCSSクラス適用し、テキストを追加
-                else if (!val.match(/^(\d{2,3}){0,1}\d{1,4}\d{2,4}\d{2,4}$/)) {
+                else if (!val.match(/^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/)) {
                     $("#msg-tel").addClass("color");
                     $("#msg-tel").text("電話番号が正しく入力されていません(00011112222)");
 
