@@ -71,8 +71,5 @@ Task.where("start_time < ? && ? < end_time", self.end_time.since(interval_time.m
 
    rails g model StaffRestTime rest_start_time:datetime rest_end_time:datetime
 
-   bin/rails g rspec:controller Pblic::Tasks
-
-   rails g rspec:model task
-
-   slategrey
+   rails g migration Addカラム名Toテーブル名 カラム名:データ型
+   rails g migration AddPublicUidToCalendar public_uid:string

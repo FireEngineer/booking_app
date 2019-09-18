@@ -1,0 +1,36 @@
+<h1 class="text_center">キャンセル完了</h1>
+
+<div class="card card-body bg-light p-5 card_margin">
+  以下の内容の予約をキャンセルしました。
+
+  <h4 class="booking_content">キャンセル内容</h4>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">日時</label></th>
+                    <th class="col-xs-10"><%= reservation_date(@task) %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">担当者</label></th>
+                    <th class="col-xs-10"><%= @task.staff.name %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース名</label></th>
+                    <th class="col-xs-10"><%= @task.task_course.title %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース時間</label></th>
+                    <th class="col-xs-10"><%= "#{@task.task_course.course_time}分"%></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">料金</label></th>
+                    <th class="col-xs-10"><%= "#{@task.task_course.charge}円" %></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+</div>
+
+
+<%= link_to "予約フォームに戻る", calendar_tasks_path(@calendar), class:"btn btn-primary block_display" %>

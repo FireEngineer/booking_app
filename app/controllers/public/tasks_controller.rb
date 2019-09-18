@@ -135,10 +135,15 @@ class Public::TasksController < Public::Base
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to calendar_tasks_url(params[:calendar_id]), notice: '予約をキャンセルしました。' }
+      format.html { redirect_to calendar_task_cancel_complete_url(params[:calendar_id], @task), success: '予約をキャンセルしました。' }
       format.json { head :no_content }
       format.js { render :destroy }
     end
+  end
+
+  def cancel_complete
+    @task = Task.only_deleted.find(params[:id])
+    @calendar = Calendar.find_by(public_uid: params[:calendar_id])
   end
 
   # ==============================================================================================

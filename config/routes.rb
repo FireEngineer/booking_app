@@ -42,6 +42,7 @@ Rails.application.routes.draw do
         get "tasks/:id/complete", to: "tasks#complete", as: :task_complete
         get "tasks/:id/cancel", to: "tasks#cancel", as: :task_cancel
         post "tasks/redirect_register_line", to: "tasks#redirect_register_line", as: :redirect_line
+        get "tasks/:id/cancel_complete", to: "tasks#cancel_complete", as: :task_cancel_complete
     end
     # カレンダーが公開してない場合のページ
     get "not_released_page", to: "templetes#not_released_page"
