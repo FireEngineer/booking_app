@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-dark bg-primary fixed-top">
+  <%= image_tag 'favicon.png', :size =>'40x40'%>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,36 +11,25 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="settingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          設定
+          <i class="fas fa-cog"></i>設定
         </a>
         <div class="dropdown-menu" aria-labelledby="settingDropdown">
           <%= link_to "ユーザー設定", user_path(current_user), class:"dropdown-item load_btn" %>
-          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"dropdown-item load_btn" %>
-          <div class="dropdown-divider"></div>
-          <%= link_to "予約一覧", user_calendar_user_tasks_path(current_user, @calendar), class:"dropdown-item load_btn" %>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="shiftDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          カレンダー
-        </a>
-        <div class="dropdown-menu" aria-labelledby="shiftDropdown">
           <%= link_to "カレンダー設定", user_calendar_path(current_user, @calendar), class:"dropdown-item load_btn" %>
           <%= link_to "休日設定", calendar_iregular_holidays_path(@calendar), class:"dropdown-item load_btn" %>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="shiftDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          スタッフ
-        </a>
-        <div class="dropdown-menu" aria-labelledby="shiftDropdown">
-          <%= link_to "シフト設定", user_calendar_staffs_shifts_path(current_user, current_user.calendars.first), class:"dropdown-item load_btn" %>
           <%= link_to "スタッフ設定", user_calendar_staffs_path(current_user, @calendar), class:"dropdown-item load_btn" %>
+          <div class="dropdown-divider"></div>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"dropdown-item load_btn" %>
         </div>
+      </li>
+      <li class="nav-item">
+        <%= link_to user_calendar_user_tasks_path(current_user, @calendar), class:"nav-link load_btn" do %>
+          <i class="far fa-list-alt"></i>予約一覧
+        <% end %>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="shiftDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= @calendar.display_release %>
+          <i class="fas fa-globe"></i><%= @calendar.display_release %>
         </a>
         <div class="dropdown-menu" aria-labelledby="shiftDropdown">
           <% if @calendar.is_released %>
@@ -50,7 +40,9 @@
         </div>
       </li>
     </ul>
-    <%= button_tag "公開リンク", value:"#{calendar_tasks_url(@calendar, openExternalBrowser: 1)}", type: 'button', class:"btn btn-outline-light", id:"copy_public_url" %>
+    <%= button_tag value:"#{calendar_tasks_url(@calendar, openExternalBrowser: 1)}", type: 'button', class:"btn btn-outline-light", id:"copy_public_url" do %>
+      <i class="fas fa-link"></i>公開リンク
+    <% end %>
     <%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calendar), class:"form-inline my-2 my-lg-0" do |f| %>
       <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2", :placeholder => "電話番号or名前" %>
       <%= f.submit "検索", class:"btn btn-outline-success my-2 my-sm-0 load_btn" %>
