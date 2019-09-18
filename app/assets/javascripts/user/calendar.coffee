@@ -27,6 +27,7 @@ $(document).on 'turbolinks:load', ->
     ,
     plugins: [ 'timeGrid' ],
     defaultView: 'agendaWeek',
+    columnHeaderFormat: 'ddd D',
     header: {
       left: 'prev,next today',
       center: 'title',
