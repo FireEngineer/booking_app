@@ -5,9 +5,8 @@
 <% end %>
 
 <%= paginate @tasks %>
-<div class="table_scroll">
+<div class="table-responsive">
   <table class="table table-hover">
-    <caption>テーブルの表題</caption>
     <thead>
       <tr>
         <th><%= sort_link(@q, :id, "ID") %></th>
