@@ -49,7 +49,6 @@ class User::UserTasksController < User::Base
     @task = Task.find(params[:id])
     @task.attributes = task_params
     task_course = @task.task_course
-    @task.end_time = end_time(@task.start_time.to_s, task_course)
     if @task.save
       flash[:success] = '予約を更新しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id, task_id: @task.id)

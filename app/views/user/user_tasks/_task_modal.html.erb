@@ -44,7 +44,17 @@
                 </tr>
                 <tr>
                   <th scope="row">予約終了時間</th>
-                  <td><%= l(task.end_time, format: :very_short) %></td>
+                  <td>
+                    <p class="disabled_form"><%= l(task.end_time, format: :very_short) %></p>
+                    <P class="display_none">
+                      <%= f.datetime_select(
+                          :end_time,          
+                          # discard_day: true,
+                          # discard_month: true,
+                          # discard_year: true,
+                          ) %>
+                    </p>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">予約コース</th>
