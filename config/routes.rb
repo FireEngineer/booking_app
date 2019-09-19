@@ -67,6 +67,7 @@ Rails.application.routes.draw do
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end
     resources :calendars, only: [] do
+      resources :store_members
       resources :iregular_holidays
       resources :staffs, only: [] do
         resources :staff_shifts

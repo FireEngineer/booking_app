@@ -3,7 +3,7 @@ class Calendar < ApplicationRecord
   generate_public_uid
 
   belongs_to :user
-  has_many :store_member
+  has_many :store_members
   has_many :task_courses
   has_one :calendar_config
   has_many :tasks
