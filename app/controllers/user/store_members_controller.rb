@@ -6,6 +6,7 @@ class User::StoreMembersController < User::Base
   end
 
   def show
-
+    @store_member = StoreMember.find(params[:id])
+    @tasks = @store_member.tasks
   end
 end

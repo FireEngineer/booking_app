@@ -15,7 +15,9 @@
         <th scope="row"><%= member.name %></th>
         <td><%= member.phone %></td>
         <td><%= member.email %></td>
-        <td></td>
+        <td>
+          <%= link_to "詳細", calendar_store_member_path(@calendar, member), class:"btn btn-primary" %>
+        </td>
       </tr>
     <% end %>
   </tbody>
