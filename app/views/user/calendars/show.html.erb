@@ -1,5 +1,7 @@
 <p><span class="js-copytext" value="<%= calendar_tasks_url(@calendar) %>">
-  <%= link_to "お客さま専用予約フォームへ", calendar_tasks_path(@calendar), class:"btn btn-outline-primary load_btn" %>
+  <%= link_to "お客さま専用予約フォームへ", calendar_tasks_path(@calendar, openExternalBrowser: 1), class:"btn btn-outline-primary load_btn" %>
+  <br>
+  <label><i class="fas fa-link"></i></label><%= calendar_tasks_url(@calendar, openExternalBrowser: 1) %>
 </span></p>
 
   <ul id="myTab" class="nav nav-tabs" role="tablist">

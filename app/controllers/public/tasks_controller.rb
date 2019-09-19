@@ -179,8 +179,8 @@ class Public::TasksController < Public::Base
   def time_interval(start_time, end_time)
     array = []
     1.step do |i|
-      array.push(Time.parse("#{start_time}:00") + 15.minutes * (i - 1))
-      break if Time.parse("#{start_time}:00") + 15.minutes * (i - 1) == Time.parse("#{end_time}:00")
+      array.push(Time.parse("#{start_time}:00") + 10.minutes * (i - 1))
+      break if Time.parse("#{start_time}:00") + 10.minutes * (i - 1) == Time.parse("#{end_time}:00")
     end
     array
   end
