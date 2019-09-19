@@ -134,6 +134,7 @@ class LineBot
         test@gmail.com
       ・TEL
         000000000000
+        #{ENV['RAILS_ENV']}
       ==================="
     }
     response = client.push_message(user_id, message)
