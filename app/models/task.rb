@@ -13,9 +13,12 @@ class Task < ApplicationRecord
   belongs_to :calendar
   belongs_to :staff, optional: true
 
+  scope :expect_past, -> { where("start_time >= ?", Time.current) }
+
   after_save :sync_create, :mail_send
   after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
   after_destroy :sybc_delete, :line_send_with_delete_task, :mail_send_with_delete_task
+  
 
   # 予約が被っている時刻に同時に保存されないように検証
   after_create do
@@ -23,9 +26,9 @@ class Task < ApplicationRecord
     interval_time = calendar.calendar_config.interval_time
     raise TaskUnuniqueError if Task.lock.where('start_time < ? && ? < end_time', end_time.since(interval_time.minutes), start_time.ago(interval_time.minutes)).where(staff_id: staff_id).where.not(id: id).any?
   end
-
-  def self.with_store_member
-    joins(:store_member).select('tasks.*, store_members.name, store_members.email, store_members.phone, store_members.id as member_id')
+  
+  def self.by_calendar(calendar)
+    joins(:store_member).where(calendar_id: calendar.id).select('tasks.*, store_members.name, store_members.email, store_members.phone, store_members.id as member_id')
   end
 
   def calendar_event_uid

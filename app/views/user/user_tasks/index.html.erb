@@ -1,6 +1,12 @@
 <%= search_form_for @q, url: user_calendar_user_tasks_path(current_user, @calendar) do |f| %>
-  <%= f.label :store_member_name_or_store_member_phone, "名前or電話番号" %>
-  <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2" %>
+  <label>名前or電話番号</label>
+  <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control" %>
+  <label>過去の予約を除外する</label>
+  <% if params[:except_past_task] %>
+    <%=check_box_tag :except_past_task, {} ,{:checked => true }%><br>
+  <% else %>
+    <%=check_box_tag :except_past_task%><br>
+  <% end %>
   <%= f.submit "検索", class:"btn btn-primary load_btn" %>
 <% end %>
 
@@ -9,7 +15,6 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th><%= sort_link(@q, :id, "ID") %></th>
         <th><%= sort_link(@q, :name, "名前") %></th>
         <th><%= sort_link(@q, :email, "email") %></th>
         <th><%= sort_link(@q, :phone, "電話番号") %></th>
@@ -21,7 +26,6 @@
     <tbody>
       <% @tasks.each do |task| %>
         <tr>
-          <th scope="row"><%= task.id %></th>
           <td><%= task.store_member.name %></td>
           <td><%= task.store_member.email %></td>
           <td><%= task.store_member.phone %></td>
@@ -30,7 +34,7 @@
             <%= link_to "カレンダーへ", user_calendar_dashboard_path(current_user, @calendar, staff_id: task.staff.id, task_id: task.id), class:"btn btn-outline-primary load_btn"  %>
             <%= link_to "キャンセル", user_calendar_user_task_path(current_user, @calendar, task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
           </td>
-          <td><%= task.created_at %></td>
+          <td><%= l(task.created_at, format: :long) %></td>
         </tr>
       <% end %>
     </tbody>

@@ -2,8 +2,12 @@ class User::UserTasksController < User::Base
   before_action :calendar
 
   def index
-    @calendar = Calendar.find_by(public_uid: params[:calendar_id])
-    @q = Task.with_store_member.ransack(params[:q])
+    if params[:except_past_task]
+      @q = Task.by_calendar(@calendar).expect_past.ransack(params[:q])
+    else
+      @q = Task.by_calendar(@calendar).ransack(params[:q])
+    end
+    @q.sorts = 'start_time desc'
     @tasks = @q.result(distinct: true).page(params[:page]).per(10)
   end
 
