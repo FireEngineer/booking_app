@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <%= link_to @calendar.calendar_name, calendar_tasks_path(@calendar), class:"navbar-brand" %>
   <% if @calendar.phone %>
-    <i class="fas fa-phone-square-alt"></i><p>TEL:<%= @calendar.phone %></p>
+    <i class="fas fa-phone-square-alt"></i><p>TEL:<a href="tel:<%=@calendar.phone%>"><%= @calendar.phone %></a></p>
   <% end %>
-  <% if @calendar.phone %>
+  <% unless @calendar.address.blank? %>
     <p><i class="fas fa-map-marker-alt"></i>住所:<%= @calendar.address %></p>
   <% end %>
 </nav>
