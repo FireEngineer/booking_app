@@ -1,15 +1,6 @@
 class User::UsersController < User::Base
   before_action :check_has_calendar
-  before_action :calendar
-
-  def dashboard
-    @staffs = @calendar.staffs
-    @staff = Staff.find_by(id: params[:staff_id]) || @calendar.staffs.first
-    staff_shifts = staff_shifts(@staff)
-    staff_tasks = staff_tasks(@staff)
-    @events = (staff_shifts + staff_tasks)&.to_json
-  end
-
+  
   def show
     @user = current_user
   end
