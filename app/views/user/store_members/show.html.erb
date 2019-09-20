@@ -25,31 +25,33 @@
 
 <div class="card-deck">
   <div class="card">
-    <% prev_task = @tasks.member_tasks(@store_member).prev_task %>
+    <% prev_task = @tasks.prev_task.first %>
     <div class="card-header">
       前回の予約
-      <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, prev_task), class:"btn btn-primary btn-sm", remote: :true %>
+      <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, prev_task), class:"btn btn-primary btn-sm", remote: :true if prev_task %>
     </div>
     <div class="card-body">
       <table class="table table-borderless table-sm">
-        <tbody>
-          <tr>
-            <th scope="row">時間</th>
-            <td><%= reservation_date(prev_task) %></td>
-          </tr>
-          <tr>
-            <th scope="row">コース</th>
-            <td><%= prev_task.task_course.title %></td>
-          </tr>
-          <tr>
-            <th scope="row">ご要望</th>
-            <td><%= prev_task.request %></td>
-          </tr>
-          <tr>
-            <th scope="row">メモ</th>
-            <td><%= prev_task.memo %></td>
-          </tr>
-        </tbody>
+        <% if prev_task %>
+          <tbody>
+            <tr>
+              <th scope="row">時間</th>
+              <td><%= reservation_date(prev_task) %></td>
+            </tr>
+            <tr>
+              <th scope="row">コース</th>
+              <td><%= prev_task.task_course.title %></td>
+            </tr>
+            <tr>
+              <th scope="row">ご要望</th>
+              <td><%= prev_task.request %></td>
+            </tr>
+            <tr>
+              <th scope="row">メモ</th>
+              <td><%= prev_task.memo %></td>
+            </tr>
+          </tbody>
+        <% end %>
       </table>
     </div>
   </div>
@@ -78,7 +80,7 @@
             </tr>
             <tr>
               <th scope="row">
-                <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, prev_task), class:"btn btn-primary btn-sm", remote: :true %>
+                <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, task), class:"btn btn-primary btn-sm", remote: :true if task %>
               </th>
             </tr>
           </tbody>
@@ -87,31 +89,33 @@
     </div>
   </div>
   <div class="card">
-    <% next_task = @tasks.member_tasks(@store_member).next_task %>
+    <% next_task = @tasks.next_task.first %>
     <div class="card-header">
       次回の予約
-      <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, next_task), class:"btn btn-primary btn-sm", remote: :true %>
+      <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, next_task), class:"btn btn-primary btn-sm", remote: :true if next_task %>
     </div>
     <div class="card-body">
       <table class="table table-borderless table-sm">
-        <tbody>
-          <tr>
-            <th scope="row">時間</th>
-            <td><%= reservation_date(next_task) %></td>
-          </tr>
-          <tr>
-            <th scope="row">コース</th>
-            <td><%= next_task.task_course.title %></td>
-          </tr>
-          <tr>
-            <th scope="row">ご要望</th>
-            <td><%= next_task.request %></td>
-          </tr>
-          <tr>
-            <th scope="row">メモ</th>
-            <td><%= next_task.memo %></td>
-          </tr>
-        </tbody>
+        <% if next_task %>
+          <tbody>
+            <tr>
+              <th scope="row">時間</th>
+              <td><%= reservation_date(next_task) %></td>
+            </tr>
+            <tr>
+              <th scope="row">コース</th>
+              <td><%= next_task.task_course.title %></td>
+            </tr>
+            <tr>
+              <th scope="row">ご要望</th>
+              <td><%= next_task.request %></td>
+            </tr>
+            <tr>
+              <th scope="row">メモ</th>
+              <td><%= next_task.memo %></td>
+            </tr>
+          </tbody>
+        <% end %>
       </table>
     </div>
   </div>

@@ -13,4 +13,6 @@ class User::StoreMembersController < User::Base
   def store_member_task_show
     @task = Task.find(params[:id])
   end
+
+  
 end
