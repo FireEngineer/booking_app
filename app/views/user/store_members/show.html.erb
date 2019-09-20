@@ -1,23 +1,42 @@
 <h1>会員詳細<<small><%= @store_member.name %>様</small>></h1>
 
 <div class="card text-white bg-info mb-3">
-  <%# <div class="card-header">
-    Quote
-  </div> %>
-  <div class="card-body">
-    <blockquote class="blockquote mb-0">
-      <table class="table table-borderless table-sm">
-        <tbody>
-          <tr>
-            <th scope="row">電話番号</th>
-            <td><%= @store_member.phone %></td>
-          </tr>
-          <tr>
-            <th scope="row">email</th>
-            <td><%= @store_member.email %></td>
-          </tr>
-        </tbody>
-      </table>
+  <a class="display_open_btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+  <div class="card-header">
+    会員情報<i class="fas fa-info-circle"></i>
+  </div>
+  </a>
+  <div class="card-body collapse" id="collapseExample">
+    <blockquote class="blockquote mb-0 member_edit_form">
+      <%= form_for @store_member, url: calendar_store_member_path(@calendar, @store_member) do |f| %>
+        <table class="table table-borderless table-sm">
+          <tbody>
+            <tr>
+              <th scope="row">電話番号</th>
+              <td><%= @store_member.phone %></td>
+            </tr>
+            <tr>
+              <th scope="row">email</th>
+              <td><%= @store_member.email %></td>
+            </tr>
+            <tr>
+              <th scope="row">メモ</th>
+              <td>
+                <p class="disabled_form"><%= @store_member.memo %></p>
+                <P class="display_none">
+                  <%= f.text_area :memo, class: "form-control form_style display_none" %>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+        <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
+      <% end %>
       <%# <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer> %>
     </blockquote>
   </div>
@@ -144,3 +163,13 @@
   </tbody>
 </table>
 <div id="member_task_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+
+<script>
+  // ボタンを押して、編集が可能になる
+  $('#start_edit_btn').on('click', function() {
+    $('.member_edit_form').find(".disabled_form").css("display","none")
+    $('.member_edit_form').find(".display_none").removeClass("display_none");
+    $(this).remove();
+  });
+</script>
