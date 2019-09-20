@@ -33,6 +33,7 @@ class User::UserTasksController < User::Base
     task.end_time = end_time(task.start_time.to_s, task_course)
     task.calendar = @calendar
     if @store_member.save
+      LineBot.new.push_message(task, @store_member.line_user_id) if @store_member.line_user_id
       flash[:success] = '予約を作成しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
     else
@@ -50,6 +51,10 @@ class User::UserTasksController < User::Base
     @task.attributes = task_params
     task_course = @task.task_course
     if @task.save
+      if params[:is_send_notice_to_member] == "1" && @task.start_time > Time.current
+        LineBot.new.push_message_with_edit_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
+        NotificationMailer.send_edit_task_to_user(@task, @calendar.user, @calendar).deliver
+      end
       flash[:success] = '予約を更新しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id, task_id: @task.id)
     else

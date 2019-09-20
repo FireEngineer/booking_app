@@ -19,8 +19,8 @@ class Task < ApplicationRecord
   scope :prev_task, -> { order(start_time: "DESC").where("start_time < ?", Time.current.beginning_of_day).first }
   scope :next_task, -> { order(:start_time).where("start_time > ?", Time.current.end_of_day).first }
 
-  after_save :sync_create, :mail_send
-  after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
+  after_create :sync_create, :mail_send
+  # after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
   after_destroy :sybc_delete, :line_send_with_delete_task, :mail_send_with_delete_task
   
 

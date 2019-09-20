@@ -82,7 +82,12 @@
                     </p>
                   </td>
                 </tr>
-              
+                <tr class="display_none">
+                  <th scope="row">お客様に通知する場合はチェックを入れてください</th>
+                  <td>
+                      <%= check_box_tag :is_send_notice_to_member %>
+                  </td>
+                </tr>
             </tbody>
           </table>
       </div><!-- /.modal-body -->
@@ -90,7 +95,7 @@
         <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
         <%= link_to "キャンセル", user_calendar_user_task_path(current_user, task.calendar, task), method: :delete, class:"btn btn-outline-danger btn-sm display_none", data: {confirm: "キャンセルを行うとお客様に通知が行きます。"} %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >閉じる</button>
-        <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新すると、お客様に通知が行きます。"} %>
+        <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
       </div><!-- /.modal-footer -->
       <% end %>
     </div><!-- /.modal-content -->
