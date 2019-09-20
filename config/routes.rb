@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     end
     resources :calendars, only: [] do
       resources :store_members
+      get "store_member_task_show/:id", to:"store_members#store_member_task_show", as: "store_member_task_show"
       resources :iregular_holidays
       resources :staffs, only: [] do
         resources :staff_shifts

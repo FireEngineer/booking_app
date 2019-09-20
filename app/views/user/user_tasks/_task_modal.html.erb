@@ -11,7 +11,6 @@
       <div class="modal-body">
         <% member = task.store_member %>
           <table class="table table-sm">
-            <caption>詳細情報</caption>
             <tbody>
               <%= fields_for member do |f| %>
                 <tr>
@@ -71,6 +70,15 @@
                     <p class="disabled_form"><%= task.staff.name %></p>
                     <P class="display_none">
                       <%= f.collection_select :staff_id, task.calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style display_none", required: "required" %>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">メモ</th>
+                  <td>
+                    <p class="disabled_form"><%= task.memo %></p>
+                    <P class="display_none">
+                      <%= f.text_area :memo, class: "form-control form_style display_none" %>
                     </p>
                   </td>
                 </tr>

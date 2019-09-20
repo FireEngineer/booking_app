@@ -76,8 +76,11 @@ class Task < ApplicationRecord
   end
 
   # 予約時間が現時刻より先かどうか
+  # 過去の予約時間の変更はできない、それ以外は許可
   def check_after_timenow
-    errors.add(:start_time, '現時刻より前の予定は作成できません。') if start_time < Time.current
+    if start_time < Time.current && (start_time_changed? || end_time_changed?)
+      errors.add(:start_time, '現時刻より前の予定は作成できません。')
+    end
   end
 
   # 休みの日かどうか
