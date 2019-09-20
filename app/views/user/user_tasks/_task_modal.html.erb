@@ -16,7 +16,7 @@
               <%= fields_for member do |f| %>
                 <tr>
                   <th scope="row">名前</th>
-                  <td><%= member.name %>  <%= link_to "次回予約をする", user_calendar_dashboard_path(current_user, task.calendar, staff_id: task.staff_id, store_member_id: task.store_member.id)%></td>
+                  <td><%= link_to member.name, calendar_store_member_path(member.calendar, member), class:"btn btn-info btn-sm" %>  <%= link_to "次回予約をする", user_calendar_dashboard_path(current_user, task.calendar, staff_id: task.staff_id, store_member_id: task.store_member.id)%></td>
                 </tr>
                 <tr>
                   <th scope="row">メールアドレス</th>
