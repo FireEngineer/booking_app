@@ -13,7 +13,11 @@ class Task < ApplicationRecord
   belongs_to :calendar
   belongs_to :staff, optional: true
 
+  scope :member_tasks, -> (store_member) { where(store_member_id: store_member.id) }
   scope :expect_past, -> { where("start_time >= ?", Time.current) }
+  scope :today_tasks, -> { where("start_time >= ? && start_time <= ?", Time.current.beginning_of_day, Time.current.end_of_day) }
+  scope :prev_task, -> { order(start_time: "DESC").where("start_time < ?", Time.current.beginning_of_day).first }
+  scope :next_task, -> { order(:start_time).where("start_time > ?", Time.current.end_of_day).first }
 
   after_save :sync_create, :mail_send
   after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task

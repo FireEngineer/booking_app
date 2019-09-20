@@ -1,4 +1,98 @@
-<h1>会員詳細</h1>
+<h1>会員詳細<small><%= @store_member.name %>様</small></h1>
+
+<div class="card text-white bg-info mb-3">
+  <%# <div class="card-header">
+    Quote
+  </div> %>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+      <table class="table table-borderless table-sm">
+        <tbody>
+          <tr>
+            <th scope="row">電話番号</th>
+            <td><%= @store_member.phone %></td>
+          </tr>
+          <tr>
+            <th scope="row">email</th>
+            <td><%= @store_member.email %></td>
+          </tr>
+        </tbody>
+      </table>
+      <%# <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer> %>
+    </blockquote>
+  </div>
+</div>
+
+<div class="card-deck">
+  <div class="card">
+    <% prev_task = @tasks.member_tasks(@store_member).prev_task %>
+    <div class="card-header">前回の予約</div>
+    <div class="card-body">
+      <table class="table table-borderless table-sm">
+        <tbody>
+          <tr>
+            <th scope="row">時間</th>
+            <td><%= reservation_date(prev_task) %></td>
+          </tr>
+          <tr>
+            <th scope="row">コース</th>
+            <td><%= prev_task.task_course.title %></td>
+          </tr>
+          <tr>
+            <th scope="row">ご要望</th>
+            <td><%= prev_task.request %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card border-info">
+    <% today_tasks = @tasks.member_tasks(@store_member).today_tasks %>
+    <div class="card-header text-info">本日の予約 : <%= today_tasks.size %>件</div>
+    <div class="card-body text-info">
+      <table class="table table-borderless table-sm">
+        <% today_tasks.each do |task| %>
+          <tbody>
+            <tr>
+              <th scope="row">時間</th>
+              <td><%= reservation_date(task) %></td>
+            </tr>
+            <tr>
+              <th scope="row">コース</th>
+              <td><%= task.task_course.title %></td>
+            </tr>
+            <tr>
+              <th scope="row">ご要望</th>
+              <td><%= task.request %></td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <% next_task = @tasks.member_tasks(@store_member).next_task %>
+    <div class="card-header">次回の予約</div>
+    <div class="card-body">
+      <table class="table table-borderless table-sm">
+        <tbody>
+          <tr>
+            <th scope="row">時間</th>
+            <td><%= reservation_date(next_task) %></td>
+          </tr>
+          <tr>
+            <th scope="row">コース</th>
+            <td><%= next_task.task_course.title %></td>
+          </tr>
+          <tr>
+            <th scope="row">ご要望</th>
+            <td><%= next_task.request %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <table class="table table-hover">
   <thead>

@@ -7,6 +7,6 @@ class User::StoreMembersController < User::Base
 
   def show
     @store_member = StoreMember.find(params[:id])
-    @tasks = @store_member.tasks
+    @tasks = @store_member.tasks.order(start_time: "desc")
   end
 end
