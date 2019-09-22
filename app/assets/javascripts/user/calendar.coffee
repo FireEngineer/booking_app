@@ -55,7 +55,27 @@ $(document).on 'turbolinks:load', ->
                 console.log(data);
                 return
               else
+                debugger
                 alert(data["responseText"])
+                console.log(data["responseText"]);
+                console.log(data);
+                revertFunc()
+                return
+            )
+          return
+      else if event.classNames == "sub_task"
+        if !confirm('休憩時間を変更しますか？')
+          revertFunc()
+          return
+        else
+          $.get("sub_tasks/#{event.id}/update_by_drop?start_time=#{event.start.format()}&end_time=#{event.end.format()}").always((data, textStatus, jqXHR) ->
+              if data["responseText"] == "success"
+              # 成功の場合の処理
+                console.log("成功");
+                console.log(data);
+                return
+              else
+                alert(data)
                 console.log(data["responseText"]);
                 console.log(data);
                 revertFunc()

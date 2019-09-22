@@ -29,6 +29,15 @@ class User::SubTasksController < User::Base
     end
   end
 
+  def update_by_drop
+    @task = Task.find_by(id: params[:id])
+    if @task.update(start_time: params[:start_time], end_time: params[:end_time])
+      render json: 'success'
+    else
+      render json: @task.errors.full_messages
+    end
+  end
+
   private
     def params_sub_task
       params.require(:task).permit(:name, :start_time, :end_time, :memo, :staff_id)
