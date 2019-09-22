@@ -1,0 +1,2 @@
+$("#user_task_modal").html("<%= escape_javascript(render 'sub_task_modal', task: @task, calendar: @calendar ) %>")
+$("#user_task_modal").modal("show")

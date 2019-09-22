@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_20_044456) do
+ActiveRecord::Schema.define(version: 2019_09_22_075628) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 2019_09_20_044456) do
     t.bigint "task_course_id"
     t.bigint "staff_id"
     t.text "memo"
+    t.boolean "is_sub"
     t.index ["calendar_id"], name: "index_tasks_on_calendar_id"
     t.index ["staff_id"], name: "index_tasks_on_staff_id"
     t.index ["store_member_id"], name: "index_tasks_on_store_member_id"

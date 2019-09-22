@@ -22,7 +22,9 @@ $(document).on 'turbolinks:load', ->
       if eventObj.classNames[0] == "staff_rest"
         console.log("staff_rest");
         $.get("staff_rest_times/#{eventObj.classNames[1]}/edit");
-      else 
+      else if eventObj.classNames == "sub_task"
+        $.get("sub_tasks/#{eventObj.id}/edit");
+      else
         $.get("user_tasks/#{eventObj.id}");
     ,
     plugins: [ 'timeGrid' ],

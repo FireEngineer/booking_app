@@ -1,8 +1,5 @@
 class Task < ApplicationRecord
   acts_as_paranoid
-  # validates :title, :content, :due_at, presence: true
-  # validates :start_time, uniqueness: true
-  validate :check_time_original
   validate :check_include_work_time
   validate :start_end_check
   validate :check_after_timenow
@@ -19,7 +16,7 @@ class Task < ApplicationRecord
   scope :prev_task, -> { where("start_time < ?", Time.current.beginning_of_day) }
   scope :next_task, -> { where("start_time > ?", Time.current.end_of_day) }
 
-  after_create :sync_create, :mail_send
+  # after_create :sync_create, :mail_send
   # after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
   after_destroy :sybc_delete, :line_send_with_delete_task, :mail_send_with_delete_task
   

@@ -2,7 +2,16 @@ module CalendarTaskToJsonOutputer
 
     def calendar_tasks(calendar)
         calendar.tasks.map do |task|
-            if task.end_time < Time.current
+            if task.is_sub?
+                {
+                    title: "仮予約",
+                    start: I18n.l(task.start_time, format: :to_work_json),
+                    end: I18n.l(task.end_time, format: :to_work_json),
+                    id: task.id,
+                    classNames: 'sub_task',
+                    backgroundColor: '#FF9800'
+                }
+            elsif task.end_time < Time.current
                 {
                     title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{task.staff.name}",
                     start: I18n.l(task.start_time, format: :to_work_json),

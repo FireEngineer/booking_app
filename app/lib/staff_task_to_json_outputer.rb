@@ -60,7 +60,16 @@ module StaffTaskToJsonOutputer
 
     def staff_tasks(staff, search_id)
         staff.tasks.map do |task|
-            if search_id && task.id == search_id.to_i
+            if task.is_sub?
+              {
+                  title: "仮予約",
+                  start: I18n.l(task.start_time, format: :to_work_json),
+                  end: I18n.l(task.end_time, format: :to_work_json),
+                  id: task.id,
+                  classNames: 'sub_task',
+                  backgroundColor: '#FF9800'
+              }
+            elsif search_id && task.id == search_id.to_i
               {
                 title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{staff.name}",
                 start: I18n.l(task.start_time, format: :to_work_json),

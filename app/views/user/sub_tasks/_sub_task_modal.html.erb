@@ -1,6 +1,15 @@
-<%= form_for store_member, url: user_calendar_sub_tasks_path(current_user, calendar), method: :post do |f| %>
-    <%= render 'layouts/error_messages', model: f.object %>
-    <%= fields_for :task do |task| %>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">新規予約フォーム</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div><!-- /.modal-header -->
+      <div class="modal-body">
+
+<%= form_for task, url: user_calendar_sub_task_path(current_user, calendar, task), method: :patch do |task| %>
+    <%= render 'layouts/error_messages', model: task.object %>
         <div class="form-group">
             <label for="exampleInputPassword1">日時</label><span class="badge badge-danger">必須</span>
             <%#= task.text_field :time, value: "#{l(@task.start_time, format: :long)}~",  class: "form-control form_style", readonly: true %>
@@ -33,9 +42,16 @@
             <label for="exampleInputPassword1">担当者</label><span class="badge badge-danger">必須</span>
             <%= task.collection_select :staff_id, @calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style", required: "required" %>
         </div>
-    <% end %>
-    <%= f.submit "予約する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"仮予約を作成しますか？"} %>
+    
+    <%= task.submit "更新する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"更新しますか？"} %>
 <% end %>
+
+</div><!-- /.modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >閉じる</button>
+      </div><!-- /.modal-footer -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
 
 
 <script>
