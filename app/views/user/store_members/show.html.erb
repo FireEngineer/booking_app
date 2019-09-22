@@ -3,38 +3,34 @@
 <div class="card border-primary mb-3">
   <a class="display_open_btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
     <div class="card-header">
-      会員情報(開/閉<i class="fas fa-angle-double-down"></i>)
+      会員情報(<i class="fas fa-angle-double-down"></i>)
     </div>
   </a>
   <div class="card-body collapse" id="collapseExample">
     <blockquote class="blockquote mb-0 member_edit_form">
       <%= form_for @store_member, url: calendar_store_member_path(@calendar, @store_member) do |f| %>
-        <table class="table table-borderless table-sm">
-          <tbody>
-            <tr>
-              <th scope="row">電話番号</th>
-              <td><%= @store_member.phone %></td>
-            </tr>
-            <tr>
-              <th scope="row">email</th>
-              <td><%= @store_member.email %></td>
-            </tr>
-            <tr>
-              <th scope="row">メモ</th>
-              <td>
-                <p class="disabled_form"><%= @store_member.memo %></p>
-                <P class="display_none">
-                  <%= f.text_area :memo, class: "form-control form_style display_none" %>
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
-              </th>
-            </tr>
-          </tbody>
-        </table>
+          <table class="table table-borderless table-sm">
+            <tbody>
+              <tr>
+                <th class="col-xs-2"><i class="fas fa-phone-square fa-2x"></i></th>
+                <td class="col-xs-10"><%= @store_member.phone %></td>
+              </tr>
+              <tr>
+                <th class="col-xs-2"><i class="far fa-envelope fa-2x"></i></th>
+                <td class="col-xs-10"><%= @store_member.email %></td>
+              </tr>
+              <tr>
+                <th class="col-xs-2">メモ</th>
+                <td class="col-xs-10">
+                  <p class="disabled_form"><%= @store_member.memo %></p>
+                  <P class="display_none">
+                    <%= f.text_area :memo, class: "form-control form_style display_none memo_text_area" %>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
         <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
       <% end %>
     </blockquote>
@@ -46,7 +42,7 @@
     <% prev_task = @tasks.prev_task.first %>
     <a class="display_open_btn" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
       <div class="card-header">
-        前回の予約
+        前回の予約(<i class="fas fa-angle-double-down"></i>)
       </div>
     </a>
     <div class="card-body collapse" id="collapseExample2">
@@ -77,7 +73,7 @@
   <div class="card border-info">
     <% today_tasks = @tasks.member_tasks(@store_member).today_tasks %>
     <a class="display_open_btn" data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
-      <div class="card-header">本日の予約 : <%= today_tasks.size %>件</div>
+      <div class="card-header">本日の予約 : <%= today_tasks.size %>件 (<i class="fas fa-angle-double-down"></i>)</div>
     </a>
     <div class="card-body text-info collapse" id="collapseExample3">
       <table class="table table-borderless table-sm">
@@ -97,7 +93,7 @@
             </tr>
             <tr>
               <th scope="row">メモ</th>
-              <td><%= task.memo %></td>
+              <td><%= simple_format(task.memo) %></td>
             </tr>
           </tbody>
         <% end %>
@@ -108,7 +104,7 @@
     <% next_task = @tasks.next_task.first %>
     <a class="display_open_btn" data-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample">
       <div class="card-header">
-        次回の予約
+        次回の予約(<i class="fas fa-angle-double-down"></i>)
       </div>
     </a>
     <div class="card-body collapse" id="collapseExample4">
