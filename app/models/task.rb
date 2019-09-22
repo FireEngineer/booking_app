@@ -8,8 +8,8 @@ class Task < ApplicationRecord
   validate :check_after_timenow
   validate :check_calendar_holiday
 
-  belongs_to :task_course
-  belongs_to :store_member
+  belongs_to :task_course, optional: true
+  belongs_to :store_member, optional: true
   belongs_to :calendar
   belongs_to :staff, optional: true
 
