@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-dark bg-primary fixed-top">
-  <%= image_tag 'favicon.png', :size =>'40x40'%>
+  <%= link_to user_calendar_dashboard_path(current_user, @calendar) do %>
+    <%= image_tag 'favicon.png', :size =>'40x40'%>
+  <% end %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

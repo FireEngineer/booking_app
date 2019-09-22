@@ -2,6 +2,12 @@
   <table class="table table-sm" id="<%= task.id %>_task">
     <tbody>
       <tr>
+        <th scope="row">
+          <%= link_to "カレンダーへ", user_calendar_dashboard_path(current_user, calendar, staff_id: task.staff.id, task_id: task.id), class:"btn btn-outline-primary load_btn btn-sm"  %>
+        </th>
+        <td></td>
+      </tr>
+      <tr>
         <th scope="row">時間</th>
         <td><%= reservation_date(task) %></td>
       </tr>
@@ -27,8 +33,8 @@
           <button type="button" class="btn btn-success" id="<%= task.id %>_start_edit_member_task_btn">編集する</button>
           <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
         </th>
+        <td></td>
       </tr>
-      <td></td>
     </tbody>
   </table>
 <% end %>
