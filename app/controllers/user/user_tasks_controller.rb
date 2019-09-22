@@ -93,6 +93,6 @@ class User::UserTasksController < User::Base
   end
 
   def task_params
-    params.require(:task).permit(:start_time, :end_time, :staff_id, :task_course_id, :memo)
+    params.require(:task).permit(:start_time, :end_time, :staff_id, :task_course_id, :memo, :request)
   end
 end

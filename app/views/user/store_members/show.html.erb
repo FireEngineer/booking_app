@@ -1,139 +1,47 @@
 <h1>会員詳細<<small><%= @store_member.name %>様</small>></h1>
 
-<div class="card border-primary mb-3">
-  <a class="display_open_btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    <div class="card-header">
-      会員情報(<i class="fas fa-angle-double-down"></i>)
-    </div>
-  </a>
-  <div class="card-body collapse" id="collapseExample">
-    <blockquote class="blockquote mb-0 member_edit_form">
-      <%= form_for @store_member, url: calendar_store_member_path(@calendar, @store_member) do |f| %>
-          <table class="table table-sm">
-            <tbody>
-              <tr>
-                <th class="col-xs-2"><i class="fas fa-phone-square fa-2x"></i></th>
-                <td class="col-xs-10">
-                  <a href="tel:<%= @store_member.phone %>"><%= @store_member.phone %></a>
-                </td>
-              </tr>
-              <tr>
-                <th class="col-xs-2"><i class="far fa-envelope fa-2x"></i></th>
-                <td class="col-xs-10">
-                  <a href="mailto:<%= @store_member.email %>"><%= @store_member.email %></a>
-                </td>
-              </tr>
-              <tr>
-                <th class="col-xs-2">メモ</th>
-                <td class="col-xs-10">
-                  <p class="disabled_form"><%= simple_format(@store_member.memo) %></p>
-                  <P class="display_none">
-                    <%= f.text_area :memo, class: "form-control form_style display_none memo_text_area" %>
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
-        <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
-      <% end %>
-    </blockquote>
-  </div>
-</div>
+<%= render 'member_info', calendar: @calendar, store_member: @store_member %>
 
-
+  <%# 前回の予約 %>
   <div class="card">
-    <% prev_task = @tasks.prev_task.first %>
+    <% task = @tasks.prev_task.first %>
     <a class="display_open_btn" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
       <div class="card-header">
         前回の予約(<i class="fas fa-angle-double-down"></i>)
       </div>
     </a>
     <div class="card-body collapse" id="collapseExample2">
-      <table class="table table-sm">
-        <% if prev_task %>
-          <tbody>
-            <tr>
-              <th scope="row">時間</th>
-              <td><%= reservation_date(prev_task) %></td>
-            </tr>
-            <tr>
-              <th scope="row">コース</th>
-              <td><%= prev_task.task_course.title %></td>
-            </tr>
-            <tr>
-              <th scope="row">ご要望</th>
-              <td><%= prev_task.request %></td>
-            </tr>
-            <tr>
-              <th scope="row">メモ</th>
-              <td><%= simple_format(prev_task.memo) %></td>
-            </tr>
-          </tbody>
-        <% end %>
-      </table>
+      <% if task %>
+        <%= render 'member_task_detail', task: task, calendar: @calendar %>
+      <% end %>
     </div>
   </div>
+
+  <%# 今日の予約 %>
   <div class="card border-info">
-    <% today_tasks = @tasks.member_tasks(@store_member).today_tasks %>
+    <% tasks = @tasks.member_tasks(@store_member).today_tasks %>
     <a class="display_open_btn" data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
-      <div class="card-header">本日の予約 : <%= today_tasks.size %>件 (<i class="fas fa-angle-double-down"></i>)</div>
+      <div class="card-header">本日の予約 : <%= tasks.size %>件 (<i class="fas fa-angle-double-down"></i>)</div>
     </a>
     <div class="card-body text-info collapse" id="collapseExample3">
-      <table class="table table-sm">
-        <% today_tasks.each do |task| %>
-          <tbody>
-            <tr>
-              <th scope="row">時間</th>
-              <td><%= reservation_date(task) %></td>
-            </tr>
-            <tr>
-              <th scope="row">コース</th>
-              <td><%= task.task_course.title %></td>
-            </tr>
-            <tr>
-              <th scope="row">ご要望</th>
-              <td><%= task.request %></td>
-            </tr>
-            <tr>
-              <th scope="row">メモ</th>
-              <td><%= simple_format(task.memo) %></td>
-            </tr>
-          </tbody>
-        <% end %>
-      </table>
+      <% tasks.each do |task| %>
+        <%= render 'member_task_detail', task: task, calendar: @calendar %>
+      <% end %>
     </div>
   </div>
+
+  <%# 次の予約 %>
   <div class="card">
-    <% next_task = @tasks.next_task.first %>
+    <% task = @tasks.next_task.first %>
     <a class="display_open_btn" data-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample">
       <div class="card-header">
         次回の予約(<i class="fas fa-angle-double-down"></i>)
       </div>
     </a>
     <div class="card-body collapse" id="collapseExample4">
-      <table class="table table-sm">
-        <% if next_task %>
-          <tbody>
-            <tr>
-              <th scope="row">時間</th>
-              <td><%= reservation_date(next_task) %></td>
-            </tr>
-            <tr>
-              <th scope="row">コース</th>
-              <td><%= next_task.task_course.title %></td>
-            </tr>
-            <tr>
-              <th scope="row">ご要望</th>
-              <td><%= next_task.request %></td>
-            </tr>
-            <tr>
-              <th scope="row">メモ</th>
-              <td><%= simple_format(next_task.memo) %></td>
-            </tr>
-          </tbody>
-        <% end %>
-      </table>
+      <% if task %>
+        <%= render 'member_task_detail', task: task, calendar: @calendar %>
+      <% end %>
     </div>
   </div>
 

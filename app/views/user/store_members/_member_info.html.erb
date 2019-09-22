@@ -1,0 +1,40 @@
+<div class="card border-primary mb-3">
+  <a class="display_open_btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    <div class="card-header">
+      会員情報(<i class="fas fa-angle-double-down"></i>)
+    </div>
+  </a>
+  <div class="card-body collapse" id="collapseExample">
+    <blockquote class="blockquote mb-0 member_edit_form">
+      <%= form_for store_member, url: calendar_store_member_path(calendar, store_member) do |f| %>
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <th class="col-xs-2"><i class="fas fa-phone-square fa-2x"></i></th>
+                <td class="col-xs-10">
+                  <a href="tel:<%= store_member.phone %>"><%= store_member.phone %></a>
+                </td>
+              </tr>
+              <tr>
+                <th class="col-xs-2"><i class="far fa-envelope fa-2x"></i></th>
+                <td class="col-xs-10">
+                  <a href="mailto:<%= store_member.email %>"><%= store_member.email %></a>
+                </td>
+              </tr>
+              <tr>
+                <th class="col-xs-2">メモ</th>
+                <td class="col-xs-10">
+                  <%= simple_format(store_member.memo, class: 'disabled_form') %>
+                  <P class="display_none">
+                    <%= f.text_area :memo, class: "form-control form_style display_none memo_text_area" %>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
+        <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
+      <% end %>
+    </blockquote>
+  </div>
+</div>

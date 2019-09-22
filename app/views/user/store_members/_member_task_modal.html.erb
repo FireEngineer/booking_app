@@ -25,7 +25,7 @@
             <tr>
               <th scope="row">メモ</th>
               <td>
-                <p class="disabled_form"><%= simple_format(task.memo) %></p>
+                <%= simple_format(task.memo, class: 'disabled_form') %>
                 <P class="display_none">
                   <%= f.text_area :memo, class: "form-control form_style display_none memo_text_area" %>
                 </p>

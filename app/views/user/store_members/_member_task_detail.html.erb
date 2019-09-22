@@ -1,0 +1,43 @@
+<%= form_for task, url: calendar_member_update_task_path(calendar, task) do |f| %>
+  <table class="table table-sm" id="<%= task.id %>_task">
+    <tbody>
+      <tr>
+        <th scope="row">時間</th>
+        <td><%= reservation_date(task) %></td>
+      </tr>
+      <tr>
+        <th scope="row">コース</th>
+        <td><%= task.task_course.title %></td>
+      </tr>
+      <tr>
+        <th scope="row">ご要望</th>
+        <td><%= task.request %></td>
+      </tr>
+      <tr>
+        <th scope="row">メモ</th>
+        <td>
+          <%= simple_format(task.memo, class: 'disabled_form') %>
+          <P class="display_none">
+            <%= f.text_area :memo, class: "form-control form_style display_none memo_text_area" %>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <button type="button" class="btn btn-success" id="<%= task.id %>_start_edit_member_task_btn">編集する</button>
+          <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
+        </th>
+      </tr>
+      <td></td>
+    </tbody>
+  </table>
+<% end %>
+
+<script>
+  // ボタンを押して、編集が可能になる
+  $('#<%= task.id %>_start_edit_member_task_btn').on('click', function() {
+    $('#<%= task.id %>_task').find(".disabled_form").css("display","none")
+    $('#<%= task.id %>_task').find(".display_none").removeClass("display_none");
+    $(this).remove();
+  });
+</script>

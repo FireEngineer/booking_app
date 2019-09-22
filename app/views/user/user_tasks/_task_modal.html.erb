@@ -74,9 +74,18 @@
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">ご要望</th>
+                  <td>
+                    <%= simple_format(task.request, class: 'disabled_form') %>
+                    <P class="display_none">
+                      <%= f.text_area :request, class: "form-control form_style display_none" %>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
                   <th scope="row">メモ</th>
                   <td>
-                    <p class="disabled_form"><%= task.memo %></p>
+                    <%= simple_format(task.memo, class: 'disabled_form') %>
                     <P class="display_none">
                       <%= f.text_area :memo, class: "form-control form_style display_none" %>
                     </p>
@@ -101,40 +110,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 
-
-  <div id="sidebar">
-    <head>
-        <nav class="navbar navbar-light bg-light">
-        <span class="navbar-brand mb-0 h1">Bootstrap</span>
-        </nav>
-    </head>
-</div>
-
-
-
-<script>
-    $('#sidebar').simpleSidebar({
-        opener: '#button',
-        wrapper: '#wrapper',
-        sidebar: {
-            align: 'right', //or 'left' - This option can be ignored, the sidebar will authomatically align to right.
-            width: 200, //You can ingnore this option, the sidebar will authomatically size itselt to 300px.
-            closingLinks: '.close-sidebar', // If you ignore this option, the plugin will lool for all links and can be buggy. Choose a class for every object inside the sidebar that once clicked will close the sidebar.
-            css: {
-                //Here you can add more css rules but you should use your own stylesheet.
-                zIndex: 10000,
-                background: "white", //Choose the amount of zIndex you want. It must be the higher zIndex number.
-            }
-        },
-        mask: {                             //コンテンツにかかるマスクの設定
-        style: {
-            backgroundColor: "red",    //カラー
-            opacity: 0.9,               //透明度
-            filter: 'Alpha(opacity=90)'
-        }
-    }
-    });
-</script>
 <script>
   // ボタンを押して、編集が可能になる
   $('#start_edit_btn').on('click', function() {
