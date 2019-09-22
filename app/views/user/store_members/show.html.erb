@@ -1,10 +1,10 @@
 <h1>会員詳細<<small><%= @store_member.name %>様</small>></h1>
 
-<div class="card text-white bg-info mb-3">
+<div class="card border-primary mb-3">
   <a class="display_open_btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-  <div class="card-header">
-    会員情報(開/閉<i class="fas fa-angle-double-down"></i>)
-  </div>
+    <div class="card-header">
+      会員情報(開/閉<i class="fas fa-angle-double-down"></i>)
+    </div>
   </a>
   <div class="card-body collapse" id="collapseExample">
     <blockquote class="blockquote mb-0 member_edit_form">
@@ -37,19 +37,19 @@
         </table>
         <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
       <% end %>
-      <%# <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer> %>
     </blockquote>
   </div>
 </div>
 
-<div class="card-deck">
+
   <div class="card">
     <% prev_task = @tasks.prev_task.first %>
-    <div class="card-header">
-      前回の予約
-      <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, prev_task), class:"btn btn-primary btn-sm", remote: :true if prev_task %>
-    </div>
-    <div class="card-body">
+    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <div class="card-header">
+        前回の予約
+      </div>
+    </a>
+    <div class="card-body collapse" id="collapseExample2">
       <table class="table table-borderless table-sm">
         <% if prev_task %>
           <tbody>
@@ -76,8 +76,10 @@
   </div>
   <div class="card border-info">
     <% today_tasks = @tasks.member_tasks(@store_member).today_tasks %>
-    <div class="card-header text-info">本日の予約 : <%= today_tasks.size %>件</div>
-    <div class="card-body text-info">
+    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <div class="card-header">本日の予約 : <%= today_tasks.size %>件</div>
+    </a>
+    <div class="card-body text-info collapse" id="collapseExample3">
       <table class="table table-borderless table-sm">
         <% today_tasks.each do |task| %>
           <tbody>
@@ -97,11 +99,6 @@
               <th scope="row">メモ</th>
               <td><%= task.memo %></td>
             </tr>
-            <tr>
-              <th scope="row">
-                <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, task), class:"btn btn-primary btn-sm", remote: :true if task %>
-              </th>
-            </tr>
           </tbody>
         <% end %>
       </table>
@@ -109,11 +106,12 @@
   </div>
   <div class="card">
     <% next_task = @tasks.next_task.first %>
-    <div class="card-header">
-      次回の予約
-      <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, next_task), class:"btn btn-primary btn-sm", remote: :true if next_task %>
-    </div>
-    <div class="card-body">
+    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <div class="card-header">
+        次回の予約
+      </div>
+    </a>
+    <div class="card-body collapse" id="collapseExample4">
       <table class="table table-borderless table-sm">
         <% if next_task %>
           <tbody>
@@ -138,14 +136,13 @@
       </table>
     </div>
   </div>
-</div>
+
 
 <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">開始時間</th>
       <th scope="col">終了時間</th>
-      <th scope="col">ご要望</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -154,7 +151,6 @@
       <tr>
         <th scope="row"><%= l(task.start_time, format: :long) %></th>
         <td><%= l(task.end_time, format: :long) %></td>
-        <td><%= task.request %></td>
         <td>
           <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, task), class:"btn btn-primary", remote: :true %>
         </td>
