@@ -9,20 +9,24 @@
   <div class="card-body collapse" id="collapseExample">
     <blockquote class="blockquote mb-0 member_edit_form">
       <%= form_for @store_member, url: calendar_store_member_path(@calendar, @store_member) do |f| %>
-          <table class="table table-borderless table-sm">
+          <table class="table table-sm">
             <tbody>
               <tr>
                 <th class="col-xs-2"><i class="fas fa-phone-square fa-2x"></i></th>
-                <td class="col-xs-10"><%= @store_member.phone %></td>
+                <td class="col-xs-10">
+                  <a href="tel:<%= @store_member.phone %>"><%= @store_member.phone %></a>
+                </td>
               </tr>
               <tr>
                 <th class="col-xs-2"><i class="far fa-envelope fa-2x"></i></th>
-                <td class="col-xs-10"><%= @store_member.email %></td>
+                <td class="col-xs-10">
+                  <a href="mailto:<%= @store_member.email %>"><%= @store_member.email %></a>
+                </td>
               </tr>
               <tr>
                 <th class="col-xs-2">メモ</th>
                 <td class="col-xs-10">
-                  <p class="disabled_form"><%= @store_member.memo %></p>
+                  <p class="disabled_form"><%= simple_format(@store_member.memo) %></p>
                   <P class="display_none">
                     <%= f.text_area :memo, class: "form-control form_style display_none memo_text_area" %>
                   </p>
@@ -46,7 +50,7 @@
       </div>
     </a>
     <div class="card-body collapse" id="collapseExample2">
-      <table class="table table-borderless table-sm">
+      <table class="table table-sm">
         <% if prev_task %>
           <tbody>
             <tr>
@@ -63,7 +67,7 @@
             </tr>
             <tr>
               <th scope="row">メモ</th>
-              <td><%= prev_task.memo %></td>
+              <td><%= simple_format(prev_task.memo) %></td>
             </tr>
           </tbody>
         <% end %>
@@ -76,7 +80,7 @@
       <div class="card-header">本日の予約 : <%= today_tasks.size %>件 (<i class="fas fa-angle-double-down"></i>)</div>
     </a>
     <div class="card-body text-info collapse" id="collapseExample3">
-      <table class="table table-borderless table-sm">
+      <table class="table table-sm">
         <% today_tasks.each do |task| %>
           <tbody>
             <tr>
@@ -108,7 +112,7 @@
       </div>
     </a>
     <div class="card-body collapse" id="collapseExample4">
-      <table class="table table-borderless table-sm">
+      <table class="table table-sm">
         <% if next_task %>
           <tbody>
             <tr>
@@ -125,7 +129,7 @@
             </tr>
             <tr>
               <th scope="row">メモ</th>
-              <td><%= next_task.memo %></td>
+              <td><%= simple_format(next_task.memo) %></td>
             </tr>
           </tbody>
         <% end %>
