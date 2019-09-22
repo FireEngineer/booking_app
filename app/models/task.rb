@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
   acts_as_paranoid
+  validate :check_time_original
   validate :check_include_work_time
   validate :start_end_check
   validate :check_after_timenow

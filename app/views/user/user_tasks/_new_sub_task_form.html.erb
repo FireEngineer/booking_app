@@ -1,3 +1,4 @@
+<% task.end_time = task.start_time.since(1.hours) %>
 <%= form_for store_member, url: user_calendar_sub_tasks_path(current_user, calendar), method: :post do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
     <%= fields_for :task do |task| %>
@@ -34,7 +35,7 @@
             <%= task.collection_select :staff_id, @calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style", required: "required" %>
         </div>
     <% end %>
-    <%= f.submit "予約する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"仮予約を作成しますか？"} %>
+    <%= f.submit "仮予約を作成する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"仮予約を作成しますか？"} %>
 <% end %>
 
 

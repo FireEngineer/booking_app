@@ -32,7 +32,6 @@
             <label for="exampleInputPassword1">担当者</label><span class="badge badge-danger">必須</span>
             <%= task.collection_select :staff_id, @calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style", required: "required" %>
         </div>
-    
     <%= task.submit "予約する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"予約を確定しますか？"} %>
 <% end %>
 

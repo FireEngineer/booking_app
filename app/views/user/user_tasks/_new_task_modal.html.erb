@@ -27,7 +27,7 @@
                   <%= render 'new_task_form', task: task, calendar: calendar, store_member: store_member %>
               </div>
               <div id="sub_task" class="tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-                  <%= render 'new_sub_task_form', calendar: calendar, store_member: store_member %>
+                  <%= render 'new_sub_task_form', task: task, calendar: calendar, store_member: store_member %>
               </div>
               <div id="staff_rest" class="tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                   <%= render 'new_staff_rest_form', calendar: calendar, staff_rest_time: staff_rest_time %>
