@@ -65,6 +65,7 @@ Rails.application.routes.draw do
         get "staff_rest_times/:id/update_by_drop", to: "staff_rest_times#update_by_drop"
         resources :sub_tasks, only: [:create, :update, :edit]
         get 'sub_tasks/:id/update_by_drop', to: 'sub_tasks#update_by_drop'
+        patch 'sub_tasks/:id/update_to_task', to: 'sub_tasks#update_to_task', as: "update_to_task"
       end
       get "calendar/:id/setting", to: "calendars#setting", as: "calendar_setting"
     end

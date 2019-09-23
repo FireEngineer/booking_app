@@ -231,3 +231,11 @@ line送信（ユーザー:今井, タスクID:7）
 2019-09-19 20:18:39 +0900
 テストrakeタスク送信
 2019-09-22 20:18:11 +0900
+rake aborted!
+NoMethodError: undefined method `line_user_id' for nil:NilClass
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:7:in `block (3 levels) in <top (required)>'
+/Users/shota6/rails/app/rails_todo/lib/tasks/task_reminder.rake:5:in `block (2 levels) in <top (required)>'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `load'
+/Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
+Tasks: TOP => task_reminder:push
+(See full trace by running task with --trace)

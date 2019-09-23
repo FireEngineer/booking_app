@@ -1,5 +1,18 @@
-<%= form_for task, url: user_calendar_sub_task_path(current_user, calendar, task), method: :patch do |task| %>
-    <%= render 'layouts/error_messages', model: task.object %>
+<%= form_for store_member, url: user_calendar_update_to_task_path(current_user, calendar, task), method: :patch do |f| %>
+    <%= render 'layouts/error_messages', model: f.object %>
+    <div class="form-group">
+        <label for="exampleInputPassword1">お名前</label><span id="msg-name"></span><span class="badge badge-danger">必須</span>
+        <%= f.text_field :name, class: "form-control form_style", id: "name", placeholder: "お名前（山田太郎）", required: "required" %>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">メールアドレス</label><span id="msg-email"></span>
+        <%= f.email_field :email, class: "form-control form_style", id: "email", placeholder: "メールアドレス(test@test.com)" %>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">電話番号</label><span id="msg-tel"></span><span class="badge badge-danger">必須</span>
+        <%= f.number_field :phone, class: "form-control form_style", id: "tel", placeholder: "電話番号(09012345678)", required: "required" %>
+    </div>
+    <%= fields_for :task do |task|  %>
         <div class="form-group">
             <label for="exampleInputPassword1">日時</label><span class="badge badge-danger">必須</span>
             <%#= task.text_field :time, value: "#{l(@task.start_time, format: :long)}~",  class: "form-control form_style", readonly: true %>
@@ -13,16 +26,8 @@
             <%#= task.hidden_field :start_time, value: @task.start_time %>
         </div>
         <div class="form-group">
-            <label for="exampleInputPassword1">日時</label><span class="badge badge-danger">必須</span>
-            <%#= task.text_field :time, value: "#{l(@task.start_time, format: :long)}~",  class: "form-control form_style", readonly: true %>
-            <%= raw sprintf(
-                    task.datetime_select(
-                        :end_time,
-                        use_month_numbers: true,
-                        )
-                )
-                %>
-            <%#= task.hidden_field :start_time, value: @task.start_time %>
+            <label for="exampleInputPassword1">ご要望</label>
+            <%= task.text_area :request, class: "form-control form_style" %>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">メモ（お客様の通知には表示されません）</label>
@@ -32,8 +37,12 @@
             <label for="exampleInputPassword1">担当者</label><span class="badge badge-danger">必須</span>
             <%= task.collection_select :staff_id, @calendar.staffs, :id, :name, {prompt: ""},  class: "form-control form_style", required: "required" %>
         </div>
-    
-    <%= task.submit "更新する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"更新しますか？"} %>
+        <div class="form-group">
+            <label for="exampleInputPassword1">コース</label><span class="badge badge-danger">必須</span>
+            <%= task.collection_select :task_course_id, @calendar.task_courses, :id, :title, {prompt: ""},  class: "form-control form_style", required: "required" %>
+        </div>
+    <% end %>
+    <%= f.submit "予約する", class:"btn btn-primary btn_style load_btn_user_booking", data:{confirm:"予約を確定しますか？"} %>
 <% end %>
 
 
