@@ -34,7 +34,7 @@ class User::UserTasksController < User::Base
     task.calendar = @calendar
     if @store_member.save
       LineBot.new.push_message(task, @store_member.line_user_id) if @store_member.line_user_id
-      NotificationMailer.send_edit_task_to_user(task, @calendar.user, @calendar).deliver if @store_member.email
+      NotificationMailer.send_confirm_to_user(task, @calendar.user, @calendar).deliver if @store_member.email
       flash[:success] = '予約を作成しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
     else
