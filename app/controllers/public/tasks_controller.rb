@@ -201,6 +201,7 @@ class Public::TasksController < Public::Base
     @task.staff = Staff.find(params[:staff_id])
     if @store_member.save
       LineBot.new.push_message(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
+      NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)
       return
@@ -240,6 +241,7 @@ class Public::TasksController < Public::Base
     if @store_member.save
       @store_member.update(line_user_id: line_user_id)
       LineBot.new.push_message(@task, line_user_id)
+      NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)
     else

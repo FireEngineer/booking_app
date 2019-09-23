@@ -51,6 +51,7 @@ class User::SubTasksController < User::Base
     task.is_sub = false
     if store_member.save && task.save
       LineBot.new.push_message(task, store_member.line_user_id) if store_member.line_user_id
+      NotificationMailer.send_confirm_to_user(task, calendar.user, calendar).deliver if store_member.email
       flash[:success] = '予約を作成しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
     else
