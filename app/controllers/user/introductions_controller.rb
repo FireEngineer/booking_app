@@ -35,6 +35,6 @@ class User::IntroductionsController < User::Base
   end
 
   def params_staff
-    params.require(:staff).permit(:name, :description, :calendar_id)
+    params.require(:staff).permit(:name, :description, :calendar_id, :email, :password, :password_confirmation)
   end
 end

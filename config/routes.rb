@@ -93,4 +93,14 @@ Rails.application.routes.draw do
   end
 # ================================================================================================================-
   # staff権限
+
+  scope module: :staff do
+    get 'line_links/line_link_staff', to: 'line_links#line_link_staff', as: "line_link_staff"
+    resources :calendars, only: [] do
+      resources :staffs do
+        post 'line_links/redirect_line', to: 'line_links#redirect_line', as: "redirect_line"
+      end
+    end
+  end
+
 end

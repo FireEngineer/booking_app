@@ -21,9 +21,19 @@
           <td>スタッフの名前です。あとで削除、編集可能です。</td>
         </tr>
         <tr>
-          <th scope="row">スタッフ紹介</th>
-          <td><%= f.text_area :description, class: "form-control" %></td>
-          <td>スタッフの自己紹介を書いてください。（空欄でも大丈夫です。）</td>
+          <th scope="row">email</th>
+          <td><%= f.text_field :email, class: "form-control", required: true %></td>
+          <td>メールアドレス</td>
+        </tr>
+        <tr>
+          <th scope="row">password</th>
+          <td><%= f.text_field :password, class: "form-control", required: true %></td>
+          <td>メールアドレス</td>
+        </tr>
+        <tr>
+          <th scope="row">password</th>
+          <td><%= f.text_field :password_confirmation, class: "form-control", required: true %></td>
+          <td>メールアドレス</td>
         </tr>
         <%= f.hidden_field :calendar_id %>
         <tr>

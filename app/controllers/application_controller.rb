@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     if current_staff
       current_staff.calendar.user
     else
-      User.find_by_id(devise_current_user.id)
+      User.find_by_id(devise_current_user.id) rescue nil
     end
   end
 

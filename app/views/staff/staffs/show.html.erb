@@ -1,0 +1,5 @@
+<h1>スタッフ詳細ページ</h1>
+
+LINE連携状況：<%= @staff.line_link %><br>
+
+<%= link_to "LINE連携", calendar_staff_redirect_line_path(@calendar, @staff), class:"btn btn-success", method: :post %>

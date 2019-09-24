@@ -239,3 +239,5 @@ NoMethodError: undefined method `line_user_id' for nil:NilClass
 /Users/shota6/.rbenv/versions/2.6.3/bin/bundle:23:in `<main>'
 Tasks: TOP => task_reminder:push
 (See full trace by running task with --trace)
+テストrakeタスク送信
+2019-09-24 20:18:37 +0900
