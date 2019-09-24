@@ -33,7 +33,7 @@ class Public::TasksController < Public::Base
     # DBタスクデータを引き出す
     @events = @staff.tasks.map { |task| [task.start_time, task.end_time] }
     # @events = SyncCalendarService.new(task,@user,@calendar).read_event
-    one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.months_since(@calendar.display_week_term)]
+    one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
   end
 
