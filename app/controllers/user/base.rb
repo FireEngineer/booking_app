@@ -1,5 +1,5 @@
 class User::Base < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   layout 'user'
 
   # def after_sign_in_path_for(resource)
@@ -27,4 +27,11 @@ class User::Base < ApplicationController
       StaffShiftsCreator.call(start_term, end_term, staff)
     end
   end
+
+  def authenticate_user_staff
+    unless current_user || current_staff
+      redirect_tonew_staff_session_url
+    end
+  end
+
 end

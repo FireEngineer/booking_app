@@ -20,6 +20,11 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
   end
+  devise_for :staffs, controllers: {
+    sessions:      'staffs/sessions',
+    passwords:     'staffs/passwords',
+    registrations: 'staffs/registrations'
+  }
   # rootページ用ルーティング
   # devise_scope :user do
   #   root :to => 'devise/sessions#new'
@@ -87,5 +92,5 @@ Rails.application.routes.draw do
 
   end
 # ================================================================================================================-
-
+  # staff権限
 end
