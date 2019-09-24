@@ -18,6 +18,7 @@ class Calendar < ApplicationRecord
   after_create :create_default_task_course
   after_create :create_calendar_config
 
+
   def to_param
     public_uid
     # public_uid: params[:id]
@@ -40,4 +41,5 @@ class Calendar < ApplicationRecord
       config.save
     end
   end
+  
 end

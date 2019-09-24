@@ -18,8 +18,13 @@ class User::CalendarsController < User::Base
   def update
     @user = current_user
     if @calendar.update(params_calendar)
+      # スタッフのシフトを作成（base.rbに記載）
+      if @calendar.saved_change_to_display_week_term?
+        create_calendar_staffs_tasks(@calendar)
+      end
       flash[:succese] = 'カレンダーの設定を更新しました。'
       redirect_to user_calendar_url(@user, @calendar)
+
     else
       render action: :index
     end
