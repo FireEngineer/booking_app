@@ -1,16 +1,6 @@
 class User::Base < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user_staff!
   layout 'user'
-
-  # def after_sign_in_path_for(resource)
-  #     if current_admin
-  #       dash_board_top_path(resource)
-  #     elsif !current_user.client_id
-  #       google_auth_ident_form_path
-  #     else
-  #       user_calendar_dashboard_path(current_user, current_user.calendars.first) # ログイン後に遷移するpathを設定
-  #     end
-  # end
 
   def calendar
     calendar_params = params[:calendar_id] || params[:id]
@@ -28,9 +18,9 @@ class User::Base < ApplicationController
     end
   end
 
-  def authenticate_user_staff
+  def authenticate_user_staff!
     unless current_user || current_staff
-      redirect_tonew_staff_session_url
+      redirect_to new_staff_session_url
     end
   end
 

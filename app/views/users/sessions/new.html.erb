@@ -1,7 +1,7 @@
 <div style="text-align:center;">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
     <%= devise_error_messages! %>
-    <h1 class="h3 mb-3 font-weight-normal">ログイン</h1>
+    <h1 class="h3 mb-3 font-weight-normal">管理者ログイン</h1>
       <%= f.label :email, "メールアドレス", class:"sr-only" %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"inputEmail", placeholder:"Emailアドレス", required:"required" %>
       <%= f.label :password, "パスワード", class:"sr-only" %>
@@ -20,7 +20,3 @@
   <% end %>
   <%= render "users/shared/links" %>
 </div>
-
-
-
-

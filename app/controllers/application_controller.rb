@@ -38,12 +38,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def new_current_user
+  def current_user
     if current_staff
       current_staff.calendar.user
     else
-      debugger
-      current_user
+      User.find_by_id(devise_current_user.id)
     end
   end
 
@@ -60,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(_resource)
-    new_user_session_path # ログアウト後に遷移するpathを設定
+    new_staff_session_path # ログアウト後に遷移するpathを設定
   end
 
   def end_time(start_time, task_course)
