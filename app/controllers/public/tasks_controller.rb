@@ -64,6 +64,7 @@ class Public::TasksController < Public::Base
       state = SecureRandom.base64(10)
       # このURLがラインログインへのURL
       url = LineAccess.redirect_url(CHANNEL_ID, redirect_uri, state)
+      debugger
       redirect_to url
     end
   end
@@ -89,7 +90,8 @@ class Public::TasksController < Public::Base
 
     # ここからが正常処理
     # アクセストークンを取得
-    get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code])
+    redirect_uri = URI.escape(task_create_url)
+    get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code], redirect_uri)
     # アクセストークンを使用して、BOTとお客との友達関係を取得
     friend_response = LineAccess.get_friend_relation(get_access_token['access_token'])
     # アクセストークンのIDトークンを"gem jwt"を利用してデコード

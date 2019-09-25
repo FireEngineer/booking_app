@@ -7,12 +7,8 @@ module LineAccess
     "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{channel_id}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&bot_prompt=aggressive"
   end
 
-  def get_access_token(channel_id, channel_secret, code)
-    redirect_uri = if Rails.env == 'production'
-                     "#{ENV['PRODUCTION_HOST_URL']}/task_create"
-                   else
-                     "#{ENV['DEVELOPMENT_HOST_URL']}/task_create"
-                   end
+  def get_access_token(channel_id, channel_secret, code, redirect_uri)
+    redirect_uri = redirect_uri
     uri = URI.parse('https://api.line.me/oauth2/v2.1/token')
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'application/x-www-form-urlencoded'

@@ -1,5 +1,5 @@
 class Staff::LineLinksController < User::Base
-  before_action :calendar, except: [:line_link_staff]
+  before_action :calendar, except: [:callback]
 
   CHANNEL_ID = ENV['LINE_LOGIN_CHANNEL_ID']
   CHANNEL_SECRET = ENV['LINE_LOGIN_CHANNEL_SECRET']
@@ -9,18 +9,19 @@ class Staff::LineLinksController < User::Base
     @staff = Staff.find(params[:staff_id])
     # セッションにフォーム値を保持して、ラインログイン後レコード保存
     session[:staff_id] = @staff.id
-    redirect_uri = URI.escape(line_link_staff_url)
+    redirect_uri = line_link_staff_url
     state = SecureRandom.base64(10)
     # このURLがラインログインへのURL
     url = LineAccess.redirect_url(CHANNEL_ID, redirect_uri, state)
     redirect_to url
   end
 
-  def line_link_staff
+  def callback
     staff = Staff.find(session[:staff_id])
     calendar = staff.calendar
     # アクセストークンを取得
-    get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code])
+    redirect_uri = line_link_staff_url
+    get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code], redirect_uri)
     # アクセストークンを使用して、BOTとお客との友達関係を取得
     friend_response = LineAccess.get_friend_relation(get_access_token['access_token'])
     # アクセストークンのIDトークンを"gem jwt"を利用してデコード
@@ -41,9 +42,9 @@ class Staff::LineLinksController < User::Base
       return
     end
 
-  rescue
-    flash[:danger] = 'ライン連携に失敗しました'
-    redirect_to calendar_staff_url(calendar, staff)
+  # rescue
+  #   flash[:danger] = 'ライン連携に失敗しました'
+  #   redirect_to calendar_staff_url(calendar, staff)
   end
 
 end
