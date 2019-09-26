@@ -26,43 +26,202 @@ class LineBotByStaff
     user = task.calendar.user
     calendar = task.calendar
     message = {
-      "type": "bubble",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "Header text"
+      "type": "flex",
+      "altText": "This is a Flex Message",
+      "contents": {
+        "type": "bubble",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "予約通知",
+              "size": "xl",
+              "color": "#ffffff"
+            }
+          ],
+          "backgroundColor": "#057ef6"
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "名前",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "email",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.email,
+                  "wrap": true,
+                  "color": "#007bff",
+                  "size": "md",
+                  "flex": 5,
+                  "action": {
+                    "type": "uri",
+                    "label": "action",
+                    "uri": "mailto:#{store_member.email}"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "TEL",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.phone,
+                  "wrap": true,
+                  "color": "#007bff",
+                  "size": "md",
+                  "flex": 5,
+                  "action": {
+                    "type": "uri",
+                    "label": "action",
+                    "uri": "tel:#{store_member.phone}"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "開始",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                  "text": I18n.l(task.start_time, format: :long)
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "終了",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1,
+                  "weight": "regular"
+                },
+                {
+                  "type": "text",
+                  "text": I18n.l(task.end_time, format: :long),
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "コース",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": task_course.title,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            }
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "button",
+              "style": "link",
+              "height": "sm",
+              "action": {
+                "type": "uri",
+                "label": "予約を確認",
+                "uri": Rails.application.routes.url_helpers.user_calendar_dashboard_url(user, calendar, staff_id: staff.id, task_id: task.id)
+              }
+            },
+            {
+              "type": "spacer",
+              "size": "sm"
+            }
+          ],
+          "flex": 0
+        },
+        "styles": {
+          "footer": {
+            "separator": true
           }
-        ]
-      },
-      "hero": {
-        "type": "image",
-        "url": "https://example.com/flex/images/image.jpg"
-      },
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "Body text"
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "Footer text"
-          }
-        ]
-      },
-      "styles": {
-        "comment": "See the example of a bubble style object"
+        }
       }
     }
     response = client.push_message(user_id, message)
