@@ -20,12 +20,27 @@ class LineBotByStaff
   def new; end
 
   def push_message_with_task_create(task, user_id)
+    message = message_with_task_create(task)
+    response = client.push_message(user_id, message)
+  end
+
+
+  private
+
+  def initialize_client(channel_secret, channel_token)
+    client = Line::Bot::Client.new do |config|
+      config.channel_secret = channel_secret
+      config.channel_token = channel_token
+    end
+  end
+
+  def message_with_task_create(task)
     store_member = task.store_member
     task_course = task.task_course
     staff = task.staff
     user = task.calendar.user
     calendar = task.calendar
-    message = {
+    {
       "type": "flex",
       "altText": "This is a Flex Message",
       "contents": {
@@ -224,16 +239,5 @@ class LineBotByStaff
         }
       }
     }
-    response = client.push_message(user_id, message)
-  end
-
-
-  private
-
-  def initialize_client(channel_secret, channel_token)
-    client = Line::Bot::Client.new do |config|
-      config.channel_secret = channel_secret
-      config.channel_token = channel_token
-    end
   end
 end
