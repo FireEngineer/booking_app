@@ -64,7 +64,6 @@ class Public::TasksController < Public::Base
       state = SecureRandom.base64(10)
       # このURLがラインログインへのURL
       url = LineAccess.redirect_url(CHANNEL_ID, redirect_uri, state)
-      debugger
       redirect_to url
     end
   end
@@ -204,6 +203,7 @@ class Public::TasksController < Public::Base
     if @store_member.save
       LineBot.new.push_message(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
       NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
+      LineBotByStaff.new.push_message_with_task_create(@task, "Ua552f298a44ffd2ab2a380805aebab28")
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)
       return
@@ -244,6 +244,7 @@ class Public::TasksController < Public::Base
       @store_member.update(line_user_id: line_user_id)
       LineBot.new.push_message(@task, line_user_id)
       NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
+      LineBotByStaff.new.push_message_with_task_create(@task, @staff.line_user_id) if @staff.line_user_id
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)
     else

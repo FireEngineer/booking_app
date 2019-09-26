@@ -6,6 +6,7 @@ $(document).on 'turbolinks:load', ->
   unless data_calendar
     return
   $('#calendar').fullCalendar {
+    nowIndicator: true,
     height: window.innerHeight - 100,
     selectLongPressDelay: 300,
     validRange: {
