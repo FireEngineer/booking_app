@@ -1,2 +1,7 @@
 予約の時間表示ヘルパー
 reservation_date(task)
+
+rails g migration AddMemoToTask memo:text
+rails g migration AddMemoToStoreMember memo:text
+
+rails g migration AddDviseToStaff
