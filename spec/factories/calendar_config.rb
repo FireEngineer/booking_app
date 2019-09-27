@@ -5,9 +5,15 @@ FactoryBot.define do
         cancelable_time {24}
 
         after(:create) do |calendar_config|
-            7.times do
-                create(:regular_holiday, calendar_config: calendar_config)
-            end
+            create(:regular_holiday_sun, calendar_config: calendar_config)
+            create(:regular_holiday_mon, calendar_config: calendar_config)
+            create(:regular_holiday_tue, calendar_config: calendar_config)
+            create(:regular_holiday_wed, calendar_config: calendar_config)
+            create(:regular_holiday_thu, calendar_config: calendar_config)
+            create(:regular_holiday_fri, calendar_config: calendar_config)
+            create(:regular_holiday_sat, calendar_config: calendar_config)
         end
+
+
     end
 end
