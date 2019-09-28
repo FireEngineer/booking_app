@@ -69,7 +69,7 @@ class Task < ApplicationRecord
 
   # 開始時間が終了時間より遅くないか
   def start_end_check
-    errors.add(:end_date, 'の時間を正しく記入してください。') unless
+    errors.add(:end_time, 'の時間を正しく記入してください。') unless
     start_time < end_time
   end
 
