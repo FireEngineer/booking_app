@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>calender</title>
+    <title>予約アプリ</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="google-site-verification" content="FXpzPpHGDRqmupmcC64f40VBjdgwxqG_zcPZHRM0dY0" />
@@ -12,7 +12,14 @@
   </head>
   
 
-  <body>
+  <body class="body_color">
+    <style>
+      <% if controller.params["controller"] == "staffs/sessions" %>
+        .body_color {
+          background-color: #FFC107;
+        }
+      <% end %>
+    </style>
     <%= yield %>
     <div>
       <%= debug(params) if Rails.env.development? %>

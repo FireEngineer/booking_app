@@ -1,5 +1,6 @@
 class User::UserTasksController < User::Base
   before_action :calendar
+  skip_before_action :authenticate_current_user!
 
   def index
     if params[:except_past_task]

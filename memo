@@ -5,3 +5,5 @@ rails g migration AddMemoToTask memo:text
 rails g migration AddMemoToStoreMember memo:text
 
 rails g migration AddDviseToStaff
+
+reala155@hotmail.com

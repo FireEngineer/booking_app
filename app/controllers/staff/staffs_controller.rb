@@ -1,4 +1,4 @@
-class Staff::StaffsController < User::Base
+class Staff::StaffsController < Staff::StaffBase
   before_action :calendar
 
   def show

@@ -1,5 +1,7 @@
 class User::Base < ApplicationController
   before_action :authenticate_user_staff!
+  before_action :authenticate_current_user!
+
   layout 'user'
 
   def calendar
@@ -21,6 +23,13 @@ class User::Base < ApplicationController
   def authenticate_user_staff!
     unless current_user || current_staff
       redirect_to new_staff_session_url
+    end
+  end
+
+  def authenticate_current_user!
+    if current_staff
+      flash[:danger] = "権限がありません"
+      redirect_to user_calendar_dashboard_url(current_user, params[:calendar_id])
     end
   end
 

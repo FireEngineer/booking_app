@@ -1,5 +1,6 @@
 class User::TopController < User::Base
   before_action :calendar
+  skip_before_action :authenticate_current_user!
 
   def dashboard
     @user = current_user

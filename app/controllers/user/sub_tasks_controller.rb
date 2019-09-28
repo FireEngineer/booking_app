@@ -1,5 +1,6 @@
 class User::SubTasksController < User::Base
   before_action :calendar
+  skip_before_action :authenticate_current_user!
 
   def create
     task = Task.new(params_sub_task)

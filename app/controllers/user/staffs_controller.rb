@@ -1,6 +1,7 @@
 class User::StaffsController < User::Base
   before_action :staff, only: %i[show edit update destroy]
   before_action :calendar
+  skip_before_action :authenticate_current_user!, expect: [:new, :create, :destroy]
 
   def index
     @staffs = @calendar.staffs

@@ -1,4 +1,4 @@
-class Staff::LineLinksController < User::Base
+class Staff::LineLinksController < Staff::StaffBase
   before_action :calendar, except: [:callback]
 
   CHANNEL_ID = ENV['LINE_LOGIN_CHANNEL_ID']

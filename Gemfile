@@ -109,6 +109,7 @@ group :development do
   # N+1問題の改善
   gem 'bullet'
   gem 'rubocop', require: false
+  gem 'brakeman', :require => false
 end
 
 group :test do

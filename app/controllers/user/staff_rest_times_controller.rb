@@ -1,5 +1,6 @@
 class User::StaffRestTimesController < User::Base
   before_action :calendar
+  skip_before_action :authenticate_current_user!
 
   def new
     @staff_rest_time = StaffRestTime.new
