@@ -5,7 +5,11 @@ class User::TopController < User::Base
   def dashboard
     @user = current_user
     @staffs = @calendar.staffs
-    @staff = Staff.find_by(id: params[:staff_id])
+    if current_staff
+      @staff = current_staff
+    else
+      @staff = Staff.find_by(id: params[:staff_id])
+    end
     # スタッフの情報を取得
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff, params[:task_id])
