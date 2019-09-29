@@ -5,9 +5,9 @@ module StaffDecorator
 
   def line_link
     if line_user_id
-      "LINE連携済み"
+      "<span class='badge badge-success'>LINE連携済み</span>".html_safe
     else
-      "LINE未連携"
+      "<span class='badge badge-secondary'>LINE未連携</span>".html_safe
     end
   end
 

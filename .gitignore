@@ -41,3 +41,5 @@
 !.elasticbeanstalk/*.global.yml
 
 .env
+
+/00_sample_templete
