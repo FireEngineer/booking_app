@@ -15,12 +15,13 @@ class User::StaffsController < User::Base
 
   def create
     @staff = @calendar.staffs.build(staff_params)
+    debugger
     if @staff.save
       flash[:success] = 'スタッフを登録しました'
       redirect_to user_calendar_staffs_url(current_user, @calendar)
     else
-      format.html { render :new }
-      format.json { render json: @staff.errors, status: :unprocessable_entity }
+      flash[:danger] = 'スタッフを登録できませんでした。'
+      redirect_to user_calendar_staffs_url(current_user, @calendar)
     end
   end
 
@@ -30,11 +31,11 @@ class User::StaffsController < User::Base
     respond_to do |format|
       if @staff.update(staff_params)
         flash[:success] = 'スタッフを更新しました'
-        format.html { redirect_to user_calendar_staffs_url(current_user, @calendar) }
+        format.html { redirect_to edit_user_calendar_staff_url(current_user, @calendar, @staff) }
         # format.json { render :show, status: :ok, location: @staff }
       else
         flash[:danger] = 'スタッフを更新できませんでした'
-        format.html { redirect_to user_calendar_staffs_url(current_user, @calendar) }
+        format.html { redirect_to edit_user_calendar_staff_url(current_user, @calendar, @staff) }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
@@ -57,8 +58,12 @@ class User::StaffsController < User::Base
 
   private
 
+  def staff_params_update
+    params.require(:staff).permit(:name, :description, :email, staff_regular_holidays_attributes: %i[is_holiday work_start_at work_end_at id is_rest rest_start_time rest_end_time])
+  end
+
   def staff_params
-    params.require(:staff).permit(:name, :description, staff_regular_holidays_attributes: %i[is_holiday work_start_at work_end_at id is_rest rest_start_time rest_end_time])
+    params.require(:staff).permit(:name, :description, :email, :password, :password_confirmation)
   end
 
   def staff

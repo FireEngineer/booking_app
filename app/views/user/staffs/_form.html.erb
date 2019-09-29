@@ -1,4 +1,12 @@
-<%= f.label :名前 %>
-<%= f.text_field :name, class:"form-control" %>
+<%= f.label :名前 %><span class="badge badge-danger">必須</span>
+<%= f.text_field :name, class:"form-control", required: true %>
 <%= f.label :説明 %>
 <%= f.text_area :description, class:"form-control", :placeholder => "スタッフの自己紹介を記入してください。（必須ではありません）" %>
+<%= f.label :メールアドレス %><span class="badge badge-danger">必須</span>
+<%= f.email_field :email, class:"form-control", required: true, :placeholder => "*****@gmail.com" %>
+<% unless controller.action_name == "edit" %>
+  <%= f.label :パスワード %><span class="badge badge-danger">必須</span>
+  <%= f.password_field :password, class:"form-control", required: true, :placeholder => "password" %>
+  <%= f.label :確認パスワード %><span class="badge badge-danger">必須</span>
+  <%= f.password_field :password_confirmation, class:"form-control", required: true, :placeholder => "password" %>
+<% end %>
