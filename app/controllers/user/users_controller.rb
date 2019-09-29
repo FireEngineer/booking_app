@@ -7,7 +7,12 @@ class User::UsersController < User::Base
 
   def update
     @user = current_user
+    if params[:user][:password].blank?
+      params[:user].delete("password")
+      params[:user].delete("password_confirmation")
+    end
     if @user.update(user_params)
+      sign_in(@user, :bypass => true)
       flash[:success] = 'ユーザーの更新に成功しました。'
       redirect_to user_path(@user)
     else
@@ -18,7 +23,7 @@ class User::UsersController < User::Base
   private
 
   def user_params
-    params.require(:user).permit(:email, :line_token, :client_id, :client_secret)
+    params.require(:user).permit(:email, :password, :password_confirmation)
   end
 
   def check_has_calendar

@@ -1,3 +1,7 @@
+<h1>ユーザー編集</h1>
+
+<%= render 'layouts/error_messages', model: @user %>
+
 <%= form_for @user, url: user_path(@user), method: :patch do |f| %>
     <table class="table">
         <thead>
@@ -10,8 +14,17 @@
         <tbody>
             <tr>
                 <th scope="row">email</th>
-                <td><%= f.text_field :email, class:"form-control" %></td>
+                <td><%= f.email_field :email, class:"form-control" %></td>
             </tr>
+            <tr>
+                <th scope="row">パスワード</th>
+                <td><%= f.password_field :password, class:"form-control" %></td>
+            </tr>
+            <tr>
+                <th scope="row">パスワード（確認用）</th>
+                <td><%= f.password_field :password_confirmation, class:"form-control" %></td>
+            </tr>
+            <tr>
                 <th scope="row"><%= f.submit "更新", class:"btn btn-primary" %></th>
                 <td></td>
             </tr>
