@@ -6,25 +6,25 @@
 <% end %>
 
 <%= paginate @store_members %>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col"><%= sort_link(@q, :name, "名前") %></th>
-      <th scope="col"><%= sort_link(@q, :phone, "電話番号") %></th>
-      <th scope="col"><%= sort_link(@q, :email, "email") %></th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @store_members.each do |member| %>
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <th scope="row"><%= member.name %></th>
-        <td><%= member.phone %></td>
-        <td><%= member.email %></td>
-        <td>
-          <%= link_to "詳細", calendar_store_member_path(@calendar, member), class:"btn btn-primary" %>
-        </td>
+        <th scope="col"><%= sort_link(@q, :name, "名前") %></th>
+        <th scope="col"><%= sort_link(@q, :phone, "電話番号") %></th>
+        <th scope="col"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @store_members.each do |member| %>
+        <tr>
+          <th scope="row"><%= member.name %></th>
+          <td><%= member.phone %></td>
+          <td>
+            <%= link_to "詳細", calendar_store_member_path(@calendar, member), class:"btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
