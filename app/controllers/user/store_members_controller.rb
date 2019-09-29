@@ -3,7 +3,8 @@ class User::StoreMembersController < User::Base
   skip_before_action :authenticate_current_user!
 
   def index
-    @store_members = @calendar.store_members
+    @member_q = @calendar.store_members.ransack(params[:q])
+    @store_members = @member_q.result(distinct: true).page(params[:page]).per(10)
   end
 
   def show

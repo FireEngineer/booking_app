@@ -51,6 +51,12 @@
           <i class="far fa-list-alt"></i>予約一覧
         <% end %>
       </li>
+      <%# 会員一覧 %>
+      <li class="nav-item">
+        <%= link_to calendar_store_members_path(@calendar), class:"nav-link load_btn" do %>
+          <i class="far fa-address-book"></i>会員一覧
+        <% end %>
+      </li>
 
       <%# カレンダーリリース状況 %>
       <% unless current_staff %>
