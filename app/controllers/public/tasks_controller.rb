@@ -161,7 +161,7 @@ class Public::TasksController < Public::Base
   end
 
   def store_member_params
-    params.require(:store_member).permit(:name, :email, :phone, :gender, :age, tasks_attributes: %i[start_time end_time request])
+    params.require(:store_member).permit(:name, :email, :phone, :gender, :age, :is_allow_notice, tasks_attributes: %i[start_time end_time request])
   end
 
   def task_params
@@ -192,6 +192,7 @@ class Public::TasksController < Public::Base
     # 電話番号で、既存の会員データがあれば、そのデータを使用する
     if StoreMember.find_by(phone: store_member_params['phone'])
       @store_member = StoreMember.find_by(phone: store_member_params['phone'])
+      @store_member.is_allow_notice = session[:store_member]['is_allow_notice']
     else
       @store_member = StoreMember.new(store_member_params)
       @store_member.calendar = @calendar
@@ -201,9 +202,11 @@ class Public::TasksController < Public::Base
     @task.task_course = @task_course
     @task.staff = Staff.find(params[:staff_id])
     if @store_member.save
-      LineBot.new.push_message(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
-      NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
-      LineBotByStaff.new.push_message_with_task_create(@task, "Ua552f298a44ffd2ab2a380805aebab28")
+      if @store_member.is_allow_notice?
+        LineBot.new.push_message(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
+        NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
+      end
+      LineBotByStaff.new.push_message_with_task_create(@task, @task.staff.line_user_id)
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)
       return
@@ -231,6 +234,7 @@ class Public::TasksController < Public::Base
     # 電話番号で、既存の会員データがあれば、そのデータを使用する
     if StoreMember.find_by(phone: session[:store_member]['phone'])
       @store_member = StoreMember.find_by(phone: session[:store_member]['phone'])
+      @store_member.is_allow_notice = session[:store_member]['is_allow_notice']
     else
       @store_member = StoreMember.new(session[:store_member])
       @store_member.calendar = @calendar
@@ -242,8 +246,10 @@ class Public::TasksController < Public::Base
     @staff = @task.staff
     if @store_member.save
       @store_member.update(line_user_id: line_user_id)
-      LineBot.new.push_message(@task, line_user_id)
-      NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
+      if @store_member.is_allow_notice?
+        LineBot.new.push_message(@task, line_user_id)
+        NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
+      end
       LineBotByStaff.new.push_message_with_task_create(@task, @staff.line_user_id) if @staff.line_user_id
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)

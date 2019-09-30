@@ -44,6 +44,10 @@
         <label for="exampleInputEmail1">電話番号</label><span id="msg-tel"></span><span class="badge badge-danger">必須</span></h6>
         <%= f.number_field :phone, class: "form-control form_style", id: "tel", placeholder: "電話番号(09012345678)", required: "required" %>
       </div>
+      <div class="form-group form-check">
+        <%= f.check_box :is_allow_notice, {class: "form-check-input", checked: true}, "true", "false" %>
+        <label for="exampleInputEmail1" class="form-check-label">メールや、LINEでの通知を許可する方は、チェック</label>
+      </div>
       <%= fields_for :task do |task|  %>
             <%= task.hidden_field :start_time, value: @task.start_time %>
             <%= task.hidden_field :end_time, value: @task.end_time %>
