@@ -5,16 +5,16 @@ jobs:
     - image: circleci/ruby:2.5.3-node
       environment:
         RAILS_ENV: test
-        MYSQL_HOST: 127.0.0.1
-        MYSQL_USERNAME: 'root'
-        MYSQL_PASSWORD: ''
+        MYSQL_HOST: localhost
+        MYSQL_USERNAME: 'shota6'
+        MYSQL_PASSWORD: 'password'
         MYSQL_PORT: 3306
     - image: circleci/mysql:5.7-ram
       environment:
         MYSQL_DATABASE: qiita_clone_test
         MYSQL_ALLOW_EMPTY_PASSWORD: true
         MYSQL_ROOT_HOST: '%'
-    working_directory: ~/qiita_clone
+    working_directory: ~/rails_todo
     steps:
     - checkout
     - restore_cache:
