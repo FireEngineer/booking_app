@@ -27,9 +27,10 @@ RSpec.describe Public::TasksController, type: :controller do
         describe 'Get #new' do
             describe "未来の予約なら、成功レスポンス" do
                 before do
-                    # @task = Task.new(start_time: "2019-9-16T10:0:00+09:00")
+                    # @task = Task.new(calendar_id: @calendar.id, staff_id: @staff.id, task_course_id: @course.id, start_time: Time.current.tomorrow.change(hour: 11).to_time, end_time: Time.current.tomorrow.change(hour: 12).to_time)
+                    # debugger
                     # @store_member = StoreMember.new
-                    get :new, params: {calendar_id: @calendar.public_uid, staff_id: @staff, course_id: @course, start_time: Time.current.days_since(2)}
+                    get :new, params: {calendar_id: @calendar.public_uid, staff_id: @staff.id, course_id: @course.id, start_time: Time.current.tomorrow.change(hour: 10)}
                 end
                 it 'リクエストは200 OKとなること' do
                 expect(response.status).to eq 200

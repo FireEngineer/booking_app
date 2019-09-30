@@ -13,8 +13,8 @@ RSpec.describe Task, type: :model do
     it "未来の時間はOK" do 
       @task = Task.new( 
         request: "リクエスト",
-        start_time: Time.current.since(1.hours), 
-        end_time: Time.current.since(2.hours), 
+        start_time: Time.current.tomorrow.change(hour: 9), 
+        end_time: Time.current.tomorrow.change(hour: 10), 
         task_course_id: @course.id,
         staff_id: @staff.id,
         store_member_id: @store_member.id,
@@ -52,8 +52,8 @@ RSpec.describe Task, type: :model do
     it "時間が他の予定と被っているとだめ" do 
       @task = Task.new( 
         request: "リクエスト",
-        start_time: Time.current.since(3.days), 
-        end_time: Time.current.since(3.days).since(1.hours), 
+        start_time: Time.current.tomorrow.change(hour: 9), 
+        end_time: Time.current.tomorrow.change(hour: 10), 
         task_course_id: @course.id,
         staff_id: @staff.id,
         store_member_id: @store_member.id,
@@ -61,8 +61,8 @@ RSpec.describe Task, type: :model do
       ).save
       @second＿task = Task.new( 
         request: "リクエスト",
-        start_time: Time.current.since(3.days), 
-        end_time: Time.current.since(3.days).since(1.hours), 
+        start_time: Time.current.tomorrow.change(hour: 9), 
+        end_time: Time.current.tomorrow.change(hour: 10), 
         task_course_id: @course.id,
         staff_id: @staff.id,
         store_member_id: @store_member.id,
