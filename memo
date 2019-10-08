@@ -7,3 +7,5 @@ rails g migration AddMemoToStoreMember memo:text
 rails g migration AddDviseToStaff
 
 reala155@hotmail.com
+
+rails g migration AddIsAllowNoticeToStoreMember boolean:is_allow_notice

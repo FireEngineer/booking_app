@@ -76,7 +76,7 @@
     </ul>
 
     <%# 公開リンク %>
-    <%= button_tag value:"#{calendar_tasks_url(@calendar, openExternalBrowser: 1)}", type: 'button', class:"btn btn-outline-light", id:"copy_public_url" do %>
+    <%= button_tag type: 'button', class:"btn btn-outline-light", id:"copy_public_url", data: {"clipboard-text":"#{calendar_tasks_url(@calendar, openExternalBrowser: 1)}"} do %>
       <i class="fas fa-link"></i>公開リンク
     <% end %>
 
@@ -89,35 +89,18 @@
 </nav>
 
 <script>
-
+// 公開カレンダーのコピペ処理
 $(document).ready(function(){
-    $('#copy_public_url').on('click', function() {
-        var target = null;
-        var p = null;
-        window.getSelection().removeAllRanges();
-        if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-            target = document.querySelector('#copy_public_url');
-            target.contentEditable  = true;
-            target.readOnly = false;
-        } else {
-            p = document.createElement('p');
-            p.setAttribute('id', 'target')
-            document.body.appendChild(p);
-            p.innerHTML = $('#copy_public_url').val();
-            target = document.querySelector('#target');
-        }
-        var range = document.createRange();
-        range.selectNode(target);
-        window.getSelection().addRange(range);
-        document.execCommand("copy");
-        if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-            target.contentEditable  = false;
-            target.readOnly = true;
-        } else {
-            document.body.removeChild(p);
-        }
-        window.getSelection().removeAllRanges();
-        alert(`${p.innerHTML}\nクリップボードに公開リンクをコピーしました。`);
+  $('#copy_public_url').on('click', function() {
+    var clipboard = new ClipboardJS('#copy_public_url');
+    debugger
+    // クリップ成功
+    clipboard.on('success', (e) => {
+      debugger
+        alert('クリップボードに公開リンクをコピーしたよ');
     });
+  });
 });
+
+
 </script>
