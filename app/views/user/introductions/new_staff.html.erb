@@ -27,13 +27,13 @@
         </tr>
         <tr>
           <th scope="row">password</th>
-          <td><%= f.text_field :password, class: "form-control", required: true %></td>
-          <td>メールアドレス</td>
+          <td><%= f.password_field :password, class: "form-control", required: true %></td>
+          <td>パスワード</td>
         </tr>
         <tr>
           <th scope="row">password</th>
-          <td><%= f.text_field :password_confirmation, class: "form-control", required: true %></td>
-          <td>メールアドレス</td>
+          <td><%= f.password_field :password_confirmation, class: "form-control", required: true %></td>
+          <td>確認用パスワード</td>
         </tr>
         <%= f.hidden_field :calendar_id %>
         <tr>

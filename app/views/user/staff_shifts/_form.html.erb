@@ -12,7 +12,7 @@
           <%= f.label :出勤時間 %>
         </div>
         <%= raw sprintf(
-              f.datetime_select(
+              f.time_select(
                   :work_start_time,
                   use_month_numbers: true,
                   start_year:        1930,
@@ -28,7 +28,7 @@
           <%= f.label :退勤時間 %>
         </div>
         <%= raw sprintf(
-              f.datetime_select(
+              f.time_select(
                   :work_end_time,
                   use_month_numbers: true,
                   start_year:        1930,
