@@ -103,36 +103,73 @@
 //   });
 // });
 
+// $(document).ready(function(){
+//     $('#copy_btn').on('click', function() {
+//         var target = null;
+//         var p = null;
+//         window.getSelection().removeAllRanges();
+//         if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+//             target = document.querySelector('#target_text');
+//             target.contentEditable  = true;
+//             target.readOnly = false;
+//         } else {
+//             p = document.createElement('p');
+//             p.setAttribute('id', 'target')
+//             document.body.appendChild(p);
+//             p.innerHTML = $('#target_text').val();
+//             target = document.querySelector('#target_text');
+//         }
+//         var range = document.createRange();
+//         range.selectNode(target);
+//         window.getSelection().addRange(range);
+//         document.execCommand("copy");
+//         if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+//             target.contentEditable  = false;
+//             target.readOnly = true;
+//         } else {
+//             document.body.removeChild(p);
+//         }
+//         window.getSelection().removeAllRanges();
+//         alert('クリップボードに公開リンクをコピーしました');
+//     });
+// });
+
+
+function copy(str) {
+    if(!str || typeof(str) != "string") {
+    return "";
+    }
+
+    //strを含んだtextareaをbodyタグの末尾に設置
+    $(document.body).append("<textarea id=\"tmp_copy\" style=\"position:fixed;right:100vw;font-size:16px;\" readonly=\"readonly\">" + str + "</textarea>");
+
+
+    //elmはtextareaノード
+    var elm = $("#tmp_copy")[0];
+
+    //select()でtextarea内の文字を選択
+    elm.select();
+
+    //rangeでtextarea内の文字を選択
+    var range = document.createRange();
+    range.selectNodeContents(elm);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    elm.setSelectionRange(0, 999999);
+
+    //execCommandを実施
+    document.execCommand("copy");
+
+    //textareaを削除
+    $(elm).remove();
+}
+
 $(document).ready(function(){
-    $('#copy_btn').on('click', function() {
-        var target = null;
-        var p = null;
-        window.getSelection().removeAllRanges();
-        if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-            target = document.querySelector('#target_text');
-            target.contentEditable  = true;
-            target.readOnly = false;
-        } else {
-            p = document.createElement('p');
-            p.setAttribute('id', 'target')
-            document.body.appendChild(p);
-            p.innerHTML = $('#target_text').val();
-            target = document.querySelector('#target');
-        }
-        var range = document.createRange();
-        range.selectNode(target);
-        window.getSelection().addRange(range);
-        document.execCommand("copy");
-        if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-            target.contentEditable  = false;
-            target.readOnly = true;
-        } else {
-            document.body.removeChild(p);
-        }
-        window.getSelection().removeAllRanges();
-        alert('クリップボードに公開リンクをコピーしました');
-    });
+  $('#copy_btn').on('click', function() {　
+    value = $('#target_text').val();
+    copy(value);
+    alert('クリップボードに公開リンクをコピーしました');
+  });
 });
-
-
 </script>

@@ -29,7 +29,7 @@ class User::StaffsController < User::Base
 
   def update
     respond_to do |format|
-      if @staff.update(staff_params)
+      if @staff.update(staff_params_update)
         flash[:success] = 'スタッフを更新しました'
         format.html { redirect_to edit_user_calendar_staff_url(current_user, @calendar, @staff) }
         # format.json { render :show, status: :ok, location: @staff }
