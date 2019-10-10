@@ -22,6 +22,7 @@
           <td><%= member.phone %></td>
           <td>
             <%= link_to "詳細", calendar_store_member_path(@calendar, member), class:"btn btn-primary" %>
+            <%= link_to "予約を行う", user_calendar_dashboard_path(current_user, @calendar, store_member_id: member.id), class:"btn btn-info" %>
           </td>
         </tr>
       <% end %>
