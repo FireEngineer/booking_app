@@ -33,4 +33,15 @@ class User::Base < ApplicationController
     end
   end
 
+  def check_staff_course_exsist!
+    if !@calendar.staffs.any? && !@calendar.task_courses.any?
+      @cation = "1"
+    elsif !@calendar.staffs.any?
+      @cation = "2"
+    elsif !@calendar.task_courses.any?
+      @cation = "3"
+    end
+
+  end
+
 end

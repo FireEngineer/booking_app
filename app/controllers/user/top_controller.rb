@@ -1,5 +1,6 @@
 class User::TopController < User::Base
   before_action :calendar
+  before_action :check_staff_course_exsist!
   skip_before_action :authenticate_current_user!
 
   def dashboard

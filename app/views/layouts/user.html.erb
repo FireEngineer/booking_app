@@ -38,9 +38,23 @@
         <% end %>
       </header>
       <%= render 'layouts/user_layout' %>
+
+
+
       <script>
         $(".load_btn").click(function(){
             $("#overlay").fadeIn(500);
+        });
+
+        $(document).ready(function(){
+          var value = "<%= @cation %>";
+          if (value === "1") {
+            alert("【警告】スタッフとコースを作成してください！カレンダーが公開できない状態です！");
+          } else if (value === "2") {
+            alert("【警告】スタッフを作成してください！カレンダーが公開できない状態です！");
+          } else if (value === "3") {
+            alert("【警告】コースを作成してください！カレンダーが公開できない状態です！");
+          }
         });
       </script>
       
