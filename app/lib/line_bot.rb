@@ -18,108 +18,22 @@ class LineBot
   def new; end
 
   def push_message(task, user_id)
-    message = {
-      type: 'text',
-      text: "予約ありがとうございます!
-      ===================
-      ・名前
-        #{task.store_member.name}
-      ・email
-        #{task.store_member.email}
-      ・TEL
-        #{task.store_member.phone}
-      ・開始時間
-        #{task.start_time.strftime('%Y年%-m月%-d日 %H:%M')}~
-        #{task.end_time.strftime('%H:%M')}
-      ・コース名
-        #{task.task_course.title}
-      ・コース料金
-        #{task.task_course.charge}
-      ・担当者
-        #{task.staff.name}
-      ・キャンセルURL
-        #{HOST_URL}/calendars/#{task.calendar.public_uid}/tasks/#{task.id}/cancel
-      ==================="
-    }
+    message = message_with_task_create(task)
     response = client.push_message(user_id, message)
   end
 
   def push_message_with_edit_task(task, user_id)
-    message = {
-      type: 'text',
-      text: "予約内容を変更しました!
-      ===================
-      ・名前
-        #{task.store_member.name}
-      ・email
-        #{task.store_member.email}
-      ・TEL
-        #{task.store_member.phone}
-      ・開始時間
-        #{task.start_time.strftime('%Y年%-m月%-d日 %H:%M')}~
-        #{task.end_time.strftime('%H:%M')}
-      ・コース名
-        #{task.task_course.title}
-      ・コース料金
-        #{task.task_course.charge}
-      ・担当者
-        #{task.staff.name}
-      ・キャンセルURL
-        #{HOST_URL}/calendars/#{task.calendar.public_uid}/tasks/#{task.id}/cancel
-      ==================="
-    }
+    message = message_with_task_update(task)
     response = client.push_message(user_id, message)
   end
 
   def push_message_with_delete_task(task, user_id)
-    message = {
-      type: 'text',
-      text: "予約をキャンセルしました!
-      ===================
-      ・名前
-        #{task.store_member.name}
-      ・email
-        #{task.store_member.email}
-      ・TEL
-        #{task.store_member.phone}
-      ・開始時間
-        #{task.start_time.strftime('%Y年%-m月%-d日 %H:%M')}~
-        #{task.end_time.strftime('%H:%M')}
-      ・コース名
-        #{task.task_course.title}
-      ・コース料金
-        #{task.task_course.charge}
-      ・担当者
-        #{task.staff.name}
-      ==================="
-    }
+    message = message_with_task_delete(task)
     response = client.push_message(user_id, message)
   end
 
   def push_message_with_reminder(task, user_id)
-    message = {
-      type: 'text',
-      text: "明日の予約内容のお知らせ。
-      ===================
-      ・名前
-        #{task.store_member.name}
-      ・email
-        #{task.store_member.email}
-      ・TEL
-        #{task.store_member.phone}
-      ・開始時間
-        #{task.start_time.strftime('%Y年%-m月%-d日 %H:%M')}~
-        #{task.end_time.strftime('%H:%M')}
-      ・コース名
-        #{task.task_course.title}
-      ・コース料金
-        #{task.task_course.charge}
-      ・担当者
-        #{task.staff.name}
-      ・キャンセルURL
-        #{HOST_URL}/calendars/#{task.calendar.public_uid}/tasks/#{task.id}/cancel
-      ==================="
-    }
+    message message_with_task_reminder(task)
     response = client.push_message(user_id, message)
   end
 
@@ -148,4 +62,915 @@ class LineBot
       config.channel_token = channel_token
     end
   end
+
+  def message_with_task_create(task)
+    store_member = task.store_member
+    task_course = task.task_course
+    staff = task.staff
+    user = task.calendar.user
+    calendar = task.calendar
+    {
+      "type": "flex",
+      "altText": "This is a Flex Message",
+      "contents": {
+        "type": "bubble",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "予約完了通知",
+              "size": "lg",
+              "color": "#ffffff"
+            }
+          ],
+          "backgroundColor": "#82dd97"
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "ご予約ありがとうございます。"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "名前",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "email",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.email,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "TEL",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.phone,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "開始",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                  "text": I18n.l(task.start_time, format: :long)
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "終了",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1,
+                  "weight": "regular"
+                },
+                {
+                  "type": "text",
+                  "text": I18n.l(task.end_time, format: :long),
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "コース",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": task_course.title,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "担当者",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": staff.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": calendar.calendar_name,
+              "action": {
+                "type": "uri",
+                "label": "action",
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
+              },
+              "color": "#007bff"
+            },
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "button",
+              "style": "link",
+              "height": "sm",
+              "action": {
+                "type": "uri",
+                "label": "予約内容を確認",
+                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(calendar, task)
+              }
+            },
+            {
+              "type": "spacer",
+              "size": "sm"
+            }
+          ],
+          "flex": 0
+        },
+        "styles": {
+          "footer": {
+            "separator": true
+          }
+        }
+      }
+    }
+  end
+
+  def message_with_task_update(task)
+    store_member = task.store_member
+    task_course = task.task_course
+    staff = task.staff
+    user = task.calendar.user
+    calendar = task.calendar
+    {
+      "type": "flex",
+      "altText": "This is a Flex Message",
+      "contents": {
+        "type": "bubble",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "予約変更通知",
+              "size": "lg",
+              "color": "#ffffff"
+            }
+          ],
+          "backgroundColor": "#cddc39"
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "予約内容に変更がありました。"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "名前",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "email",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.email,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "TEL",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.phone,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "開始",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                  "text": I18n.l(task.start_time, format: :long)
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "終了",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1,
+                  "weight": "regular"
+                },
+                {
+                  "type": "text",
+                  "text": I18n.l(task.end_time, format: :long),
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "コース",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": task_course.title,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "担当者",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": staff.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": calendar.calendar_name,
+              "action": {
+                "type": "uri",
+                "label": "action",
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
+              },
+              "color": "#007bff"
+            },
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "button",
+              "style": "link",
+              "height": "sm",
+              "action": {
+                "type": "uri",
+                "label": "予約内容を確認",
+                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(calendar, task)
+              }
+            },
+            {
+              "type": "spacer",
+              "size": "sm"
+            }
+          ],
+          "flex": 0
+        },
+        "styles": {
+          "footer": {
+            "separator": true
+          }
+        }
+      }
+    }
+  end
+
+  def message_with_task_delete(task)
+    store_member = task.store_member
+    task_course = task.task_course
+    staff = task.staff
+    user = task.calendar.user
+    calendar = task.calendar
+    {
+      "type": "flex",
+      "altText": "This is a Flex Message",
+      "contents": {
+        "type": "bubble",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "予約キャンセル通知",
+              "size": "lg",
+              "color": "#ffffff"
+            }
+          ],
+          "backgroundColor": "#9e9e9e"
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "予約をキャンセルしました。"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "名前",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "email",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.email,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "TEL",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.phone,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "開始",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                  "text": I18n.l(task.start_time, format: :long)
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "終了",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1,
+                  "weight": "regular"
+                },
+                {
+                  "type": "text",
+                  "text": I18n.l(task.end_time, format: :long),
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "コース",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": task_course.title,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "担当者",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": staff.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": calendar.calendar_name,
+              "action": {
+                "type": "uri",
+                "label": "action",
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
+              },
+              "color": "#007bff"
+            },
+          ]
+        },
+      }
+    }
+  end
+
+  def message_with_task_reminder(task)
+    store_member = task.store_member
+    task_course = task.task_course
+    staff = task.staff
+    user = task.calendar.user
+    calendar = task.calendar
+    {
+      "type": "flex",
+      "altText": "This is a Flex Message",
+      "contents": {
+        "type": "bubble",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "予約リマインド通知",
+              "size": "lg",
+              "color": "#ffffff"
+            }
+          ],
+          "backgroundColor": "#f7e333"
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "明日の予約のリマインド通知です。"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "名前",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "email",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.email,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "TEL",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "text": store_member.phone,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "開始",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1
+                },
+                {
+                  "type": "text",
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5,
+                  "text": I18n.l(task.start_time, format: :long)
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "終了",
+                  "color": "#aaaaaa",
+                  "size": "md",
+                  "flex": 1,
+                  "weight": "regular"
+                },
+                {
+                  "type": "text",
+                  "text": I18n.l(task.end_time, format: :long),
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ],
+              "width": "100%"
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "コース",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": task_course.title,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "baseline",
+              "spacing": "xxl",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "担当者",
+                  "color": "#aaaaaa",
+                  "size": "xs",
+                  "flex": 1,
+                  "align": "start"
+                },
+                {
+                  "type": "text",
+                  "text": staff.name,
+                  "wrap": true,
+                  "color": "#666666",
+                  "size": "md",
+                  "flex": 5
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": calendar.calendar_name,
+              "action": {
+                "type": "uri",
+                "label": "action",
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
+              },
+              "color": "#007bff"
+            },
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "button",
+              "style": "link",
+              "height": "sm",
+              "action": {
+                "type": "uri",
+                "label": "予約内容を確認",
+                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(calendar, task)
+              }
+            },
+            {
+              "type": "spacer",
+              "size": "sm"
+            }
+          ],
+          "flex": 0
+        },
+        "styles": {
+          "footer": {
+            "separator": true
+          }
+        }
+      }
+    }
+  end
+
+
 end
