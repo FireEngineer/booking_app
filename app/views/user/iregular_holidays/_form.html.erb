@@ -11,7 +11,7 @@
             <%= form_for iregular_holiday, url: calendar_iregular_holidays_path(calendar), method: :post do |f| %>
                     <div class="form-group">
                         <label for="exampleInputPassword1">説明</label><span id="msg-name"></span>
-                        <%= f.text_area :description, class: "form-control form_style", id: "name", placeholder: "必須ではありません" %>
+                        <%= f.text_area :description, class: "form-control form_style text_area_height", id: "name", placeholder: "必須ではありません" %>
                     </div>
                     <%= f.hidden_field :date %>
                 <%= f.submit "休日を作成する", class:"btn btn-primary btn_style", data:{confirm: "休日を作成しますか？"} %>

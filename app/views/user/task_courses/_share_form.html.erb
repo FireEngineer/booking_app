@@ -4,29 +4,24 @@
         <tr>
         <th>項目</th>
         <th>設定値</th>
-        <th>説明</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th scope="row">コース名（必須）</th>
+            <th scope="row">コース名<br><span class="badge badge-danger">必須</span></th>
             <td><%= f.text_field :title, class: "form-control" %></td>
-            <td></td>
         </tr>
         <tr>
             <th scope="row">コース説明</th>
             <td><%= f.text_area :description, class: "form-control" %></td>
-            <td></td>
         </tr>
         <tr>
-            <th scope="row">コース時間（必須）</th>
+            <th scope="row">コース時間<br><span class="badge badge-danger">必須</span></th>
             <td><%= f.number_field :course_time, class: "form-control" %>分</td>
-            <td></td>
         </tr>
         <tr>
-            <th scope="row">コース料金（必須）</th>
+            <th scope="row">コース料金<br><span class="badge badge-danger">必須</span></th>
             <td><%= f.text_field :charge, class: "form-control" %>円</td>
-            <td></td>
         </tr>
     </tbody>
     </table>

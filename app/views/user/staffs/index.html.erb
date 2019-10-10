@@ -16,7 +16,7 @@
                     <td><%= staff.name %></td>
                     <td>
                         <%= link_to "編集", edit_user_calendar_staff_path(current_user, @calendar, staff), class:"btn btn-success" %>
-                        <%= link_to "シフト設定", calendar_staff_staff_shifts_path(@calendar, staff), class:"btn btn-light" %>
+                        <%= link_to "シフト設定", calendar_staff_staff_shifts_path(@calendar, staff), class:"btn btn-info" %>
                         <%= link_to "削除", user_calendar_staff_path(current_user, @calendar, staff), class:"btn btn-danger", data: { confirm: '削除しますか？' }, method: :delete %>
                     </td>
                     <div id="staff<%= staff.id %>_edit_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

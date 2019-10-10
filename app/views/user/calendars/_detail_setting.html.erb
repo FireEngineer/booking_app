@@ -1,5 +1,5 @@
 <%= form_for calendar.calendar_config, url: user_calendar_calendar_config_path(current_user, calendar) do |f| %>
-  <div class="form-group row">
+  <div class="form-group">
     <label for="inputEmail" class="col-sm-4 col-form-label">
       予約間の余裕時間（分）
       <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="一つ一つの予約の間に準備時間を入れることができます。"></i>
@@ -9,7 +9,7 @@
       <%= f.select :interval_time, [0,5,10,15,20,30,45,60], {}, class: "form-control" %>
     </div>
   </div>
-  <div class="form-group row">
+  <div class="form-group">
     <label for="inputEmail" class="col-sm-4 col-form-label">
       キャンセル可能時間設定
       <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お客様が、web上で予約時間の何時間前までキャンセルを許容するかの設定。"></i>
