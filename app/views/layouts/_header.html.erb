@@ -35,8 +35,6 @@
             <%= link_to "スタッフ設定", user_calendar_staffs_path(current_user, @calendar), class:"dropdown-item load_btn" %>
           <% end %>
           <div class="dropdown-divider"></div>
-          <%= link_to "会員一覧", calendar_store_members_path(@calendar), class:"dropdown-item load_btn" %>
-          <div class="dropdown-divider"></div>
           <% unless current_staff %>
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"dropdown-item load_btn" %>
           <% else %>

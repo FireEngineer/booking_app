@@ -35,6 +35,9 @@ class Public::TasksController < Public::Base
     # @events = SyncCalendarService.new(task,@user,@calendar).read_event
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
+    rescue => e
+      errors_log(e)
+      redirect_to not_released_page_url
   end
 
   def new

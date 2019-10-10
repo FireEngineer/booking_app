@@ -67,8 +67,6 @@ class ApplicationController < ActionController::Base
     t.since(task_course.course_time.minutes)
   end
 
-  private
-
   def check_calendar_info
     calendar = Calendar.find_by(public_uid: params[:id])
     redirect_to google_auth_redirect_path if calendar.calendar_id.blank?
@@ -82,5 +80,6 @@ class ApplicationController < ActionController::Base
       =====================================
       ==============end====================
     EOS
+    puts text
   end
 end
