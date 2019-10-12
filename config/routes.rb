@@ -105,7 +105,8 @@ Rails.application.routes.draw do
   end
 
 # ================================================================================================================-
-  # 特定商法
+  # 決済関連
   get 'law', to: 'laws#law', as: 'law'
+  get 'form', to: 'laws#form', as: 'form'
 
 end

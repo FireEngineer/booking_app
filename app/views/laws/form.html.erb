@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>【GMO:クレジット】予約システム利用費　(税込)</h2>
+
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">お支払い方法</th>
+            <td>
+              毎月定期
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">姓</th>
+            <td>
+              <%= text_field_tag :family_name , "", class:"form-control" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">名</th>
+            <td>
+              <%= text_field_tag :name , "", class:"form-control" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">メールアドレス</th>
+            <td>
+              <%= email_field_tag :email , "", class:"form-control" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">電話番号</th>
+            <td>
+              <%= text_field_tag :phone , "", class:"form-control" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">郵便番号</th>
+            <td>
+              <%= text_field_tag :postal_code , "", class:"form-control" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">都道府県</th>
+            <td>
+              <%= text_field_tag :city , "", class:"form-control" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">住所</th>
+            <td>
+              <%= text_field_tag :address , "", class:"form-control" %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">利用規約</th>
+            <td>
+              <%= text_field_tag :rule , "", class:"form-control" %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+

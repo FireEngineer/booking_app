@@ -4,4 +4,8 @@ class LawsController < ApplicationController
     
   end
 
+  def form
+    
+  end
+
 end
