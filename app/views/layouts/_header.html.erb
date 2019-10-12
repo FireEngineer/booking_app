@@ -33,6 +33,7 @@
             <%= link_to "カレンダー設定", user_calendar_path(current_user, @calendar), class:"dropdown-item load_btn" %>
             <%= link_to "休日設定", calendar_iregular_holidays_path(@calendar), class:"dropdown-item load_btn" %>
             <%= link_to "スタッフ設定", user_calendar_staffs_path(current_user, @calendar), class:"dropdown-item load_btn" %>
+            <%= link_to "コース設定", user_calendar_task_courses_path(current_user, @calendar), class:"dropdown-item load_btn" %>
           <% end %>
           <div class="dropdown-divider"></div>
           <% unless current_staff %>

@@ -1,23 +1,19 @@
 class User::TaskCoursesController < User::Base
   before_action :calendar
 
+  def index
+    
+  end
+
   def new
     @task_course = TaskCourse.new
   end
 
   def create
     @task_course = @calendar.task_courses.build(task_course_params)
-
-    respond_to do |format|
-      if @task_course.save!
-        format.html { redirect_to user_calendar_url(current_user, @calendar), notice: 'コースを作成しました。' }
-        format.json { render :show, status: :created, location: @task_course }
-        format.js { @status = 'success' }
-      else
-        format.html { redirect_to user_calendar_url(current_user, @calendar), notice: 'コース作成に失敗しました。' }
-        format.json { render json: @task_course.errors, status: :unprocessable_entity }
-        format.js { @status = 'fail' }
-      end
+    if @task_course.save
+      flash[:success] = 'コースを作成しました。'
+      redirect_to user_calendar_task_courses_url(current_user, @calendar)
     end
   end
 
@@ -27,17 +23,9 @@ class User::TaskCoursesController < User::Base
 
   def update
     @task_course = TaskCourse.find(params[:id])
-
-    respond_to do |format|
-      if @task_course.update(task_course_params)
-        format.html { redirect_to user_calendar_url(current_user, @calendar), notice: 'コースを更新しました。' }
-        format.json { render :show, status: :created, location: @task_course }
-        format.js { @status = 'success' }
-      else
-        format.html { redirect_to user_calendar_url(current_user, @calendar), notice: 'コース更新に失敗しました。' }
-        format.json { render json: @task_course.errors, status: :unprocessable_entity }
-        format.js { @status = 'fail' }
-      end
+    if @task_course.update(task_course_params)
+      flash[:success] = 'コースを更新しました。'
+      redirect_to user_calendar_task_courses_url(current_user, @calendar)
     end
   end
 
@@ -46,11 +34,11 @@ class User::TaskCoursesController < User::Base
 
     respond_to do |format|
       if @task_course.destroy
-        format.html { redirect_to user_calendar_url(current_user, @calendar), notice: 'コースを削除しました。' }
+        format.html { redirect_to user_calendar_task_courses_url(current_user, @calendar), notice: 'コースを削除しました。' }
         format.json { render :show, status: :created, location: @task_course }
         format.js { @status = 'success' }
       else
-        format.html { redirect_to user_calendar_url(current_user, @calendar), notice: 'コース削除に失敗しました。' }
+        format.html { redirect_to user_calendar_task_courses_url(current_user, @calendar), notice: 'コース削除に失敗しました。' }
         format.json { render json: @task_course.errors, status: :unprocessable_entity }
         format.js { @status = 'fail' }
       end
