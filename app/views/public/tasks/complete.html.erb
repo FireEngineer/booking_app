@@ -39,6 +39,9 @@
           <th scope="row">ご要望</th>
           <td><%= @task.request %></td>
         </tr>
+        <tr>
+          <th scope="row">通知を許可していない方はこのページを参照してください。</th>
+        </tr>
       </tbody>
     </table>
     <div class="card-body">
@@ -47,4 +50,5 @@
   </div>
 
   <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style" %>
+  <%= link_to "キャンセルを行う", calendar_task_path(params[:calendar_id], @task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
 </div>

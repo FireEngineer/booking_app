@@ -25,7 +25,7 @@ class LineBotByStaff
   end
 
   def push_message_with_task_cancel(task, user_id)
-    message = message_with_task_create(task)
+    message = message_with_task_cancel(task)
     response = client.push_message(user_id, message)
   end
 
