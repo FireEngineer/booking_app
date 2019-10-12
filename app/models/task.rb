@@ -19,7 +19,7 @@ class Task < ApplicationRecord
 
   # after_create :sync_create, :mail_send
   # after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
-  after_destroy :sybc_delete, :line_send_with_delete_task, :mail_send_with_delete_task
+  # after_destroy :sybc_delete, :line_send_with_delete_task, :mail_send_with_delete_task
   
 
   # 予約が被っている時刻に同時に保存されないように検証

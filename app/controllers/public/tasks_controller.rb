@@ -138,6 +138,11 @@ class Public::TasksController < Public::Base
 
   def destroy
     @task.destroy
+    if @task.store_member.is_allow_notice?
+      LineBot.new.push_message_with_delete_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
+      NotificationMailer.send_delete_task_to_user(@task, @calendar.user, @calendar).deliver if @task.store_member.email
+    end
+    LineBotByStaff.new.push_message_with_task_cancel(@task, @task.staff.line_user_id)
     respond_to do |format|
       format.html { redirect_to calendar_task_cancel_complete_url(params[:calendar_id], @task), success: '予約をキャンセルしました。' }
       format.json { head :no_content }
@@ -195,7 +200,7 @@ class Public::TasksController < Public::Base
     # 電話番号で、既存の会員データがあれば、そのデータを使用する
     if StoreMember.find_by(phone: store_member_params['phone'])
       @store_member = StoreMember.find_by(phone: store_member_params['phone'])
-      @store_member.is_allow_notice = session[:store_member]['is_allow_notice']
+      @store_member.is_allow_notice = params[:store_member]['is_allow_notice']
     else
       @store_member = StoreMember.new(store_member_params)
       @store_member.calendar = @calendar
