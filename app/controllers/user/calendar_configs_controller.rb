@@ -15,6 +15,6 @@ class User::CalendarConfigsController < User::Base
   private
 
   def calendar_config_regular_holidays_params
-    params.require(:calendar_config).permit(:capacity, :interval_time, regular_holidays_attributes: %i[holiday_flag id business_start_at business_end_at is_reset rest_start_time rest_end_time])
+    params.require(:calendar_config).permit(:capacity, :interval_time, :booking_message, regular_holidays_attributes: %i[holiday_flag id business_start_at business_end_at is_reset rest_start_time rest_end_time])
   end
 end

@@ -274,7 +274,12 @@ class LineBot
                 "uri": "https://calendar.google.com/calendar/r/eventedit?text=#{calendar.calendar_name}&details=#{detail}&dates=#{I18n.l(task.start_time, format: :to_google_time)}/#{I18n.l(task.end_time, format: :to_google_time)}&sf=true"
               },
               "color": "#098bf2"
-            }
+            },
+            {
+              "type": "text",
+              "text": calendar.calendar_config.booking_message,
+              "wrap": true,
+            },
           ]
         },
         "footer": {

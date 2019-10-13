@@ -16,7 +16,8 @@
 
 ご要望：<%= @task.request %>
 
-
+==========================================================
+<%= @calendar.calendar_config.booking_message %>
 
 ※キャンセルをご希望のお方は以下のURLよりキャンセルしてください。
 <%= if Rails.env == "production" then "#{ENV['PRODUCTION_HOST_URL']}/calendars/#{@calendar.public_uid}/tasks/#{@task.id}/cancel"

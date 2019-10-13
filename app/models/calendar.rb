@@ -32,6 +32,7 @@ class Calendar < ApplicationRecord
   def create_calendar_config
     unless calendar_config
       config = build_calendar_config(capacity: 1)
+      config.booking_message = booking_message(self)
       array = %w[日 月 火 水 木 金 土]
       start_time = Time.current.change(hour: self.start_time, min: 0)
       end_time = Time.current.change(hour: self.end_time, min: 0)
@@ -41,5 +42,12 @@ class Calendar < ApplicationRecord
       config.save
     end
   end
-  
+
+  private
+    def booking_message(calendar)
+      text = <<-EOS
+        ご予約ありがとうございます！
+        #{calendar.calendar_name}
+      EOS
+    end
 end
