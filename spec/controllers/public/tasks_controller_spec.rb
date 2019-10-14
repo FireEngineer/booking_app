@@ -27,7 +27,6 @@ RSpec.describe Public::TasksController, type: :controller do
         describe 'Get #new' do
             describe "未来の予約なら、成功レスポンス" do
                 before do
-                    debugger
                     get :new, params: {calendar_id: @calendar.public_uid, staff_id: @staff.id, course_id: @course.id, start_time: Time.current.tomorrow.change(hour: 10)}
                 end
                 it 'リクエストは200 OKとなること' do
