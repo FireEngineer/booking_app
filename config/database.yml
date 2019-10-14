@@ -30,7 +30,7 @@ test:
   pool: 5
   username: shota6
   password: password
-  host: localhost
+  host: <%= ENV['DB_HOST'] %>
 
 production:
   adapter: mysql2
