@@ -13,3 +13,4 @@ rails g migration AddIsAllowNoticeToStoreMember boolean:is_allow_notice
 rails g migration AddGoogleToStaff client_id:text client_secret:text google_api_token:text
 
 rails g controller Rows
+rails g migration AddBookingMessageToCalendarConfig booking_message:text
