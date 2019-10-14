@@ -28,8 +28,8 @@ test:
   reconnect: false
   database: rails_todo_test
   pool: 5
-  username: shota6
-  password: password
+  username: <%= ENV.fetch("DB_USERNAME") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
   host: <%= ENV['DB_HOST'] %>
 
 production:
