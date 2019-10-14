@@ -13,14 +13,7 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_USERNAME: 'root'
           DB_PASSWORD: ''
-          PRODUCTION_HOST_URL: https://www.yoyaku-app.com
-          DEVELOPMENT_HOST_URL: http://localhost:3000
-          CHANNEL_SECRET: 2a3591a3789e3937403903e9dd87cabd
-          CHANNEL_TOKEN: s61bzMv2/Ta8mhRMaI9kP08sjtdQ0Kfa99ofal8PyOCa0QaNAnAtfrAmNEGO3bnigM0L7tHsPiqRy548ps8r0SXUPZazJKYhxS5sjle/OQ+2opbgYGrdrDYHZl5oKJQJ4i7n3Hi8XB8L91B1SZU4+AdB04t89/1O/w1cDnyilFU=
-          LINE_LOGIN_CHANNEL_ID: 1613295225
-          LINE_LOGIN_CHANNEL_SECRET: f08e3e3f843cd24675469fd5b1ddf930
-          TEST_LINE_USER_ID: Ua552f298a44ffd2ab2a380805aebab28
-          EMAIL_PASS: piosmtkyixpzzioo
+          TZ: Asia/Tokyo
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
