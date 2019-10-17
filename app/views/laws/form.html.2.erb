@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+    <meta  name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <div class="container card card_color">
+      <h2 class="text_center">【株式会社テックリーダーズ】支払い手続き</h2>
+      <form action="{$SelectURL|htmlspecialchars}" method="post">
+        <p>
+          {insert name="input_keyItems"}
+        </p>
+        <div>
+          <h4 class="section_title_style">クレジットカード決済の必要事項をご記入ください</h2>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th scope="row">カード番号</th>
+                <td>
+                  
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">お支払い方法</th>
+                <td>
+                  <input type="radio" name="PayType" value="credit" required>クレジットカード
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-primary">送信</button>
+      </form>
+    </div>
+  </body>
+  <style>
+    .text_center {
+      text-align: center;
+    }
+
+    .container {
+      margin-top: 30px;
+    }
+
+    .card_color {
+      background-color: #fbfafa;
+    }
+
+    .section_title_style {
+      border-bottom: black 1px solid;
+    }
+
+  </style>
+
+</html>
+
