@@ -1,0 +1,2 @@
+class SystemPlan < ApplicationRecord
+end

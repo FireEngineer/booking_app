@@ -7,31 +7,43 @@
   </head>
   <body>
     <div class="container card card_color">
-      <h2 class="text_center">【株式会社テックリーダーズ】支払い手続き</h2>
-      <form action="{$SelectURL|htmlspecialchars}" method="post">
+      <h2 class="text_center">【株式会社テックリーダーズ】お支払い手続き</h2>
+      <form action="{$RetURL|htmlspecialchars}" method="post">
         <p>
-          {insert name="input_keyItems"}
+          {insert name＝”input_returnParams”}
         </p>
         <div>
-          <h4 class="section_title_style">クレジットカード決済の必要事項をご記入ください</h2>
+          <h5 class="section_title_style">ご利用内容</h2>
           <table class="table table-borderless">
             <tbody>
               <tr>
-                <th scope="row">カード番号</th>
+                <th scope="row">金額</th>
                 <td>
-                  
+                  5000円/(毎月)
                 </td>
               </tr>
               <tr>
-                <th scope="row">お支払い方法</th>
+                <th scope="row">支払い方法</th>
                 <td>
-                  <input type="radio" name="PayType" value="credit" required>クレジットカード
+                  一括（毎月）
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">カード番号</th>
+                <td>
+                  {$CardNo|htmlspecialchars}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">有効期限(MM/YY)</th>
+                <td>
+                  {$ExpireMonth|htmlspecialchars}/{$ExpireYear|htmlspecialchars}
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <button class="btn btn-primary">送信</button>
+        <button class="btn btn-primary">進む</button>
       </form>
     </div>
   </body>

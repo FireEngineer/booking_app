@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+    <meta  name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <div class="container card card_color">
+      <h2 class="text_center">【株式会社テックリーダーズ】お支払い手続き</h2>
+      <form action="{$ExecURL|htmlspecialchars}" method="post">
+        <p>
+          {insert name="input_keyItems"}
+        </p>
+        <div>
+          <h4 class="section_title_style">クレジットカード決済の必要事項をご記入ください</h2>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th scope="row">カード番号</th>
+                <td>
+                  <input name="CardNo" type="text" id="Name" class="code form-control" maxlength="16" required/>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">カード有効期限</th>
+                <td>
+                  <select name="ExpireMonth" required>
+                    <option value=""></option>
+                    <option value="01">1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    <option value="08">8</option>
+                    <option value="09">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>月
+
+                  <select name="ExpireYear" required>
+                    <option value="">-</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                  </select>年
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">セキュリティーコード</th>
+                <td>
+                  <input name="SecurityCode" type="text" id="SecurityCode" class="code" maxlength="4" size="6" required />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h4 class="section_title_style">ご利用内容</h2>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th scope="row">システム利用費</th>
+                <td>
+                  5,000円（税込）/ 月
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <input name="Method" type="hidden" value="1" />
+        </div>
+        <button class="btn btn-primary">確認する</button>
+      </form>
+    </div>
+  </body>
+  <style>
+    .text_center {
+      text-align: center;
+    }
+
+    .container {
+      margin-top: 30px;
+    }
+
+    .card_color {
+      background-color: #fbfafa;
+    }
+
+    .section_title_style {
+      border-bottom: black 1px solid;
+    }
+
+  </style>
+
+</html>
+

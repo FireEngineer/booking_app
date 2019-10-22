@@ -90,6 +90,13 @@ Rails.application.routes.draw do
     post "introductions/create_staff", to: "introductions#create_staff"
     # =========
 
+    # =====userの決済ロジック用
+    get 'payments/form', to: 'payments#form', as: 'form'
+    post 'payments/payment_callback', to: 'payments#payment_callback', as: 'payment_callback'
+    post 'payments/registration_callback', to: 'payments#registration_callback', as: 'registration_callback'
+    get 'payments/edit_credit', to: 'payments#edit_credit', as: 'edit_credit'
+    # =========
+
   end
 # ================================================================================================================-
   # staff権限
@@ -107,6 +114,5 @@ Rails.application.routes.draw do
 # ================================================================================================================-
   # 決済関連
   get 'law', to: 'laws#law', as: 'law'
-  get 'form', to: 'laws#form', as: 'form'
 
 end
