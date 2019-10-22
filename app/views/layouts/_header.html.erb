@@ -66,6 +66,8 @@
           <div class="dropdown-menu" aria-labelledby="shiftDropdown">
             <% if @calendar.is_released %>
               <%= link_to "非公開にする", user_calendar_update_is_released_path(current_user, @calendar, commit:"非公開にする"), class:"dropdown-item load_btn", method: :patch %>
+            <% elsif !@calendar.user.system_plans&.find_by(plan_id: "P001") %>
+              <%= link_to "プランに登録してカレンダーを公開する", form_path, class:"dropdown-item load_btn" %>
             <% else %>
               <%= link_to "カレンダーを公開する", user_calendar_update_is_released_path(current_user, @calendar, commit:"公開にする"), class:"dropdown-item load_btn", method: :patch %>
             <% end %>

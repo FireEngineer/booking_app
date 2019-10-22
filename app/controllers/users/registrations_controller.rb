@@ -10,9 +10,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    resource.update(password: params[:password], password_confirmation: params[:password_confirmation], member_id: SecureRandom.alphanumeric(6))
+  end
 
   # GET /resource/edit
   # def edit

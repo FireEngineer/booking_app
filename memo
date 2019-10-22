@@ -14,3 +14,11 @@ rails g migration AddGoogleToStaff client_id:text client_secret:text google_api_
 
 rails g controller Rows
 rails g migration AddBookingMessageToCalendarConfig booking_message:text
+
+rails g migration AddMemberIdToUser member_id:strig
+
+rails g model SystemPlan title:string plan_id:string charge:integer description:text
+
+rails g model Order order_id:string
+
+User.first.update(member_id: "333333")
