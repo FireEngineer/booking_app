@@ -22,3 +22,4 @@ rails g model SystemPlan title:string plan_id:string charge:integer description:
 rails g model Order order_id:string
 
 User.first.update(member_id: "333333")
+Calendar.first.update(is_released: false)
