@@ -23,3 +23,5 @@ rails g model Order order_id:string
 
 User.first.update(member_id: "333333")
 Calendar.first.update(is_released: false)
+
+http://localhost:3000/payments/form
