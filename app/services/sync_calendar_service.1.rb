@@ -1,11 +1,11 @@
 include Encryptor
 class SyncCalendarService
-  attr_accessor :task, :staff, :calendar
+  attr_accessor :task, :user, :calendar
 
-  def self.client_options(staff)
+  def self.client_options(user)
     option = {
-      client_id: decrypt(staff.client_id),
-      client_secret: decrypt(staff.client_secret),
+      client_id: decrypt(user.client_id),
+      client_secret: decrypt(user.client_secret),
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_credential_uri: 'https://www.googleapis.com/oauth2/v4/token',
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
@@ -15,15 +15,15 @@ class SyncCalendarService
     option
   end
 
-  def initialize(task, staff, calendar)
+  def initialize(task, user, calendar)
     @task = task
-    @staff = staff
+    @user = user
     @calendar = calendar
   end
 
   def self.notify(calendar)
-    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
-    client.update!(staff.google_api_token)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
+    client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
     client.execute!(
@@ -38,9 +38,8 @@ class SyncCalendarService
   end
 
   def read_event
-    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
-    debugger
-    client.update!(JSON.parse(staff.google_api_token))
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
+    client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
 
@@ -67,8 +66,8 @@ class SyncCalendarService
   end
 
   def create_event
-    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
-    client.update!(staff.google_api_token)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
+    client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
     service.insert_event(calendar_id, calendar_event)
@@ -78,8 +77,8 @@ class SyncCalendarService
   end
 
   def update_event
-    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
-    client.update!(staff.google_api_token)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
+    client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
     service.update_event(calendar_id, task.calendar_event_uid, calendar_event)
@@ -89,8 +88,8 @@ class SyncCalendarService
   end
 
   def delete_event
-    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
-    client.update!(staff.google_api_token)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
+    client.update!(user.google_api_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
     service.delete_event(calendar_id, task.calendar_event_uid)
@@ -104,10 +103,10 @@ class SyncCalendarService
   private
 
   def refresh_token
-    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
-    client.update!(staff.google_api_token)
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(user))
+    client.update!(user.google_api_token)
     response = client.refresh!
-    staff.google_api_token = staff.google_api_token.merge(response)
+    user.google_api_token = user.google_api_token.merge(response)
   end
 
   def calendar_event

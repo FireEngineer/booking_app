@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     resources :calendars, only: [] do
       resources :staffs do
         # スタッフのライン連携
+        resources :google_calendar_apis
         post 'line_links/redirect_line', to: 'line_links#redirect_line', as: "redirect_line"
       end
     end

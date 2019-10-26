@@ -86,7 +86,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       logger.info('GMO error!!!')
     end
-    debugger
   end
 
 end
