@@ -13,6 +13,9 @@ class Task < ApplicationRecord
 
   scope :member_tasks, -> (store_member) { where(store_member_id: store_member.id) }
   scope :expect_past, -> { where("start_time >= ?", Time.current) }
+  scope :future_tasks, -> { where("start_time >= ?", Time.current) }
+  scope :staff_tasks, -> (staff) { where(staff_id: staff.id) }
+  scope :staff_tasks, -> (staff) { where(staff_id: staff.id) }
   scope :today_tasks, -> { where("start_time >= ? && start_time <= ?", Time.current.beginning_of_day, Time.current.end_of_day) }
   scope :prev_task, -> { where("start_time < ?", Time.current.beginning_of_day) }
   scope :next_task, -> { where("start_time > ?", Time.current.end_of_day) }
@@ -27,6 +30,16 @@ class Task < ApplicationRecord
     # lockメソッドを使って、DBのトランザクションレベルを変更
     interval_time = calendar.calendar_config.interval_time
     raise TaskUnuniqueError if Task.lock.where('start_time < ? && ? < end_time', end_time.since(interval_time.minutes), start_time.ago(interval_time.minutes)).where(staff_id: staff_id).where.not(id: id).any?
+  end
+
+  def self.register_unregistered_tasks_in_staff_google_calendar(staff)
+    Task.future_tasks.staff_tasks(staff).each do |task|
+      if task.google_event_id
+        SyncCalendarService.new(task, task.staff, task.calendar).create_event
+      else
+        SyncCalendarService.new(task, task.staff, task.calendar).update_event
+      end
+    end
   end
   
   def self.by_calendar(calendar)

@@ -11,6 +11,7 @@ class GoogleAuthController < ApplicationController
     # _calendar = service.insert_calendar(calendar)
     # calendar = current_staff.calendars.build(calendar_id: _calendar.id)
     current_staff.save
+    Task.register_unregistered_tasks_in_staff_google_calendar(current_staff)
     # calendar.save
     flash[:success] = "googleカレンダーと連携が完了しました。"
     redirect_to user_calendar_dashboard_url(current_user, current_user.calendars.first)
