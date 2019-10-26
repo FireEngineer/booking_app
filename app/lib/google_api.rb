@@ -11,7 +11,7 @@ include ApplicationHelper
 class GoogleApi
   
   
-  CALENDAR_ID = ENV["CALENDAR_ID"]
+  CALENDAR_ID = "changemymind6@gmail.com"
 
   OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
   APPLICATION_NAME = 'Google Calendar API Ruby Quickstart'.freeze

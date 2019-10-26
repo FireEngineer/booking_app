@@ -39,7 +39,6 @@ class SyncCalendarService
 
   def read_event
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
-    debugger
     client.update!(JSON.parse(staff.google_api_token))
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
@@ -142,7 +141,7 @@ class SyncCalendarService
   end
 
   def calendar_id
-    calendar.calendar_id
+    staff.google_calendar_id
   end
 
   private

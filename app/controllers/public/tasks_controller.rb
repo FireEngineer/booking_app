@@ -31,16 +31,18 @@ class Public::TasksController < Public::Base
 
     @today = Time.current
     # DBタスクデータを引き出す
-    debugger
-    SyncCalendarService.new(task, @staff, @calendar).read_event
-    debugger
     @events = @staff.tasks.map { |task| [task.start_time, task.end_time] }
-    # @events = SyncCalendarService.new(task,@user,@calendar).read_event
+    # googleカレンダーのデータを同期
+    if @staff.google_calendar_id
+      @google_events = SyncCalendarService.new(task, @staff, @calendar).read_event
+    else
+      nil
+    end
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
-    # rescue => e
-    #   errors_log(e)
-    #   redirect_to not_released_page_url
+    rescue => e
+      errors_log(e)
+      redirect_to not_released_page_url
   end
 
   def new

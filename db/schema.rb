@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 2019_10_25_100652) do
     t.text "client_secret"
     t.text "client_id"
     t.text "google_api_token"
+    t.string "google_calendar_id"
     t.index ["calendar_id"], name: "index_staffs_on_calendar_id"
     t.index ["confirmation_token"], name: "index_staffs_on_confirmation_token", unique: true
     t.index ["email"], name: "index_staffs_on_email", unique: true

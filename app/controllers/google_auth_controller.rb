@@ -4,15 +4,15 @@ class GoogleAuthController < ApplicationController
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_staff))
     client.code = params[:code]
     response = client.fetch_access_token!
-    debugger
     current_staff.google_api_token = response.to_json
-    calendar = Google::Apis::CalendarV3::Calendar.new(discription: '', summary: (current_staff.email.sub(/@.*/, '') + '-todo'))
-    service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = client
-    _calendar = service.insert_calendar(calendar)
+    # calendar = Google::Apis::CalendarV3::Calendar.new(discription: '', summary: (current_staff.email.sub(/@.*/, '') + '-todo'))
+    # service = Google::Apis::CalendarV3::CalendarService.new
+    # service.authorization = client
+    # _calendar = service.insert_calendar(calendar)
     # calendar = current_staff.calendars.build(calendar_id: _calendar.id)
     current_staff.save
     # calendar.save
+    flash[:success] = "googleカレンダーと連携が完了しました。"
     redirect_to user_calendar_dashboard_url(current_user, current_user.calendars.first)
   end
 
@@ -39,6 +39,6 @@ class GoogleAuthController < ApplicationController
   private
 
   def params_identifier
-    params.permit(:client_id, :client_secret)
+    params.permit(:client_id, :client_secret, :google_calendar_id)
   end
 end
