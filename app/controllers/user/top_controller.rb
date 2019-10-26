@@ -12,12 +12,12 @@ class User::TopController < User::Base
       @staff = Staff.find_by(id: params[:staff_id])
     end
     # スタッフの情報を取得
-    test = GoogleEventsToJsonOutputer.staff_shifts(@staff)
+    staff_private = staff_private(@staff)
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff, params[:task_id])
     staff_rests = staff_rests(@staff)
     @events = begin
-                (staff_shifts + staff_tasks + staff_rests + test)&.to_json
+                (staff_shifts + staff_tasks + staff_rests + staff_private)&.to_json
               rescue StandardError
                 (calendar_tasks(@calendar) + calendar_holidays(@calendar)).to_json
               end
@@ -55,6 +55,11 @@ class User::TopController < User::Base
   # スタッフのタスクのJSON
   def staff_tasks(staff, search_id)
     StaffTaskToJsonOutputer.staff_tasks(staff, search_id)
+  end
+
+  # スタッフのgoogleカレンダーのプライベートな予定
+  def staff_private(staff)
+    GoogleEventsToJsonOutputer.staff_private(staff)
   end
 
   # カレンダー全体のタスクJSON

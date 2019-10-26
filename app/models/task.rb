@@ -34,7 +34,7 @@ class Task < ApplicationRecord
   end
 
   def calendar_event_uid
-    unique_id = "#{calendar.user.id}todo#{id}"
+    unique_id = "#{self.staff.calendar.public_uid}todo#{self.id}"
     Modules::Base32.encode32hex(unique_id).gsub('=', '')
   end
 
@@ -93,15 +93,15 @@ class Task < ApplicationRecord
   private
 
   def sync_create
-    # SyncCalendarService.new(self, self.calendar.user, self.calendar).create_event
+    SyncCalendarService.new(self, self.staff, self.calendar).create_event
   end
 
   def sybc_update
-    # SyncCalendarService.new(self, self.calendar.user, self.calendar).update_event
+    SyncCalendarService.new(self, self.staff, self.calendar).update_event
   end
 
   def sybc_delete
-    # SyncCalendarService.new(self, self.calendar.user, self.calendar).delete_event
+    SyncCalendarService.new(self, self.staff, self.calendar).delete_event
   end
 
   def line_send_with_edit_task

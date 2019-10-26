@@ -34,6 +34,9 @@ class User::UserTasksController < User::Base
     task.end_time = end_time(task.start_time.to_s, task_course)
     task.calendar = @calendar
     if @store_member.save
+      if task.staff.google_calendar_id
+        SyncCalendarService.new(task, task.staff, task.calendar).create_event
+      end
       LineBot.new.push_message(task, @store_member.line_user_id) if @store_member.line_user_id
       NotificationMailer.send_confirm_to_user(task, @calendar.user, @calendar).deliver if @store_member.email
       flash[:success] = '予約を作成しました'
@@ -53,6 +56,9 @@ class User::UserTasksController < User::Base
     @task.attributes = task_params
     task_course = @task.task_course
     if @task.save
+      if @task.staff.google_calendar_id
+        SyncCalendarService.new(@task, @task.staff, @task.calendar).update_event
+      end
       if params[:is_send_notice_to_member] == "1" && @task.start_time > Time.current
         LineBot.new.push_message_with_edit_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
         NotificationMailer.send_edit_task_to_user(@task, @calendar.user, @calendar).deliver if @task.store_member.email
@@ -68,6 +74,9 @@ class User::UserTasksController < User::Base
   def update_by_drop
     @task = Task.find_by(id: params[:id])
     if @task.update(start_time: params[:start_time], end_time: params[:end_time])
+      if @task.staff.google_calendar_id
+        SyncCalendarService.new(@task, @task.staff, @task.calendar).update_event
+      end
       LineBot.new.push_message_with_edit_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
       NotificationMailer.send_edit_task_to_user(@task, @calendar.user, @calendar).deliver if @task.store_member.email
       render json: 'success'
@@ -79,6 +88,9 @@ class User::UserTasksController < User::Base
   def destroy
     @task = Task.find_by(id: params[:id])
     if @task.destroy
+      if @task.staff.google_calendar_id
+        SyncCalendarService.new(@task, @task.staff, @task.calendar).delete_event
+      end
       respond_to do |format|
         format.html { redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id), notice: '予約をキャンセルしました。' }
         format.json { head :no_content }
