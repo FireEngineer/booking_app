@@ -21,6 +21,7 @@ class User::TopController < User::Base
               rescue StandardError
                 (calendar_tasks(@calendar) + calendar_holidays(@calendar)).to_json
               end
+              # debugger
     if params[:task_id]
       task_date = Task.find_by(id: params[:task_id]).start_time.to_date
       @current_date = l(task_date, format: :to_json)
@@ -74,7 +75,7 @@ class User::TopController < User::Base
 
   # カレンダーの表示する期間
   def date_range(calendar)
-    term = calendar.display_week_term.to_i
+    term = ENV['CALENDAR_DISPLAY_TERM'].to_i #calendar.display_week_term.to_i
     hash = {
       "start_date": Date.current.beginning_of_month,
       "end_date": Date.current.since(term.months).end_of_month

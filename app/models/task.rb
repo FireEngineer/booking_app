@@ -34,10 +34,8 @@ class Task < ApplicationRecord
 
   def self.register_unregistered_tasks_in_staff_google_calendar(staff)
     Task.future_tasks.staff_tasks(staff).each do |task|
-      if task.google_event_id
+      unless task.google_event_id
         SyncCalendarService.new(task, task.staff, task.calendar).create_event
-      else
-        SyncCalendarService.new(task, task.staff, task.calendar).update_event
       end
     end
   end

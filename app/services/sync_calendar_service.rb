@@ -47,7 +47,7 @@ class SyncCalendarService
                                    single_events: true,
                                    order_by: 'startTime',
                                    time_max: Date.today.since(calendar.display_week_term.week).rfc3339,
-                                   time_min: Date.today.since(calendar.start_date.day).rfc3339)
+                                   time_min: Date.today.rfc3339)
     puts 'Upcoming events:'
     puts 'No upcoming events found' if response.items.empty?
     array = []
@@ -117,7 +117,8 @@ class SyncCalendarService
       summary: "【TEL】#{task.store_member.name}",
       # location: '800 Howard St., San Francisco, CA 94103',
       description: "【セレブエンジニア電話相談】名前：#{task.store_member.name}、TEL：#{task.store_member.phone}、
-      キャンセルURL：#{"http://localhost:3000/calendars/#{calendar.public_uid}/tasks/#{task.id}/cancel" if Rails.env == 'development'}",
+      予約詳細：#{Rails.application.routes.url_helpers.user_calendar_dashboard_url(task.calendar.user, task.calendar, staff_id: task.staff.id, task_id: task.id)},
+      お客様情報：#{Rails.application.routes.url_helpers.calendar_store_member_url(task.calendar, task.store_member)}",
       start: {
         date_time: time(task.start_time, 0).to_s,
         time_zone: 'Asia/Tokyo'
@@ -129,9 +130,9 @@ class SyncCalendarService
       # recurrence: [
       #   'RRULE:FREQ=DAILY;COUNT=2'
       # ],
-      attendees: [
-        { email: task.store_member.email.to_s }
-      ]
+      # attendees: [
+      #   { email: task.store_member.email.to_s }
+      # ]
       # reminders: {
       #   use_default: false,
       #   overrides: [

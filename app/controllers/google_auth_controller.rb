@@ -15,6 +15,10 @@ class GoogleAuthController < ApplicationController
     # calendar.save
     flash[:success] = "googleカレンダーと連携が完了しました。"
     redirect_to user_calendar_dashboard_url(current_user, current_user.calendars.first)
+  rescue Signet::AuthorizationError
+    update_unlink(current_staff) #googleカレンダーのカラムをリセット
+    flash[:danger] = "googleカレンダーとの連携に失敗しました。入力した値をもう一度確認してください。"
+    redirect_to user_calendar_dashboard_url(current_user, current_user.calendars.first)
   end
 
   def redirect
@@ -38,13 +42,17 @@ class GoogleAuthController < ApplicationController
   end
 
   def unlink
-    if current_staff.update(client_id: nil, client_secret:nil, google_api_token: nil, google_calendar_id: nil)
+    if update_unlink(current_staff)
       flash[:notice] = "googleカレンダーと連携を解除しました。"
       redirect_to user_calendar_dashboard_url(current_user, current_user.calendars.first)
     end
   end
 
   private
+
+  def update_unlink(staff)
+    staff.update(client_id: nil, client_secret:nil, google_api_token: nil, google_calendar_id: nil)
+  end
 
   def params_identifier
     params.permit(:client_id, :client_secret, :google_calendar_id)

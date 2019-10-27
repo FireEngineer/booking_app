@@ -33,7 +33,7 @@ module CalendarTaskToJsonOutputer
     end
 
     def calendar_holidays(calendar)
-        term = calendar.display_week_term.to_i
+        term = ENV['CALENDAR_DISPLAY_TERM'].to_i #calendar.display_week_term.to_i
         [*Date.current.beginning_of_month..Date.current.since(term.months).end_of_month].map do |date|
           day = %w[日 月 火 水 木 金 土][date.wday]
           if calendar.calendar_config.regular_holidays.where(holiday_flag: true).find_by(day: day)
