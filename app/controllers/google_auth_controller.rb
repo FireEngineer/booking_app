@@ -37,6 +37,13 @@ class GoogleAuthController < ApplicationController
     end
   end
 
+  def unlink
+    if current_staff.update(client_id: nil, client_secret:nil, google_api_token: nil, google_calendar_id: nil)
+      flash[:notice] = "googleカレンダーと連携を解除しました。"
+      redirect_to user_calendar_dashboard_url(current_user, current_user.calendars.first)
+    end
+  end
+
   private
 
   def params_identifier

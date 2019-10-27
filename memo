@@ -25,3 +25,6 @@ User.first.update(member_id: "333333")
 Calendar.first.update(is_released: false)
 
 http://localhost:3000/payments/form
+
+rails g migration AddGoogleCalendarToStaff client_secret:string client_id:string google_api_token:string
+rails g controller Staff::GoogleCalendarApis
