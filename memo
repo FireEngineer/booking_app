@@ -28,3 +28,8 @@ http://localhost:3000/payments/form
 
 rails g migration AddGoogleCalendarToStaff client_secret:string client_id:string google_api_token:string
 rails g controller Staff::GoogleCalendarApis
+
+システムプラン作成
+SystemPlan.create!(title: "有料プラン", plan_id: "P001", charge: 5000, description: "有料プランです。")
+
+User.all.each do{|user| Order.create(user_id: user.id, system_plan_id:1, order_id: "#{user.id}0000")}

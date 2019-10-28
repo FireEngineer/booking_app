@@ -76,8 +76,7 @@ class User::UserTasksController < User::Base
     @task = Task.find_by(id: params[:id])
     ActiveRecord::Base.transaction do
       @task.update!(start_time: params[:start_time], end_time: params[:end_time])
-      sync_google_calendar_update(task)
-      raise
+      sync_google_calendar_update(@task)
       LineBot.new.push_message_with_edit_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
       NotificationMailer.send_edit_task_to_user(@task, @calendar.user, @calendar).deliver if @task.store_member.email
     end
@@ -92,6 +91,8 @@ class User::UserTasksController < User::Base
     ActiveRecord::Base.transaction do
       @task.destroy!
       sync_google_calendar_delete(@task)
+      LineBot.new.push_message_with_delete_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
+      NotificationMailer.send_delete_task_to_user(@task, @calendar.user, @calendar).deliver if @task.store_member.email
     end
       respond_to do |format|
         format.html { redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id), notice: '予約をキャンセルしました。' }
