@@ -10,7 +10,7 @@ class SyncCalendarService
       token_credential_uri: 'https://www.googleapis.com/oauth2/v4/token',
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
       redirect_uri: Rails.application.routes.url_helpers.google_auth_callback_url,
-      additional_parameters: { prompt: 'consent' }
+      additional_parameters: { prompt: 'consent', access_type: "offline", approval_prompt: "force" }
     }
     option
   end
@@ -107,6 +107,7 @@ class SyncCalendarService
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
     client.update!(JSON.parse(staff.google_api_token))
     response = client.refresh!
+    debugger
     staff.google_api_token = response.to_json
     staff.save!
   end

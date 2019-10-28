@@ -33,18 +33,19 @@ class User::UserTasksController < User::Base
     task_course = TaskCourse.find_by(id: task_params['task_course_id'])
     task.end_time = end_time(task.start_time.to_s, task_course)
     task.calendar = @calendar
-    if @store_member.save
-      if task.staff.google_calendar_id
-        SyncCalendarService.new(task, task.staff, task.calendar).create_event
-      end
+
+    ActiveRecord::Base.transaction do
+      @store_member.save!
+      sync_google_calendar_create(task)
       LineBot.new.push_message(task, @store_member.line_user_id) if @store_member.line_user_id
       NotificationMailer.send_confirm_to_user(task, @calendar.user, @calendar).deliver if @store_member.email
-      flash[:success] = '予約を作成しました'
-      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
-    else
-      flash[:error] = @store_member.errors.full_messages[0]
-      redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
     end
+    flash[:success] = '予約を作成しました'
+    redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
+  rescue
+    # sync_google_calendar_create(task)
+    flash[:error] = @store_member.errors.full_messages[0]
+    redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
   end
 
   def show
@@ -55,51 +56,52 @@ class User::UserTasksController < User::Base
     @task = Task.find(params[:id])
     @task.attributes = task_params
     task_course = @task.task_course
-    if @task.save
-      if @task.staff.google_calendar_id
-        SyncCalendarService.new(@task, @task.staff, @task.calendar).update_event
-      end
+    ActiveRecord::Base.transaction do
+      @task.save!
+      sync_google_calendar_update(@task)
       if params[:is_send_notice_to_member] == "1" && @task.start_time > Time.current
         LineBot.new.push_message_with_edit_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
         NotificationMailer.send_edit_task_to_user(@task, @calendar.user, @calendar).deliver if @task.store_member.email
       end
+    end
       flash[:success] = '予約を更新しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id, task_id: @task.id)
-    else
+    rescue
+      sync_google_calendar_update(@task.reload)
       flash[:success] = '予約の更新ができませんでした。'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id, task_id: @task.id)
-    end
   end
 
   def update_by_drop
     @task = Task.find_by(id: params[:id])
-    if @task.update(start_time: params[:start_time], end_time: params[:end_time])
-      if @task.staff.google_calendar_id
-        SyncCalendarService.new(@task, @task.staff, @task.calendar).update_event
-      end
+    ActiveRecord::Base.transaction do
+      @task.update!(start_time: params[:start_time], end_time: params[:end_time])
+      sync_google_calendar_update(task)
+      raise
       LineBot.new.push_message_with_edit_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
       NotificationMailer.send_edit_task_to_user(@task, @calendar.user, @calendar).deliver if @task.store_member.email
-      render json: 'success'
-    else
-      render json: @task.errors.full_messages
     end
+    render json: 'success'
+    rescue
+      sync_google_calendar_update(@task.reload)
+      render json: @task.errors.full_messages
   end
 
   def destroy
     @task = Task.find_by(id: params[:id])
-    if @task.destroy
-      if @task.staff.google_calendar_id
-        SyncCalendarService.new(@task, @task.staff, @task.calendar).delete_event
-      end
+    ActiveRecord::Base.transaction do
+      @task.destroy!
+      sync_google_calendar_delete(@task)
+    end
       respond_to do |format|
         format.html { redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id), notice: '予約をキャンセルしました。' }
         format.json { head :no_content }
         format.js { render :destroy }
       end
-    else
+    rescue
+      # sync_google_calendar_delete(@task)
       flash[:warnnig] = '予約をキャンセルできませんでした。'
       redirect_to user_calendar_user_tasks_url(params[:user_id])
-    end
   end
 
   private
@@ -111,4 +113,24 @@ class User::UserTasksController < User::Base
   def task_params
     params.require(:task).permit(:start_time, :end_time, :staff_id, :task_course_id, :memo, :request)
   end
+
+  def sync_google_calendar_create(task)
+    if task.staff.google_calendar_id
+      SyncCalendarService.new(task, task.staff, task.calendar).create_event
+    end
+  end
+
+  def sync_google_calendar_update(task)
+    if task.staff.google_calendar_id
+      SyncCalendarService.new(task, task.staff, task.calendar).update_event
+    end
+  end
+
+  def sync_google_calendar_delete(task)
+    if task.staff.google_calendar_id
+      SyncCalendarService.new(task, task.staff, task.calendar).delete_event
+    end
+  end
+
+
 end
