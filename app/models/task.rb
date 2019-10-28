@@ -13,6 +13,9 @@ class Task < ApplicationRecord
 
   scope :member_tasks, -> (store_member) { where(store_member_id: store_member.id) }
   scope :expect_past, -> { where("start_time >= ?", Time.current) }
+  scope :future_tasks, -> { where("start_time >= ?", Time.current) }
+  scope :staff_tasks, -> (staff) { where(staff_id: staff.id) }
+  scope :staff_tasks, -> (staff) { where(staff_id: staff.id) }
   scope :today_tasks, -> { where("start_time >= ? && start_time <= ?", Time.current.beginning_of_day, Time.current.end_of_day) }
   scope :prev_task, -> { where("start_time < ?", Time.current.beginning_of_day) }
   scope :next_task, -> { where("start_time > ?", Time.current.end_of_day) }
@@ -28,13 +31,21 @@ class Task < ApplicationRecord
     interval_time = calendar.calendar_config.interval_time
     raise TaskUnuniqueError if Task.lock.where('start_time < ? && ? < end_time', end_time.since(interval_time.minutes), start_time.ago(interval_time.minutes)).where(staff_id: staff_id).where.not(id: id).any?
   end
+
+  def self.register_unregistered_tasks_in_staff_google_calendar(staff)
+    Task.future_tasks.staff_tasks(staff).each do |task|
+      unless task.google_event_id
+        SyncCalendarService.new(task, task.staff, task.calendar).create_event
+      end
+    end
+  end
   
   def self.by_calendar(calendar)
     joins(:store_member).where(calendar_id: calendar.id).select('tasks.*, store_members.name, store_members.email, store_members.phone, store_members.id as member_id')
   end
 
   def calendar_event_uid
-    unique_id = "#{calendar.user.id}todo#{id}"
+    unique_id = "#{self.staff.calendar.public_uid}todo#{self.id}"
     Modules::Base32.encode32hex(unique_id).gsub('=', '')
   end
 
@@ -93,15 +104,15 @@ class Task < ApplicationRecord
   private
 
   def sync_create
-    # SyncCalendarService.new(self, self.calendar.user, self.calendar).create_event
+    SyncCalendarService.new(self, self.staff, self.calendar).create_event
   end
 
   def sybc_update
-    # SyncCalendarService.new(self, self.calendar.user, self.calendar).update_event
+    SyncCalendarService.new(self, self.staff, self.calendar).update_event
   end
 
   def sybc_delete
-    # SyncCalendarService.new(self, self.calendar.user, self.calendar).delete_event
+    SyncCalendarService.new(self, self.staff, self.calendar).delete_event
   end
 
   def line_send_with_edit_task
