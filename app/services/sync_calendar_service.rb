@@ -10,7 +10,9 @@ class SyncCalendarService
       token_credential_uri: 'https://www.googleapis.com/oauth2/v4/token',
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
       redirect_uri: Rails.application.routes.url_helpers.google_auth_callback_url,
-      additional_parameters: { prompt: 'consent', access_type: "offline", approval_prompt: "force" }
+      access_type: "offline",
+      approval_prompt: "force",
+      grant_type: 'authorization_code'
     }
     option
   end
