@@ -16,17 +16,7 @@ class SyncCalendarService
     }
     option
   end
-
-  def self.refresh_options(staff)
-    option = {
-      client_id: decrypt(staff.client_id),
-      client_secret: decrypt(staff.client_secret),
-      refresh_token: staff.refresh_token,
-      grant_type: 'refresh_token'
-    }
-    option
-  end
-
+  
   def initialize(task, staff, calendar)
     @task = task
     @staff = staff
