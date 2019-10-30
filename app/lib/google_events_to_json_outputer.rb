@@ -15,8 +15,8 @@ module GoogleEventsToJsonOutputer
         }
       end
     end.compact
-    # rescue StandardError
-    #   []
+    rescue StandardError
+      []
   end
 
   module_function :staff_private

@@ -56,7 +56,6 @@ $(document).on 'turbolinks:load', ->
                 console.log(data);
                 return
               else
-                debugger
                 alert(data["responseText"])
                 console.log(data["responseText"]);
                 console.log(data);
