@@ -4,7 +4,9 @@ class GoogleAuthController < ApplicationController
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(current_staff))
     client.code = params[:code]
     response = client.fetch_access_token!
+    debugger
     current_staff.google_api_token = response.to_json
+    current_staff.refresh_token = response["refresh_token"]
     # calendar = Google::Apis::CalendarV3::Calendar.new(discription: '', summary: (current_staff.email.sub(/@.*/, '') + '-todo'))
     # service = Google::Apis::CalendarV3::CalendarService.new
     # service.authorization = client

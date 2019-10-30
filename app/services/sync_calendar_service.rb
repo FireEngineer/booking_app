@@ -17,6 +17,16 @@ class SyncCalendarService
     option
   end
 
+  def self.refresh_options(staff)
+    option = {
+      client_id: decrypt(staff.client_id),
+      client_secret: decrypt(staff.client_secret),
+      refresh_token: staff.refresh_token,
+      grant_type: 'refresh_token'
+    }
+    option
+  end
+
   def initialize(task, staff, calendar)
     @task = task
     @staff = staff
@@ -40,6 +50,7 @@ class SyncCalendarService
   end
 
   def read_event
+    refresh_token
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
     client.update!(JSON.parse(staff.google_api_token))
     service = Google::Apis::CalendarV3::CalendarService.new
@@ -106,12 +117,24 @@ class SyncCalendarService
   private
 
   def refresh_token
-    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
-    client.update!(JSON.parse(staff.google_api_token))
-    response = client.refresh!
-    debugger
-    staff.google_api_token = response.to_json
+    response = get_access_token
+    staff.google_api_token = response
     staff.save!
+  end
+
+  def get_access_token
+    uri = URI.parse("https://www.googleapis.com/oauth2/v4/token?refresh_token=#{staff.refresh_token}&client_id=#{decrypt(staff.client_id)}&client_secret=#{decrypt(staff.client_secret)}&grant_type=refresh_token")
+    request = Net::HTTP::Post.new(uri)
+    req_options = {
+      use_ssl: uri.scheme == "https",
+    }
+
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+      http.request(request)
+    end
+
+    response.code
+    response.body
   end
 
   def calendar_event
