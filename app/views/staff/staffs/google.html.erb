@@ -1,0 +1,6 @@
+<% if @staff.google_calendar_id %>
+  <%= link_to "Googleカレンダーと連携解除する", google_auth_unlink_path, class:"btn btn-secondary", data: {confirm: "連携を解除します。"}, method: :patch %>
+  <%= link_to "Googleカレンダーと再度連携する", new_calendar_staff_google_calendar_api_path(@calendar, @staff), class:"btn btn-primary" %>
+<% else %>
+  <%= link_to "Googleカレンダーと連携する", new_calendar_staff_google_calendar_api_path(@calendar, @staff), class:"btn btn-primary" %>
+<% end %>

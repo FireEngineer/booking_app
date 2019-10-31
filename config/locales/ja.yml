@@ -221,6 +221,7 @@ ja:
       to_date: "%Y年%m月"
       to_work_json: "%Y-%m-%dT%H:%M:%S"
       to_google_time: "%Y%m%dT%H%M00"
+      to_gmo_pay_time: "%Y%m%d%H%M%S"
     pm: 午後
   date:
     formats:

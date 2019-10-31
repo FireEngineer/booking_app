@@ -32,12 +32,17 @@ class Public::TasksController < Public::Base
     @today = Time.current
     # DBタスクデータを引き出す
     @events = @staff.tasks.map { |task| [task.start_time, task.end_time] }
-    # @events = SyncCalendarService.new(task,@user,@calendar).read_event
+    # googleカレンダーのデータを同期
+    if @staff.google_calendar_id
+      @google_events = SyncCalendarService.new(task, @staff, @calendar).read_event
+    else
+      nil
+    end
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
-    rescue => e
-      errors_log(e)
-      redirect_to not_released_page_url
+    # rescue => e
+    #   errors_log(e)
+    #   redirect_to not_released_page_url
   end
 
   def new
@@ -138,10 +143,16 @@ class Public::TasksController < Public::Base
 
   def destroy
     @task.destroy
+    # googleカレンダー連携
+    if @task.staff.google_calendar_id
+      SyncCalendarService.new(@task, @task.staff, @task.calendar).delete_event
+    end
+    # 通知許可
     if @task.store_member.is_allow_notice?
       LineBot.new.push_message_with_delete_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
       NotificationMailer.send_delete_task_to_user(@task, @calendar.user, @calendar).deliver if @task.store_member.email
     end
+    # スタッフ通知
     LineBotByStaff.new.push_message_with_task_cancel(@task, @task.staff.line_user_id)
     respond_to do |format|
       format.html { redirect_to calendar_task_cancel_complete_url(params[:calendar_id], @task), success: '予約をキャンセルしました。' }
@@ -210,10 +221,16 @@ class Public::TasksController < Public::Base
     @task.task_course = @task_course
     @task.staff = Staff.find(params[:staff_id])
     if @store_member.save
+      # googleカレンダー連携
+      if @task.staff.google_calendar_id
+        SyncCalendarService.new(@task, @task.staff, @task.calendar).create_event
+      end
+      # 通知許可
       if @store_member.is_allow_notice?
         LineBot.new.push_message(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
         NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
       end
+      # スタッフ通知
       LineBotByStaff.new.push_message_with_task_create(@task, @task.staff.line_user_id)
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)
@@ -254,10 +271,16 @@ class Public::TasksController < Public::Base
     @staff = @task.staff
     if @store_member.save
       @store_member.update(line_user_id: line_user_id)
+      # googleカレンダー連携
+      if @task.staff.google_calendar_id
+        SyncCalendarService.new(@task, @task.staff, @task.calendar).create_event
+      end
+      # 通知許可
       if @store_member.is_allow_notice?
         LineBot.new.push_message(@task, line_user_id)
         NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
       end
+      # スタッフ通知
       LineBotByStaff.new.push_message_with_task_create(@task, @staff.line_user_id) if @staff.line_user_id
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)

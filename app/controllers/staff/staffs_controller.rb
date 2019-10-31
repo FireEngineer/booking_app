@@ -5,8 +5,8 @@ class Staff::StaffsController < Staff::StaffBase
   def show
   end
 
-  def password_edit
-
+  def google
+    
   end
 
   def update

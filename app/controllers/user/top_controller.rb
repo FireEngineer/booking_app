@@ -12,14 +12,15 @@ class User::TopController < User::Base
       @staff = Staff.find_by(id: params[:staff_id])
     end
     # スタッフの情報を取得
+    staff_private = staff_private(@staff)
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff, params[:task_id])
     staff_rests = staff_rests(@staff)
-    @events = begin
-                (staff_shifts + staff_tasks + staff_rests)&.to_json
-              rescue StandardError
-                (calendar_tasks(@calendar) + calendar_holidays(@calendar)).to_json
-              end
+    if @staff
+      @events = (staff_shifts + staff_tasks + staff_rests + staff_private)&.to_json
+    else
+      @events = (calendar_tasks(@calendar) + calendar_holidays(@calendar)).to_json
+    end
     if params[:task_id]
       task_date = Task.find_by(id: params[:task_id]).start_time.to_date
       @current_date = l(task_date, format: :to_json)
@@ -56,6 +57,11 @@ class User::TopController < User::Base
     StaffTaskToJsonOutputer.staff_tasks(staff, search_id)
   end
 
+  # スタッフのgoogleカレンダーのプライベートな予定
+  def staff_private(staff)
+    GoogleEventsToJsonOutputer.staff_private(staff)
+  end
+
   # カレンダー全体のタスクJSON
   def calendar_tasks(calendar)
     CalendarTaskToJsonOutputer.calendar_tasks(calendar)
@@ -68,7 +74,7 @@ class User::TopController < User::Base
 
   # カレンダーの表示する期間
   def date_range(calendar)
-    term = calendar.display_week_term.to_i
+    term = ENV['CALENDAR_DISPLAY_TERM'].to_i #calendar.display_week_term.to_i
     hash = {
       "start_date": Date.current.beginning_of_month,
       "end_date": Date.current.since(term.months).end_of_month

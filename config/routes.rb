@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'google_auth/redirect'
   get 'google_auth/ident_form'
   patch 'google_auth/identifier'
+  patch 'google_auth/unlink'
 # ================================================================================================================-
   # devise
   devise_for :admins, controllers: {
@@ -90,6 +91,13 @@ Rails.application.routes.draw do
     post "introductions/create_staff", to: "introductions#create_staff"
     # =========
 
+    # =====userの決済ロジック用
+    get 'payments/form', to: 'payments#form', as: 'form'
+    post 'payments/payment_callback', to: 'payments#payment_callback', as: 'payment_callback'
+    post 'payments/registration_callback', to: 'payments#registration_callback', as: 'registration_callback'
+    get 'payments/edit_credit', to: 'payments#edit_credit', as: 'edit_credit'
+    # =========
+
   end
 # ================================================================================================================-
   # staff権限
@@ -98,15 +106,16 @@ Rails.application.routes.draw do
     get 'callback', to: 'line_links#callback', as: "line_link_staff"
     resources :calendars, only: [] do
       resources :staffs do
+        resources :google_calendar_apis
         # スタッフのライン連携
         post 'line_links/redirect_line', to: 'line_links#redirect_line', as: "redirect_line"
       end
+      get 'staffs/:id/google', to: 'staffs#google', as: 'google'
     end
   end
 
 # ================================================================================================================-
   # 決済関連
   get 'law', to: 'laws#law', as: 'law'
-  get 'form', to: 'laws#form', as: 'form'
 
 end

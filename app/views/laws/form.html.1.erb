@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+    <meta  name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <div class="container card card_color">
+      <h2 class="text_center">【株式会社テックリーダーズ】お支払い手続き</h2>
+      <form action="{$RetURL|htmlspecialchars}" method="post">
+        <p>
+          {insert name＝”input_returnParams”}
+        </p>
+        <div>
+          <h5 class="section_title_style">ご利用内容</h2>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th scope="row">金額</th>
+                <td>
+                  5000円/(毎月)
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">支払い方法</th>
+                <td>
+                  一括（毎月）
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">カード番号</th>
+                <td>
+                  {$CardNo|htmlspecialchars}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">有効期限(MM/YY)</th>
+                <td>
+                  {$ExpireMonth|htmlspecialchars}/{$ExpireYear|htmlspecialchars}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-primary">進む</button>
+      </form>
+    </div>
+  </body>
+  <style>
+    .text_center {
+      text-align: center;
+    }
+
+    .container {
+      margin-top: 30px;
+    }
+
+    .card_color {
+      background-color: #fbfafa;
+    }
+
+    .section_title_style {
+      border-bottom: black 1px solid;
+    }
+
+  </style>
+
+</html>
+

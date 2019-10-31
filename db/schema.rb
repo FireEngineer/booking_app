@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_13_012234) do
+ActiveRecord::Schema.define(version: 2019_10_30_103421) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -76,6 +76,16 @@ ActiveRecord::Schema.define(version: 2019_10_13_012234) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_line_bots_on_admin_id"
+  end
+
+  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "order_id"
+    t.bigint "user_id"
+    t.bigint "system_plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["system_plan_id"], name: "index_orders_on_system_plan_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "regular_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -151,6 +161,11 @@ ActiveRecord::Schema.define(version: 2019_10_13_012234) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.text "client_secret"
+    t.text "client_id"
+    t.text "google_api_token"
+    t.string "google_calendar_id"
+    t.string "refresh_token"
     t.index ["calendar_id"], name: "index_staffs_on_calendar_id"
     t.index ["confirmation_token"], name: "index_staffs_on_confirmation_token", unique: true
     t.index ["email"], name: "index_staffs_on_email", unique: true
@@ -170,6 +185,15 @@ ActiveRecord::Schema.define(version: 2019_10_13_012234) do
     t.text "memo"
     t.boolean "is_allow_notice"
     t.index ["calendar_id"], name: "index_store_members_on_calendar_id"
+  end
+
+  create_table "system_plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.string "plan_id"
+    t.integer "charge"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "task_courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -223,6 +247,7 @@ ActiveRecord::Schema.define(version: 2019_10_13_012234) do
     t.text "client_id"
     t.text "client_secret"
     t.text "google_api_token"
+    t.string "member_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -230,6 +255,8 @@ ActiveRecord::Schema.define(version: 2019_10_13_012234) do
   add_foreign_key "calendar_configs", "calendars"
   add_foreign_key "iregular_holidays", "calendar_configs"
   add_foreign_key "line_bots", "admins"
+  add_foreign_key "orders", "system_plans"
+  add_foreign_key "orders", "users"
   add_foreign_key "regular_holidays", "calendar_configs"
   add_foreign_key "staff_regular_holidays", "regular_holidays"
   add_foreign_key "staff_regular_holidays", "staffs"

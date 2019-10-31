@@ -5,5 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :calendars
+  has_many :orders
+  has_many :system_plans, through: :orders
+
   serialize :google_api_token, Hash
 end

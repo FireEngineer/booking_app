@@ -5,7 +5,7 @@
 <h4>LINE連携状況：<%= @staff.line_link %></h4>
 
 <%= link_to "LINE連携する", calendar_staff_redirect_line_path(@calendar, @staff), class:"btn btn-success", method: :post %>
-<%=%>
+<%#= link_to "Googleカレンダーと連携する", new_calendar_staff_google_calendar_api_path(@calendar, @staff), class:"btn btn-primary" %>
 
 <%= form_with model:@staff, url: calendar_staff_path(@calendar, @staff), local: true do |f| %>
   <%= f.label :名前, class:"label_style" %><span class="badge badge-danger">必須</span>
