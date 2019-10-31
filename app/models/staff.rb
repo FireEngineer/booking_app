@@ -27,7 +27,7 @@ class Staff < ApplicationRecord
 
   def create_staff_shifts
     start_of_month = Date.current.beginning_of_month
-    end_of_month = start_of_month.since(3.months).end_of_month
+    end_of_month = start_of_month.since(ENV['CALENDAR_DISPLAY_TERM'].to_i.months).end_of_month
     regular_holidays = get_regular_holidays
     [*start_of_month..end_of_month].each do |date|
       day = %w[日 月 火 水 木 金 土][date.wday]
