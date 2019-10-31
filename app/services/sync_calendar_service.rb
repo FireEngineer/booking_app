@@ -49,7 +49,7 @@ class SyncCalendarService
     response = service.list_events(calendar_id,
                                    single_events: true,
                                    order_by: 'startTime',
-                                   time_max: Date.today.since(calendar.display_week_term.week).rfc3339,
+                                   time_max: Date.today.since(calendar.display_week_term.month).rfc3339,
                                    time_min: Date.today.rfc3339)
     puts 'Upcoming events:'
     puts 'No upcoming events found' if response.items.empty?
