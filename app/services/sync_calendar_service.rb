@@ -136,11 +136,11 @@ class SyncCalendarService
       予約詳細：#{Rails.application.routes.url_helpers.user_calendar_dashboard_url(task.calendar.user, task.calendar, staff_id: task.staff.id, task_id: task.id)},
       お客様情報：#{Rails.application.routes.url_helpers.calendar_store_member_url(task.calendar, task.store_member)}",
       start: {
-        date_time: time(task.start_time, 0).to_s,
+        date_time: I18n.l(task.start_time, format: :to_work_json),
         time_zone: 'Asia/Tokyo'
       },
       end: {
-        date_time: time(task.end_time, 0).to_s,
+        date_time: I18n.l(task.end_time, format: :to_work_json),
         time_zone: 'Asia/Tokyo'
       },
       # recurrence: [
