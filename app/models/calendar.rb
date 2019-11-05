@@ -9,11 +9,13 @@ class Calendar < ApplicationRecord
   has_many :tasks
   has_many :staffs
 
-  validates :display_week_term, presence: true
-  validates :end_date, presence: true
-  validates :start_date, presence: true
-  validates :end_time, presence: true
-  validates :start_time, presence: true
+  validates :display_week_term, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
+  validates :end_date, presence: true, numericality: { only_integer: true }
+  validates :start_date, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
+  validates :end_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 24 }
+  validates :start_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 24 }
+
+  validate :start_time_end_time_validate
 
   after_create :create_default_task_course
   after_create :create_calendar_config
@@ -44,6 +46,13 @@ class Calendar < ApplicationRecord
   end
 
   private
+
+    def start_time_end_time_validate
+      if start_time >= end_time
+        errors.add(:start_time, 'は表示終了時刻より遅い時間には設定できません') # エラーメッセージ
+      end
+    end
+
     def booking_message(calendar)
       text = <<-EOS
         ご予約ありがとうございます！

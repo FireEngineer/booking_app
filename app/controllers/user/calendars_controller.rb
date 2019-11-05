@@ -24,9 +24,9 @@ class User::CalendarsController < User::Base
       end
       flash[:succese] = 'カレンダーの設定を更新しました。'
       redirect_to user_calendar_url(@user, @calendar)
-
     else
-      render action: :index
+      @calendar.reload
+      render action: :show
     end
   end
 
