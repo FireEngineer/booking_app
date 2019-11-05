@@ -44,10 +44,38 @@
     <div class="card-footer">
       通知を許可していない方はこのページを参照してください。<br>
       <br>
-      <%= simple_format(@task.calendar.calendar_config.booking_message) %>
+      <%= simple_format(raw Rinku.auto_link(h(@task.calendar.calendar_config.booking_message))) %>
+      <%= raw Rinku.auto_link(h(@task.calendar.calendar_config.booking_link)) %>
     </div>
   </div>
 
   <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style" %>
   <%= link_to "キャンセルを行う", calendar_task_path(params[:calendar_id], @task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
 </div>
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">ご予約ありがとうございます！</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <small>ご予約者様へのメッセージ</small>
+        <p>
+          <%= simple_format(raw Rinku.auto_link(h(@task.calendar.calendar_config.booking_message))) %>
+          <%= raw Rinku.auto_link(h(@task.calendar.calendar_config.booking_link)) %>
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<% if @calendar.calendar_config.special_modal_flag? %>
+  <script>
+    $('#myModal').modal('show')
+  </script>
+<% end %>

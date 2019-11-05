@@ -39,3 +39,8 @@ User.all.each {|user| user.update(member_id: "#{user.id}1111")}
 rails g migration AddRefreshTokenToStaff refresh_token:string
 
 https://www.yoyaku-app.com/google_auth/callback
+
+
+
+rails g migration AddBookingLinkToCalendarConfig booking_link:string
+rails g migration AddSpecialModalFlagToCalendarConfig special_modal_flag:boolean

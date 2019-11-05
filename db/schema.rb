@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_30_103421) do
+ActiveRecord::Schema.define(version: 2019_11_05_121906) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -37,6 +37,10 @@ ActiveRecord::Schema.define(version: 2019_10_30_103421) do
     t.datetime "updated_at", null: false
     t.integer "interval_time", default: 0
     t.text "booking_message"
+    t.string "booking_link"
+    t.text "update_message"
+    t.text "cancel_message"
+    t.boolean "special_modal_flag", default: false
     t.index ["calendar_id"], name: "index_calendar_configs_on_calendar_id"
   end
 
