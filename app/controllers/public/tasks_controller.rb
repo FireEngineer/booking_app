@@ -27,7 +27,7 @@ class Public::TasksController < Public::Base
     @staff = Staff.find(staff_id)
 
     @user = @calendar.user
-    @times = time_interval(@calendar.start_time, @calendar.end_time)
+    @times = time_interval(@calendar)
 
     @today = Time.current
     # DBタスクデータを引き出す
@@ -196,11 +196,14 @@ class Public::TasksController < Public::Base
   end
 
   # 予約カレンダーの表示間隔
-  def time_interval(start_time, end_time)
+  def time_interval(calendar)
+    start_time = calendar.start_time
+    end_time = calendar.end_time
+    interval_time = calendar.display_interval_time
     array = []
     1.step do |i|
-      array.push(Time.parse("#{start_time}:00") + 10.minutes * (i - 1))
-      break if Time.parse("#{start_time}:00") + 10.minutes * (i - 1) == Time.parse("#{end_time}:00")
+      array.push(Time.parse("#{start_time}:00") + interval_time.minutes * (i - 1))
+      break if Time.parse("#{start_time}:00") + interval_time.minutes * (i - 1) == Time.parse("#{end_time}:00")
     end
     array
   end
