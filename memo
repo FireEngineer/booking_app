@@ -44,3 +44,7 @@ https://www.yoyaku-app.com/google_auth/callback
 
 rails g migration AddBookingLinkToCalendarConfig booking_link:string
 rails g migration AddSpecialModalFlagToCalendarConfig special_modal_flag:boolean
+
+rails g migration AddDisplayIntervalTimeToCalendar display_interval_time:integer
+
+update(special_modal_flag: true)
