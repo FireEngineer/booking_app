@@ -53,7 +53,7 @@
   <%= link_to "キャンセルを行う", calendar_task_path(params[:calendar_id], @task), class:"btn btn-secondary btn_style", method: :delete ,data: {confirm: "本当にキャンセルを行いますか？" } %>
 </div>
 
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+<div class="modal" tabindex="-1" role="dialog" id="myModal" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
