@@ -48,3 +48,5 @@ rails g migration AddSpecialModalFlagToCalendarConfig special_modal_flag:boolean
 rails g migration AddDisplayIntervalTimeToCalendar display_interval_time:integer
 
 update(special_modal_flag: true)
+
+ssh -i /Users/shota6/.ssh/clone.pem ec2-user@ec2-18-176-211-44.ap-northeast-1.compute.amazonaws.com
