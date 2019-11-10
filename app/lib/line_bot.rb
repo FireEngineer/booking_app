@@ -271,7 +271,7 @@ class LineBot
               "action": {
                 "type": "uri",
                 "label": "action",
-                "uri": "https://calendar.google.com/calendar/r/eventedit?text=#{calendar.calendar_name}&details=#{detail}&dates=#{I18n.l(task.start_time, format: :to_google_time)}/#{I18n.l(task.end_time, format: :to_google_time)}&sf=true"
+                "uri": "https://calendar.google.com/calendar/r/eventedit?text=#{calendar.calendar_name}&details=#{detail}&dates=#{I18n.l(task.start_time, format: :to_google_time)}/#{I18n.l(task.end_time, format: :to_google_time)}&sf=true&openExternalBrowser=1"
               },
               "color": "#098bf2"
             },
@@ -319,6 +319,7 @@ class LineBot
     staff = task.staff
     user = task.calendar.user
     calendar = task.calendar
+    detail = "担当者：#{staff.name},コース：#{task_course.title}"
     {
       "type": "flex",
       "altText": "This is a Flex Message",
@@ -513,6 +514,16 @@ class LineBot
                 "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
               },
               "color": "#007bff"
+            },
+            {
+              "type": "text",
+              "text": "googleカレンダーに予定を入れる",
+              "action": {
+                "type": "uri",
+                "label": "action",
+                "uri": "https://calendar.google.com/calendar/r/eventedit?text=#{calendar.calendar_name}&details=#{detail}&dates=#{I18n.l(task.start_time, format: :to_google_time)}/#{I18n.l(task.end_time, format: :to_google_time)}&sf=true&openExternalBrowser=1"
+              },
+              "color": "#098bf2"
             },
           ]
         },

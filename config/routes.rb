@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'google_auth/redirect'
   get 'google_auth/ident_form'
   patch 'google_auth/identifier'
+  patch 'google_auth/unlink'
 # ================================================================================================================-
   # devise
   devise_for :admins, controllers: {
@@ -105,9 +106,11 @@ Rails.application.routes.draw do
     get 'callback', to: 'line_links#callback', as: "line_link_staff"
     resources :calendars, only: [] do
       resources :staffs do
+        resources :google_calendar_apis
         # スタッフのライン連携
         post 'line_links/redirect_line', to: 'line_links#redirect_line', as: "redirect_line"
       end
+      get 'staffs/:id/google', to: 'staffs#google', as: 'google'
     end
   end
 

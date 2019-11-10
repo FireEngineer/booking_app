@@ -1,4 +1,5 @@
 class User::PaymentsController < ApplicationController
+  before_action :authenticate_user!
   protect_from_forgery :except => [:payment_callback, :registration_callback]
 
   def form
@@ -18,9 +19,9 @@ class User::PaymentsController < ApplicationController
     shop_pass_str = "#{shop_id}|#{order_id}|#{pay}||#{shop_pass}|#{date_time}"
     shop_pass_str = Digest::MD5.hexdigest(shop_pass_str)
     if browser.device.mobile?
-      @test_url = "https://pt01.mul-pay.jp/link/tshop00041183/Multi/Entry?ShopID=tshop00041183&OrderID=#{order_id}&Amount=5000&DateTime=#{date_time}&ShopPassString=#{shop_pass_str}&RetURL=http://localhost:3000/payments/payment_callback&UseCredit=1&JobCd=CHECK&SiteID=#{site_id}&MemberID=#{member_id}&MemberPassString=#{member_pass_str}&TemplateNo=2"
+      @test_url = "https://pt01.mul-pay.jp/link/tshop00041183/Multi/Entry?ShopID=tshop00041183&OrderID=#{order_id}&Amount=5000&DateTime=#{date_time}&ShopPassString=#{shop_pass_str}&RetURL=#{payment_callback_url}&UseCredit=1&JobCd=CHECK&SiteID=#{site_id}&MemberID=#{member_id}&MemberPassString=#{member_pass_str}&TemplateNo=2"
     else
-      @test_url = "https://pt01.mul-pay.jp/link/tshop00041183/Multi/Entry?ShopID=tshop00041183&OrderID=#{order_id}&Amount=5000&DateTime=#{date_time}&ShopPassString=#{shop_pass_str}&RetURL=http://localhost:3000/payments/payment_callback&UseCredit=1&JobCd=CHECK&SiteID=#{site_id}&MemberID=#{member_id}&MemberPassString=#{member_pass_str}"
+      @test_url = "https://pt01.mul-pay.jp/link/tshop00041183/Multi/Entry?ShopID=tshop00041183&OrderID=#{order_id}&Amount=5000&DateTime=#{date_time}&ShopPassString=#{shop_pass_str}&RetURL=#{payment_callback_url}&UseCredit=1&JobCd=CHECK&SiteID=#{site_id}&MemberID=#{member_id}&MemberPassString=#{member_pass_str}"
     end
   end
 

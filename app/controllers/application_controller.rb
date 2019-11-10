@@ -59,7 +59,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(_resource)
-    new_staff_session_path # ログアウト後に遷移するpathを設定
+    case _resource
+    when :user
+      new_user_session_url
+    else
+      new_staff_session_url # ログアウト後に遷移するpathを設定
+    end
   end
 
   def end_time(start_time, task_course)

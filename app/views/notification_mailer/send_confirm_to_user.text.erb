@@ -4,8 +4,6 @@
 
 お名前：<%= @task.store_member.name %>
 
-お名前：<%= @task.store_member.name %>
-
 予約日時　：<%= @task.start_time.strftime("%Y年%-m月%-d日 %H:%M") %>~<%= @task.end_time.strftime("%H:%M") %>
 
 コース名：<%= @task.task_course.title %>
@@ -17,8 +15,8 @@
 ご要望：<%= @task.request %>
 
 ==========================================================
-<%= @calendar.calendar_config.booking_message %>
-
+<%= simple_format(@calendar.calendar_config.booking_message) %>
+<%= @calendar.calendar_config.booking_link %>
 ※キャンセルをご希望のお方は以下のURLよりキャンセルしてください。
 <%= if Rails.env == "production" then "#{ENV['PRODUCTION_HOST_URL']}/calendars/#{@calendar.public_uid}/tasks/#{@task.id}/cancel"
 else "http://#{ENV['DEVELOPMENT_HOST_URL']}/calendars/#{@calendar.public_uid}/tasks/#{@task.id}/cancel" end  %>

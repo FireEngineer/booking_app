@@ -1,3 +1,5 @@
 <% flash.each do |message_type, message| %>
-  <div class="alert-secondary share_text_centering alert alert-<%= message_type %>"><%= message.html_safe %></div>
+  <% if message %>
+    <div class="alert-secondary share_text_centering alert alert-<%= message_type %>"><%= message.html_safe %></div>
+  <% end %>
 <% end %>

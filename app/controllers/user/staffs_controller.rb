@@ -15,7 +15,6 @@ class User::StaffsController < User::Base
 
   def create
     @staff = @calendar.staffs.build(staff_params)
-    debugger
     if @staff.save
       flash[:success] = 'スタッフを登録しました'
       redirect_to user_calendar_staffs_url(current_user, @calendar)

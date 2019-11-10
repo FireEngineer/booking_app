@@ -23,3 +23,28 @@ rails g model Order order_id:string
 
 User.first.update(member_id: "333333")
 Calendar.first.update(is_released: false)
+
+http://localhost:3000/payments/form
+
+rails g migration AddGoogleCalendarToStaff client_secret:string client_id:string google_api_token:string
+rails g controller Staff::GoogleCalendarApis
+
+システムプラン作成
+SystemPlan.create!(title: "有料プラン", plan_id: "P001", charge: 5000, description: "有料プランです。")
+
+User.all.each {|user| Order.create(user_id: user.id, system_plan_id:1, order_id: "#{user.id}0000")}
+rails staff_shifts:create
+User.all.each {|user| user.update(member_id: "#{user.id}1111")}
+
+rails g migration AddRefreshTokenToStaff refresh_token:string
+
+https://www.yoyaku-app.com/google_auth/callback
+
+
+
+rails g migration AddBookingLinkToCalendarConfig booking_link:string
+rails g migration AddSpecialModalFlagToCalendarConfig special_modal_flag:boolean
+
+rails g migration AddDisplayIntervalTimeToCalendar display_interval_time:integer
+
+update(special_modal_flag: true)

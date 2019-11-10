@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_22_004902) do
+ActiveRecord::Schema.define(version: 2019_11_05_125353) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -37,6 +37,10 @@ ActiveRecord::Schema.define(version: 2019_10_22_004902) do
     t.datetime "updated_at", null: false
     t.integer "interval_time", default: 0
     t.text "booking_message"
+    t.string "booking_link"
+    t.text "update_message"
+    t.text "cancel_message"
+    t.boolean "special_modal_flag", default: false
     t.index ["calendar_id"], name: "index_calendar_configs_on_calendar_id"
   end
 
@@ -56,6 +60,7 @@ ActiveRecord::Schema.define(version: 2019_10_22_004902) do
     t.string "address"
     t.string "phone"
     t.string "public_uid"
+    t.integer "display_interval_time", default: 10
     t.index ["public_uid"], name: "index_calendars_on_public_uid", unique: true
     t.index ["user_id"], name: "index_calendars_on_user_id"
   end
@@ -161,6 +166,11 @@ ActiveRecord::Schema.define(version: 2019_10_22_004902) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.text "client_secret"
+    t.text "client_id"
+    t.text "google_api_token"
+    t.string "google_calendar_id"
+    t.string "refresh_token"
     t.index ["calendar_id"], name: "index_staffs_on_calendar_id"
     t.index ["confirmation_token"], name: "index_staffs_on_confirmation_token", unique: true
     t.index ["email"], name: "index_staffs_on_email", unique: true

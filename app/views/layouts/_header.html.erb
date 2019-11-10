@@ -5,9 +5,13 @@
   <div>
     <% if current_staff %>
       <i class="fas fa-user fa-2x"></i><%= current_staff.name %>
+      <% if current_staff.google_calendar_id %>
+        <i class="fab fa-google" style="color: blue;" data-toggle="tooltip" data-placement="top" title="googleカレンダー連携中"></i>
+      <% end %>
     <% else %>
       <i class="fas fa-user-shield fa-2x"></i>管理者
     <% end %>
+    
   </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -87,6 +91,9 @@
       <%= f.search_field :store_member_name_or_store_member_phone_cont, class: "form-control mr-sm-2", :placeholder => "電話番号or名前" %>
       <%= f.submit "検索", class:"btn btn-outline-success my-2 my-sm-0 load_btn" %>
     <% end %>
+    <button class="navbar-toggler btn-block" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
   </div>
 </nav>
 
@@ -173,4 +180,8 @@ $(document).ready(function(){
     alert('クリップボードに公開リンクをコピーしました');
   });
 });
+
+
+// ツールチップ
+// $('.fa-google').tooltip("show")
 </script>

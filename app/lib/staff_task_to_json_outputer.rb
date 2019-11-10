@@ -1,7 +1,7 @@
 module StaffTaskToJsonOutputer
 
     def staff_shifts(staff)
-        test = staff.staff_shifts.where(work_date: [*Date.current..Date.current.since(staff.calendar.display_week_term.months).end_of_month]).map do |shift|
+        test = staff.staff_shifts.where(work_date: [*Date.current..Date.current.since(calendar_display_term.months).end_of_month]).map do |shift|
             day = %w[日 月 火 水 木 金 土][shift.work_date.wday]
             if staff.calendar.calendar_config.regular_holidays.where(holiday_flag: true).find_by(day: day)
               {
@@ -39,11 +39,11 @@ module StaffTaskToJsonOutputer
             end
           end
         rescue StandardError
-          nil
+          []
     end
 
     def staff_rests(staff)
-        staff.staff_shifts.where(work_date: [*Date.current..Date.current.since(staff.calendar.display_week_term.months).end_of_month]).map do |shift|
+        staff.staff_shifts.where(work_date: [*Date.current..Date.current.since(calendar_display_term.months).end_of_month]).map do |shift|
             shift.staff_rest_times.map do |rest|
               {
                 title: 'スタッフ休憩',
@@ -55,7 +55,7 @@ module StaffTaskToJsonOutputer
             end
           end.flatten
         rescue StandardError
-          nil
+          []
     end
 
     def staff_tasks(staff, search_id)
@@ -98,9 +98,14 @@ module StaffTaskToJsonOutputer
             end
           end
         rescue StandardError
-          nil
+          []
     end
 
-    module_function :staff_shifts, :staff_rests, :staff_tasks
+    private
+      def calendar_display_term
+        ENV['CALENDAR_DISPLAY_TERM'].to_i
+      end
+
+    module_function :staff_shifts, :staff_rests, :staff_tasks, :calendar_display_term
 
 end
