@@ -5,9 +5,11 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data:/var/run/mysql
     environment:
-      DB_HOST: 127.0.0.1
+      # MYSQL_DATABASE: "rails_todo_development" # デフォルトdbを指定
+      # # MYSQL_ROOT_PASSWORD: "password" # ユーザーrootならばこれでパスワードを指定する
+      # DB_HOST: localhost
       TZ: Asia/Tokyo
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
   rails:

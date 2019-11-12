@@ -48,3 +48,6 @@ rails g migration AddSpecialModalFlagToCalendarConfig special_modal_flag:boolean
 rails g migration AddDisplayIntervalTimeToCalendar display_interval_time:integer
 
 update(special_modal_flag: true)
+
+mysql -h clone-minpro-rds.clrfy79vwafb.ap-northeast-1.rds.amazonaws.com -P 3306 -u minpuro -p
+sg-0eff63d64ab8ad7cd
