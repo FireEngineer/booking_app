@@ -17,15 +17,19 @@ class ValidateTask
     time_end = time_start.since(task_course.course_time.to_i.minutes)
     limit = calendar_config.capacity # 予約可能件数
     count = 0
-    events.each do |event|
-      task_s = Time.zone.parse((event[0]).to_s).ago(interval_time.minutes)
-      task_e = Time.zone.parse((event[1]).to_s).since(interval_time.minutes)
-      if task_s < time_end && time_start < task_e
-        count += 1
-        return false if count >= limit
+    if events
+      events.each do |event|
+        task_s = Time.zone.parse((event[0]).to_s).ago(interval_time.minutes)
+        task_e = Time.zone.parse((event[1]).to_s).since(interval_time.minutes)
+        if task_s < time_end && time_start < task_e
+          count += 1
+          return false if count >= limit
+        end
       end
+      true
+    else
+      true
     end
-    true
   end
 
   private
