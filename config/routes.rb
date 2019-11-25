@@ -91,7 +91,14 @@ Rails.application.routes.draw do
     post "introductions/create_staff", to: "introductions#create_staff"
     # =========
 
-    # =====userの決済ロジック用
+    # =====userの決済ロジック用(PAYjp)
+    get 'pay/form', to: 'payjp#form', as: 'pay_form'
+    post 'pay/create_order', to: 'payjp#create_order', as: 'pay_create_order'
+    # post 'payments/registration_callback', to: 'payments#registration_callback', as: 'registration_callback'
+    get 'order_plan/:id/complete_order', to: 'payjp#complete_order', as: 'complete_order'
+    # =========
+
+    # =====userの決済ロジック用(GMO)
     get 'payments/form', to: 'payments#form', as: 'form'
     post 'payments/payment_callback', to: 'payments#payment_callback', as: 'payment_callback'
     post 'payments/registration_callback', to: 'payments#registration_callback', as: 'registration_callback'

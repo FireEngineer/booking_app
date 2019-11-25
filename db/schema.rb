@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_05_125353) do
+ActiveRecord::Schema.define(version: 2019_11_24_034035) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -83,6 +83,16 @@ ActiveRecord::Schema.define(version: 2019_11_05_125353) do
     t.index ["admin_id"], name: "index_line_bots_on_admin_id"
   end
 
+  create_table "order_plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "order_id"
+    t.bigint "user_id"
+    t.bigint "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_order_plans_on_plan_id"
+    t.index ["user_id"], name: "index_order_plans_on_user_id"
+  end
+
   create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "order_id"
     t.bigint "user_id"
@@ -91,6 +101,15 @@ ActiveRecord::Schema.define(version: 2019_11_05_125353) do
     t.datetime "updated_at", null: false
     t.index ["system_plan_id"], name: "index_orders_on_system_plan_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.integer "charge"
+    t.text "description"
+    t.string "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "regular_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -260,6 +279,8 @@ ActiveRecord::Schema.define(version: 2019_11_05_125353) do
   add_foreign_key "calendar_configs", "calendars"
   add_foreign_key "iregular_holidays", "calendar_configs"
   add_foreign_key "line_bots", "admins"
+  add_foreign_key "order_plans", "plans"
+  add_foreign_key "order_plans", "users"
   add_foreign_key "orders", "system_plans"
   add_foreign_key "orders", "users"
   add_foreign_key "regular_holidays", "calendar_configs"

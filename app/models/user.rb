@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :calendars
   has_many :orders
   has_many :system_plans, through: :orders
+  has_many :plans, through: :order_plans
 
   serialize :google_api_token, Hash
 end

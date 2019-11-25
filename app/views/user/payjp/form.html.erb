@@ -1,0 +1,15 @@
+
+<%= form_with url: pay_create_order_path do |form| %>
+  <article>
+      <label>1000円のお支払い</label>
+    </article>
+    <script
+    type="text/javascript"
+    src="https://checkout.pay.jp/"
+    class="payjp-button"
+    data-key="pk_test_4bc074dc98c5ffd44a49e129"
+    data-text="支払う"
+    data-submit-text="支払う"
+    >
+  </script>
+<% end %>

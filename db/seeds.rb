@@ -17,3 +17,4 @@
 
 
 SystemPlan.create!(title: "有料プラン", plan_id: "P001", charge: 5000, description: "有料プランです。")
+Plan.create!(title: "基本プラン", plan_id: "pln_999b5d0dda45465e852493c80719", charge: 5000, description: "有料プランです。")

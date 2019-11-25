@@ -26,10 +26,13 @@ class MyPayjp
   #
   # 顧客を登録する
   #
-  def self.create_customer(number, cvc, exp_month, exp_year)
-    token = self.create_token(number, cvc, exp_month, exp_year)
+  def self.create_customer(token, user)
     Payjp::api_key = ENV['PAYJP_SECRET_KEY']
-    Payjp::Customer.create(card: token)
+    Payjp::Customer.create(
+      card: token,
+      email: user.email,
+      description: user.email
+    )
   end
 
   #
