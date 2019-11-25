@@ -25,11 +25,11 @@
         </tr>
         <tr>
           <th scope="row">課金登録日</th>
-          <td><%= @order_plan.created_at %></td>
+          <td><%= l(@order_plan.created_at, format: :long) %></td>
         </tr>
         <tr>
-          <th scope="row">登録カード</th>
-          <td><%=  %></td>
+          <th scope="row">登録カード(下４桁)</th>
+          <td>**** **** **** <%= @order_plan.card_number %></td>
         </tr>
         <tr>
           <th scope="row">お客様email</th>
@@ -40,6 +40,5 @@
     </table>
     <div class="card-footer">
       <%= link_to "カレンダーへ", user_calendar_dashboard_path(current_user, current_user.calendars.first), class:"btn btn-primary" %>
-      
     </div>
   </div>

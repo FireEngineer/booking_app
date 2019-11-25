@@ -1,7 +1,6 @@
 class User::PayjpController < ApplicationController
   before_action :authenticate_user!
   layout 'payjp'
-  # protect_from_forgery :except => [:payment_callback, :registration_callback]
 
   def form
 
@@ -11,8 +10,8 @@ class User::PayjpController < ApplicationController
     customer = MyPayjp.create_customer(params["payjp-token"], current_user)
     plan = Plan.first
     response = MyPayjp.create_subscription(customer, plan.plan_id)
-    debugger
-    order_plan = OrderPlan.create!(user_id: current_user.id, plan_id: plan.id, order_id: response["id"])
+    order_plan = OrderPlan.create!(user_id: current_user.id, plan_id: plan.id, order_id: response["id"], card_number: customer["cards"]["data"][0]["last4"])
+    current_user.calendars.first.update(is_released: true)
     redirect_to complete_order_url(order_plan)
   end
 

@@ -52,3 +52,7 @@ update(special_modal_flag: true)
 mysql -h clone-minpro-rds.clrfy79vwafb.ap-northeast-1.rds.amazonaws.com -P 3306 -u minpuro -p
 sg-0eff63d64ab8ad7cd
 ssh -i /Users/shota6/.ssh/clone.pem ec2-user@ec2-52-68-136-43.ap-northeast-1.compute.amazonaws.com
+
+rails g model Plan title:string charge:integer description:text plan_id:string
+
+rails g model OrderPlan order_id:string 

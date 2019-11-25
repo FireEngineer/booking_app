@@ -70,7 +70,7 @@
           <div class="dropdown-menu" aria-labelledby="shiftDropdown">
             <% if @calendar.is_released %>
               <%= link_to "非公開にする", user_calendar_update_is_released_path(current_user, @calendar, commit:"非公開にする"), class:"dropdown-item load_btn", method: :patch %>
-            <% elsif !@calendar.user.system_plans&.find_by(plan_id: "P001") %>
+            <% elsif !@calendar.user.plans.any? %>
               <%= link_to "プランに登録してカレンダーを公開する", pay_form_path, class:"dropdown-item load_btn" %>
             <% else %>
               <%= link_to "カレンダーを公開する", user_calendar_update_is_released_path(current_user, @calendar, commit:"公開にする"), class:"dropdown-item load_btn", method: :patch %>
@@ -98,51 +98,6 @@
 </nav>
 
 <script>
-// 公開カレンダーのコピペ処理
-// $(document).ready(function(){
-//   $('#copy_public_url').on('click', function() {
-//     var clipboard = new ClipboardJS('#copy_public_url');
-//     debugger
-//     // クリップ成功
-//     clipboard.on('success', (e) => {
-//       debugger
-//         alert('クリップボードに公開リンクをコピーしたよ');
-//     });
-//   });
-// });
-
-// $(document).ready(function(){
-//     $('#copy_btn').on('click', function() {
-//         var target = null;
-//         var p = null;
-//         window.getSelection().removeAllRanges();
-//         if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-//             target = document.querySelector('#target_text');
-//             target.contentEditable  = true;
-//             target.readOnly = false;
-//         } else {
-//             p = document.createElement('p');
-//             p.setAttribute('id', 'target')
-//             document.body.appendChild(p);
-//             p.innerHTML = $('#target_text').val();
-//             target = document.querySelector('#target_text');
-//         }
-//         var range = document.createRange();
-//         range.selectNode(target);
-//         window.getSelection().addRange(range);
-//         document.execCommand("copy");
-//         if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-//             target.contentEditable  = false;
-//             target.readOnly = true;
-//         } else {
-//             document.body.removeChild(p);
-//         }
-//         window.getSelection().removeAllRanges();
-//         alert('クリップボードに公開リンクをコピーしました');
-//     });
-// });
-
-
 function copy(str) {
     if(!str || typeof(str) != "string") {
     return "";
@@ -181,7 +136,4 @@ $(document).ready(function(){
   });
 });
 
-
-// ツールチップ
-// $('.fa-google').tooltip("show")
 </script>
