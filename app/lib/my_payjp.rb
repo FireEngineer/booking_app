@@ -70,6 +70,7 @@ class MyPayjp
     )
   end
 
+  # 定期課金の削除（解約）
   def self.destroy_subscription(order)
     Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     subscription = Payjp::Subscription.retrieve(order.order_id)
