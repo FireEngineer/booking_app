@@ -70,4 +70,10 @@ class MyPayjp
     )
   end
 
+  def self.destroy_subscription(order)
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    subscription = Payjp::Subscription.retrieve(order.order_id)
+    subscription.delete
+  end
+
 end

@@ -1,10 +1,15 @@
 <div class="complete_page">
   <div class="title">
-    <h2>定期課金が登録されました。</h2>
+    <h2>契約プラン詳細</h2>
   </div>
 
   <div class="card">
-    <div class="card-header">内容</div>
+    <div class="card-header">
+      内容
+      <% if @order_plan.status_destroy? %>
+        <span class="badge badge-pill badge-danger">解約済み</span>
+      <% end %>
+    </div>
     <table class="table mb-0">
       <tbody>
         <tr>
@@ -32,5 +37,6 @@
     </table>
     <div class="card-footer">
       <%= link_to "カレンダーへ", user_calendar_dashboard_path(current_user, current_user.calendars.first), class:"btn btn-primary" %>
+      <%= link_to "解約手続きへ", destroy_order_operation_path(@order_plan), "data-confirm": "解約手続きページに移動しますか？" %>
     </div>
   </div>

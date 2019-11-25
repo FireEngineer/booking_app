@@ -1,6 +1,6 @@
 <div class="complete_page">
   <div class="title">
-    <h2>定期課金が登録されました。</h2>
+    <h2>契約プランの解約</h2>
   </div>
 
   <div class="card">
@@ -27,10 +27,10 @@
           <th scope="row">お客様email</th>
           <td><%= current_user.email %></td>
         </tr>
-        
       </tbody>
     </table>
     <div class="card-footer">
-      <%= link_to "カレンダーへ", user_calendar_dashboard_path(current_user, current_user.calendars.first), class:"btn btn-primary" %>
+      <%= link_to "戻る", order_plan_path(@order_plan), class:"btn btn-primary" %>
+      <%= link_to "上記プランを解約する", destroy_order_path(@order_plan), method: :patch, class:"btn btn-danger", "data-comfirm": "解約しますか？" %>
     </div>
   </div>

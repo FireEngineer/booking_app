@@ -95,7 +95,10 @@ Rails.application.routes.draw do
     get 'pay/form', to: 'payjp#form', as: 'pay_form'
     post 'pay/create_order', to: 'payjp#create_order', as: 'pay_create_order'
     # post 'payments/registration_callback', to: 'payments#registration_callback', as: 'registration_callback'
+    patch 'order_plan/:id/destroy_order', to: 'payjp#destroy_order', as: 'destroy_order'
     get 'order_plan/:id/complete_order', to: 'payjp#complete_order', as: 'complete_order'
+    get 'order_plan/:id', to: 'payjp#show', as: 'order_plan'
+    get 'order_plan/:id/destroy_order_operation', to: 'payjp#destroy_order_operation', as: "destroy_order_operation"
     # =========
 
     # =====userの決済ロジック用(GMO)

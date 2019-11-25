@@ -31,3 +31,41 @@
         </tbody>
     </table>
 <% end %>
+<h2>契約プラン状況</h2>
+<% if @order_plans.where(status: 0).any? %>
+    <% @order_plans.each do |order| %>
+        <% if order.status_ongoing? %>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row">契約プラン</th>
+                        <td>
+                            <%= order.plan.title %>
+                            <%= link_to "契約詳細", order_plan_path(order) %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">契約日時</th>
+                        <td><%= l(order.created_at, format: :long) %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">登録クレジットカード</th>
+                        <td>**** **** **** <%= order.card_number %></td>
+                    </tr>
+                </tbody>
+            </table>
+        <% end %>
+    <% end %>
+<% else %>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">契約プラン</th>
+                <td>
+                    フリープラン
+                    <%= link_to "プラン変更", pay_form_path %>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_083314) do
+ActiveRecord::Schema.define(version: 2019_11_25_102445) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_083314) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "card_number"
+    t.integer "status", default: 0, comment: "決済プランのステータス"
     t.index ["plan_id"], name: "index_order_plans_on_plan_id"
     t.index ["user_id"], name: "index_order_plans_on_user_id"
   end

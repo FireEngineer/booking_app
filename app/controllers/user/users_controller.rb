@@ -3,6 +3,7 @@ class User::UsersController < User::Base
   
   def show
     @user = current_user
+    @order_plans = @user.order_plans
   end
 
   def update
