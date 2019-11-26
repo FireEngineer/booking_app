@@ -60,3 +60,6 @@ rails g model OrderPlan order_id:string
 rails g migration AddCardNumberToOrderPlan card_number:string
 
 rails g migration AddStatusToOrderPlan status:integer
+
+Plan.create!(title: "基本プラン", plan_id: "pln_999b5d0dda45465e852493c80719", charge: 5000, description: "有料プランです。")
+User.all.each {|user| OrderPlan.create(user_id: user.id, plan_id:1, order_id: "#{user.id}0000", status: 0)}
