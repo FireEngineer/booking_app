@@ -12,7 +12,9 @@
       <div class="card-body">
         <h1 class="card-title pricing-card-title">5000円 <small class="text-muted">/ 月</small></h1>
         <ul class="list-unstyled mt-3 mb-4">
-          
+          <li><%#= link_to "利用規約", use_path %></li>
+          <li><%= link_to "特定商取引法に基づく表示", law_path %></li>
+          <li>以下の決済情報入力で、上記の表示に同意したものとします。</li>
         </ul>
         <%= form_with url: pay_create_order_path do |form| %>
             <script
@@ -30,3 +32,4 @@
   </div>
   <%= link_to "戻る", user_calendar_dashboard_path(current_user, current_user.calendars.first), class:"btn btn-primary" %>
 </div>
+

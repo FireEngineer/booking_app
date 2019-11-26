@@ -99,6 +99,7 @@ Rails.application.routes.draw do
     get 'order_plan/:id/complete_order', to: 'payjp#complete_order', as: 'complete_order'
     get 'order_plan/:id', to: 'payjp#show', as: 'order_plan'
     get 'order_plan/:id/destroy_order_operation', to: 'payjp#destroy_order_operation', as: "destroy_order_operation"
+    get 'use', to: 'payjp#use', as: 'use'
     # =========
 
     # =====userの決済ロジック用(GMO)
