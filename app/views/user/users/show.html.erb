@@ -48,10 +48,12 @@
                         <th scope="row">契約日時</th>
                         <td><%= l(order.created_at, format: :long) %></td>
                     </tr>
-                    <tr>
-                        <th scope="row">登録クレジットカード</th>
-                        <td>**** **** **** <%= order.card_number %></td>
-                    </tr>
+                    <% unless order.order_id == "free_plan" %>
+                        <tr>
+                            <th scope="row">登録クレジットカード</th>
+                            <td>**** **** **** <%= order.card_number %></td>
+                        </tr>
+                    <% end %>
                 </tbody>
             </table>
         <% end %>

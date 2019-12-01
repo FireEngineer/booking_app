@@ -1,5 +1,7 @@
 class User::PayjpController < ApplicationController
   before_action :authenticate_user!
+  before_action :has_order_plan?, only:[:form]
+
   layout 'payjp'
 
   def form
@@ -49,5 +51,14 @@ class User::PayjpController < ApplicationController
     end
     redirect_to user_url(current_user)
   end
+
+  private
+
+    def has_order_plan?
+      if current_user.order_plans.any?{ |order_plan| !order_plan.status_destroy? }
+        flash[:danger] = "すでにプランに登録済です。"
+        redirect_to user_url(current_user)
+      end
+    end
 
 end
