@@ -1,0 +1,32 @@
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">プラン編集</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_with model: @plan, url: plan_path(@plan), local: true do |f| %>
+        <div class="modal-body">
+          <table class="table table-sm">
+            <tbody>
+                <tr>
+                  <th scope="row">名前</th>
+                  <td><%= f.text_field :title, class:"form-control" %></td>
+                </tr>
+                <tr>
+                  <th scope="row">説明</th>
+                  <td><%= f.text_area :description, class:"form-control" %></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+          <%= f.submit "更新", class:"btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

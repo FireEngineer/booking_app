@@ -34,9 +34,7 @@ Rails.application.routes.draw do
   # admin権限
   scope module: :admin do
     get "admins/:id/dash_board", to: "dash_boards#top", as: :dash_board_top
-    resources :admins do
-
-    end
+    resources :plans
   end
 # ================================================================================================================-
   # public権限

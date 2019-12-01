@@ -59,6 +59,14 @@ class MyPayjp
     )
   end
 
+  # プランを更新する
+  def self.update_plan(plan)
+    Payjp::api_key = ENV['PAYJP_SECRET_KEY']
+    plan = Payjp::Plan.retrieve(plan.plan_id)
+    plan.name = plan.title
+    plan.save
+  end
+
   #
   # 定額課金を作成する
   #

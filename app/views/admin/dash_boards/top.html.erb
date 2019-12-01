@@ -1,0 +1,58 @@
+
+<%= link_to "ログアウト", destroy_admin_session_path, class:"btn btn-danger", method: :delete %>
+
+<h2>プラン一覧</h2>
+<%= link_to "プランの新規作成", new_plan_path, class:"btn btn-primary", remote: true %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">plan_id</th>
+      <th scope="col">プラン名</th>
+      <th scope="col">プラン料金</th>
+      <th scope="col">プラン契約数</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <th scope="row"><%= plan.plan_id %></th>
+        <td><%= plan.title %></td>
+        <td><%= plan.charge %></td>
+        <td><%= plan.users.size %></td>
+        <td><%= link_to "編集", edit_plan_path(plan), class:"btn btn-success", remote: true %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="modal">
+</div>
+
+<h2>ユーザー一覧</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">契約プラン</th>
+      <th scope="col">email</th>
+      <th scope="col">スタッフ数</th>
+      <th scope="col">顧客数</th>
+      <th scope="col">予約数</th>
+      <th scope="col">登録日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <th scope="row"><%= user.id %></th>
+        <td><%= user.plans&.first&.title %></td>
+        <td><%= user.email %></td>
+        <td><%= user.calendars.first.staffs.size %></td>
+        <td><%= user.calendars.first.store_members.size %></td>
+        <td><%= user.calendars.first.tasks.size %></td>
+        <td><%= user.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
