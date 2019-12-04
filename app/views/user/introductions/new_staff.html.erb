@@ -6,42 +6,30 @@
 
 <%= form_for @staff, url: introductions_create_staff_path do |f| %>
   <%= render 'layouts/error_messages', model: @staff %>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>項目</th>
-          <th>設定値</th>
-          <th>説明</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">スタッフ名</th>
-          <td><%= f.text_field :name, class: "form-control", required: true %></td>
-          <td>スタッフの名前です。あとで削除、編集可能です。</td>
-        </tr>
-        <tr>
-          <th scope="row">email</th>
-          <td><%= f.text_field :email, class: "form-control", required: true %></td>
-          <td>メールアドレス</td>
-        </tr>
-        <tr>
-          <th scope="row">password</th>
-          <td><%= f.password_field :password, class: "form-control", required: true %></td>
-          <td>パスワード</td>
-        </tr>
-        <tr>
-          <th scope="row">password</th>
-          <td><%= f.password_field :password_confirmation, class: "form-control", required: true %></td>
-          <td>確認用パスワード</td>
-        </tr>
-        <%= f.hidden_field :calendar_id %>
-        <tr>
-          <th scope="row"><%= f.submit "登録", class: "btn btn-primary", data:{confirm: "登録が完了してもカレンダーは公開されません。この後のページで公開設定を行ってください。"} %></th>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">スタッフ名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="スタッフの名前です。あとで削除、編集可能です。"></i><span class="badge badge-danger">必須</span></label>
+    <div class="col-sm-8">
+      <%= f.text_field :name, class: "form-control", required: "required" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">メールアドレス<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の電話番号の設定です"></i><span class="badge badge-danger">必須</span></label>
+    <div class="col-sm-8">
+      <%= f.text_field :email, class: "form-control", required: "required" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">パスワード<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i><span class="badge badge-danger">必須</span></label>
+    <div class="col-sm-8">
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">確認用パスワード<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i><span class="badge badge-danger">必須</span></label>
+    <div class="col-sm-8">
+      <%= f.password_field :password_confirmation, class: "form-control" %>
+    </div>
+  </div>
+  <%= f.submit "登録", class: "btn btn-primary", data:{confirm: "登録が完了してもカレンダーは公開されません。この後のページで公開設定を行ってください。"} %>
 <% end %>
 

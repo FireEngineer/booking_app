@@ -3,33 +3,87 @@
   <p>店舗の名前を設定します。後から変更可能です。</p>
 </div>
 
-
 <%= form_for @calendar, url: introductions_create_calendar_path do |f| %>
   <%= render 'layouts/error_messages', model: @calendar %>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>項目</th>
-          <th>設定値</th>
-          <th>説明</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">表示カレンダー名</th>
-          <td><%= f.text_field :calendar_name, class: "form-control", required: true %></td>
-          <td>カレンダーの名前です。URLにも使用されます。一意の名前である必要があります。</td>
-        </tr>
-        <tr>
-          <th scope="row">お店連絡先</th>
-          <td><%= f.text_field :phone, class: "form-control", required: true %></td>
-          <td>お店の連絡先です。後から変更可能です。</td>
-        </tr>
-        <tr>
-          <th scope="row"><%= f.submit "登録", class: "btn btn-primary", data:{confirm:"登録します。"} %></th>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">表示カレンダー名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の名前の設定です。"></i><span class="badge badge-danger">必須</span></label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.text_field :calendar_name, class: "form-control", required: "required" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">お店の電話番号<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の電話番号の設定です"></i><span class="badge badge-danger">必須</span></label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.text_field :phone, class: "form-control", required: "required" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">お店の住所<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i></label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.text_field :address, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">
+      予約カレンダーに表示する最初の日(日)
+      <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お客様が予約できる開始日付の設定です。１と設定すると本日〜１日後の予約からが可能になります。"></i>
+    </label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.select :start_date, [*0..10], {}, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">
+      現時刻からの許容予約開始時間（時）<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お客様の予約カレンダーで現時刻から、何時間後の予約から許容するかの設定です。"></i>
+    </label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.select :display_time, [*0..24], {}, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">
+      予約カレンダーに表示する期間（週間）<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お客様の予約カレンダーを何週間分表示するかの設定です。"></i>
+    </label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.select :display_week_term, [*1..10], {}, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">
+      予約カレンダーに表示する開始時刻（時）<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お客様の予約カレンダーの表示開始時刻の設定です。"></i>
+    </label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.select :start_time, [*0..24], {}, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">
+      予約カレンダーに表示する終了時刻（時）<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お客様の予約カレンダーの表示終了時刻の設定です。"></i>
+    </label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.select :end_time, [*0..24], {}, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">カレンダーの表示時間の間隔（分）<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お客様の予約カレンダーで表示する時間の間隔を設定できます。"></i></label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.select :display_interval_time, [10, 15, 20, 30, 60], {}, class: "form-control" %>
+    </div>
+  </div>
+  <%= f.submit "登録", class: "btn btn-primary", data: {confirm: "更新しますか？"} %>
 <% end %>
+
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>

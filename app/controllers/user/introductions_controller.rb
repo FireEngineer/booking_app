@@ -1,4 +1,8 @@
 class User::IntroductionsController < User::Base
+  before_action :authenticate_user!
+  before_action :has_calendar?, only:[:new_calendar, :create_calendar]
+  before_action :has_staff?, only:[:new_staff, :create_staff]
+
   def new_calendar
     @calendar = current_user.calendars.build
   end
@@ -14,12 +18,12 @@ class User::IntroductionsController < User::Base
   end
 
   def new_staff
-    @calendar = Calendar.find(params[:calendar_id])
-    @staff = @calendar.staffs.build
+    @staff = Staff.new
   end
 
   def create_staff
-    @staff = Staff.new(params_staff)
+    @calendar = current_user.calendars.first
+    @staff = @calendar.staffs.build(params_staff)
     if @staff.save
       flash[:success] = 'スタッフ登録が完了しました'
       redirect_to user_calendar_dashboard_url(current_user, @staff.calendar)
@@ -31,10 +35,24 @@ class User::IntroductionsController < User::Base
   private
 
   def params_calendar
-    params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calendar_name, :phone, :public_uid)
+    params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calendar_name, :phone, :public_uid, :display_interval_time, :end_time, :start_time, :display_time, :address)
   end
 
   def params_staff
-    params.require(:staff).permit(:name, :description, :calendar_id, :email, :password, :password_confirmation)
+    params.require(:staff).permit(:name, :description, :email, :password, :password_confirmation)
   end
+
+  def has_calendar?
+    if current_user.calendars.any?
+      redirect_to introductions_new_staff_url
+    end
+  end
+
+  def has_staff?
+    if current_user.calendars.first.staffs.any?
+      flash[:notice] = "スタッフは作成済みです。"
+      redirect_to user_calendar_dashboard_url(current_user, current_user.calendars.first)
+    end
+  end
+
 end
