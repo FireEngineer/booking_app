@@ -128,4 +128,12 @@ Rails.application.routes.draw do
   # 決済関連
   get 'law', to: 'laws#law', as: 'law'
 
+# ================================================================================================================-
+  # lambda_function関係
+  scope module: :lambda_function do
+    scope module: :api do
+      post 'lambda_function/api/tasks/reminder', to: "tasks#reminder"
+    end
+  end
+
 end

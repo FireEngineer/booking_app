@@ -15,8 +15,8 @@ class Task < ApplicationRecord
   scope :expect_past, -> { where("start_time >= ?", Time.current) }
   scope :future_tasks, -> { where("start_time >= ?", Time.current) }
   scope :staff_tasks, -> (staff) { where(staff_id: staff.id) }
-  scope :staff_tasks, -> (staff) { where(staff_id: staff.id) }
   scope :today_tasks, -> { where("start_time >= ? && start_time <= ?", Time.current.beginning_of_day, Time.current.end_of_day) }
+  scope :tomorrow_tasks, -> { where(start_time: Time.current.tomorrow.all_day) }
   scope :prev_task, -> { where("start_time < ?", Time.current.beginning_of_day) }
   scope :next_task, -> { where("start_time > ?", Time.current.end_of_day) }
 

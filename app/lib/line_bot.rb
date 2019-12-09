@@ -33,7 +33,7 @@ class LineBot
   end
 
   def push_message_with_reminder(task, user_id)
-    message message_with_task_reminder(task)
+    message = message_with_task_reminder(task)
     response = client.push_message(user_id, message)
   end
 
