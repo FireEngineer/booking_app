@@ -15,8 +15,8 @@ class LambdaFunction::Api::TasksController < ApplicationController
   end
 
   def test
-    raise
     test_push
+    raise
   end
 
   private
