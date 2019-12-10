@@ -75,3 +75,5 @@ sudo chmod 666 /var/app/current/log/cron.log /var/app/current/log/production.log
 curl -X POST http://localhost:3000/lambda_function/task/tasks/reminder
 
 http://localhost:3000/lambda_function/imai/shotas/reminder
+
+curl -X POST http://localhost:3000/lambda_function/api/tasks/reminder
