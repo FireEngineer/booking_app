@@ -133,6 +133,7 @@ Rails.application.routes.draw do
   scope module: :lambda_function do
     scope module: :api do
       post 'lambda_function/api/tasks/reminder', to: "tasks#reminder"
+      post 'lambda_function/api/tasks/test', to: "tasks#test"
     end
   end
 

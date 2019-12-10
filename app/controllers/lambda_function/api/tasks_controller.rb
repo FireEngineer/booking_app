@@ -14,6 +14,11 @@ class LambdaFunction::Api::TasksController < ApplicationController
     test_push
   end
 
+  def test
+    raise
+    test_push
+  end
+
   private
     def test_push
       user_id = ENV['TEST_LINE_USER_ID']
