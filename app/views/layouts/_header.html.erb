@@ -11,7 +11,8 @@
     <% else %>
       <i class="fas fa-user-shield fa-2x"></i>管理者
     <% end %>
-    
+    <span class="badge badge-light" onclick="UserTopIntro()">ヘルプ</span>
+    <%#= link_tag "ヘルプ", type: 'button', onclick: "UserTopIntro()", class:"btn" %>
   </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -25,7 +26,7 @@
       </li>
       <%# 設定 %>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="settingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-intro="オーバーレイで表示するテキスト" data-position="right">
+        <a class="nav-link dropdown-toggle" href="#" id="settingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-intro="こちらから、お客様に表示するカレンダーや、スタッフ、コースの設定ができます。" data-step="2">
           <i class="fas fa-cog"></i>設定
         </a>
         <div class="dropdown-menu" aria-labelledby="settingDropdown">
@@ -64,7 +65,7 @@
       <%# カレンダーリリース状況 %>
       <% unless current_staff %>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="shiftDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="shiftDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-intro="お客様が予約を行うページの公開設定です。こちらから公開できます。" data-step="3">
             <i class="fas fa-globe"></i><%= @calendar.display_release %>
           </a>
           <div class="dropdown-menu" aria-labelledby="shiftDropdown">
@@ -81,7 +82,7 @@
     </ul>
 
     <%# 公開リンク %>
-    <%= button_tag type: 'button', class:"btn btn-outline-light", id:"copy_btn",  data: {intro:"オーバーレイで表示するテキスト", position:"right", "clipboard-text":"#{calendar_tasks_url(@calendar, openExternalBrowser: 1)}"} do %>
+    <%= button_tag type: 'button', class:"btn btn-outline-light", id:"copy_btn",  data: {intro:"ここをタップすると、お客様が予約をするサイトのURLをコピーできます。", step: "4", position:"right", "clipboard-text":"#{calendar_tasks_url(@calendar, openExternalBrowser: 1)}"} do %>
       <i class="fas fa-link"></i>公開リンク
     <% end %>
     <input type="hidden" id="target_text" value="<%= calendar_tasks_url(@calendar, openExternalBrowser: 1) %>" onfocus="this.select();" readonly>

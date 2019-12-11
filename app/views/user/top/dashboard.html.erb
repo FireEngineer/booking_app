@@ -1,7 +1,7 @@
 
 
-<ul id="myTab" class="nav nav-tabs" role="tablist">
-  <li class="nav-item" data-intro="オーバーレイで表示するテキスト" data-position="right">
+<ul id="myTab" class="nav nav-tabs" role="tablist" data-intro="このタブで、全体の予約、各スタッフの予約管理カレンダーの表示切り替えが行えます。" data-step="5">
+  <li class="nav-item">
     <%= link_to "全体", user_calendar_dashboard_path(current_user, @calendar), class:"nav-link #{"active" unless @staff}" %>
   </li>
   <% @staffs.each do |staff| %>
@@ -17,3 +17,11 @@
 <div id="user_task_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="user_new_task_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
+
+
+<script>
+  function UserTopIntro(){
+    introJs().start();
+}
+
+</script>
