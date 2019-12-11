@@ -12,6 +12,7 @@ class LambdaFunction::Api::TasksController < ApplicationController
       puts Time.current
     end
     test_push
+    { statusCode: 200, body: JSON.generate('リマインド完了！') }
   end
 
   def test
