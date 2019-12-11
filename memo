@@ -63,3 +63,17 @@ rails g migration AddStatusToOrderPlan status:integer
 
 Plan.create!(title: "基本プラン", plan_id: "pln_999b5d0dda45465e852493c80719", charge: 5000, description: "有料プランです。")
 User.all.each {|user| OrderPlan.create(user_id: user.id, plan_id:2, order_id: "free_plan") if !user.order_plans.any? }
+
+blue: ssh -i /Users/shota6/.ssh/booking.pem ec2-user@ec2-3-115-15-108.ap-northeast-1.compute.amazonaws.com
+
+green: ssh -i /Users/shota6/.ssh/booking.pem ec2-user@ec2-52-69-36-7.ap-northeast-1.compute.amazonaws.com
+
+bundle exec whenever --update-crontab
+
+sudo chmod 666 /var/app/current/log/cron.log /var/app/current/log/production.log
+
+curl -X POST http://localhost:3000/lambda_function/task/tasks/reminder
+
+http://localhost:3000/lambda_function/imai/shotas/reminder
+
+curl -X POST http://localhost:3000/lambda_function/api/tasks/reminder
