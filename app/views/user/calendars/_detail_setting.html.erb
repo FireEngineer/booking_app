@@ -30,8 +30,12 @@
 
   <hr>
     <label for="inputEmail" class="col-sm-4 col-form-label">
-      <h4 class="inline-block">スタッフ全体のカレンダー設定</h4>
-      <h5 data-placement="top" title="店舗全体の設定です。全てのスタッフに反映されます。"  data-toggle="tooltip"><span class="badge badge-secondary">これは何の設定？<i class="fas fa-info-circle"></i></span></h5>
+      <h4 class="inline-block">店舗のカレンダー設定</h4>
+      <h5 data-placement="top" title="店舗全体の設定です。"  data-toggle="tooltip"><span class="badge badge-secondary">これは何の設定？<i class="fas fa-info-circle"></i></span></h5>
+      <p>
+        <%= check_box_tag :all_staff_update, true, false %>全てのスタッフに反映させるにはチェックを入れてください。
+      </p>
+      
       
     </label>
     <table class="table table-hover">
@@ -100,3 +104,19 @@
         <% end %>
       </tbody>
     </table>
+
+
+<%# <script>
+  function Confirm(value){
+    debugger
+    if (value.prop("checked") == true) {
+      if(!confirm('本当に削除しますか？')){
+          /* キャンセルの時の処理 */
+          return false;
+      }else{
+          /*　OKの時の処理 */
+          
+      }
+    }
+  }
+</script> %>

@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <%= f.submit "更新", class: "btn btn-primary", data: {confirm: "更新しますか？"} %>
-            <%= link_to "カレンダープレビュー", user_calendar_preview_path(current_user, @calendar), class: "btn btn-primary", remote: true %>
+            <%= link_to "カレンダープレビュー", user_calendar_preview_path(current_user, @calendar), class: "btn btn-default", remote: true %>
         </div>
       <% end %>
     </div>
@@ -34,7 +34,6 @@
         <div class="form-group">
             <%= f.submit "更新", class: "btn btn-primary", data: {confirm: "更新しますか？"} %>
         </div>
-        <%= link_to "カレンダープレビュー", "##", class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>
