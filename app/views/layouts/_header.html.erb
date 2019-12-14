@@ -11,7 +11,9 @@
     <% else %>
       <i class="fas fa-user-shield fa-2x"></i>管理者
     <% end %>
-    <span class="badge badge-light" onclick="UserTopIntro()">ヘルプ</span>
+    <%= link_to user_helps_path, remote: true do %>
+      <span class="badge badge-light">ヘルプ</span>
+    <% end %>
     <%#= link_tag "ヘルプ", type: 'button', onclick: "UserTopIntro()", class:"btn" %>
   </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

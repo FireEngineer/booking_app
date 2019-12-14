@@ -16,9 +16,36 @@
   </ul>
   <div id="myTabContent" class="tab-content mt-3">
     <div id="home" class="tab-pane active" role="tabpanel" aria-labelledby="home-tab">
-      <%= render 'basic_setting', calendar: @calendar %>
+      <%= form_for @calendar, url: user_calendar_path(current_user, @calendar) do |f| %>
+        <div class="form-area"> 
+          <%= render 'basic_setting', f: f %>
+        </div>
+        <div class="form-group">
+            <%= f.submit "更新", class: "btn btn-primary", data: {confirm: "更新しますか？"} %>
+            <%= link_to "カレンダープレビュー", user_calendar_preview_path(current_user, @calendar), class: "btn btn-primary", remote: true %>
+        </div>
+      <% end %>
     </div>
     <div id="contact" class="tab-pane" role="tabpanel" aria-labelledby="contact-tab">
-      <%= render 'detail_setting', calendar: @calendar %>
+      <%= form_for @calendar.calendar_config, url: user_calendar_calendar_config_path(current_user, @calendar) do |f| %>
+        <div class="form-area"> 
+          <%= render 'detail_setting', f: f %>
+        </div>
+        <div class="form-group">
+            <%= f.submit "更新", class: "btn btn-primary", data: {confirm: "更新しますか？"} %>
+        </div>
+        <%= link_to "カレンダープレビュー", "##", class: "btn btn-primary" %>
+      <% end %>
     </div>
   </div>
+
+  <style>
+    .form-area {
+      height: 65vh;
+      overflow-y: scroll;
+      background-color: white;
+    }
+    #myTabContent {
+      margin: 0!important;
+    }
+  </style>

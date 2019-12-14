@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     resources :users do
       patch "calendar/:id/update", to: "calendars#update"
       patch "calendar/:id/update_is_released", to: "calendars#update_is_released", as: "calendar_update_is_released"
+      get "calendar/:id/calendar_preview", to: "calendars#calendar_preview", as: "calendar_preview"
       resources :calendars do
         get "dashboard", to: "top#dashboard"
         get "user_tasks/:id/update_by_drop", to: "user_tasks#update_by_drop"
@@ -135,6 +136,12 @@ Rails.application.routes.draw do
       post 'lambda_function/api/tasks/reminder', to: "tasks#reminder"
       post 'lambda_function/api/tasks/test', to: "tasks#test"
     end
+  end
+# ================================================================================================================-
+
+  # help
+  scope module: :user do
+    get "user/helps", to:"helps#user_modal"
   end
 
 end

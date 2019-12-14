@@ -1,6 +1,26 @@
 
 
-<%= form_for calendar, url: user_calendar_path(current_user, calendar) do |f| %>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">表示カレンダー名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の名前の設定です。"></i><span class="badge badge-danger">必須</span></label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.text_field :calendar_name, class: "form-control", required: "required" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">お店の住所<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i></label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.text_field :address, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-4 col-form-label">お店の電話番号<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の電話番号の設定です"></i><span class="badge badge-danger">必須</span></label>
+    <div class="col-sm-8">
+      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
+      <%= f.text_field :phone, class: "form-control", required: "required" %>
+    </div>
+  </div>
   <div class="form-group">
     <label for="inputEmail" class="col-sm-4 col-form-label">
       表示開始日(日)
@@ -33,27 +53,6 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="inputEmail" class="col-sm-4 col-form-label">表示カレンダー名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の名前の設定です。"></i><span class="badge badge-danger">必須</span></label>
-    <div class="col-sm-8">
-      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
-      <%= f.text_field :calendar_name, class: "form-control", required: "required" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputEmail" class="col-sm-4 col-form-label">お店の住所<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i></label>
-    <div class="col-sm-8">
-      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
-      <%= f.text_field :address, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputEmail" class="col-sm-4 col-form-label">お店の電話番号<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の電話番号の設定です"></i><span class="badge badge-danger">必須</span></label>
-    <div class="col-sm-8">
-      <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
-      <%= f.text_field :phone, class: "form-control", required: "required" %>
-    </div>
-  </div>
-  <div class="form-group">
     <label for="inputEmail" class="col-sm-4 col-form-label">現時刻からの許容予約開始時間（時）<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お客様の予約カレンダーで現時刻から、何時間後の予約から許容するかの設定です。"></i></label>
     <div class="col-sm-8">
       <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
@@ -67,11 +66,6 @@
       <%= f.select :display_interval_time, [10, 15, 20, 30, 60], {}, class: "form-control" %>
     </div>
   </div>
-  
-  <div class="form-group">
-      <%= f.submit "更新", class: "btn btn-primary", data: {confirm: "更新しますか？"} %>
-  </div>
-<% end %>
 
 <script>
 $(function () {
