@@ -1,6 +1,6 @@
 <div style="text-align:center;">
   <h1 class="h3 mb-3 font-weight-normal mb-5 mt-4"><%= image_tag 'favicon.png', :size =>'40x40'%>スマート予約にログイン</h1>
-  <div class="card mx-auto w-50" id="devise_card_style">
+  <div class="card mx-auto devise-card-width" id="devise_card_style">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
       <h3>管理者ログイン</h3>
       <%= devise_error_messages! %>

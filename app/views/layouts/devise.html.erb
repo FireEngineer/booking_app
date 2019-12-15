@@ -14,7 +14,7 @@
 
   <body class="body_color">
     <style>
-      <% if controller.params["controller"] == "staffs/sessions" %>
+      <% if controller.params["controller"].include?("staffs") %>
         .body_color {
           background-color: #FFC107;
         }

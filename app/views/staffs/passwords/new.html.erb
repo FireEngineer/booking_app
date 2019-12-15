@@ -1,16 +1,25 @@
-<h2>Forgot your password?</h2>
+<div style="text-align:center;">
+  <h1 class="h3 mb-3 font-weight-normal"><%= image_tag 'favicon.png', :size =>'40x40'%>スマート予約　パスワードリセット</h1>
+  <h3>スタッフ</h3>
+  <div class="card mx-auto devise-card-width" id="devise_card_style">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post , :class => "form-signin"}) do |f| %>
+      <%= devise_error_messages! %>
+      <label class="text-left">ご使用のemailを入力ください。<br>email宛に、リセットメールが届きます。</label>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"inputEmail", placeholder:"Emailアドレス", required:"required", autofocus:"autofocus" %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <div class="actions mt-5">
+        <%= f.submit "パスワードをリセットする", class:"btn btn-lg btn-primary btn-block" %>
+      </div>
+    <% end %>
+    <%= render "staffs/shared/links" %>
   </div>
+</div>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
+<footer class="footer mt-auto py-3" id="new_footer_style">
+  <div class="container text-right">
+          <%= link_to "利用規約", use_path %> | 
+          <%= link_to "特定商取引法に基づく表示", law_path %> |
+          <%= link_to "プライバシーポリシー", privacy_path %>
   </div>
-<% end %>
+</footer>
 
-<%= render "staffs/shared/links" %>

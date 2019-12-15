@@ -6,3 +6,23 @@
 #devise_card_style {
   border-radius: 0.5rem!important;
 }
+
+// 小デバイス（横向きモバイル, 576px 以上）
+@media (min-width: 576px) { 
+  .devise-card-width { width: 100% }
+ }
+
+// 中デバイス（タブレット, 768px 以上）
+@media (min-width: 768px) { 
+  .devise-card-width { width: 80% }
+ }
+
+// 大デバイス（デスクトップ, 992px 以上）
+@media (min-width: 992px) { 
+  .devise-card-width { width: 60% }
+ }
+
+// 特大デバイス（ワイド・デスクトップ, 1200px 以上）
+@media (min-width: 1200px) { 
+  .devise-card-width { width: 50% }
+ }
