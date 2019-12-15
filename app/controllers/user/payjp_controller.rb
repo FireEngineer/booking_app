@@ -1,5 +1,5 @@
 class User::PayjpController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except:[:use, :privacy]
   before_action :has_order_plan?, only:[:form]
 
   layout 'payjp'

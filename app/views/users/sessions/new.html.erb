@@ -1,22 +1,33 @@
 <div style="text-align:center;">
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
-    <%= devise_error_messages! %>
-    <h1 class="h3 mb-3 font-weight-normal">管理者ログイン</h1>
+  <h1 class="h3 mb-3 font-weight-normal mb-5 mt-4"><%= image_tag 'favicon.png', :size =>'40x40'%>スマート予約にログイン</h1>
+  <div class="card mx-auto w-50" id="devise_card_style">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
+      <h3>管理者ログイン</h3>
+      <%= devise_error_messages! %>
       <%= f.label :email, "メールアドレス", class:"sr-only" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"inputEmail", placeholder:"Emailアドレス", required:"required" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control mt-3", id:"inputEmail", placeholder:"Emailアドレス", required:"required" %>
       <%= f.label :password, "パスワード", class:"sr-only" %>
       <%= f.password_field :password, autocomplete: "current-password", class:"form-control", id:"inputPassword", placeholder:"パスワード", required:"required" %>
 
-    <% if devise_mapping.rememberable? -%>
-      <div class="form-check mb-3">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
-      </div>
-    <% end -%>
+      <% if devise_mapping.rememberable? -%>
+        <div class="form-check mb-3">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end -%>
 
-    <div class="actions">
-      <%= f.submit "ログイン", class:"btn btn-lg btn-primary btn-block" %>
-    </div>
-  <% end %>
-  <%= render "users/shared/links" %>
+      <div class="actions">
+        <%= f.submit "ログイン", class:"btn btn-lg btn-primary btn-block" %>
+      </div>
+    <% end %>
+    <%= render "users/shared/links" %>
+  </div>
 </div>
+
+<footer class="footer mt-auto py-3" id="new_footer_style">
+  <div class="container text-right">
+          <%= link_to "利用規約", use_path %> | 
+          <%= link_to "特定商取引法に基づく表示", law_path %> |
+          <%= link_to "プライバシーポリシー", privacy_path %>
+  </div>
+</footer>

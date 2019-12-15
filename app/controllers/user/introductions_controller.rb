@@ -3,8 +3,6 @@ class User::IntroductionsController < User::Base
   before_action :has_calendar?, only:[:new_calendar, :create_calendar]
   before_action :has_staff?, only:[:new_staff, :create_staff]
 
-  layout 'introduction'
-
   def new_calendar
     @calendar = current_user.calendars.build
   end
