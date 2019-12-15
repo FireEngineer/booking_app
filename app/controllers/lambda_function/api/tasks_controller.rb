@@ -2,7 +2,7 @@ class LambdaFunction::Api::TasksController < ApplicationController
   protect_from_forgery with: :null_session
 
   def reminder
-    Task.tomorrow_tasks.where(calendar_id: 1).each do |task|
+    Task.tomorrow_tasks.each do |task|
       member = task.store_member
       if member.line_user_id
         LineBot.new.push_message_with_reminder(task, member.line_user_id)
