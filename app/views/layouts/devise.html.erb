@@ -12,14 +12,7 @@
   </head>
   
 
-  <body class="body_color">
-    <style>
-      <% if controller.params["controller"].include?("staffs") %>
-        .body_color {
-          background-color: #FFC107;
-        }
-      <% end %>
-    </style>
+  <body>
     <%= render 'layouts/flash_messages' %>
     <%= yield %>
     <div>
