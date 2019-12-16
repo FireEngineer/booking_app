@@ -1,0 +1,53 @@
+.tabel_scroll {
+/* width: 500px; */
+height: 90vh;
+overflow: scroll;
+
+  table {
+  table-layout: fixed;
+  width: 100%;
+  }
+
+  th {
+  background-color: #666666;
+  color: white;
+  width: 10%;
+  }
+
+  thead tr th {
+  /* width: 100px; */
+  position: sticky;
+  top: 0;
+  z-index:1;
+  }
+
+  tbody tr th {
+  position: sticky;
+  left: 0;
+  }
+
+  th, td {
+  /* padding: 5px 10px; */
+  }
+
+}
+
+/*ページネーション自体のデザイン*/
+.pagination {
+  margin: 10px 0;
+}
+.pagination>li>a {          
+  border: none;     /*枠線をなくす*/
+  color: #696969;   /*文字の色を変える*/
+}
+
+/* 表示しているページ番号のデザイン */
+.pagination>.active>a {     
+  background-color: #97d8f5!important;     /*背景の色を変える*/
+  border-radius: 15px;     /*角を丸くする*/
+}
+
+/*ホバー時のデザイン*/
+.pagination>li>a:hover {        
+  border-radius: 15px;    /*角を丸くする*/
+}

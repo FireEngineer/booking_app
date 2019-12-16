@@ -3,8 +3,8 @@ ja:
     pagination:
       first: "&laquo; 最初"
       last: "最後 &raquo;"
-      previous: "&lsaquo; 前"
-      next: "次 &rsaquo;"
+      previous: "&lsaquo; 前週"
+      next: "次週 &rsaquo;"
       truncate: "..."
   helpers:
     page_entries_info:
