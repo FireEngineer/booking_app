@@ -88,6 +88,8 @@ Rails.application.routes.draw do
     post "introductions/create_calendar", to: "introductions#create_calendar"
     get "introductions/new_staff", to: "introductions#new_staff"
     post "introductions/create_staff", to: "introductions#create_staff"
+    get "introductions/new_task_course", to: "introductions#new_task_course"
+    post "introductions/craete_task_course", to: "introductions#craete_task_course"
     # =========
 
     # =====userの決済ロジック用(PAYjp)

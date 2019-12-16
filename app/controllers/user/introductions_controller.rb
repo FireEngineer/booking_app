@@ -26,9 +26,24 @@ class User::IntroductionsController < User::Base
     @staff = @calendar.staffs.build(params_staff)
     if @staff.save
       flash[:success] = 'スタッフ登録が完了しました'
-      redirect_to user_calendar_dashboard_url(current_user, @staff.calendar)
+      redirect_to introductions_new_task_course_url(calendar_id: @calendar.id)
     else
       render :new_staff
+    end
+  end
+
+  def new_task_course
+    @task_course = TaskCourse.new
+  end
+
+  def craete_task_course
+    @calendar = current_user.calendars.first
+    @task_course = @calendar.task_courses.build(params_task_course)
+    if @task_course.save
+      flash[:success] = 'コース登録が完了しました'
+      redirect_to user_calendar_dashboard_url(current_user, @task_course.calendar)
+    else
+      render :new_task_course
     end
   end
 
@@ -40,6 +55,10 @@ class User::IntroductionsController < User::Base
 
   def params_staff
     params.require(:staff).permit(:name, :description, :email, :password, :password_confirmation)
+  end
+
+  def params_task_course
+    params.require(:task_course).permit(:title, :description, :course_time, :charge)
   end
 
   def has_calendar?

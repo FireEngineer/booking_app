@@ -18,7 +18,6 @@ class Calendar < ApplicationRecord
 
   validate :start_time_end_time_validate
 
-  after_create :create_default_task_course
   after_create :create_calendar_config
 
 
@@ -28,9 +27,9 @@ class Calendar < ApplicationRecord
     # public_uid
   end
 
-  def create_default_task_course
-    task_courses.build(title: '60分コース', description: '60分のコースになります。', course_time: 60, charge: '5000').save unless task_courses.first
-  end
+  # def create_default_task_course
+  #   task_courses.build(title: '60分コース', description: '60分のコースになります。', course_time: 60, charge: '5000').save unless task_courses.first
+  # end
 
   def create_calendar_config
     unless calendar_config
