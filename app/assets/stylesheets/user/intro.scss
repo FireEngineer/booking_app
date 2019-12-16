@@ -1,0 +1,27 @@
+// 小デバイス（横向きモバイル, 576px 以上）
+@media (min-width: 576px) { 
+  .container_intro_form {
+    width: 100%;
+  }
+ }
+
+// 中デバイス（タブレット, 768px 以上）
+@media (min-width: 768px) { 
+  .container_intro_form {
+    width: 60%;
+  }
+ }
+
+// 大デバイス（デスクトップ, 992px 以上）
+@media (min-width: 992px) { 
+  .container_intro_form {
+    width: 60%;
+  }
+ }
+
+// 特大デバイス（ワイド・デスクトップ, 1200px 以上）
+@media (min-width: 1200px) { 
+  .container_intro_form {
+    width: 40%;
+  }
+ }

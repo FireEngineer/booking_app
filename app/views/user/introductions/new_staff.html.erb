@@ -1,35 +1,41 @@
-<div>
-  <h1>スタッフ初期設定</h1>
-  <p>スタッフを設定します。後から変更可能です。</p>
+<div style="text-align:center;">
+  <h1 class="h3 mb-3 font-weight-normal mt-4"><%= image_tag 'favicon.png', :size =>'40x40'%>スタッフの設定</h1>
+  <p>スマート予約へのご登録ありがとうございます。</p>
+  <div class="container_intro_form mx-auto" id="devise_card_style">
+    <%= form_for @staff, url: introductions_create_staff_path do |f| %>
+      <%= render 'layouts/error_messages', model: @staff %>
+      <label class="text-left">店舗の設定をしてください。<br>後から、変更ができます。</label>
+      <div class="form-group text-left">
+        <label for="inputEmail" class="col-form-label">スタッフ名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="スタッフの名前です。あとで削除、編集可能です。"></i><span class="badge badge-danger">必須</span></label>
+        <div>
+          <%= f.text_field :name, class: "form-control", required: "required" %>
+        </div>
+      </div>
+      <div class="form-group text-left">
+        <label for="inputEmail" class="col-form-label">メールアドレス<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の電話番号の設定です"></i><span class="badge badge-danger">必須</span></label>
+        <div>
+          <%= f.text_field :email, class: "form-control", required: "required" %>
+        </div>
+      </div>
+      <div class="form-group text-left">
+        <label for="inputEmail" class="col-form-label">パスワード<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i><span class="badge badge-danger">必須</span></label>
+        <div>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group text-left">
+        <label for="inputEmail" class="col-form-label">確認用パスワード<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i><span class="badge badge-danger">必須</span></label>
+        <div>
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+        </div>
+      </div>
+      <%#= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"inputEmail", placeholder:"Emailアドレス", required:"required", autofocus:"autofocus" %>
+      <%#= f.password_field :password, autocomplete: "new-password", class:"form-control", placeholder:"パスワード", required:"required" %>
+      <%#= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control", placeholder:"確認用パスワード", required:"required" %>
+      <div class="actions">
+        <%= f.submit "次へ", class:"btn btn-lg btn-primary btn-block" %>
+      </div>
+    <% end %>
+  </div>
 </div>
-
-
-<%= form_for @staff, url: introductions_create_staff_path do |f| %>
-  <%= render 'layouts/error_messages', model: @staff %>
-  <div class="form-group">
-    <label for="inputEmail" class="col-sm-4 col-form-label">スタッフ名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="スタッフの名前です。あとで削除、編集可能です。"></i><span class="badge badge-danger">必須</span></label>
-    <div class="col-sm-8">
-      <%= f.text_field :name, class: "form-control", required: "required" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputEmail" class="col-sm-4 col-form-label">メールアドレス<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の電話番号の設定です"></i><span class="badge badge-danger">必須</span></label>
-    <div class="col-sm-8">
-      <%= f.text_field :email, class: "form-control", required: "required" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputEmail" class="col-sm-4 col-form-label">パスワード<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i><span class="badge badge-danger">必須</span></label>
-    <div class="col-sm-8">
-      <%= f.password_field :password, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputEmail" class="col-sm-4 col-form-label">確認用パスワード<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i><span class="badge badge-danger">必須</span></label>
-    <div class="col-sm-8">
-      <%= f.password_field :password_confirmation, class: "form-control" %>
-    </div>
-  </div>
-  <%= f.submit "登録", class: "btn btn-primary", data:{confirm: "登録が完了してもカレンダーは公開されません。この後のページで公開設定を行ってください。"} %>
-<% end %>
 
