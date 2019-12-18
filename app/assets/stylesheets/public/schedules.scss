@@ -127,3 +127,22 @@ td.impossible {
 }
 
 
+// indexページ
+.select_form {
+  height: 200px;
+  overflow-y: scroll;
+  max-height: 220px;
+  border-top: #6a7378 3px solid;
+}
+
+.select_tr {
+  cursor: pointer;
+}
+
+.select_tr:hover {
+  background-color: #eda8a2!important;
+}
+
+.selected {
+  background-color: #a7a6a652;
+}
