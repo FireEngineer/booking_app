@@ -35,19 +35,17 @@
             <tbody>
               <% @calendar.staffs.each do |staff| %>
                 <% if @staff == staff %>
-                  <tr class="select_tr selected" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>" >
+                  <tr class="select_tr selected" data-dismiss="modal" aria-label="Close">
                     <td id="categ_id_5" class="text-left">
                       <i class="fas fa-check mr-2 text-primary"></i></i><span><%= staff.name %></span>
                     </td>
                   </tr>
                 <% else %>
-                  <%= link_to calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) do %>
-                    <tr class="select_tr" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>">
-                      <td id="categ_id_5" class="text-left">
-                        <i class="fas fa-angle-right mr-2"></i><span><%= staff.name %></span>
-                      </td>
-                    </tr>
-                  <% end %>
+                  <tr class="select_tr load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>">
+                    <td id="categ_id_5" class="text-left">
+                      <i class="fas fa-angle-right mr-2"></i><span><%= staff.name %></span>
+                    </td>
+                  </tr>
                 <% end %>
               <% end %>
             </tbody>
@@ -74,13 +72,13 @@
             <tbody>
               <% @calendar.task_courses.each do |course| %>
                 <% if @task_course == course %>
-                  <tr class="select_tr selected" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
+                  <tr class="select_tr selected" data-dismiss="modal" aria-label="Close">
                     <td id="categ_id_5" class="text-left">
                       <i class="fas fa-check mr-2 text-primary"></i><span><%= course.title %></span>
                     </td>
                   </tr>
                 <% else %>
-                  <tr class="select_tr" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
+                  <tr class="select_tr load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
                     <td id="categ_id_5" class="text-left">
                       <i class="fas fa-angle-right mr-2"></i><span><%= course.title %></span>
                     </td>
@@ -94,5 +92,3 @@
     </div>
   </div>
 </div>
-
-<select></select>
