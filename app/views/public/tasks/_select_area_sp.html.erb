@@ -1,0 +1,98 @@
+ <%# スタッフ選択 %>
+<div class="mb-3">
+  <h5 class="text-left">担当スタッフを選択</h5>
+  <div class="select_form_sp">
+    <ul class="list-group">
+      <li class="list-group-item disabled" data-toggle="modal" data-target="#staff_modal"><%= @staff.name %><i class="fas fa-angle-down float-right"></i></li>
+    </ul>
+  </div>
+</div>
+
+  <%# コースの選択 %>
+  <div class="mb-3">
+    <h5 class="text-left">コースを選択</h5>
+    <div class="select_form_sp">
+      <ul class="list-group">
+        <li class="list-group-item disabled" data-toggle="modal" data-target="#course_modal"><%= @task_course.title %><i class="fas fa-angle-down float-right"></i></li>
+      </ul>
+    </div>
+  </div>
+
+
+<!-- スタッフ選択モーダル -->
+<div class="modal" id="staff_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">スタッフを選択</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="select_form_modal">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-clickable" id="res_step_cat">
+            <tbody>
+              <% @calendar.staffs.each do |staff| %>
+                <% if @staff == staff %>
+                  <tr class="select_tr selected" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>" >
+                    <td id="categ_id_5" class="text-left">
+                      <i class="fas fa-check mr-2 text-primary"></i></i><span><%= staff.name %></span>
+                    </td>
+                  </tr>
+                <% else %>
+                  <%= link_to calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) do %>
+                    <tr class="select_tr" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>">
+                      <td id="categ_id_5" class="text-left">
+                        <i class="fas fa-angle-right mr-2"></i><span><%= staff.name %></span>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- コース選択モーダル -->
+<div class="modal" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">コースを選択</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="select_form_modal">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-clickable" id="res_step_cat">
+            <tbody>
+              <% @calendar.task_courses.each do |course| %>
+                <% if @task_course == course %>
+                  <tr class="select_tr selected" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
+                    <td id="categ_id_5" class="text-left">
+                      <i class="fas fa-check mr-2 text-primary"></i><span><%= course.title %></span>
+                    </td>
+                  </tr>
+                <% else %>
+                  <tr class="select_tr" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
+                    <td id="categ_id_5" class="text-left">
+                      <i class="fas fa-angle-right mr-2"></i><span><%= course.title %></span>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<select></select>

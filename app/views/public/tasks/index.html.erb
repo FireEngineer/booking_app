@@ -2,59 +2,12 @@
   <div class="title">
     <h2 class="title_style mt-3">予約フォーム</h2>
   </div>
-    <%# スタッフ選択 %>
-  <div>
-    <h5 class="text-left ">担当スタッフを選択</h5>
-    <div class="select_form">
-      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-sm table-clickable" id="res_step_cat">
-        <tbody>
-          <% @calendar.staffs.each do |staff| %>
-            <% if @staff == staff %>
-              <tr class="select_tr selected" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>" >
-                <td id="categ_id_5" class="text-left">
-                  <i class="fas fa-check mr-2 text-primary"></i></i><span><%= staff.name %></span>
-                </td>
-              </tr>
-            <% else %>
-              <%= link_to calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) do %>
-                <tr class="select_tr" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>">
-                  <td id="categ_id_5" class="text-left">
-                    <i class="fas fa-angle-right mr-2"></i><span><%= staff.name %></span>
-                  </td>
-                </tr>
-              <% end %>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-    <%# コースの選択 %>
-    <div>
-      <h5 class="text-left ">コースを選択</h5>
-      <div class="select_form">
-        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-sm table-clickable" id="res_step_cat">
-          <tbody>
-            <% @calendar.task_courses.each do |course| %>
-              <% if @task_course == course %>
-                <tr class="select_tr selected" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
-                  <td id="categ_id_5" class="text-left">
-                    <i class="fas fa-check mr-2 text-primary"></i><span><%= course.title %></span>
-                  </td>
-                </tr>
-              <% else %>
-                <tr class="select_tr" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
-                  <td id="categ_id_5" class="text-left">
-                    <i class="fas fa-angle-right mr-2"></i><span><%= course.title %></span>
-                  </td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  
+  <% if browser.device.mobile?  %>
+    <%= render 'select_area_sp' %>
+  <% else %>
+    <%= render 'select_area' %>
+  <% end %>
 
   <%= paginate @month %>
     <div class="tabel_scroll">

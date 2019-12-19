@@ -135,6 +135,10 @@ td.impossible {
   border-top: #6a7378 3px solid;
 }
 
+.select_form_sp {
+  border-top: #6a7378 3px solid;
+}
+
 .select_tr {
   cursor: pointer;
 }
@@ -145,4 +149,13 @@ td.impossible {
 
 .selected {
   background-color: #a7a6a652;
+}
+
+.float-right {
+  float: right;
+}
+
+.select_form_modal {
+  height: 200px;
+  overflow-y: scroll;
 }
