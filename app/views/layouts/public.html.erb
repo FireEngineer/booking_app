@@ -35,5 +35,23 @@
         <%= yield %>
       </div>
       <%= debug(params) if Rails.env.development? %>
+      <script>
+      $(".load_btn").click(function(){
+          $("#overlay").fadeIn(500);
+      });
+    </script>
+      <script type="text/javascript">
+        window.onpageshow = function(e) {
+          if( e.persisted == true ){
+          // ローディング画面を隠す
+            $("#overlay").remove();
+          /* もしローディング画面を出す以外にも画面遷移時に処理を行っている場合など、
+          * 何らかの不具合が出た場合には、
+          * 画面を読み込み直すのでブラウジングのスムーズさが少し損なわれてしまいますが、
+          * 強制的にリロードさせる下記の処理をさせると大体解決します。*/
+          // window.location.reload();
+          }
+        }
+      </script>
   </body>
 </html>
