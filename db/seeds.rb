@@ -17,5 +17,5 @@
 
 
 SystemPlan.create!(title: "有料プラン", plan_id: "P001", charge: 5000, description: "有料プランです。")
-Plan.create!(title: "基本プラン", plan_id: "pln_999b5d0dda45465e852493c80719", charge: 5000, description: "有料プランです。")
+Plan.create!(title: "トライアルプラン", plan_id: "pln_999b5d0dda45465e852493c80719", charge: 5000, description: "一ヶ月のトライアルプランです。その後月末に課金されます。")
 Plan.create!(title: "お試しプラン", plan_id: "free", charge: 0, description: "期限なしの無料お試しプランです。")
