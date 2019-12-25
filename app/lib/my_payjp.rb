@@ -75,6 +75,7 @@ class MyPayjp
     Payjp::Subscription.create(
       customer: customer,
       plan:     plan,
+      prorate: true,
     )
   end
 

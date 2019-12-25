@@ -10,7 +10,7 @@ class User::PayjpController < ApplicationController
 
   def create_order
     customer = MyPayjp.create_customer(params["payjp-token"], current_user)
-    plan = Plan.first
+    plan = Plan.find_by(plan_id: "toraial") || Plan.fitst
     response = MyPayjp.create_subscription(customer, plan.plan_id)
     if response["error"]
       flash[:danger] = "決済が完了しませんでした。入力内容を確認して、もう一度やり直してください。"

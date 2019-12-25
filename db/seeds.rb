@@ -14,8 +14,5 @@
 # admin = Admin.new(email: email, password: pass, encrypted_password: pass)
 # admin.build_line_bot(channel_id: channel_id, channel_secret: channel_secret)
 # admin.save!
-
-
-SystemPlan.create!(title: "有料プラン", plan_id: "P001", charge: 5000, description: "有料プランです。")
-Plan.create!(title: "トライアルプラン", plan_id: "pln_999b5d0dda45465e852493c80719", charge: 5000, description: "一ヶ月のトライアルプランです。その後月末に課金されます。")
-Plan.create!(title: "お試しプラン", plan_id: "free", charge: 0, description: "期限なしの無料お試しプランです。")
+Plan.create!(title: "トライアルプラン", plan_id: "toraial", charge: 10000, description: "30日のトライアルプランです。３0日後に課金されます。")
+Plan.create!(title: "有料プラン", plan_id: "free", charge: 0, description: "期限なしの無料お試しプランです。")

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_24_223801) do
+ActiveRecord::Schema.define(version: 2019_12_25_102339) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2019_12_24_223801) do
     t.datetime "updated_at", null: false
     t.integer "trial_days", comment: "トライアル日数"
     t.integer "billing_day", comment: "課金を開始する日（その月の何日から課金するかどうか）"
+    t.string "plan_uid", comment: "プランを識別するためのもの"
   end
 
   create_table "regular_holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
