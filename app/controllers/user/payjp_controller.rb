@@ -4,22 +4,36 @@ class User::PayjpController < ApplicationController
 
   layout 'payjp'
 
-  def form
+  def choice_plan
 
+  end
+
+  def form
+    if Plan.find_by(plan_id: params[:plan_params])
+      @plan = Plan.find_by(plan_id: params[:plan_params])
+    else
+      flash[:danger] = "決済パラメーターが不正です"
+      redirect_to choice_plan_url
+    end
   end
 
   def create_order
     customer = MyPayjp.create_customer(params["payjp-token"], current_user)
-    plan = Plan.find_by(plan_id: "toraial") || Plan.fitst
-    response = MyPayjp.create_subscription(customer, plan.plan_id)
-    if response["error"]
-      flash[:danger] = "決済が完了しませんでした。入力内容を確認して、もう一度やり直してください。"
-      redirect_to user_url(current_user)
+    plan = Plan.find_by(plan_id: params[:plan_id])
+    if plan
+      response = MyPayjp.create_subscription(customer, plan.plan_id)
+      if response["error"]
+        flash[:danger] = "決済が完了しませんでした。入力内容を確認して、もう一度やり直してください。"
+        redirect_to user_url(current_user)
+      else
+        order_plan = OrderPlan.create!(user_id: current_user.id, plan_id: plan.id, order_id: response["id"], card_number: customer["cards"]["data"][0]["last4"])
+        current_user.calendars.first.update(is_released: true)
+        flash[:success] = "決済が完了しました。"
+        redirect_to complete_order_url(order_plan)
+      end
     else
-      order_plan = OrderPlan.create!(user_id: current_user.id, plan_id: plan.id, order_id: response["id"], card_number: customer["cards"]["data"][0]["last4"])
-      current_user.calendars.first.update(is_released: true)
-      flash[:success] = "決済が完了しました。"
-      redirect_to complete_order_url(order_plan)
+      flash[:danger] = "決済パラメーターが不正です"
+      redirect_to choice_plan_url
     end
   end
 

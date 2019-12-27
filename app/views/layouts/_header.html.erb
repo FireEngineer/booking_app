@@ -74,7 +74,7 @@
             <% if @calendar.is_released %>
               <%= link_to "非公開にする", user_calendar_update_is_released_path(current_user, @calendar, commit:"非公開にする"), class:"dropdown-item load_btn", method: :patch %>
             <% elsif !@calendar.user.order_plans.any? { |order_plan| !order_plan.status_destroy? } %>
-              <%= link_to "プランに登録してカレンダーを公開する", pay_form_path, class:"dropdown-item load_btn" %>
+              <%= link_to "プランに登録してカレンダーを公開する", choice_plan_path, class:"dropdown-item load_btn" %>
             <% else %>
               <%= link_to "カレンダーを公開する", user_calendar_update_is_released_path(current_user, @calendar, commit:"公開にする"), class:"dropdown-item load_btn", method: :patch %>
             <% end %>

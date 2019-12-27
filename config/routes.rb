@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     # =========
 
     # =====userの決済ロジック用(PAYjp)
+    get 'pay/choice_plan', to: 'payjp#choice_plan', as: 'choice_plan'
     get 'pay/form', to: 'payjp#form', as: 'pay_form'
     post 'pay/create_order', to: 'payjp#create_order', as: 'pay_create_order'
     # post 'payments/registration_callback', to: 'payments#registration_callback', as: 'registration_callback'
