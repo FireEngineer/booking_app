@@ -5,35 +5,67 @@
 
 <div class="container">
   <div class="card-deck mb-3 text-center">
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">パーソナルプラン</h4>
+    <% if Plan.joins(:order_plans).where(order_plans: {status: "destroy"}).where(plan_id: ["5000T30D1", "10000T30D1"]).any? %>
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">パーソナルプラン</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">5000円 <small class="text-muted">/ 月</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>お一人でご利用いただくプランです。</li>
+            <li>課金日は毎月1日です。</li>
+            <li>課金日までは日割り計算で課金されます。</li>
+          </ul>
+          <%= link_to "決済に進む", pay_form_path(plan_params: "5000D1"), class:"btn btn-lg btn-block btn-primary" %>
+        </div>
       </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">5000円 <small class="text-muted">/ 月</small></h1>
-        <ul class="list-unstyled mt-3 mb-4">
-          <li>お一人でご利用いただくプランです。</li>
-          <li>課金日は毎月1日です。</li>
-          <li>30日のトライアル後課金されます。</li>
-          <li>トライアル期間終了後、課金日までは日割り計算で課金されます。</li>
-        </ul>
-        <%= link_to "決済に進む", pay_form_path(plan_params: "5000T30D1"), class:"btn btn-lg btn-block btn-primary" %>
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">プロプラン</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">10000円 <small class="text-muted">/ 月</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>店舗などの複数のスタッフがご利用いただくプランです。</li>
+            <li>課金日は毎月1日です。</li>
+            <li>課金日までは日割り計算で課金されます。</li>
+          </ul>
+          <%= link_to "決済に進む", pay_form_path(plan_params: "10000D1"), class:"btn btn-lg btn-block btn-primary" %>
+        </div>
       </div>
     </div>
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">プロプラン</h4>
+    <% else %>
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">パーソナルプラン(30日トライアル付き)</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">5000円 <small class="text-muted">/ 月</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>お一人でご利用いただくプランです。</li>
+            <li>課金日は毎月1日です。</li>
+            <li>30日のトライアル後課金されます。</li>
+            <li>トライアル期間終了後、課金日までは日割り計算で課金されます。</li>
+          </ul>
+          <%= link_to "決済に進む", pay_form_path(plan_params: "5000T30D1"), class:"btn btn-lg btn-block btn-primary" %>
+        </div>
       </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">10000円 <small class="text-muted">/ 月</small></h1>
-        <ul class="list-unstyled mt-3 mb-4">
-          <li>店舗などの複数のスタッフがご利用いただくプランです。</li>
-          <li>課金日は毎月1日です。</li>
-          <li>30日のトライアル後課金されます。</li>
-          <li>トライアル期間終了後、課金日までは日割り計算で課金されます。</li>
-        </ul>
-        <%= link_to "決済に進む", pay_form_path(plan_params: "10000T30D1"), class:"btn btn-lg btn-block btn-primary" %>
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">プロプラン(30日トライアル付き)</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">10000円 <small class="text-muted">/ 月</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>店舗などの複数のスタッフがご利用いただくプランです。</li>
+            <li>課金日は毎月1日です。</li>
+            <li>30日のトライアル後課金されます。</li>
+            <li>トライアル期間終了後、課金日までは日割り計算で課金されます。</li>
+          </ul>
+          <%= link_to "決済に進む", pay_form_path(plan_params: "10000T30D1"), class:"btn btn-lg btn-block btn-primary" %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
