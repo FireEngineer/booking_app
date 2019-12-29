@@ -234,12 +234,12 @@
     }
     start();
 
-    var isPrivate = false;
     if (window.openDatabase) {
     try {
-        window.openDatabase(null, null, null, null);
-    } catch (_) {
-        isPrivate = true;
+        localStorage.test = 'hoge';
+        alert('✅LocalStorage使えるよ');
+    } catch(e) {
+        alert("ブラウザのシークレットモードを解除してください。正常に予約ができない場合があります。");
         window.location.href = "<%= calendar_tasks_url(@calendar) %>"
     }
     }
