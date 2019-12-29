@@ -77,3 +77,5 @@ curl -X POST http://localhost:3000/lambda_function/task/tasks/reminder
 http://localhost:3000/lambda_function/imai/shotas/reminder
 
 curl -X POST https://www.yoyaku-app.com/lambda_function/api/tasks/reminder
+
+http://localhost:3000/calendars/414e98b1/tasks/new?course_id=1&staff_id=1&start_time=2019-12-30T9%3A0%3A00%2B09%3A00
