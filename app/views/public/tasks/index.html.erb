@@ -67,7 +67,7 @@
   if (window.openDatabase) {
     try {
         localStorage.test = 'hoge';
-        alert('✅LocalStorage使えるよ');
+        
     } catch(e) {
         alert("ブラウザのシークレットモードを解除してください。正常に予約ができない場合があります。");
         window.location.href = "<%= calendar_tasks_url(@calendar) %>"

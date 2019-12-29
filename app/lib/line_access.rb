@@ -4,7 +4,7 @@ require 'jwt'
 
 module LineAccess
   def redirect_url(channel_id, redirect_uri, state)
-    "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{channel_id}&redirect_uri=#{redirect_uri}&state=#{state}&scope=openid%20profile&bot_prompt=normal"
+    "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{channel_id}&redirect_uri=#{redirect_uri}&state=#{state}&bot_prompt=aggressive&scope=openid%20profile"
   end
 
   def get_access_token(channel_id, channel_secret, code, redirect_uri)
