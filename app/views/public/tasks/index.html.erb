@@ -28,7 +28,7 @@
                 <% time_str = time(day, time) %>
                   <% if ValidateTask.call(@events, time_str, @task_course) && ValidateStaffShift.call(@staff, time_str, @task_course) && !RegularDay.call(@calendar, day) && time_str.to_time >= Time.current.since(@calendar.display_time.hours) && ValidateTask.call(@google_events, time_str, @task_course)   %>
                     <td class="possible">
-                      <%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: @staff.id), class:"load_btn" do %>
+                      <%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: @staff.id) do %>
                         <i class="far fa-circle"></i>
                       <% end %>
                     </td>
