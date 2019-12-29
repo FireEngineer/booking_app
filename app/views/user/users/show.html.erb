@@ -13,6 +13,10 @@
         </thead>
         <tbody>
             <tr>
+                <th scope="row">アカウント名</th>
+                <td><%= f.text_field :name, class:"form-control" %></td>
+            </tr>
+            <tr>
                 <th scope="row">email</th>
                 <td><%= f.email_field :email, class:"form-control" %></td>
             </tr>
@@ -65,7 +69,7 @@
                 <th scope="row">契約プラン</th>
                 <td>
                     フリープラン
-                    <%= link_to "プラン変更", pay_form_path %>
+                    <%= link_to "プラン変更", choice_plan_path %>
                 </td>
             </tr>
         </tbody>

@@ -4,12 +4,13 @@ class User::IntroductionsController < User::Base
   before_action :has_staff?, only:[:new_staff, :create_staff]
 
   def new_calendar
-    @calendar = current_user.calendars.build
+    @user = current_user
+    @calendar = @user.calendars.build
   end
 
   def create_calendar
-    @calendar = current_user.calendars.build(params_calendar)
-    if @calendar.save
+    @calendar = current_user.calendars.build
+    if current_user.update(params_user_calendar)
       flash[:success] = '店鋪登録が完了しました'
       redirect_to introductions_new_staff_url(calendar_id: @calendar.id)
     else
@@ -49,8 +50,8 @@ class User::IntroductionsController < User::Base
 
   private
 
-  def params_calendar
-    params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :calendar_name, :phone, :public_uid, :display_interval_time, :end_time, :start_time, :display_time, :address)
+  def params_user_calendar
+    params.require(:user).permit(:name, calendars_attributes: [:end_date, :display_week_term, :calendar_name, :phone, :public_uid, :display_interval_time, :end_time, :start_time, :display_time, :address])
   end
 
   def params_staff

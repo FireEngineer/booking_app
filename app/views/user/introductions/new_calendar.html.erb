@@ -1,33 +1,35 @@
 <div style="text-align:center;">
-  <h1 class="h3 mb-3 font-weight-normal mt-4"><%= image_tag 'favicon.png', :size =>'40x40'%>店舗の設定</h1>
+  <h1 class="h3 mb-3 font-weight-normal mt-4"><%= image_tag 'favicon.png', :size =>'40x40'%>アカウントの基本設定</h1>
   <p>スマート予約へのご登録ありがとうございます。</p>
   <div class="container_intro_form mx-auto" id="devise_card_style">
-    <%= form_for @calendar, url: introductions_create_calendar_path do |f| %>
-      <label class="text-left">店舗の設定をしてください。<br>後から、変更ができます。</label>
+    <%= form_for @user, url: introductions_create_calendar_path, method: :post do |f| %>
+      <label class="text-left">アカウントの基本設定をしてください。<br>後から、変更ができます。</label>
       <div class="form-group text-left">
-        <label for="inputEmail" class="col-form-label">表示カレンダー名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の名前の設定です。"></i><span class="badge badge-danger">必須</span></label>
+        <label for="inputEmail" class="col-form-label">アカウント名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の名前の設定です。"></i><span class="badge badge-danger">必須</span></label>
         <div>
-          <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
-          <%= f.text_field :calendar_name, class: "form-control", required: "required" %>
+          <%= f.text_field :name, class: "form-control", required: "required" %>
         </div>
       </div>
-      <div class="form-group text-left">
-        <label for="inputEmail" class="col-form-label">お店の電話番号<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の電話番号の設定です"></i><span class="badge badge-danger">必須</span></label>
-        <div>
-          <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
-          <%= f.text_field :phone, class: "form-control", required: "required" %>
+      <%= f.fields_for :calendars do |f| %>
+        <div class="form-group text-left">
+          <label for="inputEmail" class="col-form-label">表示カレンダー名<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の名前の設定です。"></i><span class="badge badge-danger">必須</span></label>
+          <div>
+            <%= f.text_field :calendar_name, class: "form-control", required: "required" %>
+          </div>
         </div>
-      </div>
-      <div class="form-group text-left">
-        <label for="inputEmail" class="col-form-label">お店の住所<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i></label>
-        <div>
-          <%# <input type="email" class="form-control" id="inputEmail" placeholder="Eメール"> %>
-          <%= f.text_field :address, class: "form-control" %>
+        <div class="form-group text-left">
+          <label for="inputEmail" class="col-form-label">お店の電話番号<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の電話番号の設定です"></i><span class="badge badge-danger">必須</span></label>
+          <div>
+            <%= f.text_field :phone, class: "form-control", required: "required" %>
+          </div>
         </div>
-      </div>
-      <%#= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"inputEmail", placeholder:"Emailアドレス", required:"required", autofocus:"autofocus" %>
-      <%#= f.password_field :password, autocomplete: "new-password", class:"form-control", placeholder:"パスワード", required:"required" %>
-      <%#= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control", placeholder:"確認用パスワード", required:"required" %>
+        <div class="form-group text-left">
+          <label for="inputEmail" class="col-form-label">お店の住所<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="お店の住所の設定です。"></i></label>
+          <div>
+            <%= f.text_field :address, class: "form-control" %>
+          </div>
+        </div>
+      <% end %>
       <div class="actions">
         <%= f.submit "次へ", class:"btn btn-lg btn-primary btn-block" %>
       </div>

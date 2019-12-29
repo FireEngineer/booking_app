@@ -13,7 +13,7 @@
     <table class="table mb-0">
       <tbody>
         <tr>
-          <th scope="row">課金プラン</th>
+          <th scope="row">プラン</th>
           <td><%= @order_plan.plan.title %></td>
         </tr>
         <tr>
@@ -23,6 +23,14 @@
         <tr>
           <th scope="row">課金登録日</th>
           <td><%= l(@order_plan.created_at, format: :long) %></td>
+        </tr>
+        <tr>
+          <th scope="row">課金日</th>
+          <td>毎月<%= @order_plan.plan.billing_day %>日</td>
+        </tr>
+        <tr>
+          <th scope="row">プラン継続日数</th>
+          <td><%= billing_term(@order_plan.created_at) %>日</td>
         </tr>
         <tr>
           <th scope="row">登録カード(下４桁)</th>

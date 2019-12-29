@@ -8,16 +8,24 @@
     <table class="table mb-0">
       <tbody>
         <tr>
-          <th scope="row">課金プラン</th>
-          <td>予約システム有料プラン</td>
+          <th scope="row">プラン</th>
+          <td><%= @plan.title %></td>
         </tr>
         <tr>
           <th scope="row">プラン料金</th>
-          <td>10,000円/月</td>
+          <td><%= @plan.charge %>円/月</td>
         </tr>
         <tr>
           <th scope="row">課金登録日</th>
           <td><%= l(@order_plan.created_at, format: :long) %></td>
+        </tr>
+        <tr>
+          <th scope="row">課金日</th>
+          <td>毎月<%= @order_plan.plan.billing_day %>日</td>
+        </tr>
+        <tr>
+          <th scope="row">プラン継続日数</th>
+          <td><%= billing_term(@order_plan.created_at) %>日</td>
         </tr>
         <tr>
           <th scope="row">登録カード(下４桁)</th>
@@ -31,6 +39,6 @@
     </table>
     <div class="card-footer">
       <%= link_to "戻る", order_plan_path(@order_plan), class:"btn btn-primary" %>
-      <%= link_to "上記プランを解約する", destroy_order_path(@order_plan), method: :patch, class:"btn btn-danger", "data-comfirm": "解約しますか？" %>
+      <%= link_to "上記プランを解約する", destroy_order_path(@order_plan), method: :patch, class:"btn btn-danger", data:{confirm: "本当に解約しますか？"} %>
     </div>
   </div>

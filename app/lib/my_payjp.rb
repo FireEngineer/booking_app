@@ -70,12 +70,19 @@ class MyPayjp
   #
   # 定額課金を作成する
   #
-  def self.create_subscription(customer, plan)
+  def self.create_subscription(customer, plan, current_user)
     Payjp::api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Subscription.create(
       customer: customer,
       plan:     plan,
       prorate: true,
+      metadata: {
+        name: current_user.name,
+        email: current_user.email,
+        phone: current_user.calendars.first.phone,
+        user_id: current_user.id,
+        shop_name: current_user.calendars.first.calendar_name,
+      }
     )
   end
 

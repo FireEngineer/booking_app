@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :system_plans, through: :orders
   has_many :order_plans
   has_many :plans, through: :order_plans
+  accepts_nested_attributes_for :calendars
 
   serialize :google_api_token, Hash
 end
