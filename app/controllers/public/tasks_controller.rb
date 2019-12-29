@@ -63,7 +63,7 @@ class Public::TasksController < Public::Base
   def redirect_register_line
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @user = @calendar.user
-    if params[:commit] == 'そのまま予約する'
+    if params[:commit] == '予約（通知をEメールで受け取る）'
       task_create_without_line(params, store_member_params, task_params)
     else
       # セッションにフォーム値を保持して、ラインログイン後レコード保存
@@ -90,8 +90,8 @@ class Public::TasksController < Public::Base
                                         task_course_id: @task_course.id,
                                         calendar_id: @calendar.id)
       check_task_validation(@task, @calendar)
-      flash.now[:success] = 'キャンセルしました。'
-      render :new
+      flash[:success] = 'キャンセルしました。'
+      redirect_to new_calendar_task_url(@calendar, start_time: session[:task]['start_time'], course_id: @task_course.id, staff_id: @staff.id)
       return
     end
 
@@ -119,8 +119,8 @@ class Public::TasksController < Public::Base
                                         task_course_id: @task_course.id,
                                         calendar_id: @calendar.id)
       check_task_validation(@task, @calendar)
-      flash.now[:danger] = 'ラインボットと友達になってください'
-      render :new
+      flash[:danger] = 'ラインボットと友達になってください'
+      redirect_to new_calendar_task_url(@calendar, start_time: session[:task]['start_time'], course_id: @task_course.id, staff_id: @staff.id)
       return
     end
   end
