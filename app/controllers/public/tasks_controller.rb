@@ -56,7 +56,7 @@ class Public::TasksController < Public::Base
                                       staff_id: @staff.id,
                                       task_course_id: @task_course.id,
                                       calendar_id: @calendar.id)
-    check_task_validation(@task)
+    check_task_validation(@task, @calendar)
   end
 
   # ラインログインボタンでこのアクションが呼ばれる
@@ -89,7 +89,7 @@ class Public::TasksController < Public::Base
                                         staff_id: @staff.id,
                                         task_course_id: @task_course.id,
                                         calendar_id: @calendar.id)
-      check_task_validation(@task)
+      check_task_validation(@task, @calendar)
       flash.now[:success] = 'キャンセルしました。'
       render :new
       return
@@ -118,7 +118,7 @@ class Public::TasksController < Public::Base
                                         staff_id: @staff.id,
                                         task_course_id: @task_course.id,
                                         calendar_id: @calendar.id)
-      check_task_validation(@task)
+      check_task_validation(@task, @calendar)
       flash.now[:danger] = 'ラインボットと友達になってください'
       render :new
       return
@@ -188,10 +188,10 @@ class Public::TasksController < Public::Base
   end
 
   # タスクのバリデーションチェック
-  def check_task_validation(task)
+  def check_task_validation(task, calendar)
     if task.invalid?
-      flash[:warnning] = 'この時間はすでに予約が入っております。'
-      redirect_to calendar_tasks_url(params[:id])
+      flash[:danger] = 'この時間はすでに予約が入っております。'
+      redirect_to calendar_tasks_url(calendar)
     end
   end
 
