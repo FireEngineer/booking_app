@@ -1,6 +1,6 @@
 <div style="text-align:center;">
   <h1 class="h3 mb-3 font-weight-normal mt-4"><%= image_tag 'favicon.png', :size =>'40x40'%>コースの設定</h1>
-  <p>スマート予約へのご登録ありがとうございます。</p>
+  <p><%= ENV['SYSTEM_NAME'] %>へのご登録ありがとうございます。</p>
   <div class="container_intro_form mx-auto" id="devise_card_style">
     <%= form_for @task_course, url: introductions_craete_task_course_path do |f| %>
       <%= render 'layouts/error_messages', model: @task_course %>

@@ -1,6 +1,6 @@
 <div style="text-align:center;">
   <h1 class="h3 mb-3 font-weight-normal mt-4"><%= image_tag 'favicon.png', :size =>'40x40'%>アカウントの基本設定</h1>
-  <p>スマート予約へのご登録ありがとうございます。</p>
+  <p><%= ENV['SYSTEM_NAME'] %>へのご登録ありがとうございます。</p>
   <div class="container_intro_form mx-auto" id="devise_card_style">
     <%= form_for @user, url: introductions_create_calendar_path, method: :post do |f| %>
       <label class="text-left">アカウントの基本設定をしてください。<br>後から、変更ができます。</label>

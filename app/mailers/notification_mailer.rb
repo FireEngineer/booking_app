@@ -1,12 +1,12 @@
 class NotificationMailer < ApplicationMailer
-  default from: 'hogehoge@example.com'
+  default from: ENV['EMAIL']
 
   def send_confirm_to_user(task, user, calendar)
     @task = task
     @user = user
     @calendar = calendar
     mail(
-      from: 'tech.leaders.kk@gmail.com',
+      from: ENV['EMAIL'],
       to: task.store_member.email,
       subject: '予約確定通知'
     )
@@ -17,7 +17,7 @@ class NotificationMailer < ApplicationMailer
     @user = user
     @calendar = calendar
     mail(
-      from: 'tech.leaders.kk@gmail.com',
+      from: ENV['EMAIL'],
       to: task.store_member.email,
       subject: '予約内容変更通知'
     )
@@ -28,7 +28,7 @@ class NotificationMailer < ApplicationMailer
     @user = user
     @calendar = calendar
     mail(
-      from: 'tech.leaders.kk@gmail.com',
+      from: ENV['EMAIL'],
       to: task.store_member.email,
       subject: '予約キャンセル通知'
     )
@@ -39,7 +39,7 @@ class NotificationMailer < ApplicationMailer
     @user = user
     @calendar = calendar
     mail(
-      from: 'tech.leaders.kk@gmail.com',
+      from: ENV['EMAIL'],
       to: task.store_member.email,
       subject: '明日の予約リマインド'
     )
