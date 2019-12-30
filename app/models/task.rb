@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  after_create_commit { TaskBroadcastJob.perform_later self }
   acts_as_paranoid
   validate :check_time_original
   validate :check_include_work_time

@@ -147,4 +147,6 @@ Rails.application.routes.draw do
     get "user/helps", to:"helps#user_modal"
   end
 
+  mount ActionCable.server => '/cable'
+
 end
