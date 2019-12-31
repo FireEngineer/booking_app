@@ -5,6 +5,5 @@ test:
   adapter: async
 
 production:
-  adapter: async
-  # url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  # channel_prefix: rails_todo_production
+  adapter: redis
+  url: redis://redis-for-bokking-env.333cas.ng.0001.apne1.cache.amazonaws.com:6379

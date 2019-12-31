@@ -45,7 +45,7 @@ Rails.application.configure do
   # Mount Action Cable outside main process or domain
   config.action_cable.mount_path = '/cable'
   config.action_cable.url = 'wss://booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com/cable'
-  config.action_cable.allowed_request_origins = [ 'https://booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com/', /https:\/\/booking-env-action-cable.ap-northeast-1.elasticbeanstalk.*/ ]
+  config.action_cable.allowed_request_origins = [ 'https://booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com', 'http://booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com',   'https://www.booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com', 'http://www.booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com']
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
