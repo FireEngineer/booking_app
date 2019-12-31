@@ -48,7 +48,7 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = [ 'https://booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com', 'http://booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com',   'https://www.booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com', 'http://www.booking-env-action-cable.ap-northeast-1.elasticbeanstalk.com']
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
