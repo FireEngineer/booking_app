@@ -6,4 +6,4 @@ test:
 
 production:
   adapter: redis
-  url: redis://redis-for-bokking-env.333cas.ng.0001.apne1.cache.amazonaws.com:6379
+  url: redis://redis-for-booking.333cas.ng.0001.apne1.cache.amazonaws.com:6379
