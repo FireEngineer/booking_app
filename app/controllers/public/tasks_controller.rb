@@ -9,9 +9,6 @@ class Public::TasksController < Public::Base
   require 'net/http'
   require 'uri'
 
-  # CHANNEL_ID = Admin.first.line_bot.channel_id
-  # CHANNEL_SECRET = Admin.first.line_bot.channel_secret
-
   CHANNEL_ID = ENV['LINE_LOGIN_CHANNEL_ID']
   CHANNEL_SECRET = ENV['LINE_LOGIN_CHANNEL_SECRET']
 
@@ -40,9 +37,6 @@ class Public::TasksController < Public::Base
     end
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
-    # rescue => e
-    #   errors_log(e)
-    #   redirect_to not_released_page_url
   end
 
   def new
