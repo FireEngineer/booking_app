@@ -67,6 +67,10 @@ class Task < ApplicationRecord
     date = start_time.to_date
     staff = self.staff
     shift = staff.staff_shifts.find_by(work_date: date)
+    unless shift
+      puts "shiftが存在しません。(指定された日付のshiftは存在しない)"
+      raise "shiftが存在しません。"
+    end
     unless start_time >= shift.work_start_time && end_time <= shift.work_end_time
       errors.add(:start_time, 'スタッフの勤務時間外です。') # エラーメッセージ
     end
