@@ -52,8 +52,10 @@ class Public::TasksController < Public::Base
                                       calendar_id: @calendar.id)
     check_task_validation(@task, @calendar)
   rescue RuntimeError => e
-    flash[:danger] = "指定された日付の予約はできません。"
-    redirect_to calendar_tasks_url(@calendar)
+    if e.message == "shiftが存在しません。"
+      flash[:danger] = "指定された日付の予約はできません。"
+      redirect_to calendar_tasks_url(@calendar)
+    end
   end
 
   # ラインログインボタンでこのアクションが呼ばれる
