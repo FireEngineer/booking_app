@@ -15,9 +15,9 @@ class Public::Base < ApplicationController
   end
 
   def calendar_is_released?
-    calendar = Calendar.find_by(public_uid: params[:calendar_id]) || Calendar.find_by(id: session[:calendar])
+    calendar = Calendar.find_by(public_uid: params[:calendar_id]) || nil
     redirect_to not_released_page_url unless calendar.is_released?
-    # rescue
-    #     redirect_to not_released_page_url
+    rescue NoMethodError
+      render template: 'errors/error_secret_mode', status: 404, layout: 'application', content_type: 'text/html'
   end
 end
