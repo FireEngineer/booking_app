@@ -96,6 +96,11 @@ class Public::TasksController < Public::Base
     # アクセストークンを使用して、BOTとお客との友達関係を取得
     friend_response = LineAccess.get_friend_relation(get_access_token['access_token'])
     # アクセストークンのIDトークンを"gem jwt"を利用してデコード
+    if get_access_token["error"]
+      flash[:danger] = '２重クリックを検知しました。予約は完了しています。メール、LINEをご確認ください。'
+      redirect_to calendar_tasks_url(Calendar.find_by(id: session[:calendar]))
+      return
+    end
     line_user_id = LineAccess.decode_response(get_access_token)
 
     # BOTと友達かどうか確認する。
@@ -234,8 +239,8 @@ class Public::TasksController < Public::Base
       return
     else
       @staff = @task.staff
-      flash.now[:danger] = '予約ができませんでした。'
-      render :new
+      flash[:danger] = 'この時間はすでに予約が入っております。'
+      redirect_to calendar_tasks_url(@calendar)
       return
     end
   end
@@ -282,8 +287,8 @@ class Public::TasksController < Public::Base
       flash[:success] = '予約が完了しました。'
       redirect_to calendar_task_complete_path(@calendar, @task)
     else
-      flash.now[:danger] = '予約ができませんでした。'
-      render :new
+      flash[:danger] = 'この時間はすでに予約が入っております。'
+      redirect_to calendar_tasks_url(@calendar)
     end
   end
 end
