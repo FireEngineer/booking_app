@@ -1,0 +1,36 @@
+<div class="help_modal">
+  <%= link_to "##", type:"button", data:{toggle:"modal", target:"#HelpModal"}, class:"fixed_btn", id:"fab" do %>
+    <i class="fas fa-question"></i>
+  <% end %>
+  <!-- Modal -->
+  <div class="modal fade" id="HelpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-width" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="accordion" id="accordionExample">
+            <% @help_urls.each.with_index do |url, index| %>
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                      <%= url[0] %>
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapse<%= index %>" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body p-0">
+                    <iframe id="ston-CgZCfgcw8G" width="100%" height="815" frameBorder="0" name="StonlyExplanation" allowfullscreen src="<%= url[1] %>"> </iframe>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

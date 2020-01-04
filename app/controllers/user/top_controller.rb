@@ -38,6 +38,9 @@ class User::TopController < User::Base
       @store_member_id = nil
     end
     @data_calendar = date_range(@calendar)
+    @help_urls = [["店舗側予約方法", "https://stonly.com/sl/00cf73dc-2622-4c44-8e4e-96d8a637f0af/Steps/"],
+                  ["ドラッグ＆ドロップによる、予約時間の変更", "https://stonly.com/sl/3cdb59f3-7165-445a-81b9-75870ba9f8e3/Steps/"],
+                 ]
   end
 
   private
