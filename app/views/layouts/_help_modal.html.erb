@@ -10,10 +10,10 @@
           <div class="accordion" id="accordionExample">
             <% @help_urls.each.with_index do |url, index| %>
               <div class="card">
-                <div class="card-header" id="headingOne">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
-                      <%= url[0] %>
+                <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                  <h5 class="mb-0 over-scroll">
+                    <button class="btn btn-link" type="button">
+                      <%= url[0] %>  <i class="far fa-hand-point-down"></i>
                     </button>
                   </h5>
                 </div>
