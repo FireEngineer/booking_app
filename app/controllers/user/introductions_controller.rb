@@ -6,7 +6,7 @@ class User::IntroductionsController < User::Base
   def new_calendar
     @user = current_user
     @calendar = @user.calendars.build
-    @help_urls = [["アカウント登録", "https://stonly.com/embed/CgZCfgcw8G/view/"],["アカウント登録", "https://stonly.com/embed/CgZCfgcw8G/view/"]]
+    @help_urls = [["アカウント登録", "https://stonly.com/embed/CgZCfgcw8G/view/"]]
   end
 
   def create_calendar
@@ -21,7 +21,7 @@ class User::IntroductionsController < User::Base
 
   def new_staff
     @staff = Staff.new
-    @help_urls = [["アカウント登録", "https://stonly.com/embed/CgZCfgcw8G/view/"],["アカウント登録", "https://stonly.com/embed/CgZCfgcw8G/view/"]]
+    @help_urls = [["アカウント登録", "https://stonly.com/embed/CgZCfgcw8G/view/"]]
   end
 
   def create_staff

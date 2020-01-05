@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_29_020255) do
+ActiveRecord::Schema.define(version: 2020_01_05_055807) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -81,6 +81,14 @@ ActiveRecord::Schema.define(version: 2019_12_29_020255) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_line_bots_on_admin_id"
+  end
+
+  create_table "member_pictures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "picture"
+    t.bigint "store_member_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["store_member_id"], name: "index_member_pictures_on_store_member_id"
   end
 
   create_table "order_plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -285,6 +293,7 @@ ActiveRecord::Schema.define(version: 2019_12_29_020255) do
   add_foreign_key "calendar_configs", "calendars"
   add_foreign_key "iregular_holidays", "calendar_configs"
   add_foreign_key "line_bots", "admins"
+  add_foreign_key "member_pictures", "store_members"
   add_foreign_key "order_plans", "plans"
   add_foreign_key "order_plans", "users"
   add_foreign_key "orders", "system_plans"

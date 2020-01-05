@@ -1,0 +1,4 @@
+<%= form_with model:MemberPicture.new, url:calendar_store_member_member_pictures_path(@calendar, @store_member), local: true do |f| %>
+  <%= f.file_field :picture %><br>
+  <%= f.submit "保存する", class:"btn btn-primary btn-sm" %>
+<% end %>
