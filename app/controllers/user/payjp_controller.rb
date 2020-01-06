@@ -1,7 +1,8 @@
-class User::PayjpController < ApplicationController
+class User::PayjpController < User::Base
   before_action :authenticate_user!, except:[:use, :privacy]
   before_action :has_order_plan?, only:[:form]
   before_action :correct_order_plan?, only:[:destroy_order_operation, :destroy_order, :show]
+  skip_before_action :agreement_plan?
 
   layout 'payjp'
 

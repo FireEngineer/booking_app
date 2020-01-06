@@ -1,6 +1,8 @@
 class User::Base < ApplicationController
   before_action :authenticate_user_staff!
   before_action :authenticate_current_user!
+  before_action :initial_setting_complete?
+  before_action :agreement_plan?
 
   layout 'user'
 
@@ -44,16 +46,23 @@ class User::Base < ApplicationController
 
   end
 
-  def agreement_plan?
+  def initial_setting_complete?
     if !current_user.calendars.any?
       flash[:danger] = "初期設定が完了していません。"
       redirect_to introductions_new_calendar
     elsif !current_user.calendars.first.staffs.any?
       flash[:danger] = "初期設定が完了していません。"
       redirect_to introductions_new_staff_url
-    elsif current_user.calendars.first.task_courses.any?
+    elsif !current_user.calendars.first.task_courses.any?
       flash[:danger] = "初期設定が完了していません。"
       redirect_to introductions_new_staff_url
+    end
+  end
+
+  def agreement_plan?
+    if !current_user.order_plans.any?
+      flash[:danger] = "プランを選択してください。"
+      redirect_to choice_plan_url
     end
   end
 

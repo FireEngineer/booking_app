@@ -2,6 +2,7 @@ class User::IntroductionsController < User::Base
   before_action :authenticate_user!
   before_action :has_calendar?, only:[:new_calendar, :create_calendar]
   before_action :has_staff?, only:[:new_staff, :create_staff]
+  skip_before_action :initial_setting_complete?
 
   def new_calendar
     @user = current_user
@@ -45,7 +46,7 @@ class User::IntroductionsController < User::Base
     @task_course = @calendar.task_courses.build(params_task_course)
     if @task_course.save
       flash[:success] = 'コース登録が完了しました'
-      redirect_to user_calendar_dashboard_url(current_user, @task_course.calendar)
+      redirect_to choice_plan_url
     else
       render :new_task_course
     end

@@ -1,4 +1,4 @@
-class User::MemberPicturesController < ApplicationController
+class User::MemberPicturesController < User::Base
 
   def create
     calendar = Calendar.find_by(public_uid: params[:calendar_id])

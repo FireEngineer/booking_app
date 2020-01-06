@@ -1,4 +1,4 @@
-class User::PaymentsController < ApplicationController
+class User::PaymentsController < User::Base
   before_action :authenticate_user!
   protect_from_forgery :except => [:payment_callback, :registration_callback]
 
