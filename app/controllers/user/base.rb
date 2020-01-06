@@ -44,4 +44,17 @@ class User::Base < ApplicationController
 
   end
 
+  def agreement_plan?
+    if !current_user.calendars.any?
+      flash[:danger] = "初期設定が完了していません。"
+      redirect_to introductions_new_calendar
+    elsif !current_user.calendars.first.staffs.any?
+      flash[:danger] = "初期設定が完了していません。"
+      redirect_to introductions_new_staff_url
+    elsif current_user.calendars.first.task_courses.any?
+      flash[:danger] = "初期設定が完了していません。"
+      redirect_to introductions_new_staff_url
+    end
+  end
+
 end
