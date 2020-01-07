@@ -7,7 +7,7 @@ if Rails.env.production?
       region: ENV['AWS_REGION']
     }
 
-    config.fog_directory  = ENV['FOG_DIRECTORY']
+    config.fog_directory = ENV['FOG_DIRECTORY']
     config.cache_storage = :fog
   end
 end
