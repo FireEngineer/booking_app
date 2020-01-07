@@ -32,9 +32,19 @@
               </tr>
             </tbody>
           </table>
-        <button type="button" class="btn btn-success" id="start_edit_btn">編集する</button>
-        <%= f.submit "更新", class:"btn btn-primary display_none", data: {confirm: "内容を更新しますか？"} %>
+        <button type="button" class="btn btn-success mb-2" id="start_edit_btn">編集する</button>
+        <%= f.submit "更新", class:"btn btn-primary display_none mb-2", data: {confirm: "内容を更新しますか？"} %>
       <% end %>
     </blockquote>
+    <div class="card">
+      <ul id="images">
+        <% @store_member.member_pictures.each do |picture| %>
+          <%= image_tag picture.picture.to_s, :size =>'320x180' %>
+        <% end %>
+      </ul>
+    </div>
   </div>
 </div>
+<script>
+    var viewer = new Viewer(document.getElementById('images')); //任意でid名を指定
+</script>
