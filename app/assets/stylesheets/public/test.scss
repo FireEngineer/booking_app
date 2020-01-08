@@ -1,0 +1,2352 @@
+@charset "utf-8";
+
+/************************************************************
+ * CLASSES（コンポーネント）
+ ************************************************************/
+
+/* salonHeader */
+.rsvSalonHeader {
+	background-color: #F4F4F4;
+}
+.rsvType {
+	background-color: #EF4256;
+	color: #FFFFFF;
+	float: left;
+	font-weight: bold;
+	line-height: 26px;
+	width: 80px;
+	text-align: center;
+	margin-right: 8px;
+}
+.rsvTypeLead {
+	color: #EF4256;
+	font-weight: bold;
+	overflow: hidden;
+	line-height: 26px;
+}
+.rsvSalonNameWrap {
+	color: #665555;
+	padding: 15px 15px 10px;
+}
+.rsvSalonName {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+/* 矢羽根 */
+.rsvStepList {
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	display: table;
+	line-height: 1;
+	overflow: hidden;
+	width: 100%;
+}
+.rsvStepList > li {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	color: #999999;
+	display: table-cell;
+	font-size: 13px;
+	font-weight: bold;
+	height: 42px;
+	position: relative;
+	vertical-align: middle;
+}
+.rsvStepList > li > span {
+	display: block;
+	font-size: 10px;
+	margin-bottom: 4px;
+}
+.rsvStepList > li > span:before,
+.rsvStepList > li > span:after {
+	border-style: solid;
+	content: "";
+	display: block;
+	position: absolute;
+}
+.rsvStepList > li > span:before {
+	border-color: transparent transparent transparent #CBC4C4;
+	border-width: 22px 0 22px 13px;
+	right: 0;
+	top: -1px;
+}
+.rsvStepList > li > span:after {
+	border-color: transparent transparent transparent #FFFFFF;
+	border-width: 22px 0 22px 13px;
+	right: 1px;
+	top: -1px;
+}
+.rslStep1 {
+	padding-left: 46px;
+	width: 234px;
+}
+.rslStep2 {
+	padding-left: 46px;
+	width: 171px;
+}
+.rslStep3 {
+	padding-left: 10px;
+	width: 134px;
+}
+.rslStep4 {
+	padding-left: 10px;
+	width: 134px;
+}
+.rslStepEnd {
+	line-height: 42px;
+	text-align: center;
+	width: 90px;
+}
+.rslStep1:before,
+.rslStep2:before {
+	background-image: url(/CSP/img/common/sprites/icon_reserve.png?switch=20191219);
+	background-repeat: no-repeat;
+	content: "";
+	display: block;
+	position: absolute;
+}
+.rslStep1:before {
+	height: 20px;
+	left: 10px;
+	top: 11px;
+	width: 30px;
+}
+.rslStep2:before {
+	background-position: 0 -90px;
+	height: 30px;
+	left: 10px;
+	top: 5px;
+	width: 30px;
+}
+.rsvStepList > .active	{ color: #CC4466; }
+.rsvStepList > .passive	{ color: #CCCCCC; }
+.rslStep1.active:before	{ background-position: 0 0; }
+.rslStep1.passive:before	{ background-position: 0 -60px; }
+.rslStep2.active:before	{ background-position: 0 -130px; }
+.rslStep2.passive:before	{ background-position: 0 -210px; }
+
+/* 見出し */
+.title {
+	background-color: #E8E8E2;
+	border: #A6A6A6 solid 1px;
+	display: block;
+	line-height: 20px;
+	padding-top: 10px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.whiteTitle {
+	background-color: #FFFFFF;
+	border: #A6A6A6 solid 1px;
+	display: block;
+}
+
+.titleLeft {
+	width: 135px;
+}
+
+.reserveTitleOuter {
+	background-position: -3060px top;
+	background-repeat: no-repeat;
+	background-color: #A6A39B;
+	position: relative;
+	zoom: 1;
+}
+
+.reserveTitleInner {
+	background-position: -3825px bottom;
+	background-repeat: no-repeat;
+	color: white;
+	font-size: 14px;
+	padding: 6px 10px;
+}
+
+.rsvTitle {
+	color: #665555;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+/* h3 右ボタン */
+.h3Right {
+	margin-left:420px;
+}
+
+.topHalf2 {
+margin-top:-11.5px;
+top:50%;
+}
+
+/* タブエリア */
+.titleBottom {
+	border-bottom: 2px solid #BFBFBF;
+}
+
+/* 表エリア */
+.separateLine {
+	border-top:1px solid #DDDDDD;
+	height:1px;
+	overflow:hidden;
+	margin: 30px 0;
+}
+
+/* フォーム系 */
+.tfFR {
+	border-top: 1px solid #8E8E8E;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #8E8E8E;
+	line-height: 1;
+	padding: 4px 2px;
+}
+
+/* ヘッダー・フッター */
+#wrapperMini {
+	margin-bottom: 0;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0;
+	position: relative;
+	width: 805px;
+}
+
+.titleMini {
+	background-color: #E8E8E2;
+	border: 1px solid #A6A6A6;
+	display: block;
+	line-height: 20px;
+	padding: 10px;
+}
+
+#footerMini {
+    border-top-color: #DDDDDD;
+    border-top-style: solid;
+    border-top-width: 1px;
+    height: 60px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    padding-top: 10px;
+    position: relative;
+}
+
+#copyrightMini {
+	position: absolute;
+	top: 10px;
+}
+
+#footerLinksMini {
+	font-size: 10px;
+	overflow: hidden;
+	position: absolute;
+	top: 20px;
+	right: -15px;
+}
+
+#footerLinksMini li{
+	float: left;
+	border-right: 1px solid #DDD;
+	padding-right: 15px;
+	*padding-right: 16px;
+	margin-left: 15px;
+	margin-right: -1px;
+}
+/* 詳細要望入力 */
+.moreDetailRequestInput {
+	position: relative;
+	display: block;
+	padding: 6px 10px;
+	border: 1px dotted #CCCCCC;
+	margin-top: 20px;
+	text-decoration: none !important;
+	overflow: hidden;
+	zoom: 1;
+}
+.moreDetailRequestInputProgressBar {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	_width: 103%;
+	height: 2px;
+	font-size: 0;
+	display: block;
+	background-color: #D36985;
+}
+.moreDetailRequestInput:hover .moreDetailRequestInputText {
+	text-decoration: underline;
+}
+.moreDetailRequestInputArea {
+	position: relative;
+	height: 0;
+	overflow: hidden;
+	zoom: 1;
+}
+.moreDetailRequestInputAreaInner {
+	overflow: hidden;
+}
+.mmSettingBox {
+	background-color: #F2F2F2;
+	padding: 10px;
+}
+.mmSettingHeadline {
+	text-indent: 10px;
+	font-weight: bold;
+	color: #666666;
+	padding-bottom: 3px;
+}
+.mmSettingBody {
+	padding: 10px;
+	border-top: 1px solid #9C9C9C;
+}
+.mmSettingBody label {
+	line-height: 1.5;
+}
+.mmSettingBodyNotes {
+	font-size: 11px;
+	padding-left: 23px;
+}
+
+/* クーポン */
+.couponMenuName {
+	color: #665555;
+	word-wrap: break-word;
+}
+.couponSecline {
+	padding-right: 18px;
+	position: relative;
+}
+.couponSecline:after {
+	background: #CCCCCC;
+	content: "";
+	display: inline-block;
+	height: 10px;
+	margin-left: 10px;
+	margin-top: 3px;
+	position: absolute;
+	width: 1px;
+}
+.couponTbl {
+	border: solid 1px #CCCCCC;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	vertical-align: top;
+	width: 100%;
+}
+
+.couponList {
+	font-size: 10px;
+}
+.couponListCassete {
+	margin-top: 5px;
+	border: 1px solid #EEAABB;
+	zoom: 1;
+}
+
+.couponTable {
+	border-spacing: 1px;
+	vertical-align: top;
+}
+.couponTable td > div > p {
+	word-break: break-all;
+}
+.couponLabelCT02,
+.couponLabelCT01,
+.couponLabelCT03 {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 0 7px 0 6px;
+	text-align: center;
+	width: 14px;
+}
+.couponLabelCT02	{ background-color: #FB615F; color: #FFFFFF; }
+.couponLabelCT01	{ background-color: #FFCCCB; color: #FB615F; }
+.couponLabelCT03	{ background-color: #FFE8E8; color: #FB615F; }
+
+.couponImgWrap {
+	text-align: center;
+	width: 97px;
+}
+.couponImgWrap img {
+	max-height: 97px;
+	max-width: 97px;
+}
+.menuTbl {
+	border-color: #CCCCCC;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	vertical-align: top;
+	width: 100%;
+}
+.menuTbl td {
+	border-top: solid 1px #CCCCCC;
+}
+
+/* 限定クーポン */
+.limitedCouponList {
+	font-size: 10px;
+}
+
+.limitedCouponListCassete {
+	margin-top: 5px;
+	border: 1px solid #91AC8A;
+	zoom: 1;
+}
+
+/* タブエリア */
+.tabBottom {
+	border-bottom: 3px solid #F5C3CC;
+}
+
+/* タブエリア */
+.tabBottom2 {
+	border-bottom: 3px solid #7030A0;
+}
+
+/* 表説明エリア*/
+.topTable {
+	background-color: #EEECE1;
+	border: #BCBCBC solid 1px;
+	display: block;
+	line-height: 20px;
+	padding: 5px;
+}
+
+.whiteTable {
+	background-color: #FFFFFF;
+	border: #BCBCBC solid 1px;
+	display: block;
+	padding: 5px 5px 5px 15px;
+	line-height: 25px;
+}
+
+.whiteTable2 {
+	background-color: #FFFFFF;
+	border: #E6E6E6 solid 1px;
+	padding: 5px;
+}
+
+/* 表エリア */
+.coverTable {
+	background-color: #F5F3EF;
+	border-bottom: #DDDDDD solid 1px;
+	border-left: #DDDDDD solid 1px;
+	border-right: #DDDDDD solid 1px;
+	display: block;
+	padding: 5px;
+}
+.innerCol,
+.telCol,
+.closeCol {
+	box-sizing: border-box;
+	text-align: center;
+	width: 42px;
+}
+.telCol {
+	background-color: #FFFFFF;
+}
+.closeCol {
+	background-color: #EEEEEE;
+}
+.telColText,
+.closeColText {
+	left: 50%;
+	position: absolute;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	-ms-writing-mode: bt-rl;
+	-webkit-writing-mode: vertical-rl;
+	writing-mode: vertical-rl;
+}
+.telColText {
+	letter-spacing: 2px;
+	top: calc(50% + 1px); /* letter-spacingが文字下部に2pxつくため、半分の1px分を下にずらすことで上下中央寄せにする */
+}
+.closeColText {
+	letter-spacing: 10px;
+	top: calc(50% + 5px); /* letter-spacingが文字下部に10pxつくため、半分の5px分を下にずらすことで上下中央寄せにする */
+}
+.timeCell {
+	background-color: #F6F6F6;
+	border-top: 1px solid #BFB9B0;
+	font-size: 11px;
+	height: 35px;
+	line-height: 35px;
+	width: 100%;
+}
+.timeCell.timeSharpLine {
+	font-size: 13px;
+}
+.weekPaging {
+	background-color: #FFFFFF;
+	border: solid #BFB9B0;
+	border-width: 1px 0 2px 0;
+	font-weight: bold;
+	text-align: center;
+	width: 87px;
+}
+.monthCell {
+	border-top: 1px solid #BFB9B0;
+	box-sizing: border-box;
+	height: 38px;
+	text-align: center;
+}
+.timeTableLeft .timeCell {
+	text-align: right;
+	padding-right: 15px;
+}
+.timeTableRight .timeCell {
+	text-align: left;
+	padding-left: 15px;
+}
+.closeCell,
+.openCell,
+.telCell {
+	border: solid #BFB9B0;
+	border-width: 1px 0 0 0;
+	height: 35px;
+	text-align: center;
+	width: auto;
+}
+.dayCell,
+.sat,
+.sun {
+	border: solid #BFB9B0;
+	border-width: 1px 0 2px 1px;
+	box-sizing: border-box;
+	height: 45px;
+	text-align: center;
+	width: 42px;
+}
+.sat {
+	background-color: #D9E3EC;
+	color: #4466BB;
+}
+.sun {
+	background-color: #EEDDD9;
+	color: #BB5555;
+}
+.closeCell {
+	background-color: #EEEEEE;
+}
+.openCell {
+	background-color: #FFFFFF;
+	-webkit-transition: background-color 0.1s;
+	transition: background-color 0.1s;
+}
+.moreInnerTable tr:first-child > th,
+.moreInnerTable tr:first-child > td {
+	border-top: none;
+}
+
+.moreInnerTable tr:not(:first-child) > .timeSharpLine {
+	border-top: 2px solid #BFB9B0;
+}
+.moreInnerTable tr:last-child > .timeCell {
+	border-bottom : none;
+}
+.openCell > .icnOpen {
+	display: block;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	text-indent: -9999px;
+	width: auto;
+}
+.openCell > .icnOpen:hover {
+	background-color: #FCDBE3;
+	text-decoration: none;
+}
+.openCell > span.icnOpen:hover {
+	background-color: #FFFFFF;
+}
+.openCell > .icnOpen::before,
+.openCell > .icnOpen::after {
+	border: 1px solid #CC4466;
+	border-radius: 100px;
+	content: "";
+	display: block;
+	left: 0;
+	margin: auto;
+	position: absolute;
+	right: 0;
+}
+.openCell.isDisabled > .icnOpen::before,
+.openCell.isDisabled > .icnOpen::after {
+	border: 1px solid #CCCCCC;
+}
+.openCell > .icnOpen::before {
+	height: 14px;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	width: 14px;
+}
+.openCell > .icnOpen::after {
+	height: 8px;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	width: 8px;
+}
+.temporaryReserve .icnOpen::after {
+	display: none;
+}
+.closeCell > .icnClose {
+	display: block;
+	line-height: 35px;
+	overflow: hidden;
+	position: relative;
+	text-indent: -9999px;
+	width: auto;
+}
+.closeCell > .icnClose::before,
+.closeCell > .icnClose::after {
+	background: #333333;
+	content: "";
+	display: block;
+	height: 1px;
+	left: 0;
+	margin: auto;
+	position: absolute;
+	right: 0;
+	top: 16px;
+	width: 10px;
+}
+.closeCell.isDisabled,
+.telCell.isDisabled {
+	background: #FFFFFF;
+	color: #CCCCCC !important;
+}
+.closeCell.isDisabled > .icnClose::before,
+.closeCell.isDisabled > .icnClose::after {
+	background: #CCCCCC;
+}
+.closeCell > .icnClose::before {
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+.closeCell > .icnClose::after {
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.weekPaging > .arrowPagingWeekROff,
+.weekPaging > .arrowPagingWeekR,
+.weekPaging > .arrowPagingWeekLOff,
+.weekPaging > .arrowPagingWeekL {
+	position: relative;
+}
+.weekPaging > .arrowPagingWeekROff:before,
+.weekPaging > .arrowPagingWeekR:before,
+.weekPaging > .arrowPagingWeekLOff:before,
+.weekPaging > .arrowPagingWeekL:before {
+	border-bottom: 4px solid transparent;
+	border-top: 4px solid transparent;
+	position: absolute;
+	content: '';
+	background-repeat: no-repeat;
+	width: 0;
+	height: 0;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+.weekPaging > .arrowPagingWeekROff,
+.weekPaging > .arrowPagingWeekLOff {
+	color: #CCCCCC;
+}
+.weekPaging > .arrowPagingWeekROff:before {
+	border-left: 4px solid #CCCCCC;
+	right: 0;
+}
+.weekPaging > .arrowPagingWeekR:before {
+	border-left: 4px solid #D36985;
+	right: 0;
+}
+.weekPaging > .arrowPagingWeekLOff:before {
+	border-right: 4px solid #CCCCCC;
+	left: 0;
+}
+.weekPaging > .arrowPagingWeekL:before {
+	border-right: 4px solid #D36985;
+	left: 0;
+}
+/* 表下部ボタンエリア*/
+.submitArea {
+	background-color: #F5F3EF;
+	display: block;
+	line-height: 20px;
+	padding: 10px;
+}
+
+.submitArea2 {
+	background-color: #F5F3EF;
+	display: block;
+	line-height: 20px;
+	padding: 10px;
+}
+
+.submitArea3 {
+	display: block;
+	line-height: 20px;
+	padding: 10px;
+}
+
+/* 行揃え用 */
+.pL1e	{ padding-left: 1em; }
+.txt1e	{ text-indent: -1em; }
+
+/* フォーム */
+textarea	{ height:55px; }
+
+.reserveSampleDefault {
+	ime-mode: active;
+	width: 590px;
+	color:#999999;
+	display:none;
+	font-size: 12px;
+}
+
+/* 追加 */
+.innerTable {
+	border: solid #BFB9B0;
+	border-spacing: 0;
+	border-width: 0 1px 1px 1px;
+	box-sizing: border-box;
+	width: 100%;
+}
+.innerTable > tbody > tr > th + th {
+	border-left: 1px solid #BFB9B0;
+}
+.moreInnerTable {
+	border: 0 none;
+	border-collapse: collapse;
+	width: 100%;
+	border-spacing: 0;
+	padding: 0;
+	margin: 0;
+	height: 230px;
+	position: relative;
+}
+.separate {
+	height: 3px;
+	border: solid 0;
+	background-color: #FFFFFF;
+	padding: 0;
+}
+/* 表エリア */
+.pCellV5H5 th,
+.pCellV5H5 td {
+	padding: 5px;
+}
+
+
+#popUpTitle {
+	background-color: #f5f3ef;
+	border: 1px solid #dddddd;
+	margin-bottom: 12px;
+	padding: 8px 11px;
+}
+
+.popAdd {
+	background: url("/CSP/img/logo/lin_s_tenpo.gif?switch=20191219") no-repeat left top;
+	margin-top: 7px;
+	padding-top: 8px;
+}
+.titleLine {
+	border-bottom: 3px solid #e4e0d9;
+	padding: 5px 9px 6px;
+	margin-bottom: 17px;
+}
+
+.imgClose 		{ background: url(/CSP/img/bt/icons_buttons/close.gif?switch=20191219) no-repeat 0 0; width: 80px; height: 24px; }
+.imgClose:hover	{ background: url(/CSP/img/bt/icons_buttons/close.gif?switch=20191219) no-repeat 0 -24px; }
+
+.selectBtn 		{ background: url(/CSP/img/bt/icons_buttons/select2.gif?switch=20191219) no-repeat 0 0; width: 80px; height: 24px; }
+.selectBtn:hover{ background: url(/CSP/img/bt/icons_buttons/select2.gif?switch=20191219) no-repeat 0 -24px; }
+
+.bdCell3 {
+	border-top: 1px solid #A6A6A6;
+	border-left: 1px solid #A6A6A6;
+}
+.bdCell3 th,
+.bdCell3 td {
+	border-right: 1px solid #A6A6A6;
+	border-bottom: 1px solid #A6A6A6;
+}
+
+/* ×・・Eーク */
+.batsu {
+	margin-top: -5px;
+}
+
+/************************************************************
+ * CLASSES(プロパティ)
+ ************************************************************/
+
+/* WIDTH */
+.w5em	{ width: 5em; }
+.w14    { width: 14px; }
+.w20    { width: 20px; }
+.w24    { width: 24px; }
+.w35	{ width: 35px; }
+.w60	{ width:  60px; }
+.w74	{ width: 74px; }
+.w80	{ width: 80px; }
+.w90	{ width: 90px; }
+.w95	{ width: 95px; }
+.w100	{ width: 100px; }
+.w105	{ width: 105px; }
+.w110	{ width: 110px; }
+.w112	{ width: 112px; }
+.w115	{ width: 115px; }
+.w116	{ width: 116px; }
+.w117	{ width: 117px; }
+.w120	{ width: 120px; }
+.w130	{ width: 130px; }
+.w140	{ width: 140px; }
+.w148	{ width: 148px; }
+.w150	{ width: 150px; }
+.w160	{ width: 160px; }
+.w164	{ width: 164px; }
+.w166	{ width: 166px; }
+.w170	{ width: 170px; }
+.w180	{ width: 180px; }
+.w186	{ width: 186px; }
+.w190	{ width: 190px; }
+.w200	{ width: 200px; }
+.w201	{ width: 201px; }
+.w205	{ width: 205px; }
+.w210	{ width: 210px; }
+.w219	{ width: 219px; }
+.w220	{ width: 220px; }
+.w238	{ width: 238px; }
+.w256	{ width: 256px; }
+.w260	{ width: 260px; }
+.w285	{ width: 285px; }
+.w295	{ width: 295px; }
+.w290	{ width: 290px; }
+.w300	{ width: 300px; }
+.w310	{ width: 310px; }
+.w330	{ width: 330px; }
+.w335	{ width: 335px; }
+.w340	{ width: 340px; }
+.w349	{ width: 349px; }
+.w360	{ width: 360px; }
+.w365	{ width: 365px; }
+.w393	{ width: 393px; }
+.w400	{ width: 400px; }
+.w418	{ width: 418px; }
+.w425	{ width: 425px; }
+.w430	{ width: 430px; }
+.w465	{ width: 465px; }
+.w440	{ width: 440px; }
+.w443	{ width: 443px; }
+.w447	{ width: 447px; }
+.w470	{ width: 470px; }
+.w480	{ width: 480px; }
+.w484	{ width: 484px; }
+.w486	{ width: 486px; }
+.w478	{ width: 478px; }
+.w500	{ width: 500px; }
+.w507	{ width: 507px; }
+.w534   { width: 534px; }
+.w550	{ width: 550px; }
+.w554	{ width: 554px; }
+.w560	{ width: 560px; } /* お店質問専用 */
+.w561	{ width: 561px; }
+.w575	{ width: 575px; }
+.w580	{ width: 580px; }
+.w589	{ width: 589px; }
+.w590	{ width: 590px; }
+.w600	{ width: 600px; }
+.w605	{ width: 605px; }
+.w610	{ width: 610px; }
+.w615	{ width: 615px; }
+.w626	{ width: 626px; }
+.w639	{ width: 639px; }
+.w648	{ width: 648px; }
+.w667	{ width: 667px; }
+.w715	{ width: 715px; }
+.w730	{ width: 730px; }
+.w734	{ width: 734px; }
+.w745	{ width: 745px; }
+.w746	{ width: 746px; }
+.w765	{ width: 765px; }
+.w780	{ width: 780px; }
+
+/* HEIGHT */
+.h32	{ height: 32px; }
+.h45	{ height: 45px; }
+.h50	{ height: 50px; }
+.h55	{ height: 55px; }
+.h75	{ height: 75px; }
+.h90	{ height: 90px; }
+.h106	{ height: 106px; }
+.h108	{ height: 108px; }
+.h153	{ height: 153px; }
+.h288	{ height: 288px; }
+
+.hMin30	{ min-height: 30px; _height: 30px; }
+.hMin36	{ min-height: 36px; _height: 36px; }
+.hMin147{ min-height: 147px; _height: 147px; }
+
+/* MARGIN */
+.mT2	{ margin-top: 2px; }
+.mT5	{ margin-top: 5px; }
+.mT7	{ margin-top: 7px; }
+.mR8	{ margin-right: 8px; }
+.mT30	{ margin-top: 30px; }
+.mT80	{ margin-top: 80px; }
+.mL18	{ margin-left: 18px; }
+.mL70	{ margin-left: 70px; }
+.mL100	{ margin-left: 100px; }
+.mL135	{ margin-left: 135px; }
+.mL245	{ margin-left: 245px; }
+.mL390	{ margin-left: 390px; }
+.mL600	{ margin-left: 600px; }
+.mR50	{ margin-right: 50px; }
+.mR100	{ margin-right: 100px; }
+.mR50	{ margin-right: 50px; }
+.mB4	{ margin-bottom: 4px; }
+.mB5	{ margin-bottom: 5px; }
+.mB6	{ margin-bottom: 6px; }
+.mB30	{ margin-bottom: 30px; }
+.mB36	{ margin-bottom: 36px; }
+.mA10	{ margin: 10px; }
+
+
+/* PADDING */
+.pR3	{ padding-right: 3px; }
+.pR6	{ padding-right: 6px; }
+.pR7	{ padding-right: 7px; }
+.pR18	{ padding-right: 18px; }
+.pV2	{ padding-top: 2px; padding-bottom: 2px; }
+.pL390  { padding-Left: 390px; }
+.pT18	{ padding-top: 18px; }
+.pB21	{ padding-bottom: 21px; }
+.pH45	{ padding-right: 45px; padding-left: 45px; }
+.pT18	{ padding-top: 18px; }
+.pB21	{ padding-bottom: 21px; }
+.pH45	{ padding-right: 45px; padding-left: 45px; }
+
+/* POSITION */
+.bottom2	{ bottom: 2px; }
+
+/* 左の罫線 */
+.boL	{ border-left: 1px solid #E6E6E6; }
+.boLgray	{ border-left: 1px solid #A6A6A6; }
+
+/* 右の罫線 */
+.boRgray	{ border-right: 1px solid #A6A6A6; }
+
+/* 下の罫線 */
+.boBgray { border-bottom: 1px solid #A6A6A6; }
+
+/* 右の罫線 */
+.bdGray2		{ border: 1px solid #A6A6A6; }
+
+/* 下の罫線 */
+.boBgray { border-bottom: 1px solid #A6A6A6; }
+
+/* BACKGROUND */
+.bgThNml th	{ background-color: #E6E6E6; }
+
+/* 選択不可時の文字色 */
+.charOff {
+	color:#999999;
+	padding-left:9px;
+}
+
+/* CAPポイントインフォメーション色 */
+.fgCapInfoBlue		{ color: #6397CC; }
+
+/* 要素・非表示 */
+.imageHide		{ display:none; }
+
+
+/* タイトル 非即時・仮予約時 */
+.dummyFlg	{ height: 35px; }
+.wTitle		{ width: 739px; }
+
+/* テキストエリア表示強制改行(IE) */
+.wordBreak {
+	word-break:break-all;
+}
+
+
+/* カレンダータブ */
+.calTab {
+	border-bottom: 2px solid #BFB4AB;
+	font-size: 0;
+	padding-left: 10px;
+	position: relative;
+}
+.calTab > li {
+	background-color: #FFFFFF;
+	border: solid #CCCCCC;
+	border-radius: 4px 4px 0 0;
+	border-width: 1px 1px 0 1px;
+	color: #666666;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	min-width: 185px;
+	text-align: center;
+}
+.calTab > li.isCurrent {
+	border-color: #BFB4AB;
+	border-width: 2px 2px 0 2px;
+	bottom: -1px;
+	position: relative;
+}
+.calTab > li.noNomination {
+	border: none;
+	color: #333333;
+	font-weight: normal;
+}
+.calTab > li.isCurrent::before {
+	background-color: #FFFFFF;
+	bottom: -1px;
+	content: " ";
+	display: block;
+	height: 2px;
+	position: absolute;
+	width: 100%;
+	z-index: 10;
+}
+.calTab > li + li {
+	margin-left: 4px;
+}
+.calTab a,
+.calTab span{
+	display: block;
+	width: 185px;
+	text-align: center;
+	font-weight: bold;
+}
+.detailTitle,
+.detailTitle a {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333333 !important;
+	text-decoration: none !important;
+}
+.calTab > li > a,
+.calTab > li > span {
+	color: #666666 !important;
+	text-decoration: none !important;
+	background-position: -325px 0;
+	outline: 0;
+}
+.calTab .isCurrent a:hover {
+	opacity:1;
+}
+
+.calTab li > a:hover {
+	opacity: 0.7;
+}
+.bdGlayTCal { border-top: 1px solid #DDDDDD; }
+
+.oNextRes {
+	background-position: -1330px -520px;
+	height: 30px;
+	width: 120px;
+}
+.oNextRes:hover {
+	background-position: -1330px -550px;
+}
+
+.reserveConditionTable {
+	margin-top: 15px;
+	position: relative;
+	z-index: 1;
+}
+.underTabContents {
+	margin-top: 15px;
+	position: relative;
+	z-index: 0;
+}
+
+/************************************************************
+ * IME-MODE
+ ************************************************************/
+
+.imeOn {
+	ime-mode: active;
+}
+
+.imeOff {
+	ime-mode: inactive;
+}
+
+/* 予約入力・確認 */
+#reserveHeaderWrapper	{
+	width: 765px;
+	margin: 0 auto;
+}
+#reserveHeaderWrapper #header	{
+	width: 765px;
+	border: 0 !important;
+	margin: 0 auto !important;
+}
+#reserveHeaderWrapper #logo	{
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding-top: 11px;
+	padding-left: 8px;
+	z-index: 1;
+}
+
+#reserveWrapper	{
+	width: 765px;
+	margin: 0 auto;
+}
+
+#reserveContents	{
+	padding-top: 5px;
+}
+
+#reserveFooter	{
+	height: 60px;
+	border-top: 1px solid #DDD;
+	padding-top: 10px;
+	width: 765px;
+	margin: 20px auto;
+	position: relative;
+}
+
+#smallLogoNavi	{
+	height: 62px;
+	position: relative;
+	z-index: 0;
+}
+
+
+/************************************************************
+ * recommended
+ ************************************************************/
+
+.reserveCompleteMessage	{
+	background-image: url(/CSP/img/bt/repeat/bg_reserve_heading.png?switch=20191219);
+	background-repeat: repeat;
+	background-position: 0 0;
+	border-bottom: 1px solid #A6A6A6;
+}
+.recommendedList	{
+	width: 726px;
+	height: auto;
+	padding-bottom: 10px;
+	margin-right: -9px;
+	overflow: hidden;
+}
+.recommendedList .recommendedListItem{
+	width: 231px;
+	border: 1px solid #DDDDDD;
+}
+.recommendedGenreHeadlineWrapper	{
+	background-image: none !important;
+}
+.recommendedHeadingNail	{
+	background-image: none;
+	float: none;
+	text-indent: 0;
+	color: #444444;
+	background-color: #F0EDDD;
+	font-weight: bold;
+	font-size: 14px;
+	padding:3px;
+	font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'ＭＳ Ｐゴシック', 'MS P Gothic', 'Osaka', arial, sans-serif, verdana, Helvetica;
+}
+.recommendedHeadingMakeup	{
+	background-image: none;
+	float: none;
+	text-indent: 0;
+	color: #444444;
+	background-color: #F0EDDD;
+	font-weight: bold;
+	font-size: 14px;
+	padding:3px;
+	font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'ＭＳ Ｐゴシック', 'MS P Gothic', 'Osaka', arial, sans-serif, verdana, Helvetica;
+}
+.recommendedHeadingRelax		{
+	background-image: none;
+	float: none;
+	text-indent: 0;
+	color: #444444;
+	background-color: #F0EDDD;
+	font-weight: bold;
+	font-size: 14px;
+	padding:3px;
+	font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'ＭＳ Ｐゴシック', 'MS P Gothic', 'Osaka', arial, sans-serif, verdana, Helvetica;
+}
+.recommendedHeadingEsthe		{
+	background-image: none;
+	float: none;
+	text-indent: 0;
+	color: #444444;
+	background-color: #F0EDDD;
+	font-weight: bold;
+	font-size: 14px;
+	padding:3px;
+	font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'ＭＳ Ｐゴシック', 'MS P Gothic', 'Osaka', arial, sans-serif, verdana, Helvetica;
+}
+.recommendedListItemInner	{
+	padding-bottom: 6px;
+}
+.recommendedListItem .upper	{
+	padding-top: 6px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 219px;
+}
+.recommendedListItem .lower	{
+	margin-left: auto;
+	margin-right: auto;
+	width: 219px;
+}
+
+.CouponMark {
+    margin: 3px 10px 0 0;
+}
+
+/************************************************************
+ * setmenu
+ ************************************************************/
+
+/* 201210リリース分追加 */
+.narrowDownPanelArrow {
+	position: absolute;
+	bottom: -0.5em;
+	left: 50%;
+	margin-left: -0.5em;
+	line-height: 1;
+	font-size: 45px;
+	color: #A6A39B;
+	z-index: -1;
+}
+.verLine{
+	width: 5px;
+	height: 13px;
+	background-color: #666666;
+	margin-top: 2px;
+	margin-right: 5px;
+}
+.secondHeading {
+	height: 15px;
+	background: url(/CSP/img/bt/icons/icon_heading.png?switch=20191219) no-repeat 0 1px;
+	padding-left: 25px;
+	padding-bottom: 7px;
+	font-size: 15px;
+	font-weight: bold;
+	color: #444444;
+	font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'ＭＳ Ｐゴシック', 'MS P Gothic', 'Osaka', arial, sans-serif, verdana, Helvetica;
+}
+.singleMenuHead {
+    color: #CC4466;
+    background-color: #F5F3F1;
+    font-weight: bold;
+    padding: 6px 10px;
+}
+.titleCouponMenu {
+	font-weight: bold;
+	color: #CC4466;
+	background-color: #E4E0D9;
+	padding: 3px 8px;
+}
+
+.couponMenuIcon			{
+	 background-color: #FF8A90;
+}
+
+.couponNoMenuIcon		{
+	background-color: #ADADAC;
+	color: #FFFFFF;
+}
+
+.couponListCassete3 {
+	border-left: 1px solid #BFBFBF;
+	border-top: 1px solid #BFBFBF;
+	border-bottom: 1px solid #BFBFBF;
+	zoom: 1;
+}
+
+.couponListCassetePink {
+	border: 1px solid #EEAABB;
+	zoom: 1;
+}
+.couponMenuIcons li {
+	float: left;
+	margin-right: 5px;
+	padding: 1px 10px;
+	color: #FFF;
+	text-align: center;
+	white-space: nowrap;
+}
+.couponMenuIcons li.couponMenuIconOff {
+	color: #CC4466;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 0;
+	text-align: left;
+}
+
+/* matsumoto add*/
+.couponMenuIconMC01			{ background-color: #6397CC; }
+.couponMenuIconMC02			{ background-color: #9290FF; }
+.couponMenuIconMC03			{ background-color: #FF8A90; }
+.couponMenuIconMC04			{ background-color: #CCA685; }
+.couponMenuIconMC05			{ background-color: #FFBE56; }
+.couponMenuIconMC06			{ background-color: #A4B361; }
+.couponMenuIconMC07			{ background-color: #BC90FF; }
+
+/* matsumoto add*/
+.listCouponTypeCT01		{ background-position: -177px -860px; display: block; width: 23px; height: 23px; }
+.listCouponTypeCT02		{ background-position: -177px -580px; display: block; width: 23px; height: 23px; }
+.listCouponTypeCT03		{ background-position: -177px -720px; display: block; width: 23px; height: 23px; }
+
+
+/* 表エリア */
+.bdCell4 {
+	border-top: 1px solid #BCBCBC;
+	border-left: 1px solid #BCBCBC;
+	border-bottom: 1px solid #BCBCBC;
+}
+.bdCellPink {
+	border: 1px solid #EEAABB;
+}
+
+/* 行揃え用 */
+.pT17p { padding-left: 25px !important; text-indent:-20px; }
+
+.stylistPic {
+	display: block;
+}
+.stylistPic img:hover {
+	-ms-filter: alpha(opacity="70");
+	filter: alpha(opacity="70");
+	opacity: 0.7;
+}
+.stylePageTitleOuter {
+	border-bottom: 3px solid #E4E0D9;
+	padding: 0 0 8px 10px;
+}
+.stylistTitle {
+	color: #CC4466;
+	font-size: 10px;
+	font-weight: bold;
+}
+.stylistName {
+	display: inline-block;
+	font-size: 16px;
+}
+.stylistDetailContentsWrap {
+	height: 0;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 0;
+	z-index: 11;
+}
+.stylistDetailContents {
+	background: #FFFFFF;
+	border: 1px solid #A6A39B;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-ms-filter: alpha(opacity="0");
+	filter: alpha(opacity="0");
+	opacity: 0;
+	padding: 30px 10px 20px;
+	position: relative;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+	width: 767px;
+}
+.sdcInner {
+	margin-top: 30px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.sdcStylistPic {
+	float: left;
+	text-align: center;
+	width: 224px;
+}
+.sdcRight {
+	float: right;
+	width: 501px;
+}
+.sdcCatch {
+	color: #CC4466;
+	font-size: 14px;
+	font-weight: bold;
+}
+.sdcDescription {
+	margin-top: 10px;
+}
+.privateContents {
+	margin-bottom: -30px;
+}
+.privateContents > li {
+	float: left;
+	margin-bottom: 30px;
+	width: 240px;
+}
+.privatePhoto {
+	float: left;
+	width: 89px;
+}
+.privatePhotoDetail {
+	float: right;
+	min-height: 119px;
+	position: relative;
+	width: 151px;
+}
+.privatePhotoDetailTxt {
+	bottom: 0;
+	font-size: 10px;
+	left: 0;
+	margin-left: 10px;
+	margin-right: 20px;
+	position: absolute;
+}
+.stylistStatus {
+	border-left: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+	width: 100%;
+}
+.stylistStatus th {
+	background-color: #E6E6E6;
+	width: 100px;
+}
+.stylistStatus th,
+.stylistStatus td {
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #CCCCCC;
+	border-top: 1px solid #FFFFFF;
+	padding: 5px;
+}
+.stylistDetailBg {
+	background: #8C867C;
+	-ms-filter: alpha(opacity="0");
+	filter: alpha(opacity="0");
+	height: 100%;
+	left: 0;
+	opacity: 0;
+	position: fixed	;
+	top: 0;
+	width: 100%;
+	z-index: 10;
+}
+.stylistDetailClose {
+	background-color: #FFFFFF;
+	background-image: url(/CSP/img/common/icon/icon_close.png?switch=20191219);
+	background-position: 50%;
+	background-repeat: no-repeat;
+	border: 2px solid #A6A39B;
+	border-radius: 15px;
+	height: 26px;
+	overflow: hidden;
+	position: absolute;
+	cursor: pointer;
+	right: -13px;
+	text-indent: -9999px;
+	top: -13px;
+	width: 26px;
+}
+.stylistDetailClose:hover {
+	background-color: #EEEEEE;
+}
+.slcClassIcn {
+	margin: -5px -5px 0 0;
+}
+.slcClassIcn > li {
+	border-radius: 4px;
+	float: left;
+	font-size: 10px;
+	margin: 5px 5px 0 0;
+	padding-left: 3px;
+	padding-right: 3px;
+	text-align: center;
+}
+
+/* rsvSelectedTbl */
+.rsvSelectedTbl {
+	width: 100%;
+}
+.rsvSelectedTbl th,
+.rsvSelectedTbl td {
+	padding: 5px;
+}
+.rsvSelectedTbl th {
+	background-color: #F2F2F2;
+	color: #665555;
+}
+.rsvSelectedTbl .rsvSelectedCoupon {
+	padding: 10px;
+	width: 484px;
+}
+.rsvSelectedHead {
+	color: #FB615F !important;
+}
+.rsvSelectedMenuWrap {
+	color: #632523;
+}
+.rsvSelectedMenuDtl {
+	width: 519px;
+	word-break: break-all;
+}
+.rsvSelectedTotalTime {
+	background-color: #F2F2F2;
+	color: #333333;
+	font-weight: bold;
+	width: 110px;
+	word-break: break-all;
+}
+
+/* rsvSelectTbl */
+.rsvSelectTbl {
+	color: #665555;
+	margin-top: 15px;
+	width: 100%;
+}
+.rsvSelectTbl th {
+	background-color: #E6E6E6;
+}
+.rsvSelectTbl label {
+	cursor: pointer;
+	display: block;
+	padding: 8px;
+}
+.rsvSelectTbl label.isDisabled,
+.rsvSelectMenuChkbox:disabled {
+	cursor: default;
+}
+.rsvSelectTbl label:hover,
+.rsvSelectMenuChkbox:hover + label {
+	background-color: #FFE2E8;
+}
+.rsvSelectMenuChkbox:hover:disabled + label {
+	background-color: transparent;
+}
+.rsvSelectMenuCategory {
+	background-color: #F5F3F1;
+	padding: 8px;
+}
+.rsvSelectSetMenuIcon {
+	display: block;
+	font-size: 10px;
+	padding-right: 10px;
+	width: 501px;
+}
+.rsvSelectSetMenuIcon > .couponMenuIcon {
+	color: #FFFFFF;
+	display: inline-block;
+	float: left;
+	margin-right: 5px;
+	margin-top: 5px;
+	padding: 1px 10px;
+	text-align: center;
+	white-space: nowrap;
+}
+.rsvSelectMenuDtl {
+	background-color: #FFE2E8;
+	width: 519px;
+	word-break: break-all;
+}
+.rsvSelectMenuName,
+.rsvSelectMenuPrice,
+.rsvSelectMenuTime {
+	display: inline-block;
+	font-size: 12px;
+	vertical-align: top;
+	word-break:break-all;
+}
+.rsvSelectMenuName {
+	font-weight: bold;
+	padding-left: 22px;
+	padding-right: 10px;
+	width: 484px;
+}
+.rsvSelectMenuPrice {
+	padding-left: 10px;
+	width: 104px;
+}
+.rsvSelectMenuTime {
+	padding-left: 10px;
+	width: 107px;
+}
+.rsvSelectMenuChkbox {
+	cursor: pointer;
+	left: 5px;
+	position: absolute;
+	top: 8px;
+	z-index: 1;
+}
+.rsvSelectMenuChkbox:checked + label {
+	background-color: #FFE2E8;
+}
+
+.postList {
+	border-top: 2px solid #D9D9D9;
+	overflow: hidden;
+	padding: 10px 0 0;
+	margin-top: 20px;
+}
+
+/* 予約導線　選択済みクーポン */
+.rsvSelectedConfirmWrap {
+	border: 1px solid #CCCCCC;
+	margin-top: 20px;
+	padding: 8px 10px 0;
+}
+.rsvSelectedConfirmTitle {
+	color: #FB615F;
+	font-weight: bold;
+	line-height: 1.4;
+}
+.rsvSelectedConfirmList {
+	margin-top: 5px;
+	padding: 0 5px 5px;
+}
+.rsvSelectedConfirmList > li {
+	font-size: 0;
+	padding: 8px 0;
+}
+.rsvSelectedConfirmList > li + li {
+	border-top: 1px dotted #CCCCCC;
+}
+.rsvSelectedConfirmIcon {
+	background-color: #FB615F;
+	color: #FFFFFF;
+	display: inline-block;
+	font-size: 10px;
+	line-height: 16px;
+	text-align: center;
+	vertical-align: top;
+	width: 30px;
+}
+.limitedCouponIcon > li {
+	background: #FFFFFF;
+	border: 1px solid #CCBBBB;
+	box-sizing: border-box;
+	color: #665555;
+	float: left;
+	font-size: 11px;
+	height: 17px;
+	margin: 0 5px 5px 0;
+	padding: 0 10px;
+}
+.limitedCouponIcon + .rsvSelectedRepeatCouponName,
+.limitedCouponIcon + .couponMenuNameWrap {
+	margin-top: 0;
+	padding-top: 0;
+}
+.rsvSelectedConfirmName,
+.rsvSelectedConfirmPrice,
+.rsvSelectedConfirmTime {
+	display: inline-block;
+	vertical-align: middle;
+	word-break: break-all;
+}
+.rsvSelectedConfirmName {
+	color: #665555;
+	font-size: 13px;
+	font-weight: bold;
+	width: 540px;
+}
+.rsvSelectedConfirmIcon + .rsvSelectedConfirmName {
+	margin-left: 10px;
+	width: 500px;
+}
+.rsvSelectedConfirmPrice {
+	color: #CC4466;
+	font-size: 13px;
+	font-weight: bold;
+	text-align: right;
+	width: 110px;
+}
+.rsvSelectedConfirmTime {
+	color: #665555;
+	font-size: 11px;
+	text-align: right;
+	width: 80px;
+}
+.rsvSelectedRepeatCoupon {
+	box-sizing: border-box;
+	padding-bottom: 10px;
+	padding-top: 15px;
+	table-layout: fixed;
+	width: 100%;
+}
+.rsvSelectedRepeatCouponLabel {
+	background-color: #FB615F;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 5px;
+	text-align: center;
+	width: 13px;
+}
+.rsvSelectedRepeatCouponName {
+	color: #555555;
+	font-weight: bold;
+	padding-top: 5px;
+	word-break: break-all;
+}
+.rsvSelectedRepeatCouponText {
+	padding-top: 5px;
+	word-break: break-all;
+}
+.rsvSelectedRepeatMenu {
+	box-sizing: border-box;
+	margin-top: 5px;
+	width: 100%;
+}
+.rsvSelectedRepeatCoupon + .rsvSelectedRepeatMenu {
+	border-top: 1px dotted #CCCCCC;
+	margin-top: 0;
+}
+.rsvSelectedRepeatMenu > li {
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+.rsvSelectedRepeatMenu > li + li {
+	border-top: 1px dotted #CCCCCC;
+}
+.rsvSelectedRepeatNameWrap {
+	display: inline-block;
+	vertical-align: middle;
+	width: 628px;
+	word-break: break-all;
+}
+.rsvSelectedRepeatName {
+	display: inline-block;
+	padding-top: 5px;
+}
+.rsvSelectedRepeatPriceWrap {
+	display: inline-block;
+	text-align: right;
+	vertical-align: middle;
+	width: 110px;
+	word-break: break-all;
+}
+.rsvSelectedRepeatPrice {
+	color: #CC4466;
+	font-size: 13px;
+	font-weight: bold;
+}
+.rsvSelectedRepeatTime {
+	color: #665555;
+}
+.rsvCouponCondition {
+	display: inline-block;
+	font-size: 10px;
+	width: 100%;
+	word-break: break-all;
+}
+.rsvCouponCondition > dt {
+	color: #CC4466;
+	float: left;
+	margin-top: 5px;
+}
+.rsvCouponCondition > dd {
+	color: #666666;
+	margin-top: 5px;
+	overflow: hidden;
+}
+/* 施術時間合計　来店日時 */
+.rsvInfoOutputWrap {
+	border: 1px solid #CCCCCC;
+}
+.rsvInfoOutputTtl,
+.rsvInfoOutputDtl {
+	color: #665555;
+	float: left;
+	font-size: 12px;
+}
+.rsvInfoOutputTtl {
+	background-color: #F4F4F4;
+	border-right: 1px solid #CCCCCC;
+	padding: 6px 20px;
+}
+.rsvInfoOutputDtl {
+	font-weight: bold;
+	padding: 6px 25px;
+}
+
+/* 「指名する/指名しない」 */
+.rsvChooseAppointWrap {
+	margin-top: 20px;
+	color: #665555;
+	line-height: 20px;
+}
+.rsvChooseAppointWrap > dt {
+	float: left;
+}
+.rsvChooseAppointWrap > dd {
+	overflow: hidden;
+}
+.rsvChooseAppointList {
+	margin-left: 7px;
+}
+.rsvChooseAppointList > li {
+	display: inline-block;
+	position: relative;
+}
+.rsvChooseAppointList > li + li {
+	margin-left: 15px;
+}
+
+/* Coupon Filter */
+.couponFilter {
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+	font-weight: bold;
+	line-height: 1;
+	width: 100%;
+}
+.couponFilterInner {
+	padding: 15px 0 15px 15px;
+}
+.couponFilterList > li {
+	float: left;
+	margin-bottom: 15px;
+	width: 120px;
+}
+.couponFilterSubmit {
+	background-color: #F4F4F4;
+	border-radius: 0 4px 4px 0;
+	text-align: center;
+	width: 120px;
+}
+.btnCouponFilterSubmit {
+	cursor: pointer;
+	height: 34px;
+	width: 90px;
+}
+.couponTypeFilter > li {
+	display: table;
+	float: left;
+}
+.couponTypeFilter > li + li {
+	margin-left: 10px;
+}
+
+.btnAddMenuReserve:before {
+	background-position: -190px -6569px;
+	height: 14px;
+	width: 10px;
+}
+
+.btnCouponTypeFilter {
+	background-color: #FFFFFF;
+	border: solid #CCCCCC;
+	border-radius: 4px;
+	border-width: 1px 1px 3px 1px;
+	box-sizing: border-box;
+	display: table-cell;
+	font-size: 13px;
+	font-weight: bold;
+	height: 35px;
+	text-align: center;
+	vertical-align: middle;
+	width: 140px;
+}
+a.btnCouponTypeFilter {
+	color: #988989;
+	text-decoration: none;
+}
+a.btnCouponTypeFilter:hover {
+	opacity: 0.7;
+}
+.btnCouponTypeFilter.isCr {
+	background-color: #BEB4AB;
+	border: 0;
+	color: #FFFFFF;
+}
+.btnCouponTypeFilter.isDisabled {
+	border-color: #EEEEEE;
+	color: #CCCCCC;
+}
+.couponResultMessage {
+	color: #988989;
+	font-size: 13px;
+	line-height: 1;
+}
+/* /Coupon Filter */
+
+/* Radio, Checkbox */
+/* 予約導線はglobal.cssを読んでいない為記述。 */
+.basicRadio,
+.basicCheck {
+	padding-right: 5px;
+	vertical-align: middle;
+}
+.basicRadio,
+.basicCheck,
+.basicRadio + label,
+.basicCheck + label {
+	cursor: pointer;
+}
+.basicRadio[disabled] + label,
+.basicCheck[disabled] + label {
+	color: #CCCCCC;
+}
+.basicRadio[disabled],
+.basicCheck[disabled],
+.basicRadio[disabled] + label,
+.basicCheck[disabled] + label {
+	cursor: default;
+}
+
+@media (min-width: 1px) {
+	.basicRadio,
+	.basicCheck {
+		display: none;
+		margin: 0;
+	}
+	.basicRadio + label,
+	.basicCheck + label {
+		display: inline-block;
+		padding: 0 0 0 19px;
+		position: relative;
+	}
+	.basicRadio + label:before,
+	.basicCheck + label:before {
+		background-color: #FFFFFF;
+		border: 1px solid #CCCCCC;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		content: "";
+		display: block;
+		height: 14px;
+		left: 0;
+		position: absolute;
+		width: 14px;
+	}
+	.basicRadio + label:before,
+	.basicRadio + label:after,
+	.basicCheck + label:before,
+	.basicCheck:checked + label:after {
+		top: -1px;
+	}
+	.basicRadio + label:before {
+		border-radius: 30px;
+	}
+	.basicCheck + label:before {
+		border-radius: 4px;
+	}
+	.basicRadio + label:after,
+	.basicCheck:checked + label:after {
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		content: "";
+		display: block;
+		margin-top: 3px;
+		position: absolute;
+	}
+	.basicRadio + label:after {
+		background-color: #CCCCCC;
+		border-radius: 8px;
+		height: 8px;
+		left: 3px;
+		width: 8px;
+	}
+	.basicCheck:checked + label:after {
+		border-color: #FFFFFF;
+		border-style: solid;
+		border-width: 0 0 2px 2px;
+		height: 6px;
+		left: 3px;
+		-webkit-transform: rotate(-45deg);
+		-ms-transform: rotate(-45deg);
+		transform: rotate(-45deg);
+		width: 8px;
+	}
+	.basicRadio:disabled + label:before,
+	.basicCheck:disabled + label:before,
+	.basicRadio:checked:disabled + label:before,
+	.basicCheck:checked:disabled + label:before {
+		background-color: #FFFFFF;
+		border-color: #E6E6E6;
+	}
+	.basicRadio:checked:disabled + label:after,
+	.basicRadio:disabled + label:after {
+		background-color: #E6E6E6;
+	}
+	.basicCheck:checked:disabled + label:after {
+		content: none;
+	}
+}
+
+/*　「指名する/指名しない」 Radio調整　*/
+.rsvRadio + label {
+	padding-left: 25px;
+}
+.rsvChooseAppointLabel {
+	font-weight: bold;
+	min-height: 20px;
+}
+.rsvRadio + label:before {
+	border: 2px solid #CCCCCC;
+	display: inline-block;
+	height: 20px;
+	top: 0;
+	width: 20px;
+	z-index: 1;
+}
+.rsvRadio + label:after {
+	content: none;
+}
+.rsvRadio:checked + label:after {
+	content: "";
+	height: 10px;
+	left: 5px;
+	top: 2px;
+	width: 10px;
+	z-index: 2;
+}
+
+/* スタッフカセット */
+.rsvStaffTbl {
+	border-bottom: 1px solid #BFB4AB;
+	color: #665555;
+	font-size: 11px;
+	padding-bottom: 20px;
+	table-layout: fixed;
+	width: 100%;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+.rsvStaffTbl + .rsvStaffTbl {
+	margin-top: 20px;
+}
+.rsvStaffTbl td {
+	padding: 0 15px;
+	vertical-align: top;
+}
+
+/* 追加メニュー選択 */
+.rsvSelectAddMenuNote {
+    color: #FF6600;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: -18px;
+    text-align: right;
+}
+
+/* ボタン */
+.rsvCompleteBtn {
+	box-sizing: border-box;
+	color: #666666 !important;
+	display: inline-block;
+	font-size: 14px;
+	padding: 3px 0 2px;
+	width: 180px;
+}
+.rsvCompleteBtn + .rsvCompleteBtn {
+	margin-left: 15px;
+}
+.rsvCompleteBtnWrap {
+	margin-top: 30px;
+	text-align: center;
+}
+.rsvCompleteBtnInner {
+	display: inline-block;
+}
+.rsvCompleteBtnDetail {
+	display: block;
+	float: left;
+}
+.sendAddressBtn {
+	cursor: pointer;
+	width: 120px;
+}
+
+/* 予約完了テキスト */
+.rsvCompleteMessage {
+	color: #CC4466;
+	font-size: 18px;
+	font-weight: bold;
+}
+.rsvCompleteSubMessage {
+	color: #665555;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 20px;
+	text-align: center;
+}
+
+/* メールアドレス入力フォーム */
+.rsvCompleteCnt {
+	margin-top: 25px;
+}
+.rsvCompleteError {
+	margin-top: 35px;
+	padding-bottom: 20px;
+}
+.rsvCompleteTxt {
+	color: #665555;
+	margin-top: 15px;
+	padding-bottom: 25px;
+}
+.rsvCompleteSubTxt {
+	margin-top: 20px;
+}
+.rsvCompleteDescription {
+	color: #665555;
+	font-size: 14px;
+}
+.rsvCompleteSubDescription {
+	color: #665555;
+	font-size: 10px;
+}
+.rsvCompleteDescriptionList {
+	color: #665555;
+}
+
+.sendAddressCnt {
+	background-color: #F4F4F4;
+	color: #665555;
+	display: inline-block;
+	margin-top: 20px;
+	padding: 20px;
+}
+.sendAddressCntTxt {
+	font-size: 14px;
+}
+.sendAddressForm {
+	margin-top: 10px;
+}
+.sendAddressTxt {
+	font-size: 14px;
+	line-height: 30px;
+	padding: 0 3px;
+}
+.inputAddress,
+.inputAddressSelect {
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: #666666;
+	font-size: 14px;
+	height: 30px;
+}
+.inputAddress {
+	padding: 0 5px;
+	width: 260px;
+}
+.inputAddressSelect {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: #FFFFFF;
+	cursor: pointer;
+	padding-left: 20px;
+	width: 200px;
+}
+.inputAddressSelect::-ms-expand {
+	display: none;
+}
+.subEmailDomain {
+	position: relative;
+}
+.subEmailDomain::after {
+	border: solid transparent;
+	border-top-color: #666666;
+	border-width: 6px 4px 4px;
+	content: "";
+	display: block;
+	margin-top: -2px;
+	pointer-events: none;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+}
+
+/* キャンセル可能期限 */
+.periodTxt {
+	color: #CC0000;
+	font-weight: bold;
+	padding-left: 5px;
+}
+
+/* レコメンド */
+.recommendedSlnTtl {
+	background-color: #F5F3F1;
+	color: #665555;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 30px;
+	margin-top: 15px;
+	padding-left: 15px;
+}
+.recommendedSln {
+	margin-top: 10px;
+}
+.recommendedSlnLink {
+	float: right;
+	font-size: 13px;
+	line-height: 20px;
+	padding-left: 8px;
+	position: relative;
+}
+.recommendedSlnLink::before {
+	border: 4px solid transparent;
+	border-left-color: #8C61B8;
+	content: "";
+	left: 0;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translate(0, -50%);
+	transform: translate(0, -50%);
+}
+.recommendedSlnLink + .recommendedSlnLink {
+	margin-right: 20px;
+}
+
+/* メール不達メッセージ */
+.rsvMailNondelivery {
+	color: #CC0000;
+	font-size: 13px;
+	margin-top: 20px;
+}
+.rsvMailNondelivery +.sendAddressCnt {
+	margin-top: 25px;
+}
+.rsvMailNondeliveryTxt {
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 27px;
+	position: relative;
+}
+.rsvMailNondeliveryTxt::before {
+	border: 2px solid #CC0000;
+	border-radius: 50%;
+	color: #CC0000;
+	content: "!";
+	font-size: 16px;
+	font-weight: bold;
+	height: 18px;
+	left: 0;
+	line-height: 20px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 18px;
+}
+.rsvMailNondeliverySubTxt {
+	margin: 5px 0 0 27px;
+}
+
+/* メールアドレス送信確認モーダル */
+.rsvModalOverlay {
+	background: rgba(0,0,0,0.7);
+	display: block;
+	height: 100%;
+	left: 0;
+	opacity: 0;
+	position: fixed;
+	top: 0;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+	width: 100%;
+	z-index: 100;
+}
+.rsvModalOverlay.isOpened {
+	opacity: 1;
+}
+.rsvSendAddressModal {
+	background-color: #FFFFFF;
+	border-radius: 6px;
+	color: #665555;
+	left: 50%;
+	padding: 30px;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	width: 430px;
+	z-index: 9999;
+}
+.rsvConfirmAddress {
+	font-size: 16px;
+	font-style: normal;
+	letter-spacing: 1px;
+	margin: 30px 0;
+	text-align: center;
+	word-break: break-all;
+}
+.rsvConfirmAddressTxt {
+	display: inline-block;
+	line-height: 1.3;
+	text-align: left;
+}
+.rsvModalCloseBtn,
+.rsvModalSubmitBtn {
+	cursor: pointer;
+	display: block;
+}
+.rsvModalCloseBtn {
+	float: left;
+	padding: 5px 0 4px;
+	width: 140px;
+}
+.rsvModalSubmitBtn {
+	box-sizing: border-box;
+	float: right;
+	font-size: 14px;
+	padding: 5px 0 5px;
+	width: 280px;
+}
+.monthCell,
+.dayCell {
+	background-color: #FFFFFF;
+}
+.innerTable > thead > tr:first-child > th + th {
+	border-left: 1px solid #BFB9B0;
+}
+.innerTable > thead > tr > th {
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 1;
+}
+.innerTable > thead > tr:first-child > th {
+	top: 0;
+}
+.innerTable > thead > .dayCellContainer > th {
+	top: 38px;
+}
+.timeTableLeft,
+.timeTableRight {
+	width: 87px;
+}
+.cloneHead {
+	border: solid #BFB9B0;
+	border-width: 0 1px;
+	box-sizing: border-box;
+	position: fixed;
+	top: 0;
+	width: 765px;
+	z-index: 1;
+}
