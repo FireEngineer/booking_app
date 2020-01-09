@@ -19,6 +19,17 @@ module GoogleEventsToJsonOutputer
       []
   end
 
-  module_function :staff_private
+  def public_staff_private(staff, term)
+    array = SyncCalendarService.new(Task.new(), staff, staff.calendar).public_read_event(term).map do |event|
+      [event[0].to_time, event[1].to_time]
+    end
+    if array.nil?
+      []
+    else
+      array
+    end
+  end
+
+  module_function :staff_private, :public_staff_private
 
 end

@@ -101,11 +101,39 @@ module StaffTaskToJsonOutputer
           []
     end
 
+    def public_staff_shifts(staffs, term)
+      staffs.map do |staff|
+        staff.staff_shifts.where(work_date: term).map do |shift|
+          [shift.work_start_time, shift.work_end_time]
+        end.flatten
+      end
+    end
+
+    def public_staff_tasks(staffs, term)
+      staffs.map do |staff|
+        array = staff.tasks.where(start_time: term).map do |task|
+          [task.start_time, task.end_time]
+        end.flatten
+      end
+    end
+
+    def public_staff_rests(staffs, term)
+      staffs.map do |staff|
+        array = staff.staff_shifts.where(work_date: term.first.to_date).map do |shift|
+            shift.staff_rest_times.map do |rest|
+              [rest.rest_start_time, rest.rest_end_time]
+            end
+          end.flatten
+        rescue StandardError
+          nil
+      end
+    end
+
     private
       def calendar_display_term
         ENV['CALENDAR_DISPLAY_TERM'].to_i
       end
 
-    module_function :staff_shifts, :staff_rests, :staff_tasks, :calendar_display_term
+    module_function :staff_shifts, :staff_rests, :staff_tasks, :calendar_display_term, :public_staff_shifts, :public_staff_tasks, :public_staff_rests
 
 end

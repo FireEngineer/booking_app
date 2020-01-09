@@ -16,4 +16,25 @@ module TasksHelper
     end
     count < 3
   end
+
+  def valid?(terms, start_time, end_time)
+    terms.each do |term|
+      unless term.first <= start_time && end_time <= term.last
+        "not"
+      end
+    end
+    return "ok"
+  end
+
+  def function(not_term, start_time, end_time)
+    not_term.each do |term|
+      if start_time < term.last && term.first < end_time
+        return "not"
+      end
+    rescue ArgumentError
+      # return "ok"
+    end
+    return "ok"
+  end
+
 end

@@ -68,6 +68,34 @@ class SyncCalendarService
     retry
   end
 
+  def public_read_event(term)
+    refresh_token
+    client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
+    client.update!(JSON.parse(staff.google_api_token))
+    service = Google::Apis::CalendarV3::CalendarService.new
+    service.authorization = client
+    response = service.list_events(calendar_id,
+                                   single_events: true,
+                                   order_by: 'startTime',
+                                   time_max: term.first.rfc3339,
+                                   time_min: term.last.rfc3339)
+    puts 'Upcoming events:'
+    puts 'No upcoming events found' if response.items.empty?
+    array = []
+    response.items.each do |event|
+      array.push(
+        [event.start.date_time || event.start.date,
+         event.end.date_time || event.end.date,
+         event.id
+        ]
+      )
+    end
+    array
+  rescue Google::Apis::AuthorizationError
+    refresh_token
+    retry
+  end
+
   def create_event
     client = Signet::OAuth2::Client.new(SyncCalendarService.client_options(staff))
     client.update!(JSON.parse(staff.google_api_token))

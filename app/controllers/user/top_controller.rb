@@ -16,7 +16,6 @@ class User::TopController < User::Base
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff, params[:task_id])
     staff_rests = staff_rests(@staff)
-    debugger
     if @staff
       @events = (staff_shifts + staff_tasks + staff_rests + staff_private)&.to_json
     else

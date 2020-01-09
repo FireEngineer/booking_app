@@ -22,6 +22,7 @@ class Public::TasksController < Public::Base
                    end
     staff_id = params[:staff_id] || @calendar.staffs.first.id
     @staff = Staff.find(staff_id)
+    @staffs = @calendar.staffs
 
     @user = @calendar.user
     @times = time_interval(@calendar)
