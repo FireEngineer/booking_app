@@ -45,6 +45,18 @@ class Calendar < ApplicationRecord
     end
   end
 
+  def iregular_holidays(term)
+    self.calendar_config.iregular_holidays.where(date: term).map do |holiday|
+      holiday.date
+    end
+  end
+
+  def regular_holiday_days
+    self.calendar_config.regular_holidays.where(holiday_flag: true).map do |holiday|
+      holiday.day
+    end
+  end
+
   private
 
     def start_time_end_time_validate

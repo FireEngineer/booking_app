@@ -103,7 +103,7 @@ module StaffTaskToJsonOutputer
 
     def public_staff_shifts(staffs, term)
       staffs.map do |staff|
-        staff.staff_shifts.where(work_date: term).map do |shift|
+        array = staff.staff_shifts.without_rest_date.where(work_date: term).map do |shift|
           [shift.work_start_time, shift.work_end_time]
         end.flatten
       end

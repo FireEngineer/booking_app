@@ -4,6 +4,8 @@ class StaffShift < ApplicationRecord
 
   validate :same_date_with_staff
 
+  scope :without_rest_date, -> { where.not(is_holiday: true) } 
+
   def same_date_with_staff
     self.staff.staff_shifts.where.not(id: self.id).each do |shift|
       if self.work_date == shift.work_date

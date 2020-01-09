@@ -4,8 +4,15 @@
   <div class="select_form mb-2">
     <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-clickable" id="res_step_cat">
       <tbody>
+        <%= link_to calendar_tasks_path(@calendar, course_id: @task_course.id) do %>
+          <tr class="select_tr load_btn <% "selected" unless params[:staff_id] %>" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id) %>">
+            <td id="categ_id_5" class="text-left">
+              <i class="fas fa-angle-right mr-2"></i><span>指名なし</span>
+            </td>
+          </tr>
+        <% end %>
         <% @calendar.staffs.each do |staff| %>
-          <% if @staff == staff %>
+          <% if staff.id.to_s == params[:staff_id] %>
             <tr class="select_tr selected">
               <td id="categ_id_5" class="text-left">
                 <i class="fas fa-check mr-2 text-primary"></i></i><span><%= staff.name %></span>

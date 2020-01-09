@@ -17,24 +17,33 @@ module TasksHelper
     count < 3
   end
 
-  def valid?(terms, start_time, end_time)
+  # 勤務時間内かどうか
+  def include_shift?(terms, start_time, end_time)
     terms.each do |term|
-      unless term.first <= start_time && end_time <= term.last
-        "not"
+      if term.first <= start_time && end_time <= term.last
+        return "ok"
       end
+    rescue
     end
-    return "ok"
+    return "not"
   end
 
-  def function(not_term, start_time, end_time)
+  # 予約が入れられる時間かどうか
+  def invalid_time?(not_term, start_time, end_time)
     not_term.each do |term|
       if start_time < term.last && term.first < end_time
         return "not"
       end
-    rescue ArgumentError
-      # return "ok"
+    rescue
+      
     end
     return "ok"
+  end
+
+  def not_term(staffs, term)
+    StaffTaskToJsonOutputer.public_staff_tasks(staffs, term) +
+    StaffTaskToJsonOutputer.public_staff_rests(staffs, term) +
+    GoogleEventsToJsonOutputer.public_staff_private(staffs, term)
   end
 
 end

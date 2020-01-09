@@ -15,29 +15,26 @@ class Public::TasksController < Public::Base
   def index
     task = Task.new
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
+    @calendar_config = @calendar.calendar_config
     @task_course = if params[:course_id]
                      TaskCourse.find(params[:course_id])
                    else
                      @calendar.task_courses.first
                    end
-    staff_id = params[:staff_id] || @calendar.staffs.first.id
-    @staff = Staff.find(staff_id)
-    @staffs = @calendar.staffs
+    if params[:staff_id]
+      @staffs = Staff.where(id: params[:staff_id])
+    else
+      @staffs = @calendar.staffs
+    end
 
     @user = @calendar.user
     @times = time_interval(@calendar)
-
     @today = Time.current
-    # DBタスクデータを引き出す
-    @events = @staff.tasks.map { |task| [task.start_time, task.end_time] }
-    # googleカレンダーのデータを同期
-    if @staff.google_calendar_id
-      @google_events = SyncCalendarService.new(task, @staff, @calendar).read_event
-    else
-      nil
-    end
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
+    @regular_holiday_days = @calendar.regular_holiday_days
+    @dw = ["日", "月", "火", "水", "木", "金", "土"]
+    @iregular_holydays = @calendar.iregular_holidays(@month)
   end
 
   def new
