@@ -3,7 +3,7 @@
   <h5 class="text-left">担当スタッフを選択</h5>
   <div class="select_form_sp">
     <ul class="list-group">
-      <li class="list-group-item disabled" data-toggle="modal" data-target="#staff_modal"><%= @staff.name %><i class="fas fa-angle-down float-right"></i></li>
+      <li class="list-group-item disabled" data-toggle="modal" data-target="#staff_modal"><%= if params[:staff_id] then Staff.find(params[:staff_id]).name else "指名なし" end %><i class="fas fa-angle-down float-right"></i></li>
     </ul>
   </div>
 </div>
@@ -33,20 +33,17 @@
         <div class="select_form_modal">
           <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-clickable" id="res_step_cat">
             <tbody>
+              <tr class="select_tr <%= "selected" unless params[:staff_id] %>" data-dismiss="modal" aria-label="Close" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id) %>">
+                <td id="categ_id_5" class="text-left">
+                  <i class="<%= staff_select() %>"></i><span> 指名なし</span>
+                </td>
+              </tr>
               <% @calendar.staffs.each do |staff| %>
-                <% if @staff == staff %>
-                  <tr class="select_tr selected" data-dismiss="modal" aria-label="Close">
-                    <td id="categ_id_5" class="text-left">
-                      <i class="fas fa-check mr-2 text-primary"></i></i><span><%= staff.name %></span>
-                    </td>
-                  </tr>
-                <% else %>
-                  <tr class="select_tr load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>">
-                    <td id="categ_id_5" class="text-left">
-                      <i class="fas fa-angle-right mr-2"></i><span><%= staff.name %></span>
-                    </td>
-                  </tr>
-                <% end %>
+                <tr class="select_tr <%= "selected" if params[:staff_id] == staff.id.to_s %> load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>">
+                  <td id="categ_id_5" class="text-left">
+                    <i class="<%= staff_select(staff) %>"></i><span><%= staff.name %></span>
+                  </td>
+                </tr>
               <% end %>
             </tbody>
           </table>

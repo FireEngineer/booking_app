@@ -4,6 +4,20 @@
  * CLASSES（コンポーネント）
  ************************************************************/
 #public_task_index {
+
+.circle_style:hover {
+	background-color: #eda8a2;
+	cursor: pointer;
+}
+
+.times_style {
+	background: #dad2d2!important;
+}
+
+table {
+	border-collapse: unset;
+}
+
 /* salonHeader */
 .rsvSalonHeader {
 	background-color: #F4F4F4;
@@ -2337,9 +2351,9 @@ a.btnCouponTypeFilter:hover {
 .innerTable > thead > .dayCellContainer > th {
 	top: 38px;
 }
-.timeTableLeft,
+// .timeTableLeft,
 .timeTableRight {
-	width: 87px;
+	width: 100px;
 }
 .cloneHead {
 	border: solid #BFB9B0;

@@ -46,4 +46,24 @@ module TasksHelper
     GoogleEventsToJsonOutputer.public_staff_private(staffs, term)
   end
 
+  def staff_select(staff=nil)
+    if !staff && !params[:staff_id]
+      "fas fa-check text-primary mr-2"
+    elsif !staff && params[:staff_id]
+      "fas fa-angle-right mr-2"
+    elsif staff.id.to_s == params[:staff_id]
+      "fas fa-check text-primary mr-2"
+    else
+      "fas fa-angle-right mr-2"
+    end
+  end
+
+  def course_select(task_course, course)
+    if task_course == course
+      "fas fa-check text-primary mr-2"
+    else
+      "fas fa-angle-right mr-2"
+    end
+  end
+
 end

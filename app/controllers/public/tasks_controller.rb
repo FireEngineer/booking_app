@@ -40,15 +40,17 @@ class Public::TasksController < Public::Base
   def new
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @user = @calendar.user
-    @staff = Staff.find(params[:staff_id])
+    @staff = Staff.find_by(id: params[:staff_id])
     @task_course = TaskCourse.find(params[:course_id])
     @store_member = StoreMember.new
     @task = @store_member.tasks.build(start_time: params[:start_time],
                                       end_time: end_time(params[:start_time], @task_course),
-                                      staff_id: @staff.id,
+                                      staff_id: @staff&.id,
                                       task_course_id: @task_course.id,
                                       calendar_id: @calendar.id)
-    check_task_validation(@task, @calendar)
+    if params[:staff_id]
+      check_task_validation(@task, @calendar)
+    end
   rescue RuntimeError => e
     if e.message == "shiftが存在しません。"
       flash[:danger] = "指定された日付の予約はできません。"
@@ -78,17 +80,17 @@ class Public::TasksController < Public::Base
     if params[:error]
       @calendar = Calendar.find_by(id: session[:calendar])
       @user = @calendar.user
-      @staff = Staff.find(session[:staff_id])
+      @staff = Staff.find_by(id: session[:staff_id])
       @task_course = TaskCourse.find(session[:task_course_id])
       @store_member = StoreMember.new
       @task = @store_member.tasks.build(start_time: session[:task]['start_time'],
                                         end_time: end_time(session[:task]['start_time'], @task_course),
-                                        staff_id: @staff.id,
+                                        staff_id: @staff&.id,
                                         task_course_id: @task_course.id,
                                         calendar_id: @calendar.id)
-      check_task_validation(@task, @calendar)
+      check_task_validation(@task, @calendar) if @staff
       flash[:success] = 'キャンセルしました。'
-      redirect_to new_calendar_task_url(@calendar, start_time: session[:task]['start_time'], course_id: @task_course.id, staff_id: @staff.id)
+      redirect_to new_calendar_task_url(@calendar, start_time: session[:task]['start_time'], course_id: @task_course.id, staff_id: @staff&.id)
       return
     end
 
@@ -224,7 +226,7 @@ class Public::TasksController < Public::Base
     @task = @store_member.tasks.build(task_params)
     @task.calendar = @calendar
     @task.task_course = @task_course
-    @task.staff = Staff.find(params[:staff_id])
+    set_staff(@task, params[:staff_id])
     if @store_member.save
       # googleカレンダー連携
       if @task.staff.google_calendar_id
@@ -272,7 +274,7 @@ class Public::TasksController < Public::Base
     @task = @store_member.tasks.build(session[:task])
     @task.calendar = @calendar
     @task.task_course = @task_course
-    @task.staff = Staff.find(session[:staff_id])
+    @task.staff = set_staff(@task, session[:staff_id])
     @staff = @task.staff
     if @store_member.save
       @store_member.update(line_user_id: line_user_id)
@@ -294,4 +296,22 @@ class Public::TasksController < Public::Base
       redirect_to calendar_tasks_url(@calendar)
     end
   end
+
+
+  def set_staff(task, staff_id)
+    if params[:staff_id]
+      Staff.find(params[:staff_id])
+    else
+      task.calendar.staffs.each do |staff|
+        task.staff = staff
+        if task.valid?
+          task.is_appoint = false
+          return
+        end
+      end
+    end
+
+  end
+
+
 end

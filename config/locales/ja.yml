@@ -230,5 +230,7 @@ ja:
       top: |
         %m/%d
         (%a)
+      cell_date: "%m/%d"
+      cell_day: "(%a)"
       to_json: "%Y-%m-%d"
     

@@ -5,27 +5,19 @@
     <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-clickable" id="res_step_cat">
       <tbody>
         <%= link_to calendar_tasks_path(@calendar, course_id: @task_course.id) do %>
-          <tr class="select_tr load_btn <% "selected" unless params[:staff_id] %>" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id) %>">
+          <tr class="select_tr <%= if params[:staff_id] then "load_btn" else "selected" end %>" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id) %>">
             <td id="categ_id_5" class="text-left">
-              <i class="fas fa-angle-right mr-2"></i><span>指名なし</span>
+              <i class="<%= staff_select() %>"></i><span>指名なし</span>
             </td>
           </tr>
         <% end %>
         <% @calendar.staffs.each do |staff| %>
-          <% if staff.id.to_s == params[:staff_id] %>
-            <tr class="select_tr selected">
+          <%= link_to calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) do %>
+            <tr class="select_tr load_btn <%= "selected" if staff.id.to_s == params[:staff_id] %>" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>">
               <td id="categ_id_5" class="text-left">
-                <i class="fas fa-check mr-2 text-primary"></i></i><span><%= staff.name %></span>
+                <i class="<%= staff_select(staff) %>"></i><span><%= staff.name %></span>
               </td>
             </tr>
-          <% else %>
-            <%= link_to calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) do %>
-              <tr class="select_tr load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: @task_course.id, staff_id: staff.id) %>">
-                <td id="categ_id_5" class="text-left">
-                  <i class="fas fa-angle-right mr-2"></i><span><%= staff.name %></span>
-                </td>
-              </tr>
-            <% end %>
           <% end %>
         <% end %>
       </tbody>
@@ -40,19 +32,11 @@
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-clickable" id="res_step_cat">
         <tbody>
           <% @calendar.task_courses.each do |course| %>
-            <% if @task_course == course %>
-              <tr class="select_tr selected">
-                <td id="categ_id_5" class="text-left">
-                  <i class="fas fa-check mr-2 text-primary"></i><span><%= course.title %></span>
-                </td>
-              </tr>
-            <% else %>
-              <tr class="select_tr load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
-                <td id="categ_id_5" class="text-left">
-                  <i class="fas fa-angle-right mr-2"></i><span><%= course.title %></span>
-                </td>
-              </tr>
-            <% end %>
+            <tr class="select_tr load_btn <%= "selected" if @task_course == course %>" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff&.id) %>">
+              <td id="categ_id_5" class="text-left">
+                <i class="<%= course_select(@task_course, course) %>"></i><span><%= course.title %></span>
+              </td>
+            </tr>
           <% end %>
         </tbody>
       </table>
