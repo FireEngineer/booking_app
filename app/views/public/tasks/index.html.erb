@@ -50,8 +50,8 @@
 							</th>
 							<% @month.each do |day| %>
 								<% ok_term = StaffTaskToJsonOutputer.public_staff_shifts(@staffs, day.all_day) %>
-								<%# GoogleEventsToJsonOutputer.public_staff_private(@staffs, day.all_day) %>
-								<% not_term = not_term(@staffs, day.all_day) %>
+								<% not_term = StaffTaskToJsonOutputer.public_staff_tasks(@staffs, day.all_day) %>
+								<%# debugger %>
 								
 								<th class="closeCol w-10">
 									<table cellpadding="0" cellspacing="0" class="moreInnerTable">
@@ -66,7 +66,7 @@
 															<span class="closeColText">休業日</span>
 														</td>
 													</tr>
-												<% elsif include_shift?(ok_term, start_time, end_time) == "ok" && invalid_time?(not_term, start_time, end_time) == "ok" %>
+												<% elsif include_shift?(ok_term, not_term, start_time, end_time) == true %>
 													<tr>
 														<%# <td class="openCell timeSharpLine"> %>
 															<th class="timeCell timeSharpLine text-center circle_style">

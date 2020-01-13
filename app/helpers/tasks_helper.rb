@@ -18,14 +18,31 @@ module TasksHelper
   end
 
   # 勤務時間内かどうか
-  def include_shift?(terms, start_time, end_time)
-    terms.each do |term|
-      if term.first <= start_time && end_time <= term.last
-        return "ok"
+  def include_shift?(ok_term, not_term, start_time, end_time)
+    ok_term.zip(not_term).each do |ok_terms, not_terms|
+      ok_flag = false
+      not_flag = false
+      ok_terms.each do |term|
+        if term.first <= start_time && end_time <= term.last
+          ok_flag = true
+          break
+        end
       end
-    rescue
+      not_terms.each do |term|
+        if term.any?
+          if start_time < term.last && term.first < end_time
+            not_flag = false
+            break
+          end
+        else
+          not_flag = true
+        end
+        break if not_flag == true
+      end
+      if ok_flag == true && not_flag == true
+        return true
+      end
     end
-    return "not"
   end
 
   # 予約が入れられる時間かどうか
@@ -35,7 +52,6 @@ module TasksHelper
         return "not"
       end
     rescue
-      
     end
     return "ok"
   end

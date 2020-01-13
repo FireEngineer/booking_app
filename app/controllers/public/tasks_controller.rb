@@ -24,7 +24,7 @@ class Public::TasksController < Public::Base
     if params[:staff_id]
       @staffs = Staff.where(id: params[:staff_id])
     else
-      @staffs = @calendar.staffs
+      @staffs = @calendar.staffs.order(:id)
     end
 
     @user = @calendar.user
