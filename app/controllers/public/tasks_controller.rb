@@ -277,7 +277,7 @@ class Public::TasksController < Public::Base
     @task = @store_member.tasks.build(session[:task])
     @task.calendar = @calendar
     @task.task_course = @task_course
-    @task.staff = set_staff(@task, session[:staff_id])
+    set_staff(@task, session[:staff_id])
     @staff = @task.staff
     if @store_member.save
       @store_member.update(line_user_id: line_user_id)
@@ -302,10 +302,13 @@ class Public::TasksController < Public::Base
 
 
   def set_staff(task, staff_id)
-    if params[:staff_id]
-      Staff.find(params[:staff_id])
+    if staff_id
+      task = Staff.find(staff_id)
     else
       task.calendar.staffs.each do |staff|
+        if staff.google_api_token
+          next if SyncCalendarService.new(Task.new(), staff, staff.calendar).public_read_event((task.start_time..task.end_time)).any?
+        end
         task.staff = staff
         if task.valid?
           task.is_appoint = false
@@ -313,7 +316,10 @@ class Public::TasksController < Public::Base
         end
       end
     end
-
+    unless task.staff
+      flash[:danger] = 'この時間はすでに予約が入っております。'
+      redirect_to calendar_tasks_url(task.calendar)
+    end
   end
 
 
