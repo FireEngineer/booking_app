@@ -17,6 +17,7 @@ class Public::TasksController < Public::Base
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @display_time = @calendar.display_time
     @calendar_config = @calendar.calendar_config
+    @interval_time = @calendar_config.interval_time
     @task_course = if params[:course_id]
                      TaskCourse.find(params[:course_id])
                    else
@@ -33,6 +34,7 @@ class Public::TasksController < Public::Base
     @today = Time.current
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
+    @staffs_google_tasks = StaffsScheduleOutputer.public_staff_private(@staffs, @month)
     @regular_holiday_days = @calendar.regular_holiday_days
     @dw = ["日", "月", "火", "水", "木", "金", "土"]
     @iregular_holydays = @calendar.iregular_holidays(@month)

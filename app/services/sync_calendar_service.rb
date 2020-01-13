@@ -85,9 +85,9 @@ class SyncCalendarService
     response.items.each do |event|
       array.push(
         [event.start.date_time || event.start.date,
-         event.end.date_time || event.end.date,
-         event.id
-        ]
+          event.end.date_time || event.end.date,
+          event.id
+         ]
       )
     end
     array

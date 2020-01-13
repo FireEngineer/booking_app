@@ -12,24 +12,25 @@ module StaffsScheduleOutputer
   end
 
   # 予定を取得
-  def invalid_schedules(staffs, term)
+  def invalid_schedules(staffs, term, interval_time)
     result = staffs.map do |staff|
       task_array = staff.tasks.where(start_time: term).map do |task|
-        [task.start_time, task.end_time]
+        [task.start_time, task.end_time.since(interval_time.minutes)]
       end
       rest_array = staff.staff_shifts.where(work_date: term.first.to_date).map do |shift|
         shift.staff_rest_times.map do |rest|
           [rest.rest_start_time, rest.rest_end_time]
         end.flatten
       end
-      (task_array + rest_array + public_staff_private(staff, term))
+      (task_array + rest_array)
+      # (task_array + rest_array)
+      # debugger
     end
     result
   end
 
-  private
-    
-    def public_staff_private(staff, term)
+  def public_staff_private(staffs, term)
+    staffs.map do |staff|
       if staff.google_api_token
         array = SyncCalendarService.new(Task.new(), staff, staff.calendar).public_read_event(term).map do |event|
           [event[0].to_datetime, event[1].to_datetime]
@@ -37,7 +38,8 @@ module StaffsScheduleOutputer
       else
         [[]]
       end
-    end 
+    end
+  end
 
 
 

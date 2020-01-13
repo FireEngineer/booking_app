@@ -11,19 +11,23 @@ module TasksHelper
   end
 
   # 勤務時間内かどうか
-  def valid_schedule?(ok_term, not_term, start_time, end_time)
+  def valid_schedule?(ok_term, not_term, staffs_google_tasks, start_time, end_time)
+    index = 0
     ok_term.zip(not_term).each do |ok_terms, not_terms|
       ok_flag = false
       not_flag = false
-      ok_terms.each do |term|
-        if term.first <= start_time && end_time <= term.last
+      ok_terms.each do |ok_term|
+        # debugger
+        if ok_term.first <= start_time && end_time <= ok_term.last
           ok_flag = true
+        else
+          not_flag = false
           break
         end
       end
-      not_terms.each do |term|
-        if term.any?
-          if start_time < term.last && term.first < end_time
+      (not_terms + staffs_google_tasks[index]).each do |not_term|
+        if not_term.any?
+          if start_time < not_term.last && not_term.first < end_time
             not_flag = false
             break
           else
@@ -32,11 +36,12 @@ module TasksHelper
         else
           not_flag = true
         end
-        break if not_flag == true
+        not_flag == true
       end
       if ok_flag == true && not_flag == true
         return true
       end
+      index += 1
     end
   end
 

@@ -50,13 +50,14 @@
 							</th>
 							<% @month.each do |day| %>
 								<% ok_term = StaffsScheduleOutputer.valid_shifts(@staffs, day.all_day) %>
-								<% not_term = StaffsScheduleOutputer.invalid_schedules(@staffs, day.all_day) %>								
+								<% not_term = StaffsScheduleOutputer.invalid_schedules(@staffs, day.all_day, @interval_time) %>
+								<%# debugger %>
 								<th class="closeCol w-10">
 									<table cellpadding="0" cellspacing="0" class="moreInnerTable">
 										<tbody>
 											<% @times.each do |time| %>
 												<% start_time = DateTime.parse(time(day, time)) %>
-												<% end_time = start_time.since((@task_course.course_time + @calendar_config.interval_time).minutes) %>
+												<% end_time = start_time.since((@task_course.course_time).minutes) %>
 												<% if @regular_holiday_days.include?(@dw[day.wday]) %>
 													<tr>
 														<td class="closeColInner">
@@ -71,11 +72,11 @@
 															</th>
 														<%# </td> %>
 													</tr>
-												<% elsif valid_schedule?(ok_term, not_term, start_time, end_time) == true %>
+												<% elsif valid_schedule?(ok_term, not_term, @staffs_google_tasks, start_time, end_time) == true %>
 													<tr>
 														<%# <td class="openCell timeSharpLine"> %>
 															<th class="timeCell timeSharpLine text-center circle_style">
-																<%= link_to new_calendar_task_path(@display_time, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: params[:staff_id]) do %>
+																<%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: params[:staff_id]) do %>
 																	<i class="far fa-circle"></i>
 																<% end %>
 															</th>
