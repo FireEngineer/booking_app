@@ -4,21 +4,14 @@ module TasksHelper
     l(task.start_time, format: :middle) + ' 〜 ' + l(task.end_time, format: :very_short)
   end
 
-  # topページのまるバツ判定
-  def include_time?(events, str_time)
-    time_s = Time.zone.parse(str_time)
-    time_e = time_s.since(1.hours)
-    count = 0
-    events.each do |event|
-      event_s = Time.zone.parse((event[0]).to_s)
-      event_e = Time.zone.parse((event[1]).to_s)
-      count += 1 if event_s < time_e && time_s < event_e
+  def valid_time?(display_time, start_time)
+    if Time.current.since(display_time.hours) >= start_time
+      false
     end
-    count < 3
   end
 
   # 勤務時間内かどうか
-  def include_shift?(ok_term, not_term, start_time, end_time)
+  def valid_schedule?(ok_term, not_term, start_time, end_time)
     ok_term.zip(not_term).each do |ok_terms, not_terms|
       ok_flag = false
       not_flag = false
@@ -43,23 +36,6 @@ module TasksHelper
         return true
       end
     end
-  end
-
-  # 予約が入れられる時間かどうか
-  def invalid_time?(not_term, start_time, end_time)
-    not_term.each do |term|
-      if start_time < term.last && term.first < end_time
-        return "not"
-      end
-    rescue
-    end
-    return "ok"
-  end
-
-  def not_term(staffs, term)
-    StaffTaskToJsonOutputer.public_staff_tasks(staffs, term) +
-    StaffTaskToJsonOutputer.public_staff_rests(staffs, term) +
-    GoogleEventsToJsonOutputer.public_staff_private(staffs, term)
   end
 
   def staff_select(staff=nil)

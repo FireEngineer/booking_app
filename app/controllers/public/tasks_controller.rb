@@ -15,6 +15,7 @@ class Public::TasksController < Public::Base
   def index
     task = Task.new
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
+    @display_time = @calendar.display_time
     @calendar_config = @calendar.calendar_config
     @task_course = if params[:course_id]
                      TaskCourse.find(params[:course_id])
