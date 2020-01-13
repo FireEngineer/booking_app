@@ -24,6 +24,7 @@ module StaffsScheduleOutputer
       end
       (task_array + rest_array + public_staff_private(staff, term))
     end
+    result
   end
 
   private
@@ -31,7 +32,7 @@ module StaffsScheduleOutputer
     def public_staff_private(staff, term)
       if staff.google_api_token
         array = SyncCalendarService.new(Task.new(), staff, staff.calendar).public_read_event(term).map do |event|
-          [event[0].to_time, event[1].to_time]
+          [event[0].to_datetime, event[1].to_datetime]
         end
       else
         [[]]

@@ -26,6 +26,8 @@ module TasksHelper
           if start_time < term.last && term.first < end_time
             not_flag = false
             break
+          else
+            not_flag = true
           end
         else
           not_flag = true

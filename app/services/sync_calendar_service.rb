@@ -77,8 +77,8 @@ class SyncCalendarService
     response = service.list_events(calendar_id,
                                    single_events: true,
                                    order_by: 'startTime',
-                                   time_max: term.first.rfc3339,
-                                   time_min: term.last.rfc3339)
+                                   time_max: term.last.rfc3339,
+                                   time_min: term.first.rfc3339)
     puts 'Upcoming events:'
     puts 'No upcoming events found' if response.items.empty?
     array = []
