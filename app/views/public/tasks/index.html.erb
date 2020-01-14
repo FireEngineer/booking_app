@@ -10,7 +10,7 @@
   <% end %>
 
   <%= paginate @month %>
-		<div id="public_task_index">
+	<div id="public_task_index">
     <div id="jsRsvCdTbl" class="reserveConditionTable  jscInnerTableWrap">
 				<table class="innerTable nowrap jscInnerTable" cellpadding="0" cellspacing="0">
 					<thead>
@@ -19,9 +19,6 @@
 								<%# <span class="arrowPagingWeekLOff">前の一週間</span> %>
 							</th>
 							<th colspan="14" class="monthCell"></th>
-							<%# <th rowspan="2" class="weekPaging">
-								<%# <a href="https://beauty.hotpepper.jp/CSP/bt/reserve/salonSchedule?storeId=H000366135&amp;week=1" title="次の一週間" class="arrowPagingWeekR jscCalNavi">次の一週間</a> %>
-							<%# </th> %>
 						</tr>
 						<tr class="dayCellContainer">
 							<% @month.each do |day| %>
@@ -42,9 +39,6 @@
 												<th class="timeCell timeSharpLine"><%= l( time, format: :very_short) %></th>
 											</tr>
 										<% end %>
-										<%# <tr>
-											<th class="timeCell ">9：30</th>
-										</tr> %>
 									</tbody>
 								</table>
 							</th>
@@ -66,29 +60,23 @@
 													</tr>
 												<% elsif valid_time?(@display_time, start_time) == false %>
 													<tr>
-														<%# <td class="openCell timeSharpLine"> %>
-															<th class="timeCell timeSharpLine text-center times_style">
-																<i class="fas fa-times"></i>
-															</th>
-														<%# </td> %>
+														<th class="timeCell timeSharpLine text-center times_style">
+															<i class="fas fa-times"></i>
+														</th>
 													</tr>
 												<% elsif valid_schedule?(ok_term, not_term, @staffs_google_tasks, start_time, end_time) == true %>
 													<tr>
-														<%# <td class="openCell timeSharpLine"> %>
-															<th class="timeCell timeSharpLine text-center circle_style">
-																<%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: params[:staff_id]) do %>
-																	<i class="far fa-circle"></i>
-																<% end %>
-															</th>
-														<%# </td> %>
+														<th class="timeCell timeSharpLine text-center circle_style">
+															<%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: params[:staff_id]) do %>
+																<i class="far fa-circle"></i>
+															<% end %>
+														</th>
 													</tr>
 												<% else %>
 													<tr>
-														<%# <td class="openCell timeSharpLine"> %>
-															<th class="timeCell timeSharpLine text-center times_style">
-																<i class="fas fa-times"></i>
-															</th>
-														<%# </td> %>
+														<th class="timeCell timeSharpLine text-center times_style">
+															<i class="fas fa-times"></i>
+														</th>
 													</tr>
 												<% end %>
 											<% end %>
