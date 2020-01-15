@@ -68,18 +68,29 @@ class Public::TasksController < Public::Base
     if params[:commit] == '予約（通知をEメールで受け取る）'
       task_create_without_line(params, store_member_params, task_params)
     else
-      # セッションにフォーム値を保持して、ラインログイン後レコード保存
-      session_in(@calendar, @user, store_member_params, task_params, params)
-      redirect_uri = URI.escape(task_create_url)
-      state = SecureRandom.base64(10)
-      # このURLがラインログインへのURL
-      url = LineAccess.redirect_url(CHANNEL_ID, redirect_uri, state)
-      redirect_to url
+      @task_course = TaskCourse.find(params[:task_course_id])
+      # 電話番号で、既存の会員データがあれば、そのデータを使用する
+      if @store_member = StoreMember.find_by(phone: store_member_params['phone'])
+        @store_member.is_allow_notice = params[:store_member]['is_allow_notice']
+      else
+        @store_member = StoreMember.new(store_member_params.merge(calendar_id: @calendar.id))
+      end
+      @task = @store_member.tasks.build(task_params.merge(calendar_id: @calendar.id, task_course_id: @task_course.id))
+      set_staff(@task, params[:staff_id])
+      if @store_member.save
+        redirect_uri = URI.escape(task_create_url)
+        state = SecureRandom.base64(10)
+        # このURLがラインログインへのURL
+        @task.update(state: state)
+        url = LineAccess.redirect_url(CHANNEL_ID, redirect_uri, state)
+        redirect_to url
+      end
     end
   end
 
   def task_create
     # ラインログインをキャンセルした時
+    debuger
     if params[:error]
       @calendar = Calendar.find_by(id: session[:calendar])
       @user = @calendar.user
@@ -103,6 +114,7 @@ class Public::TasksController < Public::Base
     get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code], redirect_uri)
     # アクセストークンを使用して、BOTとお客との友達関係を取得
     friend_response = LineAccess.get_friend_relation(get_access_token['access_token'])
+    debugger
     # アクセストークンのIDトークンを"gem jwt"を利用してデコード
     if get_access_token["error"]
       flash[:danger] = '２重クリックを検知しました。予約は完了しています。メール、LINEをご確認ください。'
@@ -303,7 +315,7 @@ class Public::TasksController < Public::Base
 
   def set_staff(task, staff_id)
     if staff_id
-      task = Staff.find(staff_id)
+      task.staff = Staff.find(staff_id)
     else
       task.calendar.staffs.each do |staff|
         if staff.google_api_token

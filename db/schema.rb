@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_11_031615) do
+ActiveRecord::Schema.define(version: 2020_01_14_115406) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -262,6 +262,8 @@ ActiveRecord::Schema.define(version: 2020_01_11_031615) do
     t.boolean "is_sub"
     t.boolean "is_appoint", default: true, comment: "指名予約かどうか"
     t.boolean "is_from_public", default: true, comment: "お客からの予約かどうか"
+    t.string "state", comment: "ラインで登録時の検証用乱数"
+    t.boolean "is_valid_task", default: true, comment: "有効な予約かどうか"
     t.index ["calendar_id"], name: "index_tasks_on_calendar_id"
     t.index ["staff_id"], name: "index_tasks_on_staff_id"
     t.index ["store_member_id"], name: "index_tasks_on_store_member_id"
