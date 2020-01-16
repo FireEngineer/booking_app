@@ -8,8 +8,6 @@
   <% else %>
     <%= render 'select_area' %>
   <% end %>
-
-  <%= paginate @month %>
 	<div id="public_task_index">
     <div id="jsRsvCdTbl" class="reserveConditionTable  jscInnerTableWrap">
 				<table class="innerTable nowrap jscInnerTable" cellpadding="0" cellspacing="0">
@@ -18,7 +16,11 @@
 							<th rowspan="2" class="weekPaging">
 								<%# <span class="arrowPagingWeekLOff">前の一週間</span> %>
 							</th>
-							<th colspan="14" class="monthCell"></th>
+							<th colspan="14" class="monthCell text-center">
+								<div style="display: inline-table; text-align: center; <%= 'font-size: smaller;' if browser.device.mobile? %>">
+									<%= paginate @month, window: 0, outer_window: 0 %>
+								</div>
+							</th>
 						</tr>
 						<tr class="dayCellContainer">
 							<% @month.each do |day| %>
@@ -36,7 +38,7 @@
 									<tbody>
 										<% @times.each do |time| %>
 											<tr>
-												<th class="timeCell timeSharpLine"><%= l( time, format: :very_short) %></th>
+												<th class="timeCell timeSharpLine" style="background: white;"><%= l( time, format: :very_short) %></th>
 											</tr>
 										<% end %>
 									</tbody>

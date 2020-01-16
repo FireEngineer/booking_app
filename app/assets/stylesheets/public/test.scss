@@ -5,8 +5,15 @@
  ************************************************************/
 #public_task_index {
 
+.circle_style {
+	background: white!important;
+	i {
+		font-size: initial;
+	}
+}
+
 .circle_style:hover {
-	background-color: #eda8a2;
+	background-color: #eda8a2!important;
 	cursor: pointer;
 }
 
