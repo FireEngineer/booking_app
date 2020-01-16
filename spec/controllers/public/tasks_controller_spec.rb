@@ -47,7 +47,7 @@ RSpec.describe Public::TasksController, type: :controller do
                     expect(response.status).to eq 302
                 end
                 it ':newテンプレートを表示すること' do
-                    expect(response).to redirect_to calendar_tasks_url(@calendar)
+                    expect(response).to redirect_to calendar_tasks_url(@calendar, course_id: @course.id, staff_id: @staff.id)
                 end
             end
         end
