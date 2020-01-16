@@ -97,37 +97,39 @@ class Public::TasksController < Public::Base
 
   def task_create
     if @task = Task.find_by!(state: params[:state])
-      @task.update(is_valid_task: true)
-      # アクセストークンを取得
-      redirect_uri = URI.escape(processing_url)
-      @calendar = @task.calendar
-      @task_course = @task.task_course
-      if params[:code]
-        get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code], redirect_uri)
-        # アクセストークンを使用して、BOTとお客との友達関係を取得
-        friend_response = LineAccess.get_friend_relation(get_access_token['access_token'])
-        # アクセストークンのIDトークンを"gem jwt"を利用してデコード
-        line_user_id = LineAccess.decode_response(get_access_token)
-        if friend_response['friendFlag'] == true
-          @task.store_member.update(line_user_id: line_user_id)
-          flash[:success] = '予約が完了しました。'
-        else # ラインログインでボットと友達にならなかった時の処理
+      begin
+        @task.update(is_valid_task: true)
+        # アクセストークンを取得
+        redirect_uri = URI.escape(processing_url)
+        @calendar = @task.calendar
+        @task_course = @task.task_course
+        if params[:code]
+          get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code], redirect_uri)
+          # アクセストークンを使用して、BOTとお客との友達関係を取得
+          friend_response = LineAccess.get_friend_relation(get_access_token['access_token'])
+          # アクセストークンのIDトークンを"gem jwt"を利用してデコード
+          line_user_id = LineAccess.decode_response(get_access_token)
+          if friend_response['friendFlag'] == true
+            @task.store_member.update(line_user_id: line_user_id)
+            flash[:success] = '予約が完了しました。'
+          else # ラインログインでボットと友達にならなかった時の処理
+            flash[:success] = '予約が完了しました。'
+            flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
+          end
+          task_notification(@task)
+          redirect_to calendar_task_complete_url(@calendar, @task)
+          return
+        else #LINE連携がうまくいかなかった時（キャンセルした時）
           flash[:success] = '予約が完了しました。'
           flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
+          redirect_to calendar_task_complete_url(@calendar, @task)
+          return
         end
-        task_notification(@task)
-        redirect_to calendar_task_complete_url(@calendar, @task)
-        return
-      else #LINE連携がうまくいかなかった時（キャンセルした時）
-        flash[:success] = '予約が完了しました。'
-        flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
-        redirect_to calendar_task_complete_url(@calendar, @task)
-        return
-      end
       rescue JWT::DecodeError
         puts "JWT::DecodeError"
         flash[:success] = '予約が完了しました。'
         redirect_to calendar_task_complete_url(@calendar, @task)
+      end
     else
       flash.now[:danger] = 'LINE連携が正常に完了しませんでした。予約を最初からやり直してください。'
       render :error_line, layout: 'plane'
