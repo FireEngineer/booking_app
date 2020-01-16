@@ -2,7 +2,7 @@ namespace :task_reminder do
   desc 'リマインダー配信'
   task push: :environment do
     # 翌日のタスクを検索して、リマインド通知
-    Task.tomorrow_tasks.each do |task|
+    Task.only_valid.tomorrow_tasks.each do |task|
       member = task.store_member
       if member.line_user_id
         LineBot.new.push_message_with_reminder(task, member.line_user_id)

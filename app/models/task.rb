@@ -20,21 +20,23 @@ class Task < ApplicationRecord
   scope :tomorrow_tasks, -> { where(start_time: Time.current.tomorrow.all_day) }
   scope :prev_task, -> { where("start_time < ?", Time.current.beginning_of_day) }
   scope :next_task, -> { where("start_time > ?", Time.current.end_of_day) }
-
-  # after_create :sync_create, :mail_send
-  # after_update :sybc_update, :line_send_with_edit_task, :mail_send_with_edit_task
-  # after_destroy :sybc_delete, :line_send_with_delete_task, :mail_send_with_delete_task
+  scope :only_valid, -> { where(is_valid_task: true) } #有効な予約
+  scope :only_invalid, -> { where(is_valid_task: false) } #無効な予約
+  scope :only_appoint, -> { where(is_appoint: true) } #指名予約
+  scope :only_disappoint, -> { where(is_appoint: false) } #指名予約
+  scope :only_from_public, -> { where(is_from_public: true) } #お客様からの予約
+  scope :only_from_store, -> { where(is_from_public: false) } #店舗側での予約
   
 
   # 予約が被っている時刻に同時に保存されないように検証
   after_create do
     # lockメソッドを使って、DBのトランザクションレベルを変更
     interval_time = calendar.calendar_config.interval_time
-    raise TaskUnuniqueError if Task.lock.where('start_time < ? && ? < end_time', end_time.since(interval_time.minutes), start_time.ago(interval_time.minutes)).where(staff_id: staff_id).where.not(id: id).any?
+    raise TaskUnuniqueError if Task.only_valid.lock.where('start_time < ? && ? < end_time', end_time.since(interval_time.minutes), start_time.ago(interval_time.minutes)).where(staff_id: staff_id).where.not(id: id).any?
   end
 
   def self.register_unregistered_tasks_in_staff_google_calendar(staff)
-    Task.future_tasks.staff_tasks(staff).each do |task|
+    Task.only_valid.future_tasks.staff_tasks(staff).each do |task|
       unless task.google_event_id
         SyncCalendarService.new(task, task.staff, task.calendar).create_event
       end
@@ -50,6 +52,7 @@ class Task < ApplicationRecord
     Modules::Base32.encode32hex(unique_id).gsub('=', '')
   end
 
+  # その時間の予約に対応できるスタッフがいるかどうかの検証
   def any_staff_available?
     if staff
       if self.invalid?
@@ -80,6 +83,7 @@ class Task < ApplicationRecord
     unless Task.where('start_time < ? && ? < end_time', end_time.since(interval_time.minutes), start_time.ago(interval_time.minutes))
                .where(staff_id: staff_id)
                .where.not(id: id)
+               .only_valid
                .empty?
       errors.add(:start_time, '予約時間が重複しています') # エラーメッセージ
     end
@@ -94,13 +98,18 @@ class Task < ApplicationRecord
       puts "shiftが存在しません。(指定された日付のshiftは存在しない)"
       raise "shiftが存在しません。"
     end
+    if shift.is_holiday?
+      errors.add(:start_time, '①スタッフの勤務時間外です。') # エラーメッセージ
+      return
+    end
     unless start_time >= shift.work_start_time && end_time <= shift.work_end_time
-      errors.add(:start_time, 'スタッフの勤務時間外です。') # エラーメッセージ
+      errors.add(:start_time, '②スタッフの勤務時間外です。') # エラーメッセージ
+      return
     end
     # 休憩時間に被っているかどうか検証
     shift.staff_rest_times.each do |rest|
       if start_time < rest.rest_end_time && end_time > rest.rest_start_time
-        errors.add(:start_time, 'スタッフの勤務時間外です。') # エラーメッセージ
+        errors.add(:start_time, '③スタッフの勤務時間外です。') # エラーメッセージ
         return
       end
     end

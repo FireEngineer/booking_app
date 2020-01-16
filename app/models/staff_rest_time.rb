@@ -43,6 +43,7 @@ class StaffRestTime < ApplicationRecord
     staff = staff_shift.staff
     interval_time = staff.calendar.calendar_config.interval_time
     unless Task.lock.where('start_time < ? && ? < end_time', rest_end_time.since(interval_time.minutes), rest_start_time.ago(interval_time.minutes))
+               .only_valid
                .where(staff_id: staff.id)
                .empty?
       errors.add(:work_start_time, '予約時間と重複しています') # エラーメッセージ

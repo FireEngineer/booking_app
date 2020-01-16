@@ -13,7 +13,7 @@ class User::StoreMembersController < User::Base
   end
 
   def store_member_task_show
-    @task = Task.find(params[:id])
+    @task = Task.only_valid.find(params[:id])
   end
 
   def update
@@ -28,7 +28,7 @@ class User::StoreMembersController < User::Base
   end
 
   def update_task
-    @task = Task.find(params[:id])
+    @task = Task.only_valid.find(params[:id])
     if @task.update(params_member_task)
       flash[:success] = "会員の予定を更新しました。"
       redirect_to calendar_store_member_url(@calendar, @task.store_member)

@@ -60,8 +60,8 @@
       <%= (hidden_field_tag :staff_id, @staff.id) if @staff %>
       <div class="task_submit_btn">
         <p>以下のどちらのボタンでも、予約できます。予約完了通知の種類を選べます。</p>
-        <button type="submit" class="btn btn-success btn_style btn-block" data-confirm= "予約を行います。">予約（通知をLINEで受け取る）</button>
-        <%= f.submit "予約（通知をEメールで受け取る）", class:"btn btn-primary btn_style btn-block", data:{confirm:"予約しますか？"} %>
+        <button type="submit" class="btn btn-success btn_style btn-block booking_load_btn">予約（通知をLINEで受け取る）</button>
+        <%= f.submit "予約（通知をEメールで受け取る）", class:"btn btn-primary btn_style btn-block booking_load_btn" %>
         <%= link_to "戻る", calendar_tasks_path(@calendar), class:"btn btn-secondary btn_style load_btn btn-block" %>
       </div>
     <% end %>
@@ -245,4 +245,15 @@
     }
 
   
+</script>
+
+<script>
+$('.booking_load_btn').click(function(){
+    if(!confirm('予約しますか？')){
+        return false;
+    }else{
+        /*　OKの時の処理 */
+        $("#overlay").fadeIn(500);
+    }
+});
 </script>

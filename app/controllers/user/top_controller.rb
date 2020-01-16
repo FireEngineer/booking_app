@@ -22,7 +22,7 @@ class User::TopController < User::Base
       @events = (calendar_tasks(@calendar) + calendar_holidays(@calendar)).to_json
     end
     if params[:task_id]
-      task_date = Task.find_by(id: params[:task_id]).start_time.to_date
+      task_date = Task.only_valid.find_by(id: params[:task_id]).start_time.to_date
       @current_date = l(task_date, format: :to_json)
     elsif params[:rest_id]
       rest_date = StaffRestTime.find(params[:rest_id]).staff_shift.work_date

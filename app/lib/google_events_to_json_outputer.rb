@@ -4,7 +4,7 @@ module GoogleEventsToJsonOutputer
   # googleカレンダーのプライベートの予定を取得
   def staff_private(staff)
     SyncCalendarService.new(Task.new(), staff, staff.calendar).read_event.map do |event|
-      unless Task.find_by(google_event_id: event[2])
+      unless Task.only_valid.find_by(google_event_id: event[2])
         {
           title: 'google',
           start: I18n.l(event[0].to_time, format: :to_work_json),

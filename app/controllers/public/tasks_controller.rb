@@ -96,7 +96,7 @@ class Public::TasksController < Public::Base
   end
 
   def task_create
-    if @task = Task.find_by!(state: params[:state])
+    if @task = Task.only_invalid.find_by!(state: params[:state])
       begin
         @task.update(is_valid_task: true)
         # アクセストークンを取得
@@ -185,7 +185,7 @@ class Public::TasksController < Public::Base
   def set_task
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @user = @calendar.user
-    @task = Task.find(params[:id])
+    @task = Task.only_valid.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:danger] = 'キャンセル済みか存在しない予約です。'
       redirect_to calendar_tasks_url(@calendar)

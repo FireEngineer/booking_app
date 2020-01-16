@@ -4,8 +4,7 @@ class User::SubTasksController < User::Base
 
   def create
     task = Task.new(params_sub_task)
-    task.calendar = @calendar
-    task.is_sub = true
+    task.attributes = {calendar_id: @calendar.id, is_sub: true, is_from_public: false}
     if task.save
       flash[:success] = '仮予約を作成しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
@@ -16,12 +15,12 @@ class User::SubTasksController < User::Base
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = Task.only_valid.find(params[:id])
     @store_member = StoreMember.new
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = Task.only_valid.find(params[:id])
     if @task.update(params_sub_task)
       flash[:success] = '仮予約を更新しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: @task.staff.id, task_id: @task.id)
@@ -32,7 +31,7 @@ class User::SubTasksController < User::Base
   end
 
   def update_by_drop
-    @task = Task.find_by(id: params[:id])
+    @task = Task.only_valid.find_by(id: params[:id])
     if @task.update(start_time: params[:start_time], end_time: params[:end_time])
       render json: 'success'
     else
@@ -44,12 +43,12 @@ class User::SubTasksController < User::Base
     store_member = StoreMember.find_by(phone: params[:store_member]['phone']) || StoreMember.new(store_member_params)
     store_member.calendar = @calendar
     task_course = TaskCourse.find_by(id: task_params['task_course_id'])
-    task = Task.find(params[:id])
-    task.attributes = task_params
-    task.store_member = store_member
-    task.end_time = end_time(task.start_time.to_s, task_course)
-    task.calendar = @calendar
-    task.is_sub = false
+    task = Task.only_valid.find(params[:id])
+    task.attributes = {task_params.merge(store_member_id: store_member.id,
+                                          end_time: end_time(task.start_time.to_s, task_course),
+                                          calendar_id: @calendar.id,
+                                          is_sub: false,
+                                        )}
     if store_member.save && task.save
       LineBot.new.push_message(task, store_member.line_user_id) if store_member.line_user_id
       NotificationMailer.send_confirm_to_user(task, @calendar.user, @calendar).deliver if store_member.email

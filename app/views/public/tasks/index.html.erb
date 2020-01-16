@@ -51,7 +51,7 @@
 										<tbody>
 											<% @times.each do |time| %>
 												<% start_time = DateTime.parse(time(day, time)) %>
-												<% end_time = start_time.since((@task_course.course_time).minutes) %>
+												<% end_time = start_time.since((@task_course.course_time+@interval_time).minutes) %>
 												<% if @regular_holiday_days.include?(@dw[day.wday]) %>
 													<tr>
 														<td class="closeColInner">

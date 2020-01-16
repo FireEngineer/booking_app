@@ -4,9 +4,9 @@ class User::UserTasksController < User::Base
 
   def index
     if params[:except_past_task]
-      @q = Task.by_calendar(@calendar).expect_past.ransack(params[:q])
+      @q = Task.only_valid.by_calendar(@calendar).expect_past.ransack(params[:q])
     else
-      @q = Task.by_calendar(@calendar).ransack(params[:q])
+      @q = Task.only_valid.by_calendar(@calendar).ransack(params[:q])
     end
     @q.sorts = 'start_time desc'
     @tasks = @q.result(distinct: true).page(params[:page]).per(10)
@@ -31,8 +31,10 @@ class User::UserTasksController < User::Base
     @store_member.calendar = @calendar
     task = @store_member.tasks.build(task_params)
     task_course = TaskCourse.find_by(id: task_params['task_course_id'])
-    task.end_time = end_time(task.start_time.to_s, task_course)
-    task.calendar = @calendar
+    task.attributes = { end_time: end_time(task.start_time.to_s, task_course),
+                        calendar_id: @calendar.id,
+                        is_from_public: false,
+                      }
 
     ActiveRecord::Base.transaction do
       @store_member.save!
@@ -49,11 +51,11 @@ class User::UserTasksController < User::Base
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = Task.only_valid.find(params[:id])
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = Task.only_valid.find(params[:id])
     @task.attributes = task_params
     task_course = @task.task_course
     ActiveRecord::Base.transaction do
@@ -73,7 +75,7 @@ class User::UserTasksController < User::Base
   end
 
   def update_by_drop
-    @task = Task.find_by(id: params[:id])
+    @task = Task.only_valid.find_by(id: params[:id])
     ActiveRecord::Base.transaction do
       @task.update!(start_time: params[:start_time], end_time: params[:end_time])
       sync_google_calendar_update(@task)
@@ -87,7 +89,7 @@ class User::UserTasksController < User::Base
   end
 
   def destroy
-    @task = Task.find_by(id: params[:id])
+    @task = Task.only_valid.find_by(id: params[:id])
     ActiveRecord::Base.transaction do
       @task.destroy!
       sync_google_calendar_delete(@task)
