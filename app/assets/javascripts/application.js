@@ -16,7 +16,4 @@
 //= require jquery_ujs
 //= require popper
 //= require bootstrap-sprockets
-//= require bootstrap-datepicker
-//= require bootstrap-datepicker/core
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.ja
 //= require_tree .
