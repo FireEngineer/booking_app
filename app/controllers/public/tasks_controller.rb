@@ -1,6 +1,6 @@
 class Public::TasksController < Public::Base
   before_action :set_task, only: %i[complete destroy cancel]
-  before_action :calendar_is_released?
+  before_action :calendar_is_released?, except:[:processing, :task_create]
 
   require 'base64'
   require 'json'
@@ -74,6 +74,7 @@ class Public::TasksController < Public::Base
     any_staff?(@task) #予約に対応できるスタッフの確認
     if @store_member.save
       if params[:commit] == '予約（通知をEメールで受け取る）'
+        task_notification(@task)
         flash[:success] = '予約が完了しました。'
         redirect_to calendar_task_complete_url(@calendar, @task)
       else
@@ -117,6 +118,7 @@ class Public::TasksController < Public::Base
           redirect_to calendar_task_complete_url(@calendar, @task)
           return
         end
+        task_notification(@task)
       else #LINE連携がうまくいかなかった時（キャンセルした時）
         flash[:success] = '予約が完了しました。'
         flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
