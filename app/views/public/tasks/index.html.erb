@@ -14,7 +14,9 @@
 					<thead>
 						<tr>
 							<th rowspan="2" class="weekPaging">
-								<%# <span class="arrowPagingWeekLOff">前の一週間</span> %>
+								<div class="datepicker">
+									test
+								</div>
 							</th>
 							<th colspan="14" class="monthCell text-center">
 								<div style="display: inline-table; text-align: center; <%= 'font-size: smaller;' if browser.device.mobile? %>">
@@ -126,6 +128,15 @@
   $('tr[data-href]', 'table.table-clickable').on('click', function(){
     location.href = $(this).data('href');
   });
+});
+</script>
+
+<script>
+$(function(){
+    $('.datepicker').datepicker({
+        autoclose: false,   // デフォルト
+        // autoclose: true,
+    });
 });
 </script>
 
