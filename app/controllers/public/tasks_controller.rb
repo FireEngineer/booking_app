@@ -111,21 +111,23 @@ class Public::TasksController < Public::Base
         if friend_response['friendFlag'] == true
           @task.store_member.update(line_user_id: line_user_id)
           flash[:success] = '予約が完了しました。'
-          redirect_to calendar_task_complete_url(@calendar, @task)
-          return
         else # ラインログインでボットと友達にならなかった時の処理
           flash[:success] = '予約が完了しました。'
           flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
-          redirect_to calendar_task_complete_url(@calendar, @task)
-          return
         end
         task_notification(@task)
+        redirect_to calendar_task_complete_url(@calendar, @task)
+        return
       else #LINE連携がうまくいかなかった時（キャンセルした時）
         flash[:success] = '予約が完了しました。'
         flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
         redirect_to calendar_task_complete_url(@calendar, @task)
         return
       end
+      rescue JWT::DecodeError
+        puts "JWT::DecodeError"
+        flash[:success] = '予約が完了しました。'
+        redirect_to calendar_task_complete_url(@calendar, @task)
     else
       flash.now[:danger] = 'LINE連携が正常に完了しませんでした。予約を最初からやり直してください。'
       render :error_line, layout: 'plane'
@@ -224,6 +226,7 @@ class Public::TasksController < Public::Base
   end
 
   def task_notification(task)
+    puts "通知処理開始"
     if task.staff.google_calendar_id
       SyncCalendarService.new(@task, @task.staff, @task.calendar).create_event
     end
@@ -234,6 +237,7 @@ class Public::TasksController < Public::Base
     end
     # スタッフ通知
     LineBotByStaff.new.push_message_with_task_create(task, task.staff.line_user_id)
+    puts "通知処理終了"
   end
 
 
