@@ -65,81 +65,69 @@ class Public::TasksController < Public::Base
   def redirect_register_line
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @user = @calendar.user
-    if params[:commit] == '予約（通知をEメールで受け取る）'
-      task_create_without_line(params, store_member_params, task_params)
+    @task_course = TaskCourse.find(params[:task_course_id])
+    # 電話番号で、既存の会員データがあれば、そのデータを使用する
+    if @store_member = StoreMember.find_by(phone: store_member_params['phone'])
+      @store_member.is_allow_notice = params[:store_member]['is_allow_notice']
     else
-      @task_course = TaskCourse.find(params[:task_course_id])
-      # 電話番号で、既存の会員データがあれば、そのデータを使用する
-      if @store_member = StoreMember.find_by(phone: store_member_params['phone'])
-        @store_member.is_allow_notice = params[:store_member]['is_allow_notice']
+      @store_member = StoreMember.new(store_member_params.merge(calendar_id: @calendar.id))
+    end
+    @task = @store_member.tasks.build(task_params.merge(calendar_id: @calendar.id, task_course_id: @task_course.id))
+    set_staff(@task, params[:staff_id])
+    if @store_member.save
+      if params[:commit] == '予約（通知をEメールで受け取る）'
+        flash[:success] = '予約が完了しました。'
+        redirect_to calendar_task_complete_url(@calendar, @task)
       else
-        @store_member = StoreMember.new(store_member_params.merge(calendar_id: @calendar.id))
-      end
-      @task = @store_member.tasks.build(task_params.merge(calendar_id: @calendar.id, task_course_id: @task_course.id))
-      set_staff(@task, params[:staff_id])
-      if @store_member.save
-        redirect_uri = URI.escape(task_create_url)
-        state = SecureRandom.base64(10)
+        redirect_uri = URI.escape(processing_url)
+        state = SecureRandom.urlsafe_base64
         # このURLがラインログインへのURL
-        @task.update(state: state)
+        @task.update(state: state, is_valid_task: false)
         url = LineAccess.redirect_url(CHANNEL_ID, redirect_uri, state)
         redirect_to url
       end
+    else
+      flash[:success] = @store_member.errors.messages.values.first.first
+      redirect_to calendar_tasks_url(@calendar)
     end
   end
 
+  def processing
+    render layout: 'plane'
+  end
+
   def task_create
-    # ラインログインをキャンセルした時
-    debuger
-    if params[:error]
-      @calendar = Calendar.find_by(id: session[:calendar])
-      @user = @calendar.user
-      @staff = Staff.find_by(id: session[:staff_id])
-      @task_course = TaskCourse.find(session[:task_course_id])
-      @store_member = StoreMember.new
-      @task = @store_member.tasks.build(start_time: session[:task]['start_time'],
-                                        end_time: end_time(session[:task]['start_time'], @task_course),
-                                        staff_id: @staff&.id,
-                                        task_course_id: @task_course.id,
-                                        calendar_id: @calendar.id)
-      check_task_validation(@task, @calendar) if @staff
-      flash[:success] = 'キャンセルしました。'
-      redirect_to new_calendar_task_url(@calendar, start_time: session[:task]['start_time'], course_id: @task_course.id, staff_id: @staff&.id)
-      return
-    end
-
-    # ここからが正常処理
-    # アクセストークンを取得
-    redirect_uri = URI.escape(task_create_url)
-    get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code], redirect_uri)
-    # アクセストークンを使用して、BOTとお客との友達関係を取得
-    friend_response = LineAccess.get_friend_relation(get_access_token['access_token'])
-    debugger
-    # アクセストークンのIDトークンを"gem jwt"を利用してデコード
-    if get_access_token["error"]
-      flash[:danger] = '２重クリックを検知しました。予約は完了しています。メール、LINEをご確認ください。'
-      redirect_to calendar_tasks_url(Calendar.find_by(id: session[:calendar]))
-      return
-    end
-    line_user_id = LineAccess.decode_response(get_access_token)
-
-    # BOTと友達かどうか確認する。
-    if friend_response['friendFlag'] == true
-      task_create_with_line(session, line_user_id)
-    else # ラインログインでボットと友達にならなかった時の処理
-      @calendar = Calendar.find_by(id: session[:calendar])
-      @user = @calendar.user
-      @staff = Staff.find(session[:staff_id])
-      @task_course = TaskCourse.find(session[:task_course_id])
-      @store_member = StoreMember.new
-      @task = @store_member.tasks.build(start_time: session[:task]['start_time'],
-                                        end_time: end_time(session[:task]['start_time'], @task_course),
-                                        staff_id: @staff.id,
-                                        task_course_id: @task_course.id,
-                                        calendar_id: @calendar.id)
-      check_task_validation(@task, @calendar)
-      flash[:danger] = 'ラインボットと友達になってください'
-      redirect_to new_calendar_task_url(@calendar, start_time: session[:task]['start_time'], course_id: @task_course.id, staff_id: @staff.id)
+    if @task = Task.find_by!(state: params[:state])
+      @task.update(is_valid_task: true)
+      # アクセストークンを取得
+      redirect_uri = URI.escape(processing_url)
+      @calendar = @task.calendar
+      @task_course = @task.task_course
+      if params[:code]
+        get_access_token = LineAccess.get_access_token(CHANNEL_ID, CHANNEL_SECRET, params[:code], redirect_uri)
+        # アクセストークンを使用して、BOTとお客との友達関係を取得
+        friend_response = LineAccess.get_friend_relation(get_access_token['access_token'])
+        # アクセストークンのIDトークンを"gem jwt"を利用してデコード
+        line_user_id = LineAccess.decode_response(get_access_token)
+        if friend_response['friendFlag'] == true
+          flash[:success] = '予約が完了しました。'
+          redirect_to calendar_task_complete_url(@calendar, @task)
+          return
+        else # ラインログインでボットと友達にならなかった時の処理
+          flash[:success] = '予約が完了しました。'
+          flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
+          redirect_to calendar_task_complete_url(@calendar, @task)
+          return
+        end
+      else #LINE連携がうまくいかなかった時（キャンセルした時）
+        flash[:success] = '予約が完了しました。'
+        flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
+        redirect_to calendar_task_complete_url(@calendar, @task)
+        return
+      end
+    else
+      flash.now[:danger] = 'LINE連携が正常に完了しませんでした。予約を最初からやり直してください。'
+      render :error_line, layout: 'plane'
       return
     end
   end
@@ -150,14 +138,14 @@ class Public::TasksController < Public::Base
     cancelable_time = @calendar.calendar_config.cancelable_time
     if @task.start_time <= Time.current
       flash[:danger] = '予定時間を過ぎているので、キャンセルできません。'
-      redirect_to calendar_tasks_path(@calendar)
+      redirect_to calendar_tasks_url(@calendar)
     elsif @task.start_time > Time.current && @task.start_time <= Time.current.since(cancelable_time.hours).to_time
       flash[:danger] = "予定時間まで#{cancelable_time}時間を過ぎているので、キャンセルできません。直接お店まで電話してください。"
-      redirect_to calendar_tasks_path(@calendar)
+      redirect_to calendar_tasks_url(@calendar)
     end
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = 'この予約はキャンセル済みか、存在しません。'
-    redirect_to calendar_tasks_path(@calendar)
+    redirect_to calendar_tasks_url(@calendar)
   end
 
   def destroy
@@ -195,7 +183,7 @@ class Public::TasksController < Public::Base
     @task = Task.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:danger] = 'キャンセル済みか存在しない予約です。'
-      redirect_to calendar_tasks_path(@calendar)
+      redirect_to calendar_tasks_url(@calendar)
   end
 
   def store_member_params
@@ -227,92 +215,6 @@ class Public::TasksController < Public::Base
     array
   end
 
-  # そのまま登録ボタンで予約する時の処理
-  def task_create_without_line(params, store_member_params, task_params)
-    @task_course = TaskCourse.find(params[:task_course_id])
-    # 電話番号で、既存の会員データがあれば、そのデータを使用する
-    if StoreMember.find_by(phone: store_member_params['phone'])
-      @store_member = StoreMember.find_by(phone: store_member_params['phone'])
-      @store_member.is_allow_notice = params[:store_member]['is_allow_notice']
-    else
-      @store_member = StoreMember.new(store_member_params)
-      @store_member.calendar = @calendar
-    end
-    @task = @store_member.tasks.build(task_params)
-    @task.calendar = @calendar
-    @task.task_course = @task_course
-    set_staff(@task, params[:staff_id])
-    if @store_member.save
-      # googleカレンダー連携
-      if @task.staff.google_calendar_id
-        SyncCalendarService.new(@task, @task.staff, @task.calendar).create_event
-      end
-      # 通知許可
-      if @store_member.is_allow_notice?
-        LineBot.new.push_message(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
-        NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
-      end
-      # スタッフ通知
-      LineBotByStaff.new.push_message_with_task_create(@task, @task.staff.line_user_id)
-      flash[:success] = '予約が完了しました。'
-      redirect_to calendar_task_complete_path(@calendar, @task)
-      return
-    else
-      @staff = @task.staff
-      flash[:danger] = 'この時間はすでに予約が入っております。'
-      redirect_to calendar_tasks_url(@calendar)
-      return
-    end
-  end
-
-  def session_in(calendar, user, store_member_params, task_params, params)
-    session[:calendar] = calendar.id
-    session[:user] = user.id
-    session[:store_member] = store_member_params
-    session[:task] = task_params
-    session[:task_course_id] = params[:task_course_id]
-    session[:staff_id] = params[:staff_id]
-  end
-
-  def task_create_with_line(session, line_user_id)
-    @calendar = Calendar.find(session[:calendar])
-    @user = @calendar.user
-    @task_course = TaskCourse.find(session[:task_course_id])
-    # 電話番号で、既存の会員データがあれば、そのデータを使用する
-    if StoreMember.find_by(phone: session[:store_member]['phone'])
-      @store_member = StoreMember.find_by(phone: session[:store_member]['phone'])
-      @store_member.is_allow_notice = session[:store_member]['is_allow_notice']
-    else
-      @store_member = StoreMember.new(session[:store_member])
-      @store_member.calendar = @calendar
-    end
-    @task = @store_member.tasks.build(session[:task])
-    @task.calendar = @calendar
-    @task.task_course = @task_course
-    set_staff(@task, session[:staff_id])
-    @staff = @task.staff
-    if @store_member.save
-      @store_member.update(line_user_id: line_user_id)
-      # googleカレンダー連携
-      if @task.staff.google_calendar_id
-        SyncCalendarService.new(@task, @task.staff, @task.calendar).create_event
-      end
-      # 通知許可
-      if @store_member.is_allow_notice?
-        LineBot.new.push_message(@task, line_user_id)
-        NotificationMailer.send_confirm_to_user(@task, @calendar.user, @calendar).deliver if @store_member.email
-      end
-      # スタッフ通知
-      LineBotByStaff.new.push_message_with_task_create(@task, @staff.line_user_id) if @staff.line_user_id
-      flash[:success] = '予約が完了しました。'
-      redirect_to calendar_task_complete_path(@calendar, @task)
-    else
-      flash[:danger] = 'この時間はすでに予約が入っております。'
-      redirect_to calendar_tasks_url(@calendar)
-    end
-  end
-
-
   def set_staff(task, staff_id)
     if staff_id
       task.staff = Staff.find(staff_id)
@@ -332,6 +234,19 @@ class Public::TasksController < Public::Base
       flash[:danger] = 'この時間はすでに予約が入っております。'
       redirect_to calendar_tasks_url(task.calendar)
     end
+  end
+
+  def task_notification(task)
+    if task.staff.google_calendar_id
+      SyncCalendarService.new(@task, @task.staff, @task.calendar).create_event
+    end
+    # 通知許可
+    if task.store_member.is_allow_notice?
+      LineBot.new.push_message(task, task.store_member.line_user_id) if task.store_member.line_user_id
+      NotificationMailer.send_confirm_to_user(task, task.calendar.user, task.calendar).deliver if task.store_member.email
+    end
+    # スタッフ通知
+    LineBotByStaff.new.push_message_with_task_create(task, task.staff.line_user_id)
   end
 
 
