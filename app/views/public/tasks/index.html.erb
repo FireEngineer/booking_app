@@ -14,8 +14,10 @@
 					<thead>
 						<tr>
 							<th rowspan="2" class="weekPaging">
-								<div class="datepicker">
-									test
+								<div class="">
+									<%#= button_tag type: "button", class:"datepicker" do %>
+										<%#<i class="far fa-calendar-alt fa-2x"></i>%>
+									<%# end %>
 								</div>
 							</th>
 							<th colspan="14" class="monthCell text-center">
@@ -134,8 +136,12 @@
 <script>
 $(function(){
     $('.datepicker').datepicker({
-        autoclose: false,   // デフォルト
-        // autoclose: true,
+        // autoclose: false,   // デフォルト
+        autoclose: true,
+    }).on('changeDate', function(e) {
+		// `e` here contains the extra attributes
+		debugger
+		console.log(e);
     });
 });
 </script>

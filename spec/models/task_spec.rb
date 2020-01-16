@@ -83,7 +83,7 @@ RSpec.describe Task, type: :model do
         calendar_id: @calendar.id,
       )
       expect(@task).to be_invalid
-      expect(@task.errors[:start_time]).to include('スタッフの勤務時間外です。')
+      expect(@task.errors[:start_time]).to include('②スタッフの勤務時間外です。')
     end
 
     it 'スタッフの休憩時間と被っているとだめ' do
