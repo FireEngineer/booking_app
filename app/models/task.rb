@@ -50,6 +50,29 @@ class Task < ApplicationRecord
     Modules::Base32.encode32hex(unique_id).gsub('=', '')
   end
 
+  def any_staff_available?
+    if staff
+      if self.invalid?
+        return false
+      end
+      return true
+    else
+      self.calendar.staffs.each do |staff|
+        if staff.google_api_token
+          next if SyncCalendarService.new(Task.new(), staff, staff.calendar).public_read_event((self.start_time..self.end_time)).any?
+        end
+        self.staff = staff
+        if self.valid?
+          self.is_appoint = false
+          return true
+        end
+      end
+    end
+    unless self.staff
+      return false
+    end
+  end
+
   # バリデーション======================================================
   # 時間がかぶっていないかどうか
   def check_time_original

@@ -51,14 +51,12 @@ class Public::TasksController < Public::Base
                                       staff_id: @staff&.id,
                                       task_course_id: @task_course.id,
                                       calendar_id: @calendar.id)
-    if params[:staff_id]
-      check_task_validation(@task, @calendar)
-    end
-  rescue RuntimeError => e
-    if e.message == "shiftが存在しません。"
-      flash[:danger] = "指定された日付の予約はできません。"
-      redirect_to calendar_tasks_url(@calendar)
-    end
+    any_staff?(@task)
+  # rescue RuntimeError => e
+  #   if e.message == "shiftが存在しません。"
+  #     flash[:danger] = "指定された日付の予約はできません。"
+  #     redirect_to calendar_tasks_url(@calendar)
+  #   end
   end
 
   # ラインログインボタンでこのアクションが呼ばれる
@@ -72,8 +70,8 @@ class Public::TasksController < Public::Base
     else
       @store_member = StoreMember.new(store_member_params.merge(calendar_id: @calendar.id))
     end
-    @task = @store_member.tasks.build(task_params.merge(calendar_id: @calendar.id, task_course_id: @task_course.id))
-    set_staff(@task, params[:staff_id])
+    @task = @store_member.tasks.build(task_params.merge(calendar_id: @calendar.id, task_course_id: @task_course.id, staff_id: params[:staff_id]))
+    any_staff?(@task) #予約に対応できるスタッフの確認
     if @store_member.save
       if params[:commit] == '予約（通知をEメールで受け取る）'
         flash[:success] = '予約が完了しました。'
@@ -215,24 +213,10 @@ class Public::TasksController < Public::Base
     array
   end
 
-  def set_staff(task, staff_id)
-    if staff_id
-      task.staff = Staff.find(staff_id)
-    else
-      task.calendar.staffs.each do |staff|
-        if staff.google_api_token
-          next if SyncCalendarService.new(Task.new(), staff, staff.calendar).public_read_event((task.start_time..task.end_time)).any?
-        end
-        task.staff = staff
-        if task.valid?
-          task.is_appoint = false
-          return
-        end
-      end
-    end
-    unless task.staff
+  def any_staff?(task)
+    unless task.any_staff_available?
       flash[:danger] = 'この時間はすでに予約が入っております。'
-      redirect_to calendar_tasks_url(task.calendar)
+      redirect_to calendar_tasks_url(task.calendar, staff_id: task.staff&.id, course_id: task.task_course&.id)
     end
   end
 
