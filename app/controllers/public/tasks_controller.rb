@@ -109,6 +109,7 @@ class Public::TasksController < Public::Base
         # アクセストークンのIDトークンを"gem jwt"を利用してデコード
         line_user_id = LineAccess.decode_response(get_access_token)
         if friend_response['friendFlag'] == true
+          @task.store_member.update(line_user_id: line_user_id)
           flash[:success] = '予約が完了しました。'
           redirect_to calendar_task_complete_url(@calendar, @task)
           return
