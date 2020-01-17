@@ -44,11 +44,10 @@ class User::SubTasksController < User::Base
     store_member.calendar = @calendar
     task_course = TaskCourse.find_by(id: task_params['task_course_id'])
     task = Task.only_valid.find(params[:id])
-    task.attributes = {task_params.merge(store_member_id: store_member.id,
+    task.attributes = task_params.merge(  store_member_id: store_member.id,
                                           end_time: end_time(task.start_time.to_s, task_course),
                                           calendar_id: @calendar.id,
-                                          is_sub: false,
-                                        )}
+                                          is_sub: false)
     if store_member.save && task.save
       LineBot.new.push_message(task, store_member.line_user_id) if store_member.line_user_id
       NotificationMailer.send_confirm_to_user(task, @calendar.user, @calendar).deliver if store_member.email
