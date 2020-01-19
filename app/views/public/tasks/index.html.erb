@@ -2,13 +2,10 @@
   <div class="title">
     <h2 class="title_style mt-3">予約フォーム</h2>
   </div>
-  
-  <% if browser.device.mobile?  %>
-    <%= render 'select_area_sp' %>
-  <% else %>
-    <%= render 'select_area' %>
-  <% end %>
-	<div id="public_task_index">
+
+  <%= render 'select_area_sp' %>
+	
+	<div id="public_task_index" class="mb-5">
     <div id="jsRsvCdTbl" class="reserveConditionTable  jscInnerTableWrap">
 				<table class="innerTable nowrap jscInnerTable" cellpadding="0" cellspacing="0">
 					<thead>

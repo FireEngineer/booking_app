@@ -75,7 +75,7 @@
                     </td>
                   </tr>
                 <% else %>
-                  <tr class="select_tr load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: @staff.id) %>">
+                  <tr class="select_tr load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: params[:staff_id]) %>">
                     <td id="categ_id_5" class="text-left">
                       <i class="fas fa-angle-right mr-2"></i><span><%= course.title %></span>
                     </td>
