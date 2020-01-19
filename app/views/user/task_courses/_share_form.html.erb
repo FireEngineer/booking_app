@@ -24,6 +24,14 @@
             <th scope="row">コース料金<br><span class="badge badge-danger">必須</span></th>
             <td><%= f.number_field :charge, class: "form-control", required: "required" %>円</td>
         </tr>
+        <tr>
+            <th scope="row">税込表示<br>
+            <td><%= f.check_box :is_tax_included, class: "form-control" %></td>
+        </tr>
+        <tr>
+            <th scope="row">価格以上表示（円~）<br>
+            <td><%= f.check_box :is_more_than, class: "form-control" %></td>
+        </tr>
     </tbody>
     </table>
 </div>

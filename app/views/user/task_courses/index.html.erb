@@ -16,8 +16,8 @@
         <tr>
         <th scope="row"><%= course.title %></th>
         <td><%= course.description %></td>
-        <td><%= course.course_time %></td>
-        <td><%= course.charge %></td>
+        <td><%= course.course_time %>分</td>
+        <td><%= course.display_charge %></td>
         <td>
             <%= link_to "編集", edit_user_calendar_task_course_path(current_user, @calendar, course), remote: true, class:"btn btn-success" %>
             <%= link_to "削除", user_calendar_task_course_path(current_user, @calendar, course), method: :delete, class:"btn btn-danger", "data-confirm": "本当に削除しますか？" %>
