@@ -21,7 +21,7 @@
 
 <!-- スタッフ選択モーダル -->
 <div class="modal" id="staff_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">スタッフを選択</h5>
@@ -55,7 +55,7 @@
 
 <!-- コース選択モーダル -->
 <div class="modal" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">コースを選択</h5>
@@ -65,25 +65,29 @@
       </div>
       <div class="modal-body p-0">
         <div class="select_form_modal">
-          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-clickable" id="res_step_cat">
-            <tbody>
-              <% @calendar.task_courses.each do |course| %>
-                <% if @task_course == course %>
-                  <tr class="select_tr selected" data-dismiss="modal" aria-label="Close">
-                    <td id="categ_id_5" class="text-left">
-                      <i class="fas fa-check mr-2 text-primary"></i><span><%= course.title %></span>
-                    </td>
-                  </tr>
-                <% else %>
-                  <tr class="select_tr load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: params[:staff_id]) %>">
-                    <td id="categ_id_5" class="text-left">
-                      <i class="fas fa-angle-right mr-2"></i><span><%= course.title %></span>
-                    </td>
-                  </tr>
-                <% end %>
+          <ul class="list-unstyled">
+            <% @calendar.task_courses.each do |course| %>
+              <% if @task_course == course %>
+                <li class="media select_tr selected">
+                  <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">64x64</text></svg>
+                  <div class="media-body" data-dismiss="modal">
+                    <h5 class="mt-0 mb-1"><i class="fas fa-check mr-2 text-primary"></i><span><%= course.title %></span></h5>
+                    <%= course.display_charge %><br>
+                    <%= simple_format(course.description) %>
+                  </div>
+                </li>
+              <% else %>
+                <li class="media select_tr">
+                  <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">64x64</text></svg>
+                  <div class="media-body link_div load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: params[:staff_id]) %>">
+                    <h5 class="mt-0 mb-1"><span><%= course.title %></span></h5>
+                    <%= course.display_charge %><br>
+                    <%= simple_format(course.description) %>
+                  </div>
+                </li>
               <% end %>
-            </tbody>
-          </table>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
