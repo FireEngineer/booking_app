@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_19_045332) do
+ActiveRecord::Schema.define(version: 2020_01_21_223029) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(version: 2020_01_19_045332) do
     t.string "charge"
     t.boolean "is_tax_included", default: true, comment: "税込表示かどうか"
     t.boolean "is_more_than", default: false, comment: "以上価格表示かどうか（例：5000円~）"
+    t.string "picture"
     t.index ["calendar_id"], name: "index_task_courses_on_calendar_id"
   end
 

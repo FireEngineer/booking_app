@@ -1,4 +1,5 @@
 class TaskCourse < ApplicationRecord
+  mount_uploader :picture, PictureUploader
   belongs_to :calendar
   has_many :tasks
   

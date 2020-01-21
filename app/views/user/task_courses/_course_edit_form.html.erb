@@ -1,6 +1,6 @@
 <div class="modal-dialog">
     <div class="modal-content">
-        <%= form_for @task_course, url: user_calendar_task_course_path(current_user, current_user.calendars.first, @task_course), remote: true do |f| %>
+        <%= form_for @task_course, url: user_calendar_task_course_path(current_user, current_user.calendars.first, @task_course) do |f| %>
             <div class="modal-header">
                 <h4 class="modal-title">コース編集</h4>
                 <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
