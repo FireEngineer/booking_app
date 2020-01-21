@@ -21,7 +21,7 @@
             <% end %>
         </th>
         <td><%= course.title %></td>
-        <td><%= course.description %></td>
+        <td><%= simple_format(course.description) %></td>
         <td><%= course.course_time %>分</td>
         <td><%= course.display_charge %></td>
         <td>
