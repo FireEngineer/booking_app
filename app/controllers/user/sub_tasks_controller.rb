@@ -4,7 +4,7 @@ class User::SubTasksController < User::Base
 
   def create
     task = Task.new(params_sub_task)
-    task.attributes = {calendar_id: @calendar.id, is_sub: true, is_from_public: false}
+    task.attributes = { calendar_id: @calendar.id, is_sub: true, is_from_public: false }
     if task.save
       flash[:success] = '仮予約を作成しました'
       redirect_to user_calendar_dashboard_url(current_user, @calendar, staff_id: task.staff.id, task_id: task.id)
@@ -44,10 +44,10 @@ class User::SubTasksController < User::Base
     store_member.calendar = @calendar
     task_course = TaskCourse.find_by(id: task_params['task_course_id'])
     task = Task.only_valid.find(params[:id])
-    task.attributes = task_params.merge(  store_member_id: store_member.id,
-                                          end_time: end_time(task.start_time.to_s, task_course),
-                                          calendar_id: @calendar.id,
-                                          is_sub: false)
+    task.attributes = task_params.merge(store_member_id: store_member.id,
+                                        end_time: end_time(task.start_time.to_s, task_course),
+                                        calendar_id: @calendar.id,
+                                        is_sub: false)
     if store_member.save && task.save
       LineBot.new.push_message(task, store_member.line_user_id) if store_member.line_user_id
       NotificationMailer.send_confirm_to_user(task, @calendar.user, @calendar).deliver if store_member.email
@@ -60,15 +60,16 @@ class User::SubTasksController < User::Base
   end
 
   private
-    def params_sub_task
-      params.require(:task).permit(:name, :start_time, :end_time, :memo, :staff_id)
-    end
 
-    def store_member_params
-      params.require(:store_member).permit(:name, :email, :phone, :gender, :age)
-    end
-  
-    def task_params
-      params.require(:task).permit(:start_time, :end_time, :staff_id, :task_course_id, :memo, :request)
-    end
+  def params_sub_task
+    params.require(:task).permit(:name, :start_time, :end_time, :memo, :staff_id)
+  end
+
+  def store_member_params
+    params.require(:store_member).permit(:name, :email, :phone, :gender, :age)
+  end
+
+  def task_params
+    params.require(:task).permit(:start_time, :end_time, :staff_id, :task_course_id, :memo, :request)
+  end
 end

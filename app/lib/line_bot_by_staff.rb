@@ -29,7 +29,6 @@ class LineBotByStaff
     response = client.push_message(user_id, message)
   end
 
-
   private
 
   def initialize_client(channel_secret, channel_token)
@@ -46,169 +45,169 @@ class LineBotByStaff
     user = task.calendar.user
     calendar = task.calendar
     {
-      "type": "flex",
-      "altText": "This is a Flex Message",
+      "type": 'flex',
+      "altText": 'This is a Flex Message',
       "contents": {
-        "type": "bubble",
+        "type": 'bubble',
         "header": {
-          "type": "box",
-          "layout": "vertical",
+          "type": 'box',
+          "layout": 'vertical',
           "contents": [
             {
-              "type": "text",
-              "text": "予約通知",
-              "size": "xl",
-              "color": "#ffffff"
+              "type": 'text',
+              "text": '予約通知',
+              "size": 'xl',
+              "color": '#ffffff'
             }
           ],
-          "backgroundColor": "#057ef6"
+          "backgroundColor": '#057ef6'
         },
         "body": {
-          "type": "box",
-          "layout": "vertical",
+          "type": 'box',
+          "layout": 'vertical',
           "contents": [
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "名前",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": '名前',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": store_member.name,
                   "wrap": true,
-                  "color": "#666666",
-                  "size": "md",
+                  "color": '#666666',
+                  "size": 'md',
                   "flex": 5
                 }
               ]
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "email",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": 'email',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": store_member.email,
                   "wrap": true,
-                  "color": "#007bff",
-                  "size": "md",
+                  "color": '#007bff',
+                  "size": 'md',
                   "flex": 5,
                   "action": {
-                    "type": "uri",
-                    "label": "action",
+                    "type": 'uri',
+                    "label": 'action',
                     "uri": "mailto:#{store_member.email}"
                   }
                 }
               ]
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "TEL",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": 'TEL',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": store_member.phone,
                   "wrap": true,
-                  "color": "#007bff",
-                  "size": "md",
+                  "color": '#007bff',
+                  "size": 'md',
                   "flex": 5,
                   "action": {
-                    "type": "uri",
-                    "label": "action",
+                    "type": 'uri',
+                    "label": 'action',
                     "uri": "tel:#{store_member.phone}"
                   }
                 }
               ]
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "開始",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": '開始',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "wrap": true,
-                  "color": "#666666",
-                  "size": "md",
+                  "color": '#666666',
+                  "size": 'md',
                   "flex": 5,
                   "text": I18n.l(task.start_time, format: :long)
                 }
               ],
-              "width": "100%"
+              "width": '100%'
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "終了",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": '終了',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1,
-                  "weight": "regular"
+                  "weight": 'regular'
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": I18n.l(task.end_time, format: :long),
                   "wrap": true,
-                  "color": "#666666",
-                  "size": "md",
+                  "color": '#666666',
+                  "size": 'md',
                   "flex": 5
                 }
               ],
-              "width": "100%"
+              "width": '100%'
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "コース",
-                  "color": "#aaaaaa",
-                  "size": "xs",
+                  "type": 'text',
+                  "text": 'コース',
+                  "color": '#aaaaaa',
+                  "size": 'xs',
                   "flex": 1,
-                  "align": "start"
+                  "align": 'start'
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": task_course.title,
                   "wrap": true,
-                  "color": "#666666",
-                  "size": "md",
+                  "color": '#666666',
+                  "size": 'md',
                   "flex": 5
                 }
               ]
@@ -216,23 +215,23 @@ class LineBotByStaff
           ]
         },
         "footer": {
-          "type": "box",
-          "layout": "vertical",
-          "spacing": "sm",
+          "type": 'box',
+          "layout": 'vertical',
+          "spacing": 'sm',
           "contents": [
             {
-              "type": "button",
-              "style": "link",
-              "height": "sm",
+              "type": 'button',
+              "style": 'link',
+              "height": 'sm',
               "action": {
-                "type": "uri",
-                "label": "予約を確認",
+                "type": 'uri',
+                "label": '予約を確認',
                 "uri": Rails.application.routes.url_helpers.user_calendar_dashboard_url(user, calendar, staff_id: staff.id, task_id: task.id)
               }
             },
             {
-              "type": "spacer",
-              "size": "sm"
+              "type": 'spacer',
+              "size": 'sm'
             }
           ],
           "flex": 0
@@ -253,182 +252,180 @@ class LineBotByStaff
     user = task.calendar.user
     calendar = task.calendar
     {
-      "type": "flex",
-      "altText": "This is a Flex Message",
+      "type": 'flex',
+      "altText": 'This is a Flex Message',
       "contents": {
-        "type": "bubble",
+        "type": 'bubble',
         "header": {
-          "type": "box",
-          "layout": "vertical",
+          "type": 'box',
+          "layout": 'vertical',
           "contents": [
             {
-              "type": "text",
-              "text": "キャンセル通知",
-              "size": "xl",
-              "color": "#ffffff"
+              "type": 'text',
+              "text": 'キャンセル通知',
+              "size": 'xl',
+              "color": '#ffffff'
             }
           ],
-          "backgroundColor": "#989797"
+          "backgroundColor": '#989797'
         },
         "body": {
-          "type": "box",
-          "layout": "vertical",
+          "type": 'box',
+          "layout": 'vertical',
           "contents": [
             {
-              "type": "text",
-              "text": "以下の内容の予約がキャンセルされました。"
+              "type": 'text',
+              "text": '以下の内容の予約がキャンセルされました。'
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "名前",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": '名前',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": store_member.name,
                   "wrap": true,
-                  "color": "#666666",
-                  "size": "md",
+                  "color": '#666666',
+                  "size": 'md',
                   "flex": 5
                 }
               ]
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "email",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": 'email',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": store_member.email,
                   "wrap": true,
-                  "color": "#007bff",
-                  "size": "md",
+                  "color": '#007bff',
+                  "size": 'md',
                   "flex": 5,
                   "action": {
-                    "type": "uri",
-                    "label": "action",
+                    "type": 'uri',
+                    "label": 'action',
                     "uri": "mailto:#{store_member.email}"
                   }
                 }
               ]
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "TEL",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": 'TEL',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": store_member.phone,
                   "wrap": true,
-                  "color": "#007bff",
-                  "size": "md",
+                  "color": '#007bff',
+                  "size": 'md',
                   "flex": 5,
                   "action": {
-                    "type": "uri",
-                    "label": "action",
+                    "type": 'uri',
+                    "label": 'action',
                     "uri": "tel:#{store_member.phone}"
                   }
                 }
               ]
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "開始",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": '開始',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "wrap": true,
-                  "color": "#666666",
-                  "size": "md",
+                  "color": '#666666',
+                  "size": 'md',
                   "flex": 5,
                   "text": I18n.l(task.start_time, format: :long)
                 }
               ],
-              "width": "100%"
+              "width": '100%'
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "終了",
-                  "color": "#aaaaaa",
-                  "size": "md",
+                  "type": 'text',
+                  "text": '終了',
+                  "color": '#aaaaaa',
+                  "size": 'md',
                   "flex": 1,
-                  "weight": "regular"
+                  "weight": 'regular'
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": I18n.l(task.end_time, format: :long),
                   "wrap": true,
-                  "color": "#666666",
-                  "size": "md",
+                  "color": '#666666',
+                  "size": 'md',
                   "flex": 5
                 }
               ],
-              "width": "100%"
+              "width": '100%'
             },
             {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "xxl",
+              "type": 'box',
+              "layout": 'baseline',
+              "spacing": 'xxl',
               "contents": [
                 {
-                  "type": "text",
-                  "text": "コース",
-                  "color": "#aaaaaa",
-                  "size": "xs",
+                  "type": 'text',
+                  "text": 'コース',
+                  "color": '#aaaaaa',
+                  "size": 'xs',
                   "flex": 1,
-                  "align": "start"
+                  "align": 'start'
                 },
                 {
-                  "type": "text",
+                  "type": 'text',
                   "text": task_course.title,
                   "wrap": true,
-                  "color": "#666666",
-                  "size": "md",
+                  "color": '#666666',
+                  "size": 'md',
                   "flex": 5
                 }
               ]
             }
           ]
-        },
+        }
       }
     }
   end
-
-
 end

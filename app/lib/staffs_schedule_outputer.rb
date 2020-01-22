@@ -5,9 +5,9 @@ module StaffsScheduleOutputer
   def valid_shifts(staffs, term)
     result = staffs.map do |staff|
       a = staff.staff_shifts.without_rest_date.where(work_date: term)
-        a.map do |shift|
-          [shift&.work_start_time, shift&.work_end_time]
-        end
+      a.map do |shift|
+        [shift&.work_start_time, shift&.work_end_time]
+      end
     end
   end
 
@@ -32,7 +32,7 @@ module StaffsScheduleOutputer
   def public_staff_private(staffs, term)
     staffs.map do |staff|
       if staff.google_api_token
-        array = SyncCalendarService.new(Task.new(), staff, staff.calendar).public_read_event(term).map do |event|
+        array = SyncCalendarService.new(Task.new, staff, staff.calendar).public_read_event(term).map do |event|
           [event[0].to_datetime, event[1].to_datetime]
         end
       else
@@ -40,8 +40,6 @@ module StaffsScheduleOutputer
       end
     end
   end
-
-
 
   module_function :valid_shifts, :invalid_schedules, :public_staff_private
 end

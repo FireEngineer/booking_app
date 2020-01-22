@@ -6,21 +6,17 @@ class User::TopController < User::Base
   def dashboard
     @user = current_user
     @staffs = @calendar.staffs
-    if current_staff
-      @staff = current_staff
-    else
-      @staff = Staff.find_by(id: params[:staff_id])
-    end
+    @staff = current_staff || Staff.find_by(id: params[:staff_id])
     # スタッフの情報を取得
     staff_private = staff_private(@staff)
     staff_shifts = staff_shifts(@staff)
     staff_tasks = staff_tasks(@staff, params[:task_id])
     staff_rests = staff_rests(@staff)
-    if @staff
-      @events = (staff_shifts + staff_tasks + staff_rests + staff_private)&.to_json
-    else
-      @events = (calendar_tasks(@calendar) + calendar_holidays(@calendar)).to_json
-    end
+    @events = if @staff
+                (staff_shifts + staff_tasks + staff_rests + staff_private)&.to_json
+              else
+                (calendar_tasks(@calendar) + calendar_holidays(@calendar)).to_json
+              end
     if params[:task_id]
       task_date = Task.only_valid.find_by(id: params[:task_id]).start_time.to_date
       @current_date = l(task_date, format: :to_json)
@@ -38,11 +34,10 @@ class User::TopController < User::Base
       @store_member_id = nil
     end
     @data_calendar = date_range(@calendar)
-    @help_urls = [["店舗側予約方法", "https://stonly.com/sl/00cf73dc-2622-4c44-8e4e-96d8a637f0af/Steps/"],
-                  ["ドラッグ＆ドロップによる、予約時間の変更", "https://stonly.com/sl/3cdb59f3-7165-445a-81b9-75870ba9f8e3/Steps/"],
-                  ["予約の更新方法", "https://stonly.com/sl/b17c2e4c-bde8-4892-b668-ef2430711331/Steps/"],
-                  ["予約のキャンセル", "https://stonly.com/sl/cc425264-8193-4e3c-b0af-4c68f6eca0a8/Steps/"],
-                 ]
+    @help_urls = [['店舗側予約方法', 'https://stonly.com/sl/00cf73dc-2622-4c44-8e4e-96d8a637f0af/Steps/'],
+                  ['ドラッグ＆ドロップによる、予約時間の変更', 'https://stonly.com/sl/3cdb59f3-7165-445a-81b9-75870ba9f8e3/Steps/'],
+                  ['予約の更新方法', 'https://stonly.com/sl/b17c2e4c-bde8-4892-b668-ef2430711331/Steps/'],
+                  ['予約のキャンセル', 'https://stonly.com/sl/cc425264-8193-4e3c-b0af-4c68f6eca0a8/Steps/']]
   end
 
   private
@@ -78,8 +73,8 @@ class User::TopController < User::Base
   end
 
   # カレンダーの表示する期間
-  def date_range(calendar)
-    term = ENV['CALENDAR_DISPLAY_TERM'].to_i #calendar.display_week_term.to_i
+  def date_range(_calendar)
+    term = ENV['CALENDAR_DISPLAY_TERM'].to_i # calendar.display_week_term.to_i
     hash = {
       "start_date": Date.current.beginning_of_month,
       "end_date": Date.current.since(term.months).end_of_month

@@ -19,9 +19,7 @@ class User::CalendarsController < User::Base
     @user = current_user
     if @calendar.update(params_calendar)
       # スタッフのシフトを作成（base.rbに記載）
-      if @calendar.saved_change_to_display_week_term?
-        create_calendar_staffs_tasks(@calendar)
-      end
+      create_calendar_staffs_tasks(@calendar) if @calendar.saved_change_to_display_week_term?
       flash[:succese] = 'カレンダーの設定を更新しました。'
       redirect_to user_calendar_url(@user, @calendar)
     else
@@ -61,11 +59,7 @@ class User::CalendarsController < User::Base
     # DBタスクデータを引き出す
     @events = @staff.tasks.map { |task| [task.start_time, task.end_time] }
     # googleカレンダーのデータを同期
-    if @staff.google_calendar_id
-      @google_events = SyncCalendarService.new(task, @staff, @calendar).read_event
-    else
-      nil
-    end
+    @google_events = SyncCalendarService.new(task, @staff, @calendar).read_event if @staff.google_calendar_id
     one_month = [*Date.current.days_since(@calendar.start_date)..Date.current.weeks_since(@calendar.display_week_term)]
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
   end
@@ -87,5 +81,4 @@ class User::CalendarsController < User::Base
     end
     array
   end
-
 end

@@ -10,5 +10,4 @@ module StaffDecorator
       "<span class='badge badge-secondary'>LINE未連携</span>".html_safe
     end
   end
-
 end

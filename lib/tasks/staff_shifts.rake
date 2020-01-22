@@ -8,6 +8,6 @@ namespace :staff_shifts do
       last_shift = staff.staff_shifts.order(:work_date).last
       StaffShiftsCreator.call(start_term, end_term, staff)
     end
-    puts "スタッフシスト作成 rails task"
+    puts 'スタッフシスト作成 rails task'
   end
 end

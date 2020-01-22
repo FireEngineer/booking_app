@@ -1,9 +1,7 @@
 class User::TaskCoursesController < User::Base
   before_action :calendar
 
-  def index
-    
-  end
+  def index; end
 
   def new
     @task_course = TaskCourse.new

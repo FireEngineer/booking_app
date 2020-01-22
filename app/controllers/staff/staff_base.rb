@@ -4,7 +4,7 @@ class Staff::StaffBase < User::Base
 
   def authenticate_current_staff!
     unless current_staff
-      flash[:danger] = "権限がありません"
+      flash[:danger] = '権限がありません'
       redirect_to new_staff_session_url
     end
   end

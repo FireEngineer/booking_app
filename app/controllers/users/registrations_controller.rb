@@ -65,27 +65,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def post_gmo_with_create_member(user)
-    uri = URI.parse("https://pt01.mul-pay.jp/payment/SaveMember.idPass")
+    uri = URI.parse('https://pt01.mul-pay.jp/payment/SaveMember.idPass')
     request = Net::HTTP::Post.new(uri)
     request.set_form_data(
-      'SiteID' => ENV["SITE_ID"],
-      'SitePass' => ENV["SITE_PASS"],
-      'MemberID' => user.member_id,
+      'SiteID' => ENV['SITE_ID'],
+      'SitePass' => ENV['SITE_PASS'],
+      'MemberID' => user.member_id
     )
 
     req_options = {
-      use_ssl: uri.scheme == "https",
+      use_ssl: uri.scheme == 'https'
     }
 
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
       http.request(request)
     end
 
-    if response.code == "200"
+    if response.code == '200'
       logger.info('GMO created member!(^ ^)!')
     else
       logger.info('GMO error!!!')
     end
   end
-
 end

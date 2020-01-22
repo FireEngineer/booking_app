@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  alias_method :devise_current_user, :current_user
+  alias devise_current_user current_user
 
   # 他のエラーハンドリングでキャッチできなかった場合に
   # 500 Internal Server Error(システムエラー)を発生させる
@@ -42,7 +42,11 @@ class ApplicationController < ActionController::Base
     if current_staff
       current_staff.calendar.user
     else
-      User.find_by_id(devise_current_user.id) rescue nil
+      begin
+        User.find_by_id(devise_current_user.id)
+      rescue StandardError
+        nil
+      end
     end
   end
 

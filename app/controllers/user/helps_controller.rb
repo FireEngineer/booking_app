@@ -1,7 +1,3 @@
 class User::HelpsController < User::Base
-
-  def user_modal
-    
-  end
-
+  def user_modal; end
 end

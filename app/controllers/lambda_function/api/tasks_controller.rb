@@ -21,10 +21,11 @@ class LambdaFunction::Api::TasksController < ApplicationController
   end
 
   private
-    def test_push
-      user_id = ENV['TEST_LINE_USER_ID']
-      LineBot.new.push_test(user_id)
-      puts 'テストrakeタスク送信'
-      puts Time.current
-    end
+
+  def test_push
+    user_id = ENV['TEST_LINE_USER_ID']
+    LineBot.new.push_test(user_id)
+    puts 'テストrakeタスク送信'
+    puts Time.current
+  end
 end

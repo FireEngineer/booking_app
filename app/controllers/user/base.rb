@@ -23,47 +23,43 @@ class User::Base < ApplicationController
   end
 
   def authenticate_user_staff!
-    unless current_user || current_staff
-      redirect_to new_staff_session_url
-    end
+    redirect_to new_staff_session_url unless current_user || current_staff
   end
 
   def authenticate_current_user!
     if current_staff
-      flash[:danger] = "権限がありません"
+      flash[:danger] = '権限がありません'
       redirect_to user_calendar_dashboard_url(current_user, params[:calendar_id])
     end
   end
 
   def check_staff_course_exsist!
-    if !@calendar.staffs.any? && !@calendar.task_courses.any?
-      @cation = "1"
-    elsif !@calendar.staffs.any?
-      @cation = "2"
-    elsif !@calendar.task_courses.any?
-      @cation = "3"
+    if @calendar.staffs.none? && @calendar.task_courses.none?
+      @cation = '1'
+    elsif @calendar.staffs.none?
+      @cation = '2'
+    elsif @calendar.task_courses.none?
+      @cation = '3'
     end
-
   end
 
   def initial_setting_complete?
-    if !current_user.calendars.any?
-      flash[:danger] = "初期設定が完了していません。"
+    if current_user.calendars.none?
+      flash[:danger] = '初期設定が完了していません。'
       redirect_to introductions_new_calendar
-    elsif !current_user.calendars.first.staffs.any?
-      flash[:danger] = "初期設定が完了していません。"
+    elsif current_user.calendars.first.staffs.none?
+      flash[:danger] = '初期設定が完了していません。'
       redirect_to introductions_new_staff_url
-    elsif !current_user.calendars.first.task_courses.any?
-      flash[:danger] = "初期設定が完了していません。"
+    elsif current_user.calendars.first.task_courses.none?
+      flash[:danger] = '初期設定が完了していません。'
       redirect_to introductions_new_staff_url
     end
   end
 
   def agreement_plan?
-    if !current_user.order_plans.any?
-      flash[:danger] = "プランを選択してください。"
+    if current_user.order_plans.none?
+      flash[:danger] = 'プランを選択してください。'
       redirect_to choice_plan_url
     end
   end
-
 end

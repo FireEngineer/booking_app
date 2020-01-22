@@ -5,6 +5,6 @@ class OrderPlan < ApplicationRecord
   enum status: {
     ongoing: 0,
     destroy: 1,
-    cancel: 2,
+    cancel: 2
   }, _prefix: true
 end

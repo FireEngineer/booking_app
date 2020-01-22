@@ -12,21 +12,20 @@ class Task < ApplicationRecord
   belongs_to :calendar
   belongs_to :staff, optional: true
 
-  scope :member_tasks, -> (store_member) { where(store_member_id: store_member.id) }
-  scope :expect_past, -> { where("start_time >= ?", Time.current) }
-  scope :future_tasks, -> { where("start_time >= ?", Time.current) }
-  scope :staff_tasks, -> (staff) { where(staff_id: staff.id) }
-  scope :today_tasks, -> { where("start_time >= ? && start_time <= ?", Time.current.beginning_of_day, Time.current.end_of_day) }
+  scope :member_tasks, ->(store_member) { where(store_member_id: store_member.id) }
+  scope :expect_past, -> { where('start_time >= ?', Time.current) }
+  scope :future_tasks, -> { where('start_time >= ?', Time.current) }
+  scope :staff_tasks, ->(staff) { where(staff_id: staff.id) }
+  scope :today_tasks, -> { where('start_time >= ? && start_time <= ?', Time.current.beginning_of_day, Time.current.end_of_day) }
   scope :tomorrow_tasks, -> { where(start_time: Time.current.tomorrow.all_day) }
-  scope :prev_task, -> { where("start_time < ?", Time.current.beginning_of_day) }
-  scope :next_task, -> { where("start_time > ?", Time.current.end_of_day) }
-  scope :only_valid, -> { where(is_valid_task: true) } #有効な予約
-  scope :only_invalid, -> { where(is_valid_task: false) } #無効な予約
-  scope :only_appoint, -> { where(is_appoint: true) } #指名予約
-  scope :only_disappoint, -> { where(is_appoint: false) } #指名予約
-  scope :only_from_public, -> { where(is_from_public: true) } #お客様からの予約
-  scope :only_from_store, -> { where(is_from_public: false) } #店舗側での予約
-  
+  scope :prev_task, -> { where('start_time < ?', Time.current.beginning_of_day) }
+  scope :next_task, -> { where('start_time > ?', Time.current.end_of_day) }
+  scope :only_valid, -> { where(is_valid_task: true) } # 有効な予約
+  scope :only_invalid, -> { where(is_valid_task: false) } # 無効な予約
+  scope :only_appoint, -> { where(is_appoint: true) } # 指名予約
+  scope :only_disappoint, -> { where(is_appoint: false) } # 指名予約
+  scope :only_from_public, -> { where(is_from_public: true) } # お客様からの予約
+  scope :only_from_store, -> { where(is_from_public: false) } # 店舗側での予約
 
   # 予約が被っている時刻に同時に保存されないように検証
   after_create do
@@ -37,50 +36,45 @@ class Task < ApplicationRecord
 
   def self.register_unregistered_tasks_in_staff_google_calendar(staff)
     Task.only_valid.future_tasks.staff_tasks(staff).each do |task|
-      unless task.google_event_id
-        SyncCalendarService.new(task, task.staff, task.calendar).create_event
-      end
+      SyncCalendarService.new(task, task.staff, task.calendar).create_event unless task.google_event_id
     end
   end
-  
+
   def self.by_calendar(calendar)
     joins(:store_member).where(calendar_id: calendar.id).select('tasks.*, store_members.name, store_members.email, store_members.phone, store_members.id as member_id')
   end
 
   def calendar_event_uid
-    unique_id = "#{self.staff.calendar.public_uid}todo#{self.id}"
+    unique_id = "#{staff.calendar.public_uid}todo#{id}"
     Modules::Base32.encode32hex(unique_id).gsub('=', '')
   end
 
   # その時間の予約に対応できるスタッフがいるかどうかの検証
   def any_staff_available?
     if staff
-      if self.invalid?
-        return false
-      end
+      return false if invalid?
+
       return true
     else
-      self.calendar.staffs.each do |staff|
+      calendar.staffs.each do |staff|
         if staff.google_api_token
-          next if SyncCalendarService.new(Task.new(), staff, staff.calendar).public_read_event((self.start_time..self.end_time)).any?
+          next if SyncCalendarService.new(Task.new, staff, staff.calendar).public_read_event((start_time..end_time)).any?
         end
         self.staff = staff
-        if self.valid?
+        if valid?
           self.is_appoint = false
           return true
         end
       end
     end
-    unless self.staff
-      return false
-    end
+    return false unless self.staff
   end
 
   def staff_name
     if is_appoint?
       staff.name
     else
-      "指名なし"
+      '指名なし'
     end
   end
 
@@ -103,8 +97,8 @@ class Task < ApplicationRecord
     staff = self.staff
     shift = staff.staff_shifts.find_by(work_date: date)
     unless shift
-      puts "shiftが存在しません。(指定された日付のshiftは存在しない)"
-      raise "shiftが存在しません。"
+      puts 'shiftが存在しません。(指定された日付のshiftは存在しない)'
+      raise 'shiftが存在しません。'
     end
     if shift.is_holiday?
       errors.add(:start_time, '①スタッフの勤務時間外です。') # エラーメッセージ
@@ -132,9 +126,7 @@ class Task < ApplicationRecord
   # 予約時間が現時刻より先かどうか
   # 過去の予約時間の変更はできない、それ以外は許可
   def check_after_timenow
-    if start_time < Time.current && (start_time_changed? || end_time_changed?)
-      errors.add(:start_time, '現時刻より前の予定は作成できません。')
-    end
+    errors.add(:start_time, '現時刻より前の予定は作成できません。') if start_time < Time.current && (start_time_changed? || end_time_changed?)
   end
 
   # 休みの日かどうか
@@ -149,15 +141,15 @@ class Task < ApplicationRecord
   private
 
   def sync_create
-    SyncCalendarService.new(self, self.staff, self.calendar).create_event
+    SyncCalendarService.new(self, staff, calendar).create_event
   end
 
   def sybc_update
-    SyncCalendarService.new(self, self.staff, self.calendar).update_event
+    SyncCalendarService.new(self, staff, calendar).update_event
   end
 
   def sybc_delete
-    SyncCalendarService.new(self, self.staff, self.calendar).delete_event
+    SyncCalendarService.new(self, staff, calendar).delete_event
   end
 
   def line_send_with_edit_task

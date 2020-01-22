@@ -9,7 +9,7 @@ class User::StoreMembersController < User::Base
 
   def show
     @store_member = StoreMember.find(params[:id])
-    @tasks = @store_member.tasks.order(start_time: "desc")
+    @tasks = @store_member.tasks.order(start_time: 'desc')
   end
 
   def store_member_task_show
@@ -19,10 +19,10 @@ class User::StoreMembersController < User::Base
   def update
     @store_member = StoreMember.find(params[:id])
     if @store_member.update(params_store_member)
-      flash[:success] = "会員情報を更新しました。"
+      flash[:success] = '会員情報を更新しました。'
       redirect_to calendar_store_member_url(@calendar, @store_member)
     else
-      flash[:danger] = "会員情報を更新できませんでした。"
+      flash[:danger] = '会員情報を更新できませんでした。'
       redirect_to calendar_store_member_url(@calendar, @store_member)
     end
   end
@@ -30,22 +30,21 @@ class User::StoreMembersController < User::Base
   def update_task
     @task = Task.only_valid.find(params[:id])
     if @task.update(params_member_task)
-      flash[:success] = "会員の予定を更新しました。"
+      flash[:success] = '会員の予定を更新しました。'
       redirect_to calendar_store_member_url(@calendar, @task.store_member)
     else
-      flash[:danger] = "会員の予定を更新できませんでした。"
+      flash[:danger] = '会員の予定を更新できませんでした。'
       redirect_to calendar_store_member_url(@calendar, @task.store_member)
     end
   end
 
   private
-    def params_store_member
-      params.require(:store_member).permit(:memo, :name, :email, :phone)
-    end
 
-    def params_member_task
-      params.require(:task).permit(:memo)
-    end
+  def params_store_member
+    params.require(:store_member).permit(:memo, :name, :email, :phone)
+  end
 
-
+  def params_member_task
+    params.require(:task).permit(:memo)
+  end
 end

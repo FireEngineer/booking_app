@@ -1,6 +1,6 @@
 class Public::TasksController < Public::Base
   before_action :set_task, only: %i[complete destroy cancel]
-  before_action :calendar_is_released?, except:[:processing, :task_create]
+  before_action :calendar_is_released?, except: %i[processing task_create]
 
   require 'base64'
   require 'json'
@@ -23,11 +23,11 @@ class Public::TasksController < Public::Base
                    else
                      @calendar.task_courses.first
                    end
-    if params[:staff_id]
-      @staffs = Staff.where(id: params[:staff_id])
-    else
-      @staffs = @calendar.staffs.order(:id)
-    end
+    @staffs = if params[:staff_id]
+                Staff.where(id: params[:staff_id])
+              else
+                @calendar.staffs.order(:id)
+              end
 
     @user = @calendar.user
     @times = time_interval(@calendar)
@@ -36,7 +36,7 @@ class Public::TasksController < Public::Base
     @month = Kaminari.paginate_array(one_month).page(params[:page]).per(@calendar.end_date)
     @staffs_google_tasks = StaffsScheduleOutputer.public_staff_private(@staffs, @month)
     @regular_holiday_days = @calendar.regular_holiday_days
-    @dw = ["日", "月", "火", "水", "木", "金", "土"]
+    @dw = %w[日 月 火 水 木 金 土]
     @iregular_holydays = @calendar.iregular_holidays(@month)
   end
 
@@ -52,11 +52,11 @@ class Public::TasksController < Public::Base
                                       task_course_id: @task_course.id,
                                       calendar_id: @calendar.id)
     any_staff?(@task)
-  # rescue RuntimeError => e
-  #   if e.message == "shiftが存在しません。"
-  #     flash[:danger] = "指定された日付の予約はできません。"
-  #     redirect_to calendar_tasks_url(@calendar)
-  #   end
+    # rescue RuntimeError => e
+    #   if e.message == "shiftが存在しません。"
+    #     flash[:danger] = "指定された日付の予約はできません。"
+    #     redirect_to calendar_tasks_url(@calendar)
+    #   end
   end
 
   # ラインログインボタンでこのアクションが呼ばれる
@@ -71,7 +71,7 @@ class Public::TasksController < Public::Base
       @store_member = StoreMember.new(store_member_params.merge(calendar_id: @calendar.id))
     end
     @task = @store_member.tasks.build(task_params.merge(calendar_id: @calendar.id, task_course_id: @task_course.id, staff_id: params[:staff_id]))
-    any_staff?(@task) #予約に対応できるスタッフの確認
+    any_staff?(@task) # 予約に対応できるスタッフの確認
     if @store_member.save
       if params[:commit] == '予約（通知をEメールで受け取る）'
         task_notification(@task)
@@ -119,21 +119,21 @@ class Public::TasksController < Public::Base
           task_notification(@task)
           redirect_to calendar_task_complete_url(@calendar, @task)
           return
-        else #LINE連携がうまくいかなかった時（キャンセルした時）
+        else # LINE連携がうまくいかなかった時（キャンセルした時）
           flash[:success] = '予約が完了しました。'
           flash[:danger] = 'LINE連携はできませんでした。メールで通知をしました。'
           redirect_to calendar_task_complete_url(@calendar, @task)
           return
         end
       rescue JWT::DecodeError
-        puts "JWT::DecodeError"
+        puts 'JWT::DecodeError'
         flash[:success] = '予約が完了しました。'
         redirect_to calendar_task_complete_url(@calendar, @task)
       end
     else
       flash.now[:danger] = 'LINE連携が正常に完了しませんでした。予約を最初からやり直してください。'
       render :error_line, layout: 'plane'
-      return
+      nil
     end
   end
 
@@ -156,9 +156,7 @@ class Public::TasksController < Public::Base
   def destroy
     @task.destroy
     # googleカレンダー連携
-    if @task.staff.google_calendar_id
-      SyncCalendarService.new(@task, @task.staff, @task.calendar).delete_event
-    end
+    SyncCalendarService.new(@task, @task.staff, @task.calendar).delete_event if @task.staff.google_calendar_id
     # 通知許可
     if @task.store_member.is_allow_notice?
       LineBot.new.push_message_with_delete_task(@task, @task.store_member.line_user_id) if @task.store_member.line_user_id
@@ -186,9 +184,9 @@ class Public::TasksController < Public::Base
     @calendar = Calendar.find_by(public_uid: params[:calendar_id])
     @user = @calendar.user
     @task = Task.only_valid.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      flash[:danger] = 'キャンセル済みか存在しない予約です。'
-      redirect_to calendar_tasks_url(@calendar)
+  rescue ActiveRecord::RecordNotFound
+    flash[:danger] = 'キャンセル済みか存在しない予約です。'
+    redirect_to calendar_tasks_url(@calendar)
   end
 
   def store_member_params
@@ -228,10 +226,8 @@ class Public::TasksController < Public::Base
   end
 
   def task_notification(task)
-    puts "通知処理開始"
-    if task.staff.google_calendar_id
-      SyncCalendarService.new(@task, @task.staff, @task.calendar).create_event
-    end
+    puts '通知処理開始'
+    SyncCalendarService.new(@task, @task.staff, @task.calendar).create_event if task.staff.google_calendar_id
     # 通知許可
     if task.store_member.is_allow_notice?
       LineBot.new.push_message(task, task.store_member.line_user_id) if task.store_member.line_user_id
@@ -239,8 +235,6 @@ class Public::TasksController < Public::Base
     end
     # スタッフ通知
     LineBotByStaff.new.push_message_with_task_create(task, task.staff.line_user_id)
-    puts "通知処理終了"
+    puts '通知処理終了'
   end
-
-
 end

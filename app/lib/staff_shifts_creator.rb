@@ -20,17 +20,16 @@ class StaffShiftsCreator
 
   private
 
-    def holiday(date)
-      day = %w[日 月 火 水 木 金 土][date.wday]
-      @staff.staff_regular_holidays.find_by(day: day)
-    end
+  def holiday(date)
+    day = %w[日 月 火 水 木 金 土][date.wday]
+    @staff.staff_regular_holidays.find_by(day: day)
+  end
 
-    def start_time(date)
-      Time.parse(date.to_s).change(hour: holiday(date).work_start_at.hour, min: holiday(date).work_start_at.min)
-    end
+  def start_time(date)
+    Time.parse(date.to_s).change(hour: holiday(date).work_start_at.hour, min: holiday(date).work_start_at.min)
+  end
 
-    def end_time(date)
-      Time.parse(date.to_s).change(hour: holiday(date).work_end_at.hour, min: holiday(date).work_end_at.min)
-    end
-
+  def end_time(date)
+    Time.parse(date.to_s).change(hour: holiday(date).work_end_at.hour, min: holiday(date).work_end_at.min)
+  end
 end

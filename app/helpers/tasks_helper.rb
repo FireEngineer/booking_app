@@ -5,9 +5,7 @@ module TasksHelper
   end
 
   def valid_time?(display_time, start_time)
-    if Time.current.since(display_time.hours) >= start_time
-      false
-    end
+    false if Time.current.since(display_time.hours) >= start_time
   end
 
   # 勤務時間内かどうか
@@ -38,31 +36,29 @@ module TasksHelper
         end
         not_flag == true
       end
-      if ok_flag == true && not_flag == true
-        return true
-      end
+      return true if ok_flag == true && not_flag == true
+
       index += 1
     end
   end
 
-  def staff_select(staff=nil)
+  def staff_select(staff = nil)
     if !staff && !params[:staff_id]
-      "fas fa-check text-primary mr-2"
+      'fas fa-check text-primary mr-2'
     elsif !staff && params[:staff_id]
-      "fas fa-angle-right mr-2"
+      'fas fa-angle-right mr-2'
     elsif staff.id.to_s == params[:staff_id]
-      "fas fa-check text-primary mr-2"
+      'fas fa-check text-primary mr-2'
     else
-      "fas fa-angle-right mr-2"
+      'fas fa-angle-right mr-2'
     end
   end
 
   def course_select(task_course, course)
     if task_course == course
-      "fas fa-check text-primary mr-2"
+      'fas fa-check text-primary mr-2'
     else
-      "fas fa-angle-right mr-2"
+      'fas fa-angle-right mr-2'
     end
   end
-
 end

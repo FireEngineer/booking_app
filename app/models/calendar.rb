@@ -20,7 +20,6 @@ class Calendar < ApplicationRecord
 
   after_create :create_calendar_config
 
-
   def to_param
     public_uid
     # public_uid: params[:id]
@@ -46,29 +45,25 @@ class Calendar < ApplicationRecord
   end
 
   def iregular_holidays(term)
-    self.calendar_config.iregular_holidays.where(date: term).map do |holiday|
-      holiday.date
-    end
+    calendar_config.iregular_holidays.where(date: term).map(&:date)
   end
 
   def regular_holiday_days
-    self.calendar_config.regular_holidays.where(holiday_flag: true).map do |holiday|
-      holiday.day
-    end
+    calendar_config.regular_holidays.where(holiday_flag: true).map(&:day)
   end
 
   private
 
-    def start_time_end_time_validate
-      if start_time >= end_time
-        errors.add(:start_time, 'は表示終了時刻より遅い時間には設定できません') # エラーメッセージ
-      end
+  def start_time_end_time_validate
+    if start_time >= end_time
+      errors.add(:start_time, 'は表示終了時刻より遅い時間には設定できません') # エラーメッセージ
     end
+  end
 
-    def booking_message(calendar)
-      text = <<-EOS
+  def booking_message(calendar)
+    text = <<-EOS
         ご予約ありがとうございます！
         #{calendar.calendar_name}
-      EOS
-    end
+    EOS
+  end
 end

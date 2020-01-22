@@ -22,5 +22,4 @@ class AgreementMailer < ApplicationMailer
       subject: 'Smart予約解約手続き完了のお知らせ'
     )
   end
-
 end

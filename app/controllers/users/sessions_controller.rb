@@ -28,8 +28,6 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   def staff_login?
-    if current_staff
-      sign_out(current_staff)
-    end
+    sign_out(current_staff) if current_staff
   end
 end

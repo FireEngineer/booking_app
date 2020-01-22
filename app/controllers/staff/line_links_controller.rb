@@ -30,10 +30,10 @@ class Staff::LineLinksController < Staff::StaffBase
     # BOTと友達かどうか確認する。
     if friend_response['friendFlag'] == true
       if staff.update(line_user_id: line_user_id)
-        flash[:success] = "LINE連携が成功しました"
+        flash[:success] = 'LINE連携が成功しました'
         redirect_to calendar_staff_url(calendar, staff)
       else
-        flash[:danger] = "LINE連携が失敗しました"
+        flash[:danger] = 'LINE連携が失敗しました'
         redirect_to calendar_staff_url(calendar, staff)
       end
     else # ラインログインでボットと友達にならなかった時の処理
@@ -42,9 +42,8 @@ class Staff::LineLinksController < Staff::StaffBase
       return
     end
 
-  # rescue
-  #   flash[:danger] = 'ライン連携に失敗しました'
-  #   redirect_to calendar_staff_url(calendar, staff)
+    # rescue
+    #   flash[:danger] = 'ライン連携に失敗しました'
+    #   redirect_to calendar_staff_url(calendar, staff)
   end
-
 end

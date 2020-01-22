@@ -8,7 +8,7 @@ class TaskChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    puts "#{data["user_id"]}"
-    ActionCable.server.broadcast "task_channel_#{data["user_id"]}", user_id: data
+    puts (data['user_id']).to_s
+    ActionCable.server.broadcast "task_channel_#{data['user_id']}", user_id: data
   end
 end
