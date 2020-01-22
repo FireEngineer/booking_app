@@ -58,7 +58,7 @@ class User::StaffsController < User::Base
   private
 
   def staff_params_update
-    params.require(:staff).permit(:name, :description, :email, staff_regular_holidays_attributes: %i[is_holiday work_start_at work_end_at id is_rest rest_start_time rest_end_time])
+    params.require(:staff).permit(:name, :description, :email, :picture, staff_regular_holidays_attributes: %i[is_holiday work_start_at work_end_at id is_rest rest_start_time rest_end_time])
   end
 
   def staff_params

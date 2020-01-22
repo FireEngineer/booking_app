@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_223029) do
+ActiveRecord::Schema.define(version: 2020_01_22_200333) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_223029) do
     t.text "google_api_token"
     t.string "google_calendar_id"
     t.string "refresh_token"
+    t.string "picture", comment: "スタッフ画像"
     t.index ["calendar_id"], name: "index_staffs_on_calendar_id"
     t.index ["confirmation_token"], name: "index_staffs_on_confirmation_token", unique: true
     t.index ["email"], name: "index_staffs_on_email", unique: true

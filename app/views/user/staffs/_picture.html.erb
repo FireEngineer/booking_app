@@ -1,0 +1,7 @@
+<div>
+  <%= f.label "スタッフ画像設定" %><br>
+  <%= f.file_field :picture %><br>
+  <% if @staff.picture? %>
+    <%= image_tag @staff.picture.url, size: "100x100" %>
+  <% end %>
+</div>

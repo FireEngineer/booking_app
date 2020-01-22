@@ -1,5 +1,6 @@
 <%= form_for @staff, url: user_calendar_staff_path(current_user, @calendar, @staff) do |f| %>
   <h5>スタッフ編集</h5>
+  <%= render "picture", f: f %>
   <%= render 'form', f: f %>
   <table class="table table-hover">
       <thead>
