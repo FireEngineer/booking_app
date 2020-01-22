@@ -12,14 +12,14 @@
           <td><%= @task.store_member.name %></td>
         </tr>
         <tr>
+          <th scope="row">電話番号</th>
+          <td><%= @task.store_member.phone %></td>
+        </tr>
+        <tr>
           <th scope="row">メールアドレス</th>
           <td><%= @task.store_member.email %></td>
         </tr>
         <tr>
-          <th scope="row">電話番号</th>
-          <td><%= @task.store_member.phone %></td>
-        </tr>
-         <tr>
           <th scope="row">予約時間</th>
           <td><%= reservation_date(@task) %></td>
         </tr>
@@ -27,6 +27,12 @@
           <th scope="row">予約コース</th>
           <td><%= @task.task_course.title %></td>
         </tr>
+        <% if @task.task_course.description %>
+          <tr>
+            <th scope="row">コース説明</th>
+            <td><%= simple_format(@task.task_course.description) %></td>
+          </tr>
+        <% end %>
         <tr>
           <th scope="row">コース料金</th>
           <td><%= @task.task_course.display_charge %></td>

@@ -32,13 +32,23 @@
         <th scope="row">予約コース</th>
         <td><%= @task.task_course.title %></td>
       </tr>
+      <% if @task.task_course.description %>
+        <tr>
+          <th scope="row">コース説明</th>
+          <td><%= simple_format(@task.task_course.description) %></td>
+        </tr>
+      <% end %>
       <tr>
-        <th scope="row">予約コース</th>
+        <th scope="row">コース料金</th>
         <td><%= @task.task_course.display_charge %></td>
       </tr>
       <tr>
         <th scope="row">担当者名</th>
         <td><%= @task.staff_name %></td>
+      </tr>
+      <tr>
+        <th scope="row">ご要望</th>
+        <td><%= @task.request %></td>
       </tr>
     </tbody>
   </table>

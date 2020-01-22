@@ -7,7 +7,19 @@
         <table class="table table-borderless">
             <tbody>
                 <tr>
-                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">日時</label></th>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">お名前</label></th>
+                    <th class="col-xs-10"><%= @task.store_member.name %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">電話番号</label></th>
+                    <th class="col-xs-10"><%= @task.store_member.phone %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">メールアドレス</label></th>
+                    <th class="col-xs-10"><%= @task.store_member.email %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">予約日時</label></th>
                     <th class="col-xs-10"><%= reservation_date(@task) %></td>
                 </tr>
                 <tr>
@@ -18,6 +30,12 @@
                     <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース名</label></th>
                     <th class="col-xs-10"><%= @task.task_course.title %></td>
                 </tr>
+                <% if @task.task_course.description %>
+                    <tr>
+                        <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース説明</label></th>
+                        <th class="col-xs-10"><%= simple_format(@task.task_course.description) %></td>
+                    </tr>
+                <% end %>
                 <tr>
                     <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース時間</label></th>
                     <th class="col-xs-10"><%= "#{@task.task_course.course_time}分"%></td>
@@ -25,6 +43,10 @@
                 <tr>
                     <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">料金</label></th>
                     <th class="col-xs-10"><%= "#{@task.task_course.display_charge}円" %></td>
+                </tr>
+                <tr>
+                    <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">ご要望</label></th>
+                    <th class="col-xs-10"><%= @task.request %></td>
                 </tr>
             </tbody>
         </table>

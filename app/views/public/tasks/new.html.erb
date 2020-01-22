@@ -18,6 +18,12 @@
                     <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース名</label></th>
                     <th class="col-xs-10"><%= @task_course.title %></td>
                 </tr>
+                <% if @task_course.description %>
+                    <tr>
+                        <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース説明</label></th>
+                        <th class="col-xs-10"><%= simple_format(@task_course.description) %></td>
+                    </tr>
+                <% end %>
                 <tr>
                     <th class="col-xs-2 form_td_left"><label for="exampleInputPassword1" class="form_label">コース時間</label></th>
                     <th class="col-xs-10"><%= "#{@task_course.course_time}分"%></td>
