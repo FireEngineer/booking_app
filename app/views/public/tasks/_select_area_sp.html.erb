@@ -69,7 +69,11 @@
             <% @calendar.task_courses.each do |course| %>
               <% if @task_course == course %>
                 <li class="media select_tr selected">
-                  <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">64x64</text></svg>
+                  <% if course.picture? %>
+                    <%= image_tag course.picture.url, size: "64x64", id: "image#{course.id}" %>
+                  <% else %>
+                    <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">64x64</text></svg>
+                  <% end %>
                   <div class="media-body" data-dismiss="modal">
                     <h5 class="mt-0 mb-1"><i class="fas fa-check mr-2 text-primary"></i><span><%= course.title %></span></h5>
                     <%= course.display_charge %><br>
@@ -78,7 +82,11 @@
                 </li>
               <% else %>
                 <li class="media select_tr">
-                  <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">64x64</text></svg>
+                  <% if course.picture? %>
+                    <%= image_tag course.picture.url, size: "64x64", id: "image#{course.id}" %>
+                  <% else %>
+                    <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">64x64</text></svg>
+                  <% end %>
                   <div class="media-body link_div load_btn" data-href="<%= calendar_tasks_path(@calendar, course_id: course.id, staff_id: params[:staff_id]) %>">
                     <h5 class="mt-0 mb-1"><span><%= course.title %></span></h5>
                     <%= course.display_charge %><br>
@@ -93,3 +101,16 @@
     </div>
   </div>
 </div>
+
+
+<script>
+  <% @calendar.task_courses.each do |course| %>
+    <% if course.picture? %>
+      const viewer_<%= course.id %> = new Viewer(document.getElementById("image<%= course.id %>"), {
+        viewed() {
+          viewer_<%= course.id %>.zoomTo(1);
+        },
+      });
+    <% end %>
+  <% end %>
+</script>
