@@ -1,6 +1,6 @@
 <div class="top_page">
   <div class="title">
-    <h2 class="title_style mt-3">予約フォーム</h2>
+    <h2 class="title_style">予約フォーム</h2>
   </div>
 
   <%= render 'select_area_sp' %>
@@ -48,7 +48,6 @@
 							<% @month.each do |day| %>
 								<% ok_term = StaffsScheduleOutputer.valid_shifts(@staffs, day.all_day) %>
 								<% not_term = StaffsScheduleOutputer.invalid_schedules(@staffs, day.all_day, @interval_time) %>
-								<%# debugger %>
 								<th class="closeCol w-10">
 									<table cellpadding="0" cellspacing="0" class="moreInnerTable">
 										<tbody>
@@ -69,10 +68,8 @@
 													</tr>
 												<% elsif valid_schedule?(ok_term, not_term, @staffs_google_tasks, start_time, end_time) == true %>
 													<tr>
-														<th class="timeCell timeSharpLine text-center circle_style">
-															<%= link_to new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: params[:staff_id]) do %>
-																<i class="far fa-circle"></i>
-															<% end %>
+														<th class="timeCell timeSharpLine text-center circle_style link_div" data-href="<%= new_calendar_task_path(@calendar, start_time: time(Time.zone.parse("#{day}"), time), course_id: @task_course.id, staff_id: params[:staff_id]) %>">
+															<i class="far fa-circle"></i>
 														</th>
 													</tr>
 												<% else %>

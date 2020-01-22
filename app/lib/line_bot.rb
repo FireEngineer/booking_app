@@ -69,7 +69,7 @@ class LineBot
     staff = task.staff
     user = task.calendar.user
     calendar = task.calendar
-    detail = "担当者：#{staff.name},コース：#{task_course.title}"
+    detail = "担当者：#{task.staff_name},コース：#{task_course.title}"
     {
       "type": "flex",
       "altText": "This is a Flex Message",
@@ -247,7 +247,7 @@ class LineBot
                 },
                 {
                   "type": "text",
-                  "text": staff.name,
+                  "text": task.staff_name,
                   "wrap": true,
                   "color": "#666666",
                   "size": "md",
@@ -319,7 +319,7 @@ class LineBot
     staff = task.staff
     user = task.calendar.user
     calendar = task.calendar
-    detail = "担当者：#{staff.name},コース：#{task_course.title}"
+    detail = "担当者：#{task.staff_name},コース：#{task_course.title}"
     {
       "type": "flex",
       "altText": "This is a Flex Message",
@@ -497,7 +497,7 @@ class LineBot
                 },
                 {
                   "type": "text",
-                  "text": staff.name,
+                  "text": task.staff_name,
                   "wrap": true,
                   "color": "#666666",
                   "size": "md",
@@ -741,7 +741,7 @@ class LineBot
                 },
                 {
                   "type": "text",
-                  "text": staff.name,
+                  "text": task.staff_name,
                   "wrap": true,
                   "color": "#666666",
                   "size": "md",
@@ -948,7 +948,7 @@ class LineBot
                 },
                 {
                   "type": "text",
-                  "text": staff.name,
+                  "text": task.staff_name,
                   "wrap": true,
                   "color": "#666666",
                   "size": "md",

@@ -76,6 +76,14 @@ class Task < ApplicationRecord
     end
   end
 
+  def staff_name
+    if is_appoint?
+      staff.name
+    else
+      "指名なし"
+    end
+  end
+
   # バリデーション======================================================
   # 時間がかぶっていないかどうか
   def check_time_original
