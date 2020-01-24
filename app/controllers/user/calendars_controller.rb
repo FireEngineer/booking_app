@@ -67,7 +67,7 @@ class User::CalendarsController < User::Base
   private
 
   def params_calendar
-    params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :public_uid, :is_released, :address, :phone, :start_time, :end_time, :display_time, :display_interval_time)
+    params.require(:calendar).permit(:start_date, :end_date, :display_week_term, :public_uid, :is_released, :address, :phone, :start_time, :end_time, :display_time, :display_interval_time, :message, :picture)
   end
 
   def time_interval(calendar)

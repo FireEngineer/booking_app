@@ -1,4 +1,6 @@
 class Calendar < ApplicationRecord
+  mount_uploader :picture, PictureUploader
+
   # gem "public_uid"でDBに保存される前にpublic_uidに8桁のランダムな文字列が付与される
   generate_public_uid
 

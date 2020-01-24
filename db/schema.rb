@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_200333) do
+ActiveRecord::Schema.define(version: 2020_01_24_093148) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 2020_01_22_200333) do
     t.string "phone"
     t.string "public_uid"
     t.integer "display_interval_time", default: 10
+    t.string "picture", comment: "予約完了画面に表示する任意の画像"
+    t.text "message", comment: "予約完了画面に表示する任意のメッセージ"
     t.index ["public_uid"], name: "index_calendars_on_public_uid", unique: true
     t.index ["user_id"], name: "index_calendars_on_user_id"
   end

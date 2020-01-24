@@ -28,7 +28,7 @@
     </div>
     <div id="contact" class="tab-pane" role="tabpanel" aria-labelledby="contact-tab">
       <%= form_for @calendar.calendar_config, url: user_calendar_calendar_config_path(current_user, @calendar) do |f| %>
-        <div class="form-area"> 
+        <div class="form-area">
           <%= render 'detail_setting', f: f %>
         </div>
         <div class="form-group">
