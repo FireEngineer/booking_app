@@ -21,9 +21,9 @@ class User::StoreMembersController < User::Base
   def update
     @store_member = StoreMember.find(params[:id])
     if @store_member.update(params_store_member)
-      
+      @status = 200
     else
-      
+      @status = 400
     end
   end
 

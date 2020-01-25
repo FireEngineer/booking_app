@@ -1,3 +1,7 @@
-$("#log_text_form").val("");
-$("#member_logs").html("<%= escape_javascript(render 'user/store_members/member_logs') %>");
-$.notify("コメントを更新しました。", "success");
+<% if @status == 200 %>
+  $("#log_text_form").val("");
+  $("#member_logs").html("<%= escape_javascript(render 'user/store_members/member_logs') %>");
+  $.notify("コメントを更新しました。", "success");
+<% else %>
+  $.notify("正常に処理できませんでした。", "error");
+<% end %>

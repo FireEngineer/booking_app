@@ -8,7 +8,7 @@
           <%= f.text_area :log_text, class:"form-control #{"w-50" unless browser.device.mobile?} text_area" %>
           <div class="mt-1 edit_btn_area" id="log_info_<%= log.id %>">
             <%= link_to "削除", calendar_store_member_member_log_path(@calendar, @store_member, log), method: :delete, remote: true, 'data-confirm':"コメントを削除しますか？" %>
-            <%= f.submit "保存する", style:"border:none;background-color:transparent;text-decoration:underline;" %>
+            <%= f.submit "更新する", style:"border:none;background-color:transparent;text-decoration:underline;" %>
           </div>
         <% end %>
       </div>
