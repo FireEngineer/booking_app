@@ -2,50 +2,7 @@
 <%= render 'picture_form' %>
 <%= render 'member_info', calendar: @calendar, store_member: @store_member %>
 
-  <%# 前回の予約 %>
-  <div class="card">
-    <% task = @tasks.prev_task.first %>
-    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
-      <div class="card-header">
-        前回の予約(<i class="fas fa-angle-double-down"></i>)
-      </div>
-    </a>
-    <div class="card-body collapse" id="collapseExample2">
-      <% if task %>
-        <%= render 'member_task_detail', task: task, calendar: @calendar %>
-      <% end %>
-    </div>
-  </div>
-
-  <%# 今日の予約 %>
-  <div class="card border-info">
-    <% tasks = @tasks.member_tasks(@store_member).today_tasks %>
-    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
-      <div class="card-header">本日の予約 : <%= tasks.size %>件 (<i class="fas fa-angle-double-down"></i>)</div>
-    </a>
-    <div class="card-body text-info collapse" id="collapseExample3">
-      <% tasks.each do |task| %>
-        <%= render 'member_task_detail', task: task, calendar: @calendar %>
-      <% end %>
-    </div>
-  </div>
-
-  <%# 次の予約 %>
-  <div class="card">
-    <% task = @tasks.next_task.first %>
-    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample">
-      <div class="card-header">
-        次回の予約(<i class="fas fa-angle-double-down"></i>)
-      </div>
-    </a>
-    <div class="card-body collapse" id="collapseExample4">
-      <% if task %>
-        <%= render 'member_task_detail', task: task, calendar: @calendar %>
-      <% end %>
-    </div>
-  </div>
-
-
+  
 <table class="table table-hover">
   <thead>
     <tr>

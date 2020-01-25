@@ -1,0 +1,79 @@
+<h1>会員詳細<<small><%= @store_member.name %>様</small>></h1>
+<%= render 'picture_form' %>
+<%= render 'member_info', calendar: @calendar, store_member: @store_member %>
+
+  <%# 前回の予約 %>
+  <div class="card">
+    <% task = @tasks.prev_task.first %>
+    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <div class="card-header">
+        前回の予約(<i class="fas fa-angle-double-down"></i>)
+      </div>
+    </a>
+    <div class="card-body collapse" id="collapseExample2">
+      <% if task %>
+        <%= render 'member_task_detail', task: task, calendar: @calendar %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# 今日の予約 %>
+  <div class="card border-info">
+    <% tasks = @tasks.member_tasks(@store_member).today_tasks %>
+    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <div class="card-header">本日の予約 : <%= tasks.size %>件 (<i class="fas fa-angle-double-down"></i>)</div>
+    </a>
+    <div class="card-body text-info collapse" id="collapseExample3">
+      <% tasks.each do |task| %>
+        <%= render 'member_task_detail', task: task, calendar: @calendar %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# 次の予約 %>
+  <div class="card">
+    <% task = @tasks.next_task.first %>
+    <a class="display_open_btn" data-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <div class="card-header">
+        次回の予約(<i class="fas fa-angle-double-down"></i>)
+      </div>
+    </a>
+    <div class="card-body collapse" id="collapseExample4">
+      <% if task %>
+        <%= render 'member_task_detail', task: task, calendar: @calendar %>
+      <% end %>
+    </div>
+  </div>
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">開始時間</th>
+      <th scope="col">終了時間</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <th scope="row"><%= l(task.start_time, format: :long) %></th>
+        <td><%= l(task.end_time, format: :long) %></td>
+        <td>
+          <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, task), class:"btn btn-primary", remote: :true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div id="member_task_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+
+<script>
+  // ボタンを押して、編集が可能になる
+  $('#start_edit_btn').on('click', function() {
+    $('.member_edit_form').find(".disabled_form").css("display","none")
+    $('.member_edit_form').find(".display_none").removeClass("display_none");
+    $(this).remove();
+  });
+</script>
