@@ -1,7 +1,10 @@
 <h1>会員詳細<<small><%= @store_member.name %>様</small>></h1>
   <div class="card">
     <h5 class="card-header">
-      <%= text_area_tag :memo %>
+      <%= form_with model: @store_member, url: calendar_store_member_path(@calendar, @store_member) do |f| %>
+        <span>会員情報</span><%= f.submit "保存", class:"btn btn-success mt-1 ml-2 mb-1" %>
+        <%= f.text_area :memo, class:"form-control" %>
+      <% end %>
     </h5>
     <div class="card-body">
       <table class="table table-borderless ">
@@ -19,18 +22,19 @@
             <td><%= @store_member.phone %></td>
           </tr>
           <tr>
-            <th scope="row"><i class="fas fa-phone"></i></th>
-            <td><%= @store_member.phone %></td>
+            <th scope="row"><i class="fab fa-line fa-2x"></i></i></th>
+            <td><%= @store_member.line_status %></td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="card-footer">
-      <i class="fas fa-list mr-3"></i>メモ
+      <i class="fas fa-list mr-3"></i>コメント
     </div>
     <div class="card-body">
       <%= form_with model: @member_log, url: calendar_store_member_member_logs_path(@calendar, @store_member) do |f| %>
-        <i class="far fa-comment"></i> <%= f.text_area :log_text, placeholder:"コメントを入力してください。", class: "form-control", id:"log_text_form" %>
+        <i class="far fa-comment"></i> コメントを投稿
+        <%= f.text_area :log_text, placeholder:"コメントを入力してください。", class: "form-control", id:"log_text_form" %>
         <%= f.submit "保存", class:"btn btn-success mt-1" %>
       <% end %>
     </div>

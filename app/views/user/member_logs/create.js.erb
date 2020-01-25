@@ -1,2 +1,3 @@
 $("#log_text_form").val("");
 $("#member_logs").html("<%= escape_javascript(render 'user/store_members/member_logs') %>");
+$.notify("コメントを投稿しました。", "success");

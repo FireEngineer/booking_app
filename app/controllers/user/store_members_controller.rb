@@ -21,11 +21,9 @@ class User::StoreMembersController < User::Base
   def update
     @store_member = StoreMember.find(params[:id])
     if @store_member.update(params_store_member)
-      flash[:success] = '会員情報を更新しました。'
-      redirect_to calendar_store_member_url(@calendar, @store_member)
+      
     else
-      flash[:danger] = '会員情報を更新できませんでした。'
-      redirect_to calendar_store_member_url(@calendar, @store_member)
+      
     end
   end
 
