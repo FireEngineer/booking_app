@@ -1,29 +1,43 @@
 <h1>会員詳細<<small><%= @store_member.name %>様</small>></h1>
-<%= render 'picture_form' %>
-<%= render 'member_info', calendar: @calendar, store_member: @store_member %>
-
-  
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">開始時間</th>
-      <th scope="col">終了時間</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <th scope="row"><%= l(task.start_time, format: :long) %></th>
-        <td><%= l(task.end_time, format: :long) %></td>
-        <td>
-          <%= link_to "詳細", calendar_store_member_task_show_path(@calendar, task), class:"btn btn-primary", remote: :true %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<div id="member_task_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+  <div class="card">
+    <h5 class="card-header">
+      <%= text_area_tag :memo %>
+    </h5>
+    <div class="card-body">
+      <table class="table table-borderless ">
+        <tbody>
+          <tr>
+            <th scope="row"><i class="far fa-user"></i></th>
+            <td><%= @store_member.name %></td>
+          </tr>
+          <tr>
+            <th scope="row"><i class="far fa-envelope"></i></th>
+            <td><%= @store_member.email %></td>
+          </tr>
+          <tr>
+            <th scope="row"><i class="fas fa-phone"></i></th>
+            <td><%= @store_member.phone %></td>
+          </tr>
+          <tr>
+            <th scope="row"><i class="fas fa-phone"></i></th>
+            <td><%= @store_member.phone %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <i class="fas fa-list mr-3"></i>メモ
+    </div>
+    <div class="card-body">
+      <%= form_with model: @member_log, url: calendar_store_member_member_logs_path(@calendar, @store_member) do |f| %>
+        <i class="far fa-comment"></i> <%= f.text_area :log_text, placeholder:"コメントを入力してください。", class: "form-control", id:"log_text_form" %>
+        <%= f.submit "保存", class:"btn btn-success mt-1" %>
+      <% end %>
+    </div>
+    <div id="member_logs">
+      <%= render "member_logs" %>
+    </div>
+  </div>
 
 
 <script>
