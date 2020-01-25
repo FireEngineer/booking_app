@@ -1,0 +1,6 @@
+$("#log_text_form").val("");
+$("#member_logs").html("<%= escape_javascript(render 'user/store_members/member_logs') %>");
+$("#log_info_<%= @member_log.id %>").append("<spen id='edit_comp_<%= @member_log.id %>' style:'color:red!important;'>保存完了</spen>");
+setTimeout(function(){
+		$("#edit_comp_<%= @member_log.id %>").fadeOut(1000);
+	},1000);

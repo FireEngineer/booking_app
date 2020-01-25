@@ -53,6 +53,7 @@ GEM
     ast (2.4.0)
     autoprefixer-rails (9.6.1.1)
       execjs
+    autosize (2.4.0.0)
     bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.5)
@@ -577,6 +578,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_decorator
+  autosize (~> 2.4)
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.1.1)
   brakeman

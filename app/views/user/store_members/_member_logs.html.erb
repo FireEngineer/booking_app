@@ -1,16 +1,21 @@
 <ul class="list-unstyled">
   <% @member_logs.each do |log| %>
     <li class="media mt-5 mb-5">
-      <svg class="bd-placeholder-img mr-3 rounded-circle" width="40" height="40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">64x64</text></svg>
+      <%= image_tag "free_image", size:"40x40", class:"bd-placeholder-img mr-3 rounded-circle" %>
       <div class="media-body">
-        <p class="mt-0 mb-1">投稿日時：<%= l(log.updated_at, format: :long) %></p>
-        <div class="card w-50 p-2">
-          <%= log.log_text %>
-        </div>
-        <div class="mt-1">
-          <%= link_to "削除", calendar_store_member_member_log_path(@calendar, @store_member, log), method: :delete, remote: true, 'data-confirm':"コメントを削除しますか？" %>
-        </div>
+        <p class="mt-0 mb-1 log_info" id="log_info_<%= log.id %>"><%= log.display_updated_at %></p>
+        <%= form_with model: log, url: calendar_store_member_member_log_path(@calendar, @store_member, log) do |f| %>
+          <%= f.text_area :log_text, class:"form-control #{"w-50" unless browser.device.mobile?} text_area" %>
+          <div class="mt-1 edit_btn_area">
+            <%= link_to "削除", calendar_store_member_member_log_path(@calendar, @store_member, log), method: :delete, remote: true, 'data-confirm':"コメントを削除しますか？" %>
+            <%= f.submit "保存する", style:"border:none;background-color:transparent;text-decoration:underline;" %>
+          </div>
+        <% end %>
       </div>
     </li>
   <% end %>
 </ul>
+
+<script>
+  autosize($('textarea'));
+</script>

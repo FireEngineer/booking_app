@@ -5,3 +5,18 @@
 .store_member_td {
   width: 90%;
 }
+
+.log_info {
+  color: #bcb9b9;
+  font-size: smaller;
+}
+
+.edit_btn_area > a, .edit_btn_area > p {
+  display: inline;
+  color: #bcb9b9!important;
+  text-decoration: underline;
+}
+
+.edit_btn_area > a:hover, .edit_btn_area > p:hover {
+  cursor: pointer;
+}

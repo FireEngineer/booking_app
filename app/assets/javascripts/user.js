@@ -19,6 +19,7 @@
 //= require fullcalendar/lang/ja
 //= require popper
 //= require bootstrap-sprockets
+//= require autosize
 //= require_tree ./user
 //= require_tree .
 
