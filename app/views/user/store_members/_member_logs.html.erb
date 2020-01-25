@@ -1,11 +1,14 @@
 <ul class="list-unstyled">
   <% @member_logs.each do |log| %>
-    <li class="media">
+    <li class="media mt-5 mb-5">
       <svg class="bd-placeholder-img mr-3 rounded-circle" width="40" height="40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">64x64</text></svg>
       <div class="media-body">
-        <h5 class="mt-0 mb-1">投稿日時：<%= log.updated_at %></h5>
-        <div class="card">
+        <p class="mt-0 mb-1">投稿日時：<%= l(log.updated_at, format: :long) %></p>
+        <div class="card w-50 p-2">
           <%= log.log_text %>
+        </div>
+        <div class="mt-1">
+          <%= link_to "削除", calendar_store_member_member_log_path(@calendar, @store_member, log), method: :delete, remote: true, 'data-confirm':"コメントを削除しますか？" %>
         </div>
       </div>
     </li>

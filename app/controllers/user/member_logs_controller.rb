@@ -12,6 +12,16 @@ class User::MemberLogsController < User::Base
     end
   end
 
+  def destroy
+    @member_log = MemberLog.find(params[:id])
+
+    if @member_log.destroy
+      @store_member = StoreMember.find(params[:store_member_id])
+      @member_logs = @store_member.member_logs.order(id: "desc")
+    else
+    end
+  end
+
   private
 
     def params_member_log
