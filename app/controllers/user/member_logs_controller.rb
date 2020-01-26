@@ -19,7 +19,7 @@ class User::MemberLogsController < User::Base
     if @member_log.update(params_member_log)
       @store_member = StoreMember.find(params[:store_member_id])
       @member_logs = @store_member.member_logs.order(id: "desc")
-      @status = 400
+      @status = 200
     else
       @status = 400
     end

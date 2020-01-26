@@ -1,7 +1,7 @@
 <% if @status == 200 %>
   $("#log_text_form").val("");
   $("#member_logs").html("<%= escape_javascript(render 'user/store_members/member_logs') %>");
-  $.notify("コメントを投稿しました。", "success");
+  $.notify("画像を投稿しました。", "success");
 <% else %>
   $.notify("正常に処理できませんでした。", "error");
 <% end %>

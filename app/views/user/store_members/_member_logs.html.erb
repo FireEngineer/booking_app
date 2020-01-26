@@ -3,12 +3,30 @@
     <li class="media mt-5 mb-5">
       <%= image_tag "free_image", size:"40x40", class:"bd-placeholder-img mr-3 rounded-circle" %>
       <div class="media-body">
-        <p class="mt-0 mb-1 log_info"><%= log.display_updated_at %></p>
+        <%= form_with model: @log_picture, url: member_log_log_pictures_path(log) do |f| %>
+          <p class="mt-0 mb-1">
+            <span class="log_info mr-2"><%= log.display_updated_at %></span>
+            <i class="fas fa-camera-retro fa-lg pointer" onClick="$('#new_file<%= log.id %>').click()"></i>
+          </p>
+          <%= f.file_field :picture, multiple: true, style:"display:none;", class:"new_file", id:"new_file#{log.id}", 'data-value':"#{log.id}" %>
+        <% end %>
         <%= form_with model: log, url: calendar_store_member_member_log_path(@calendar, @store_member, log) do |f| %>
           <%= f.text_area :log_text, class:"form-control #{"w-50" unless browser.device.mobile?} text_area" %>
           <div class="mt-1 edit_btn_area" id="log_info_<%= log.id %>">
             <%= link_to "削除", calendar_store_member_member_log_path(@calendar, @store_member, log), method: :delete, remote: true, 'data-confirm':"コメントを削除しますか？" %>
-            <%= f.submit "更新する", style:"border:none;background-color:transparent;text-decoration:underline;" %>
+            <%= f.submit "更新する", class:"pointer", style:"border:none;background-color:transparent;text-decoration:underline;" %>
+            <ul id="images_<%= log.id %>" style="display: inline;">
+              <% log.log_pictures.each.with_index(1) do |picture, index| %>
+                <% if index == 1 %>
+                  <%= image_tag picture.picture.url, size:"30x30" %>
+                <% else %>
+                  <%= image_tag picture.picture.url, size:"30x30", style:"display:none" %>
+                <% end %>
+              <% end %>
+              <script>
+                var viewer = new Viewer(document.getElementById("images_<%= log.id %>"));
+              </script>
+            </ul>
           </div>
         <% end %>
       </div>
@@ -19,3 +37,28 @@
 <script>
   autosize($('textarea'));
 </script>
+
+<script type="text/javascript">
+    $('.new_file').on('change', function (e) {
+        debugger
+        console.log(e.target.files);
+        var log_id = $(this).attr("data-value");
+        var formData = new FormData();
+        var files = this.files;
+        $.each(files, function(i, file){
+            formData.append('file', file);
+          if (e.target.files[0].size > 0) {
+              $.ajax({
+                url: `/member_logs/${log_id}/log_pictures`,
+                type: "POST",
+                data : formData,
+                cache       : false,
+                contentType : false,
+                processData : false,
+            });
+          }
+        });
+    });
+</script>
+
+

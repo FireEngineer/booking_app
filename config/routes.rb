@@ -87,6 +87,9 @@ Rails.application.routes.draw do
         resources :staff_shifts
       end
     end
+    resources :member_logs do
+      resources :log_pictures, only: [:create, :destroy]
+    end
     # =====userがアカウント登録した時の最初の設定ページ
     get "introductions/new_calendar", to: "introductions#new_calendar"
     post "introductions/create_calendar", to: "introductions#create_calendar"

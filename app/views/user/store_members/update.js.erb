@@ -1,1 +1,5 @@
-$.notify("会員情報を更新しました。", "success");
+<% if @status == 200 %>
+  $.notify("会員情報を更新しました。", "success");
+<% else %>
+  $.notify("正常に処理できませんでした。", "error");
+<% end %>

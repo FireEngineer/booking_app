@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_041523) do
+ActiveRecord::Schema.define(version: 2020_01_26_084530) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -83,6 +83,14 @@ ActiveRecord::Schema.define(version: 2020_01_25_041523) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_line_bots_on_admin_id"
+  end
+
+  create_table "log_pictures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "picture", comment: "会員のログの写真"
+    t.bigint "member_log_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_log_id"], name: "index_log_pictures_on_member_log_id"
   end
 
   create_table "member_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -311,6 +319,7 @@ ActiveRecord::Schema.define(version: 2020_01_25_041523) do
   add_foreign_key "calendar_configs", "calendars"
   add_foreign_key "iregular_holidays", "calendar_configs"
   add_foreign_key "line_bots", "admins"
+  add_foreign_key "log_pictures", "member_logs"
   add_foreign_key "member_logs", "store_members"
   add_foreign_key "member_pictures", "store_members"
   add_foreign_key "order_plans", "plans"

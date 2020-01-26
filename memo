@@ -92,3 +92,4 @@ end
 
 puts result
 
+if browser.device.mobile?
