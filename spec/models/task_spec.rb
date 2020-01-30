@@ -75,8 +75,8 @@ RSpec.describe Task, type: :model do
     it 'スタッフの勤務時間内でないとだめ' do
       @task = Task.new(
         request: 'リクエスト',
-        start_time: Time.current.since(3.days).change(hour: 1),
-        end_time: Time.current.since(3.days).change(hour: 2),
+        start_time: Time.current.since(1.days).change(hour: 1),
+        end_time: Time.current.since(1.days).change(hour: 2),
         task_course_id: @course.id,
         staff_id: @staff.id,
         store_member_id: @store_member.id,
