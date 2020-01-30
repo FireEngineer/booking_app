@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User::PayjpController, type: :controller do
-  describe '' do
+  describe 'use' do
     # before do
     #   @user = create(:user)
     #   @calendar = create(:calendar, user: @user)
@@ -12,13 +12,13 @@ RSpec.describe User::PayjpController, type: :controller do
 
     describe 'Get #privacy' do
       before do
-        get :privacy
+        get :use, params: { }
       end
       it 'リクエストは200 OKとなること' do
         expect(response.status).to eq 200
       end
       it ':indexテンプレートを表示すること' do
-        expect(response).to render_template :privacy
+        expect(response).to render_template :use
       end
     end
   end
