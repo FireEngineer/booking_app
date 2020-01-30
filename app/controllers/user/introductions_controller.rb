@@ -3,6 +3,7 @@ class User::IntroductionsController < User::Base
   before_action :has_calendar?, only: %i[new_calendar create_calendar]
   before_action :has_staff?, only: %i[new_staff create_staff]
   skip_before_action :initial_setting_complete?
+  skip_before_action :agreement_plan?
 
   def new_calendar
     @user = current_user

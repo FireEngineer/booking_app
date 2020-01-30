@@ -79,6 +79,14 @@ class User::PayjpController < User::Base
     redirect_to user_url(current_user)
   end
 
+  def privacy
+
+  end
+
+  def use
+    
+  end
+
   private
 
   def has_order_plan?

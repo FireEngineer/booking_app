@@ -46,7 +46,7 @@ class User::Base < ApplicationController
   def initial_setting_complete?
     if current_user.calendars.none?
       flash[:danger] = '初期設定が完了していません。'
-      redirect_to introductions_new_calendar
+      redirect_to introductions_new_calendar_url
     elsif current_user.calendars.first.staffs.none?
       flash[:danger] = '初期設定が完了していません。'
       redirect_to introductions_new_staff_url

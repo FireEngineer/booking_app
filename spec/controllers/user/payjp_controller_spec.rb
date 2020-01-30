@@ -10,16 +10,16 @@ RSpec.describe User::PayjpController, type: :controller do
     #   @course = @calendar.task_courses.first
     # end
 
-    describe 'Get #privacy' do
-      before do
-        get :use, params: { }
-      end
-      it 'リクエストは200 OKとなること' do
-        expect(response.status).to eq 200
-      end
-      it ':indexテンプレートを表示すること' do
-        expect(response).to render_template :use
-      end
-    end
+    # describe 'Get #privacy' do
+    #   before do
+    #     get :use, params: { }
+    #   end
+    #   it 'リクエストは200 OKとなること' do
+    #     expect(response.status).to eq 200
+    #   end
+    #   it ':indexテンプレートを表示すること' do
+    #     expect(response).to render_template :use
+    #   end
+    # end
   end
 end
