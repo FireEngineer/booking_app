@@ -38,8 +38,8 @@ RSpec.describe Task, type: :model do
     it '(start_time > end_time)はダメ' do
       @task = Task.new(
         request: 'リクエスト',
-        start_time: Time.current.since(3.days).since(1.hours),
-        end_time: Time.current.since(3.days),
+        start_time: Time.current.since(1.days).since(1.hours),
+        end_time: Time.current.since(1.days),
         task_course_id: @course.id,
         staff_id: @staff.id,
         store_member_id: @store_member.id,
