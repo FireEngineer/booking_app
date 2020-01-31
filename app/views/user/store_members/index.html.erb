@@ -1,13 +1,13 @@
 <h1>会員一覧</h1>
 <%= search_form_for @member_q, url: calendar_store_members_path(@calendar) do |f| %>
   <label>名前or電話番号</label>
-  <%= f.search_field :name_or_phone_cont, class: "form-control" %>
-  <%= f.submit "検索", class:"btn btn-primary load_btn" %>
+  <%= f.search_field :name_or_phone_cont, class: "form-control col-sm-6 mb-1" %>
+  <%= f.submit "検索", class:"btn btn-primary load_btn mb-1" %>
 <% end %>
 
 <%= paginate @store_members %>
 <div class="table-responsive">
-  <table class="table table-hover">
+  <table class="table table-hover table-sm">
     <thead>
       <tr>
         <th scope="col"><%= sort_link(@q, :name, "名前") %></th>
@@ -17,11 +17,11 @@
     </thead>
     <tbody>
       <% @store_members.each do |member| %>
-        <tr>
+        <tr data-href="<%= calendar_store_member_url(@calendar, member) %>" class="hover_pointer">
           <th scope="row"><%= member.name %></th>
           <td><%= member.phone %></td>
           <td>
-            <%= link_to "詳細", calendar_store_member_path(@calendar, member), class:"btn btn-primary" %>
+            <%#= link_to "詳細", calendar_store_member_path(@calendar, member), class:"btn btn-primary" %>
             <%= link_to "予約を行う", user_calendar_dashboard_path(current_user, @calendar, store_member_id: member.id), class:"btn btn-info" %>
           </td>
         </tr>
@@ -29,3 +29,17 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  jQuery( function($) {
+    $('tbody tr[data-href]').addClass('clickable').click( function() {
+        window.location = $(this).attr('data-href');
+    }).find('a').hover( function() {
+        $(this).parents('tr').unbind('click');
+    }, function() {
+        $(this).parents('tr').click( function() {
+            window.location = $(this).attr('data-href');
+        });
+    });
+});
+</script>
