@@ -77,7 +77,9 @@ Rails.application.routes.draw do
     end
     resources :calendars, only: [] do
       resources :store_members do
-        resources :member_logs
+        resources :member_logs do
+          collection {post :create_picture}
+        end
         resources :member_pictures, only: [:create, :destroy]
       end
       get "store_member_task_show/:id", to:"store_members#store_member_task_show", as: "store_member_task_show"

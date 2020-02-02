@@ -12,7 +12,7 @@ class User::StoreMembersController < User::Base
     @tasks = @store_member.tasks.order(start_time: 'desc')
     @member_log = MemberLog.new()
     @member_logs = @store_member.member_logs.order(id: "desc")
-    @log_picture = LogPicture.new()
+    @log_picture = @member_log.log_pictures.build
   end
 
   def store_member_task_show
