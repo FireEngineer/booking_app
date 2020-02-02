@@ -80,7 +80,7 @@ class LineBotByStaff
                 },
                 {
                   "type": 'text',
-                  "text": store_member.name,
+                  "text": "#{store_member.name}様",
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -291,7 +291,7 @@ class LineBotByStaff
                 },
                 {
                   "type": 'text',
-                  "text": store_member.name,
+                  "text": "#{store_member.name}様",
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',

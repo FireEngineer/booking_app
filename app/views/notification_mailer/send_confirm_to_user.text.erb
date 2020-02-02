@@ -15,12 +15,10 @@
 ご要望：<%= @task.request %>
 
 ==========================================================
-<%= simple_format(@calendar.calendar_config.booking_message) %>
-<%= @calendar.calendar_config.booking_link %>
-※キャンセルをご希望のお方は以下のURLよりキャンセルしてください。
-<%= if Rails.env == "production" then "#{ENV['PRODUCTION_HOST_URL']}/calendars/#{@calendar.public_uid}/tasks/#{@task.id}/cancel"
-else "http://#{ENV['DEVELOPMENT_HOST_URL']}/calendars/#{@calendar.public_uid}/tasks/#{@task.id}/cancel" end  %>
+<%= @calendar.calendar_config.booking_message %>
 
+※キャンセルをご希望のお方は以下のURLよりキャンセルしてください。
+<%= calendar_task_cancel_url(@calendar, @task) %>
 ==========================================================
 <%= @calendar.calendar_name %>
 <% if @calendar.phone %>

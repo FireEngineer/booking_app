@@ -64,12 +64,7 @@ class LineBot
   end
 
   def message_with_task_create(task)
-    store_member = task.store_member
-    task_course = task.task_course
-    staff = task.staff
-    user = task.calendar.user
-    calendar = task.calendar
-    detail = "担当者：#{task.staff_name},コース：#{task_course.title}"
+    set_task_var(task)
     {
       "type": 'flex',
       "altText": 'This is a Flex Message',
@@ -110,7 +105,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.name,
+                  "text": "#{@store_member.name}様",
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -132,7 +127,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.email,
+                  "text": @store_member.email,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -154,7 +149,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.phone,
+                  "text": @store_member.phone,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -224,7 +219,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": task_course.title,
+                  "text": @task_course.title,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -257,11 +252,11 @@ class LineBot
             },
             {
               "type": 'text',
-              "text": calendar.calendar_name,
+              "text": @calendar.calendar_name,
               "action": {
                 "type": 'uri',
                 "label": 'action',
-                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(@calendar)
               },
               "color": '#007bff'
             },
@@ -271,13 +266,13 @@ class LineBot
               "action": {
                 "type": 'uri',
                 "label": 'action',
-                "uri": "https://calendar.google.com/calendar/r/eventedit?text=#{calendar.calendar_name}&details=#{detail}&dates=#{I18n.l(task.start_time, format: :to_google_time)}/#{I18n.l(task.end_time, format: :to_google_time)}&sf=true&openExternalBrowser=1"
+                "uri": "https://calendar.google.com/calendar/r/eventedit?text=#{@calendar.calendar_name}&details=#{@detail}&dates=#{I18n.l(task.start_time, format: :to_google_time)}/#{I18n.l(task.end_time, format: :to_google_time)}&sf=true&openExternalBrowser=1"
               },
               "color": '#098bf2'
             },
             {
               "type": 'text',
-              "text": calendar.calendar_config.booking_message,
+              "text": @calendar.calendar_config.booking_message,
               "wrap": true
             }
           ]
@@ -294,7 +289,7 @@ class LineBot
               "action": {
                 "type": 'uri',
                 "label": '予約内容を確認',
-                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(calendar, task)
+                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(@calendar, task)
               }
             },
             {
@@ -314,12 +309,7 @@ class LineBot
   end
 
   def message_with_task_update(task)
-    store_member = task.store_member
-    task_course = task.task_course
-    staff = task.staff
-    user = task.calendar.user
-    calendar = task.calendar
-    detail = "担当者：#{task.staff_name},コース：#{task_course.title}"
+    set_task_var(task)
     {
       "type": 'flex',
       "altText": 'This is a Flex Message',
@@ -360,7 +350,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.name,
+                  "text": "#{@store_member.name}様",
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -382,7 +372,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.email,
+                  "text": @store_member.email,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -404,7 +394,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.phone,
+                  "text": @store_member.phone,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -474,7 +464,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": task_course.title,
+                  "text": @task_course.title,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -507,11 +497,11 @@ class LineBot
             },
             {
               "type": 'text',
-              "text": calendar.calendar_name,
+              "text": @calendar.calendar_name,
               "action": {
                 "type": 'uri',
                 "label": 'action',
-                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(@calendar)
               },
               "color": '#007bff'
             },
@@ -521,7 +511,7 @@ class LineBot
               "action": {
                 "type": 'uri',
                 "label": 'action',
-                "uri": "https://calendar.google.com/calendar/r/eventedit?text=#{calendar.calendar_name}&details=#{detail}&dates=#{I18n.l(task.start_time, format: :to_google_time)}/#{I18n.l(task.end_time, format: :to_google_time)}&sf=true&openExternalBrowser=1"
+                "uri": "https://calendar.google.com/calendar/r/eventedit?text=#{@calendar.calendar_name}&details=#{@detail}&dates=#{I18n.l(task.start_time, format: :to_google_time)}/#{I18n.l(task.end_time, format: :to_google_time)}&sf=true&openExternalBrowser=1"
               },
               "color": '#098bf2'
             }
@@ -539,7 +529,7 @@ class LineBot
               "action": {
                 "type": 'uri',
                 "label": '予約内容を確認',
-                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(calendar, task)
+                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(@calendar, task)
               }
             },
             {
@@ -559,11 +549,7 @@ class LineBot
   end
 
   def message_with_task_delete(task)
-    store_member = task.store_member
-    task_course = task.task_course
-    staff = task.staff
-    user = task.calendar.user
-    calendar = task.calendar
+    set_task_var(task)
     {
       "type": 'flex',
       "altText": 'This is a Flex Message',
@@ -604,7 +590,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.name,
+                  "text": "#{@store_member.name}様",
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -626,7 +612,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.email,
+                  "text": @store_member.email,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -648,7 +634,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.phone,
+                  "text": @store_member.phone,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -718,7 +704,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": task_course.title,
+                  "text": @task_course.title,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -751,11 +737,11 @@ class LineBot
             },
             {
               "type": 'text',
-              "text": calendar.calendar_name,
+              "text": @calendar.calendar_name,
               "action": {
                 "type": 'uri',
                 "label": 'action',
-                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(@calendar)
               },
               "color": '#007bff'
             }
@@ -766,11 +752,7 @@ class LineBot
   end
 
   def message_with_task_reminder(task)
-    store_member = task.store_member
-    task_course = task.task_course
-    staff = task.staff
-    user = task.calendar.user
-    calendar = task.calendar
+    set_task_var(task)
     {
       "type": 'flex',
       "altText": 'This is a Flex Message',
@@ -811,7 +793,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.name,
+                  "text": "#{@store_member.name}様",
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -833,7 +815,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.email,
+                  "text": @store_member.email,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -855,7 +837,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": store_member.phone,
+                  "text": @store_member.phone,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -925,7 +907,7 @@ class LineBot
                 },
                 {
                   "type": 'text',
-                  "text": task_course.title,
+                  "text": @task_course.title,
                   "wrap": true,
                   "color": '#666666',
                   "size": 'md',
@@ -958,11 +940,11 @@ class LineBot
             },
             {
               "type": 'text',
-              "text": calendar.calendar_name,
+              "text": @calendar.calendar_name,
               "action": {
                 "type": 'uri',
                 "label": 'action',
-                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(calendar)
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(@calendar)
               },
               "color": '#007bff'
             }
@@ -980,7 +962,7 @@ class LineBot
               "action": {
                 "type": 'uri',
                 "label": '予約内容を確認',
-                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(calendar, task)
+                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(@calendar, task)
               }
             },
             {
@@ -998,4 +980,14 @@ class LineBot
       }
     }
   end
+
+  def set_task_var(task)
+    @store_member = task.store_member
+    @task_course = task.task_course
+    @staff = task.staff
+    @user = task.calendar.user
+    @calendar = task.calendar
+    @detail = "担当者：#{task.staff_name},コース：#{@task_course.title}"
+  end
+  
 end
