@@ -39,11 +39,11 @@ RSpec.describe Public::TasksController, type: :controller do
         before do
           get :new, params: { calendar_id: @calendar.public_uid, staff_id: @staff, course_id: @course, start_time: Time.current.days_ago(2) }
         end
-        it 'リクエストは200 OKとなること' do
+        it 'リクエストは302 OKとなること' do
           expect(response.status).to eq 302
         end
         it ':newテンプレートを表示すること' do
-          expect(response).to redirect_to calendar_tasks_url(@calendar, course_id: @course.id, staff_id: @staff.id)
+          expect(response).to redirect_to calendar_tasks_url(@calendar)
         end
       end
     end

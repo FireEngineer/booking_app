@@ -52,11 +52,11 @@ class Public::TasksController < Public::Base
                                       task_course_id: @task_course.id,
                                       calendar_id: @calendar.id)
     any_staff?(@task)
-    # rescue RuntimeError => e
-    #   if e.message == "shiftが存在しません。"
-    #     flash[:danger] = "指定された日付の予約はできません。"
-    #     redirect_to calendar_tasks_url(@calendar)
-    #   end
+    rescue RuntimeError => e
+      if e.message == "shiftが存在しません。"
+        flash[:danger] = "指定された日付の予約はできません。"
+        redirect_to calendar_tasks_url(@calendar)
+      end
   end
 
   # ラインログインボタンでこのアクションが呼ばれる
