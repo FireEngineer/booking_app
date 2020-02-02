@@ -15,7 +15,7 @@ class User::MemberLogsController < User::Base
 
   def create_picture
     @store_member = StoreMember.find(params[:store_member_id])
-    @member_log = @store_member.member_logs.build
+    @member_log = @store_member.member_logs.build(log_text: params[:log_text])
     @log_picture = @member_log.log_pictures.build(picture: params[:file])
     if @member_log.save
       @member_logs = @store_member.member_logs.order(id: "desc")
