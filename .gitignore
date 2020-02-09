@@ -43,3 +43,8 @@
 .env
 
 /00_sample_templete
+
+# ssl証明書
+/config/certs/*
+!/config/certs/.keep
+
