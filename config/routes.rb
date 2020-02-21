@@ -151,7 +151,7 @@ Rails.application.routes.draw do
   end
 # ================================================================================================================-
   # LINE richメニュー
-  post "api/line/rich/task_check", to:"api/line/rich#task_check"
+  post "line/webhook", to:"api/line/rich#webhook"
 
 # ================================================================================================================-
 
