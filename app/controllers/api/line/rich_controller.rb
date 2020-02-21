@@ -1,5 +1,6 @@
 class Api::Line::RichController < ApplicationController
   require 'line/bot'
+  protect_from_forgery
 
   def webhook
     body = request.body.read
