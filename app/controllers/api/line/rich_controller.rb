@@ -1,7 +1,7 @@
 class Api::Line::RichController < ApplicationController
   require 'line/bot'
 
-  def callback
+  def webhook
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
@@ -14,10 +14,17 @@ class Api::Line::RichController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
+          if event.message['text'] == "予約確認"
+            message = {
+              type: 'text',
+              text: "予約確認ですねー！お待ちください！"
+            }
+          else
+            message = {
+              type: 'text',
+              text: event.message['text']
+            }
+          end
         end
       end
       client.reply_message(event['replyToken'], message)
