@@ -11,7 +11,7 @@ class Api::Line::RichController < ApplicationController
     end
     events = client.parse_events_from(body)
     line_user_id = params['events'][0]['source']['userId']
-    store_member = StoreMember.find(line_user_id: line_user_id)
+    store_member = StoreMember.find_by(line_user_id: line_user_id)
     tasks = store_member.tasks.where("start_time > ?", Time.current)
     events.each do |event|
       case event
