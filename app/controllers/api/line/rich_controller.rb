@@ -21,8 +21,17 @@ class Api::Line::RichController < ApplicationController
           if event.message['text'] == "予約確認"
             tasks.each do |task|
               message = {
-                type: 'text',
-                text: task_message(task)
+                "type": "bubble",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "hello, world"
+                    }
+                  ]
+                }
               }
               response = client.reply_message(event['replyToken'], message)
               puts response
