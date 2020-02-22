@@ -29,7 +29,8 @@ class Api::Line::RichController < ApplicationController
           end
         end
       end
-      client.reply_message(event['replyToken'], message)
+      response = client.reply_message(event['replyToken'], message)
+      puts response
     end
     head :ok
   end
