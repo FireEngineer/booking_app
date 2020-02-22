@@ -1,6 +1,6 @@
 class Api::Line::RichController < ApplicationController
   require 'line/bot'
-  protect_from_forgery :except => [:webhook]
+  protect_from_forgery
   skip_before_action :verify_authenticity_token
 
   def webhook
