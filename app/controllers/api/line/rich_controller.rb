@@ -20,24 +20,23 @@ class Api::Line::RichController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           if event.message['text'] == "予約確認"
             tasks.each do |task|
-              # message = {
-              #   type: 'text',
-              #   text: task_message(task)
-              # }
-              # response = client.reply_message(event['replyToken'], message)
-              # puts response
+              message = {
+                type: 'text',
+                text: task_message(task)
+              }
+              response = client.reply_message(event['replyToken'], message)
+              puts response
             end
           else
             message = {
               type: 'text',
               text: event.message['text']
             }
+            response = client.reply_message(event['replyToken'], message)
+            puts response
           end
         end
       end
-      message = test
-      response = client.reply_message(event['replyToken'], message)
-      puts response
     end
     head :ok
   end
@@ -68,17 +67,106 @@ private
 
   def test
     {
-      "type": "bubble",
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "hello, world"
+      "type": "carousel",
+      "contents": [
+        {
+          "type": "bubble",
+          "header": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "予約内容",
+                "style": "normal",
+                "weight": "regular",
+                "size": "lg"
+              }
+            ]
+          },
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "予約時間",
+                "contents": [
+                  {
+                    "type": "span",
+                    "text": "時間"
+                  },
+                  {
+                    "type": "span",
+                    "text": "　　　予約時間"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "text": "予約時間",
+                "contents": [
+                  {
+                    "type": "span",
+                    "text": "コース"
+                  },
+                  {
+                    "type": "span",
+                    "text": "　　　予約時間"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "text": "予約時間",
+                "contents": [
+                  {
+                    "type": "span",
+                    "text": "料金"
+                  },
+                  {
+                    "type": "span",
+                    "text": "　　　予約時間"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "text": "予約時間",
+                "contents": [
+                  {
+                    "type": "span",
+                    "text": "スタッフ"
+                  },
+                  {
+                    "type": "span",
+                    "text": "　　　予約時間"
+                  }
+                ]
+              }
+            ]
+          },
+          "styles": {
+            "header": {
+              "separator": true,
+              "backgroundColor": "#27d8f7"
+            }
           }
-        ]
-      }
+        },
+        {
+          "type": "bubble",
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "hello, world"
+              }
+            ]
+          }
+        }
+      ]
     }
   end
 
