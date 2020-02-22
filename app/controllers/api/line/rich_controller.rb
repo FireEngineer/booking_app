@@ -24,9 +24,8 @@ class Api::Line::RichController < ApplicationController
               #   type: 'text',
               #   text: task_message(task)
               # }
-              message = test
-              response = client.reply_message(event['replyToken'], message)
-              puts response
+              # response = client.reply_message(event['replyToken'], message)
+              # puts response
             end
           else
             message = {
@@ -36,8 +35,9 @@ class Api::Line::RichController < ApplicationController
           end
         end
       end
-      # response = client.reply_message(event['replyToken'], message)
-      # puts response
+      message = test
+      response = client.reply_message(event['replyToken'], message)
+      puts response
     end
     head :ok
   end
