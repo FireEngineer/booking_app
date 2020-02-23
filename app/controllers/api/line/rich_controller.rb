@@ -91,6 +91,20 @@ private
               "contents": [
                 {
                   "type": "span",
+                  "text": "店舗"
+                },
+                {
+                  "type": "span",
+                  "text": "　　#{task.calendar.calendar_name}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "時間",
+              "contents": [
+                {
+                  "type": "span",
                   "text": "時間"
                 },
                 {
@@ -147,7 +161,7 @@ private
               "action": {
                 "type": 'uri',
                 "label": 'action',
-                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(task.calendar)
+                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(task.calendar, task)
               },
               "color": '#007bff'
             },
