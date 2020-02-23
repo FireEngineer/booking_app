@@ -147,7 +147,7 @@ private
               "action": {
                 "type": 'uri',
                 "label": 'action',
-                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(@calendar)
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(task.calendar)
               },
               "color": '#007bff'
             },
