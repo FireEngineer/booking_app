@@ -59,20 +59,6 @@ private
     }
   end
 
-  def task_message(task)
-    str2 = <<-EOS
-      ・予約時間
-      #{l(task.start_time, format: :middle)}~
-      #{l(task.end_time, format: :middle)}
-      ・予約コース
-      #{task.task_course.title}
-      ・コース料金
-      #{task.task_course.charge}
-      ・担当スタッフ
-      #{task.staff_name}
-    EOS
-  end
-
   def test(tasks)
     {
       "type": "carousel",
@@ -154,7 +140,17 @@ private
                   "text": "　　#{task.staff_name}"
                 }
               ]
-            }
+            },
+            {
+              "type": 'text',
+              "text": "予約詳細",
+              "action": {
+                "type": 'uri',
+                "label": 'action',
+                "uri": Rails.application.routes.url_helpers.calendar_tasks_url(@calendar)
+              },
+              "color": '#007bff'
+            },
           ]
         }
       }
