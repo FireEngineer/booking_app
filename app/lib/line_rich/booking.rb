@@ -36,4 +36,6 @@ module LineRich::Booking
       end
     end
 
+    module_function :start_booking, :calendars_array
+
 end
