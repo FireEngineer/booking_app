@@ -23,23 +23,7 @@ class Api::Line::RichController < ApplicationController
               message = {
                 "type": "flex",
                 "altText": "This is a Flex Message",
-                "contents": {
-                  "type": "bubble",
-                  "body": {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "Hello,"
-                      },
-                      {
-                        "type": "text",
-                        "text": "World!"
-                      }
-                    ]
-                  }
-                }
+                "contents": test
               }
               response = client.reply_message(event['replyToken'], message)
               puts response
@@ -85,106 +69,89 @@ private
   def test
     {
       "type": "carousel",
-      "contents": [
-        {
-          "type": "bubble",
-          "header": {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "予約内容",
-                "style": "normal",
-                "weight": "regular",
-                "size": "lg"
-              }
-            ]
-          },
-          "body": {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "予約時間",
-                "contents": [
-                  {
-                    "type": "span",
-                    "text": "時間"
-                  },
-                  {
-                    "type": "span",
-                    "text": "　　　予約時間"
-                  }
-                ]
-              },
-              {
-                "type": "text",
-                "text": "予約時間",
-                "contents": [
-                  {
-                    "type": "span",
-                    "text": "コース"
-                  },
-                  {
-                    "type": "span",
-                    "text": "　　　予約時間"
-                  }
-                ]
-              },
-              {
-                "type": "text",
-                "text": "予約時間",
-                "contents": [
-                  {
-                    "type": "span",
-                    "text": "料金"
-                  },
-                  {
-                    "type": "span",
-                    "text": "　　　予約時間"
-                  }
-                ]
-              },
-              {
-                "type": "text",
-                "text": "予約時間",
-                "contents": [
-                  {
-                    "type": "span",
-                    "text": "スタッフ"
-                  },
-                  {
-                    "type": "span",
-                    "text": "　　　予約時間"
-                  }
-                ]
-              }
-            ]
-          },
-          "styles": {
-            "header": {
-              "separator": true,
-              "backgroundColor": "#27d8f7"
-            }
-          }
-        },
-        {
-          "type": "bubble",
-          "body": {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "hello, world"
-              }
-            ]
-          }
-        }
-      ]
+      "contents": contents(tasks)
     }
+  end
+
+  def contents(tasks)
+    tasks.map do |task|
+      {
+        "type": "bubble",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "予約"
+            }
+          ],
+          "backgroundColor": "#e8f6fc"
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "時間",
+              "contents": [
+                {
+                  "type": "span",
+                  "text": "時間"
+                },
+                {
+                  "type": "span",
+                  "text": "　　#{I18n.l(task.start_time, format: :long)}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "時間",
+              "contents": [
+                {
+                  "type": "span",
+                  "text": "コース"
+                },
+                {
+                  "type": "span",
+                  "text": "　　#{task.task_course.title}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "時間",
+              "contents": [
+                {
+                  "type": "span",
+                  "text": "料金"
+                },
+                {
+                  "type": "span",
+                  "text": "　　#{task.task_course.display_charge}"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "時間",
+              "contents": [
+                {
+                  "type": "span",
+                  "text": "スタッフ"
+                },
+                {
+                  "type": "span",
+                  "text": "　　#{task.staff_name}"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    end
   end
 
   
