@@ -13,35 +13,16 @@ class Api::Line::RichController < ApplicationController
     line_user_id = params['events'][0]['source']['userId']
     store_member = StoreMember.find_by(line_user_id: line_user_id)
     tasks = store_member.tasks.only_valid.future_tasks
+
     events.each do |event|
       case event
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
           if event.message['text'] == "予約確認"
-            if tasks.any?
-              message = {
-                "type": "flex",
-                "altText": "This is a Flex Message",
-                "contents": test(tasks)
-              }
-              response = client.reply_message(event['replyToken'], message)
-              puts response
-            else
-              message = {
-                type: '予約はございません。ご予約お待ちしております！',
-                text: event.message['text']
-              }
-              response = client.reply_message(event['replyToken'], message)
-              puts response
-            end
+            confirm_task(tasks, event)
           else
-            message = {
-              type: 'text',
-              text: event.message['text']
-            }
-            response = client.reply_message(event['replyToken'], message)
-            puts response
+            normal_reply_message(event)
           end
         end
       end
@@ -59,116 +40,32 @@ private
     }
   end
 
-  def test(tasks)
-    {
-      "type": "carousel",
-      "contents": contents(tasks)
-    }
+  def confirm_task(tasks, event)
+    if tasks.any?
+      message = {
+        "type": "flex",
+        "altText": "This is a Flex Message",
+        "contents": LineRich::Confirm.carousel_task(tasks)
+      }
+      response = client.reply_message(event['replyToken'], message)
+      puts response
+    else
+      message = {
+        type: '予約はございません。ご予約お待ちしております！',
+        text: event.message['text']
+      }
+      response = client.reply_message(event['replyToken'], message)
+      puts response
+    end
   end
 
-  def contents(tasks)
-    tasks.map do |task|
-      {
-        "type": "bubble",
-        "header": {
-          "type": "box",
-          "layout": "vertical",
-          "contents": [
-            {
-              "type": "text",
-              "text": "予約"
-            }
-          ],
-          "backgroundColor": "#e8f6fc"
-        },
-        "body": {
-          "type": "box",
-          "layout": "vertical",
-          "contents": [
-            {
-              "type": "text",
-              "text": "時間",
-              "contents": [
-                {
-                  "type": "span",
-                  "text": "店舗"
-                },
-                {
-                  "type": "span",
-                  "text": "　　#{task.calendar.calendar_name}"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "text": "時間",
-              "contents": [
-                {
-                  "type": "span",
-                  "text": "時間"
-                },
-                {
-                  "type": "span",
-                  "text": "　　#{I18n.l(task.start_time, format: :long)}"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "text": "時間",
-              "contents": [
-                {
-                  "type": "span",
-                  "text": "コース"
-                },
-                {
-                  "type": "span",
-                  "text": "　　#{task.task_course.title}"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "text": "時間",
-              "contents": [
-                {
-                  "type": "span",
-                  "text": "料金"
-                },
-                {
-                  "type": "span",
-                  "text": "　　#{task.task_course.display_charge}"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "text": "時間",
-              "contents": [
-                {
-                  "type": "span",
-                  "text": "スタッフ"
-                },
-                {
-                  "type": "span",
-                  "text": "　　#{task.staff_name}"
-                }
-              ]
-            },
-            {
-              "type": 'text',
-              "text": "予約詳細",
-              "action": {
-                "type": 'uri',
-                "label": 'action',
-                "uri": Rails.application.routes.url_helpers.calendar_task_cancel_url(task.calendar, task)
-              },
-              "color": '#007bff'
-            },
-          ]
-        }
-      }
-    end
+  def normal_reply_message(event)
+    message = {
+      type: 'text',
+      text: event.message['text']
+    }
+    response = client.reply_message(event['replyToken'], message)
+    puts response
   end
 
   
