@@ -19,11 +19,18 @@ class Api::Line::RichController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           if event.message['text'] == "予約確認"
-            tasks.each do |task|
+            if tasks.any?
               message = {
                 "type": "flex",
                 "altText": "This is a Flex Message",
-                "contents": test
+                "contents": test(tasks)
+              }
+              response = client.reply_message(event['replyToken'], message)
+              puts response
+            else
+              message = {
+                type: '予約はございません。ご予約お待ちしております！',
+                text: event.message['text']
               }
               response = client.reply_message(event['replyToken'], message)
               puts response
@@ -66,7 +73,7 @@ private
     EOS
   end
 
-  def test
+  def test(tasks)
     {
       "type": "carousel",
       "contents": contents(tasks)
