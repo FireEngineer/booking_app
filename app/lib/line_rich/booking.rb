@@ -16,15 +16,15 @@ module LineRich::Booking
       "body": {
         "type": "box",
         "layout": "vertical",
-        "contents": calendars_array(calednars),
+        "contents": calendars_array(calendars),
       }
     }
   end
 
   private
 
-    def calendars_array(calednars)
-      calednars.map do |calendar|
+    def calendars_array(calendars)
+      calendars.map do |calendar|
         {
           "type": "button",
           "action": {
