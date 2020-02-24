@@ -58,8 +58,8 @@ private
       puts response
     else
       message = {
-        type: '予約はございません。ご予約お待ちしております！',
-        text: event.message['text']
+        type: 'text',
+        text: '予約はございません。ご予約お待ちしております！'
       }
       response = client.reply_message(event['replyToken'], message)
       puts response
@@ -86,8 +86,8 @@ private
       puts response
     else
       message = {
-        type: '登録されている店舗がありません。',
-        text: event.message['text']
+        type: 'text',
+        text: '登録されている店舗がありません。'
       }
       response = client.reply_message(event['replyToken'], message)
       puts response
@@ -96,7 +96,7 @@ private
 
   def test_reply(msg, event)
     message = {
-      type: '登録されている店舗がありません。',
+      type: 'text',
       text: msg
     }
     response = client.reply_message(event['replyToken'], message)
