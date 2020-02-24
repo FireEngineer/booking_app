@@ -17,6 +17,7 @@ class Api::Line::RichController < ApplicationController
       when Line::Bot::Event::Postback
         puts params['events']['postback']['data']
         if params['events']['postback']['data']['type'] == 'booking'
+          
           test_reply(msg, event)
         end
       when Line::Bot::Event::Message
