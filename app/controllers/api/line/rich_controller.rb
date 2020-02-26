@@ -1,5 +1,6 @@
 class Api::Line::RichController < ApplicationController
   require 'line/bot'
+  require 'uri'
   protect_from_forgery
   skip_before_action :verify_authenticity_token
 
@@ -15,10 +16,11 @@ class Api::Line::RichController < ApplicationController
     @events.each do |event|
       case event
       when Line::Bot::Event::Postback
-        puts params['events']['postback']['data']
-        if params['events']['postback']['data']['type'] == 'booking'
-          
-          test_reply(msg, event)
+        q_array = URI::decode_www_form(params['events'][0]['postback']['data'])
+        q_hash = Hash[q_array]
+        if q_hash['type'] == 'booking'
+          LineRich::BookingWebhook.call(client, q_hash, event)
+          # test_reply("test", event)
         end
       when Line::Bot::Event::Message
         case event.type
