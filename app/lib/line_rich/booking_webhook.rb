@@ -1,12 +1,13 @@
 class LineRich::BookingWebhook
 
-  attr_reader :client, :params, :event, :calendar, :courses
+  attr_reader :client, :params, :event, :calendar, :courses, :staffs
 
   def initialize(client, params, event)
     @client = client
     @params = params
     @calendar = Calendar.find_by(public_uid: params['calendar_uid'])
     @courses = @calendar.task_courses
+    @staffs = @calendar.staffs
     @event = event
   end
 
@@ -17,38 +18,44 @@ class LineRich::BookingWebhook
   def call
     case params['next_step'].to_i
     when 2
-      choice_course
+      choice_message(courses)
     when 3
-      choice_staff
+      choice_message(staffs)
     when 4
-      choice_date
+      choice_message(staffs)
     when 5
-      choice_time
+      choice_message(staffs)
     end
   end
 
   private
 
-    def choice_course
+    def choice_message(objects)
       message = {
         "type": "flex",
         "altText": "This is a Flex Message",
-        "contents": carousel(courses)
+        "contents": carousel(objects)
       }
       response = client.reply_message(event['replyToken'], message)
       puts response
     end
 
-    def carousel(courses)
-      {
-        "type": "carousel",
-        "contents": contents(courses)
-      }
+    def carousel(objects)
+      case objects.first.class.name
+      when "TaskCourse"
+        {
+          "type": "carousel",
+          "contents": choice_course(objects)
+        }
+      when "Staff"
+        {
+          "type": "carousel",
+          "contents": choice_staff(objects)
+        }
+      end
     end
   
-    private
-  
-    def contents(courses)
+    def choice_course(courses)
       courses.map do |course|
         {
           "type": "bubble",
@@ -124,6 +131,77 @@ class LineRich::BookingWebhook
                   "type": "postback",
                   "label": "このコースを予約する",
                   "data": "type=booking&next_step=3&calendar_uid=#{calendar.public_uid}&task_course_id=#{course.id}"
+                }
+              }
+            ],
+            "flex": 0
+          }
+        }
+      end
+    end
+
+    def choice_staff(staffs)
+      staffs.map do |staff|
+        {
+          "type": "bubble",
+          "header": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "スタッフを選択してください。"
+              }
+            ],
+            "backgroundColor": "#e8f6fc"
+          },
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "時間",
+                "contents": [
+                  {
+                    "type": "span",
+                    "text": "スタッフ"
+                  },
+                  {
+                    "type": "span",
+                    "text": "　　#{staff.name}"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "text": "料金",
+                "contents": [
+                  {
+                    "type": "span",
+                    "text": "スタッフ説明"
+                  },
+                  {
+                    "type": "span",
+                    "text": "　　#{staff.description}"
+                  }
+                ]
+              },
+            ]
+          },
+          "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "button",
+                "style": "link",
+                "height": "sm",
+                "action": {
+                  "type": "postback",
+                  "label": "このスタッフを予約する",
+                  "data": "type=booking&next_step=4&calendar_uid=#{calendar.public_uid}&task_course_id=#{params['task_course_id']}&staff_id=#{staff.id}"
                 }
               }
             ],
