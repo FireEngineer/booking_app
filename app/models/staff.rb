@@ -47,9 +47,62 @@ class Staff < ApplicationRecord
     end
   end
 
+  def get_reservable_times(course, date)
+    time_interval(calendar).delete_if do |y|
+      unless valid_schedule?(ok_term, not_term, staffs_google_tasks, start_time, end_time)
+    end
+  end
+
   private
 
   def get_regular_holidays
     regular_holidays = calendar.calendar_config.regular_holidays
+  end
+
+  # 予約カレンダーの表示間隔
+  def time_interval(calendar)
+    start_time = calendar.start_time
+    end_time = calendar.end_time
+    interval_time = calendar.display_interval_time
+    array = []
+    1.step do |i|
+      array.push(Time.parse("#{start_time}:00") + interval_time.minutes * (i - 1))
+      break if Time.parse("#{start_time}:00") + interval_time.minutes * (i - 1) == Time.parse("#{end_time}:00")
+    end
+    array
+  end
+
+  # 勤務時間内かどうか
+  def valid_schedule?(ok_term, not_term, staffs_google_tasks, start_time, end_time)
+    index = 0
+    ok_term.zip(not_term).each do |ok_terms, not_terms|
+      ok_flag = false
+      not_flag = false
+      ok_terms.each do |ok_term|
+        # debugger
+        if ok_term.first <= start_time && end_time <= ok_term.last
+          ok_flag = true
+        else
+          not_flag = false
+          break
+        end
+      end
+      (not_terms + staffs_google_tasks[index]).each do |not_term|
+        if not_term.any?
+          if start_time < not_term.last && not_term.first < end_time
+            not_flag = false
+            break
+          else
+            not_flag = true
+          end
+        else
+          not_flag = true
+        end
+        not_flag == true
+      end
+      return true if ok_flag == true && not_flag == true
+
+      index += 1
+    end
   end
 end
