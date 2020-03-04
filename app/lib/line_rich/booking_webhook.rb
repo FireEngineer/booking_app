@@ -1,6 +1,6 @@
 class LineRich::BookingWebhook
 
-  attr_reader :client, :params, :event, :calendar, :courses, :staffs
+  attr_reader :client, :params, :event, :calendar, :courses, :staffs, :dates
 
   def initialize(client, params, event)
     @client = client
@@ -9,6 +9,7 @@ class LineRich::BookingWebhook
     @courses = @calendar.task_courses
     @staffs = @calendar.staffs
     @event = event
+    @dates = 14.times.map{|n| Date.current.days_ago(n + 1)}.reverse
   end
 
   def self.call(client, params, event)
@@ -22,7 +23,7 @@ class LineRich::BookingWebhook
     when 3
       choice_message(staffs)
     when 4
-      choice_message(staffs)
+      choice_message(dates)
     when 5
       choice_message(staffs)
     end
@@ -52,9 +53,15 @@ class LineRich::BookingWebhook
           "type": "carousel",
           "contents": choice_staff(objects)
         }
+      when "Date"
+        {
+          "type": "carousel",
+          "contents": choice_date(objects)
+        }
       end
     end
-  
+
+# ↓コースの選択====================================================
     def choice_course(courses)
       courses.map do |course|
         {
@@ -140,6 +147,7 @@ class LineRich::BookingWebhook
       end
     end
 
+# ↓スタッフの選択====================================================
     def choice_staff(staffs)
       staffs.map do |staff|
         {
@@ -207,6 +215,45 @@ class LineRich::BookingWebhook
             ],
             "flex": 0
           }
+        }
+      end
+    end
+
+# ↓日付の選択====================================================
+    def choice_date(dates)
+      [
+        {
+          "type": "bubble",
+          "header": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "日付を選択してください"
+              }
+            ]
+          },
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents":
+              date_contents(dates)
+          }
+        }
+      ]
+    end
+
+    def date_contents(dates)
+      dates.map do |date|
+        {
+          "type": "button",
+          "action": {
+            "type": "postback",
+            "label": I18n.l(date, format: :long),
+            "data": "type=booking&next_step=4&calendar_uid=#{calendar.public_uid}&task_course_id=#{params['task_course_id']}&staff_id=#{params['task_course_id']}&date=#{date}"
+          },
+          "style": "link"
         }
       end
     end
