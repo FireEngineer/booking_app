@@ -12,7 +12,7 @@ module CalendarTaskToJsonOutputer
         }
       elsif task.end_time < Time.current
         {
-          title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{task.staff.name}",
+          title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{task.staff.name if task.staff}",
           start: I18n.l(task.start_time, format: :to_work_json),
           end: I18n.l(task.end_time, format: :to_work_json),
           id: task.id,
@@ -21,7 +21,7 @@ module CalendarTaskToJsonOutputer
         }
       else
         {
-          title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{task.staff.name}",
+          title: "#{task.store_member.name}様:#{task.task_course.title}:担当者#{task.staff.name if task.staff}",
           start: I18n.l(task.start_time, format: :to_work_json),
           end: I18n.l(task.end_time, format: :to_work_json),
           id: task.id,
