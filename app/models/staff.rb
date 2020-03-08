@@ -48,8 +48,15 @@ class Staff < ApplicationRecord
   end
 
   def get_reservable_times(course, date)
-    time_interval(calendar).delete_if do |y|
-      unless valid_schedule?(ok_term, not_term, staffs_google_tasks, start_time, end_time)
+    interval_time = self.calendar.calendar_config.interval_time
+    staffs = Staff.where(id: self.id)
+    staffs_google_tasks = StaffsScheduleOutputer.public_staff_private(staffs, [date])
+    ok_term = StaffsScheduleOutputer.valid_shifts(staffs, date.all_day)
+    not_term = StaffsScheduleOutputer.invalid_schedules(staffs, date.all_day, interval_time)
+    time_interval(calendar).delete_if do |time|
+      start_time = DateTime.parse(time(date, time))
+      end_time = start_time.since((course.course_time + interval_time).minutes)
+      !valid_schedule?(ok_term, not_term, staffs_google_tasks, start_time, end_time)
     end
   end
 
@@ -79,7 +86,6 @@ class Staff < ApplicationRecord
       ok_flag = false
       not_flag = false
       ok_terms.each do |ok_term|
-        # debugger
         if ok_term.first <= start_time && end_time <= ok_term.last
           ok_flag = true
         else
@@ -105,4 +111,10 @@ class Staff < ApplicationRecord
       index += 1
     end
   end
+
+  def time(date, time)
+    puts time
+    "#{date.year}-#{date.month}-#{date.day}T#{time.hour}:#{time.min}:00+09:00"
+  end
+
 end
