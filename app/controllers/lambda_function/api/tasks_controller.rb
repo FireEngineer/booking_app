@@ -19,5 +19,10 @@ class LambdaFunction::Api::TasksController < ApplicationController
   def test
     LineBot.new.push_test("テストリマインダー")
   end
-  
+
+  def test_raise
+    puts "テストraise"
+    raise
+  end
+
 end
