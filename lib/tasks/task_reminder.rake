@@ -15,8 +15,7 @@ namespace :task_reminder do
 
   desc 'リマインダー配信test'
   task test: :environment do
-    user_id = ENV['TEST_LINE_USER_ID']
-    LineBot.new.push_test(user_id)
+    LineBot.new.push_test("テストrakeタスク送信")
     puts 'テストrakeタスク送信'
     puts Time.current
   end

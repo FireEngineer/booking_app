@@ -37,21 +37,12 @@ class LineBot
     response = client.push_message(user_id, message)
   end
 
-  def push_test(user_id)
+  def push_test(text)
     message = {
       type: 'text',
-      text: "test送信
-      ===================
-      ・名前
-        testuser
-      ・email
-        test@gmail.com
-      ・TEL
-        000000000000
-        #{ENV['RAILS_ENV']}
-      ==================="
+      text: text,
     }
-    response = client.push_message(user_id, message)
+    response = client.push_message(ENV['TEST_LINE_USER_ID'], message)
   end
 
   private
