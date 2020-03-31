@@ -150,6 +150,7 @@ Rails.application.routes.draw do
 
       post 'lambda_function/api/staff_shifts/create', to: "staff_shifts#create"
       post 'lambda_function/api/staff_shifts/test', to: "staff_shifts#test"
+      post 'lambda_function/api/staff_shifts/test', to: "staff_shifts#test_raise"
     end
   end
 # ================================================================================================================-
