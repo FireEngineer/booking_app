@@ -1,5 +1,5 @@
 class LambdaFunction::Api::StaffShiftsController < ApplicationController
-  protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
 
   def create
     staffs = Staff.all.each do |staff|

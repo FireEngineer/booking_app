@@ -1,5 +1,5 @@
 class LambdaFunction::Api::TasksController < ApplicationController
-  protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
 
   def reminder
     tasks = Task.only_valid.tomorrow_tasks.each do |task|
