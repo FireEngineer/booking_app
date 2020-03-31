@@ -150,12 +150,16 @@ Rails.application.routes.draw do
     end
   end
 # ================================================================================================================-
+  # LINE richメニュー
+  post "line/webhook", to:"api/line/rich#webhook"
+
+# ================================================================================================================-
 
   # help
   scope module: :user do
     get "user/helps", to:"helps#user_modal"
   end
 
-  mount ActionCable.server => '/cable'
+  # mount ActionCable.server => '/cable'
 
 end

@@ -14,7 +14,7 @@ module StaffsScheduleOutputer
   # 予定を取得
   def invalid_schedules(staffs, term, interval_time)
     result = staffs.map do |staff|
-      task_array = staff.tasks.where(start_time: term).map do |task|
+      task_array = staff.tasks.only_valid.where(start_time: term).map do |task|
         [task.start_time, task.end_time.since(interval_time.minutes)]
       end
       rest_array = staff.staff_shifts.where(work_date: term.first.to_date).map do |shift|

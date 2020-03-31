@@ -56,9 +56,15 @@
 												<% end_time = start_time.since((@task_course.course_time+@interval_time).minutes) %>
 												<% if @regular_holiday_days.include?(@dw[day.wday]) %>
 													<tr>
-														<td class="closeColInner">
-															<span class="closeColText">休業日</span>
-														</td>
+														<th class="timeCell timeSharpLine text-center times_style">
+															<i class="fas fa-times"></i>
+														</th>
+													</tr>
+												<% elsif @iregular_holydays.include?(day) %>
+													<tr>
+														<th class="timeCell timeSharpLine text-center times_style">
+															<i class="fas fa-times"></i>
+														</th>
 													</tr>
 												<% elsif valid_time?(@display_time, start_time) == false %>
 													<tr>
