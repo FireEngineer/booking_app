@@ -28,9 +28,9 @@ test:
   reconnect: false
   database: rails_todo_test
   pool: 5
-  username: <%= ENV.fetch("DB_USERNAME") %>
-  password: <%= ENV.fetch("DB_PASSWORD") %>
-  host: <%= ENV['DB_HOST'] %>
+  username: root
+  password: ""
+  host: 127.0.0.1
 
 production:
   adapter: mysql2
