@@ -19,8 +19,7 @@ class ApplicationController < ActionController::Base
   # エラーハンドリング処理
   def handle_500(exception = nil)
     logger.info "Rendering 500 with exception: #{exception.message}" if exception
-
-    Slack500.post(request,exception) if Rails.env.production?
+    Slack500.post(request,exception)
 
     if request.xhr?
       # Ajaxのための処理
@@ -32,7 +31,7 @@ class ApplicationController < ActionController::Base
 
   def handle_404(exception = nil)
     logger.info "Rendering 404 with exception: #{exception.message}" if exception
-    Slack500.post(request,exception) if Rails.env.production?
+    Slack500.post(request,exception)
     if request.xhr?
       # Ajaxのための処理
       render json: { error: '404 error' }, status: 404
