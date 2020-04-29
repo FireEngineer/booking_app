@@ -93,3 +93,10 @@ end
 puts result
 
 if browser.device.mobile?
+end
+
+
+###############
+production: ssh -i ~/.ssh/smart_yoyaku.pem ec2-user@3.113.2.41
+
+staging: ssh -i ~/.ssh/smart_yoyaku.pem ec2-user@52.195.9.72
