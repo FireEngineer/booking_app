@@ -1,34 +1,35 @@
 version: '3'
 services:
-  mysql:
-    image: "mysql:5.7"
-    ports:
-      - "3306:3306"
+  app:
+    build:
+      context: .
+    command: bundle exec puma -C config/puma.rb
     volumes:
-      - mysql_data:/var/run/mysql
-    environment:
-      # MYSQL_DATABASE: "rails_todo_development" # デフォルトdbを指定
-      # # MYSQL_ROOT_PASSWORD: "password" # ユーザーrootならばこれでパスワードを指定する
-      # DB_HOST: localhost
-      TZ: Asia/Tokyo
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
-  rails:
-    build: .
+      - .:/webapp
+      - public-data:/webapp/public
+      - tmp-data:/webapp/tmp
+      - log-data:/webapp/log
     depends_on:
-      - mysql
+      - db
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: rails_todo_development
+      MYSQL_ROOT_PASSWORD: password
     volumes:
-      - .:/usr/src/app
-      - vendor_bundle:/usr/src/app/vendor/bundle
+      - db-data:/var/lib/mysql
+  web:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/webapp/public
+      - tmp-data:/webapp/tmp
     ports:
-      - "3000:3000"
-    entrypoint:
-      - bin/rails
-      - s
-      - -b
-      - 0.0.0.0
- 
+      - 80:80
+    depends_on:
+      - app
 volumes:
-  mysql_data:
-    driver: local
-  vendor_bundle:
-    driver: local
+  public-data:
+  tmp-data:
+  log-data:
+  db-data:
