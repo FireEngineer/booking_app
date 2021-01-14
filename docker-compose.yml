@@ -3,6 +3,7 @@ services:
   app:
     build:
       context: .
+    env_file: ./.env
     command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/webapp
@@ -14,8 +15,8 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_DATABASE: rails_todo_development
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
     volumes:
       - db-data:/var/lib/mysql
   web:

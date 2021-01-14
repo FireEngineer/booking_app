@@ -3,23 +3,21 @@ default: &default
   encoding: utf8
   pool: 5
   username: <%= ENV.fetch('DB_USERNAME', 'root') %>
-  host:     <%= ENV.fetch('DB_HOST', 'db') %>
+  host:     <%= ENV.fetch('DB_HOST', 'localhost') %>
   socket: /tmp/mysql.sock
 
 development:
   <<: *default
   database: rails_todo_development
-  host: docker.for.mac.localhost
 
 test:
   <<: *default
   database: rails_todo_test
-  host: docker.for.mac.localhost
   
 production:
   adapter: mysql2
-  database: <%= ENV['RDS_DB_NAME'] %>
-  username: <%= ENV['RDS_USERNAME'] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
