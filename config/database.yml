@@ -9,6 +9,7 @@ default: &default
 development:
   <<: *default
   database: rails_todo_development
+  socket: <%= ENV.fetch('DB_SOCKET', '/tmp/mysql.sock') %>
 
 test:
   <<: *default
